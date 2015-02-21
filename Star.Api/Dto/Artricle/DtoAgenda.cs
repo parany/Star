@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Star.Api.Dto.Agenda
+namespace Star.Api.Dto.Artricle
 {
     public class DtoAgenda
     {

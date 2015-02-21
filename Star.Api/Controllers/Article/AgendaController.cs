@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using Star.Api.Controllers.Core;
-using Star.Api.Dto.Agenda;
+using Star.Api.Dto.Artricle;
 using Star.Model.Models.Article;
 
 namespace Star.Api.Controllers.Article

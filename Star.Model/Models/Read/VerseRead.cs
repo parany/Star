@@ -1,7 +1,4 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-
-namespace Star.Model.Models.Read
+﻿namespace Star.Model.Models.Read
 {
     public class VerseRead
     {
