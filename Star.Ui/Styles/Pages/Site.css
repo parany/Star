@@ -1,0 +1,167 @@
+body {
+    font-family: monospace;
+}
+
+    #account a {
+        cursor: pointer;
+        color: #989898;
+        text-transform: uppercase;
+        margin-right: 20px;
+        font-family: monospace;
+    }
+
+        #account a:hover {
+            text-decoration: none;
+            color: black;
+        }
+
+#menu {
+    padding-left: 0;
+}
+
+    #menu a {
+        cursor: pointer;
+        color: #989898;
+        text-transform: uppercase;
+        margin-right: 20px;
+        font-family: "Rockwell Extra Bold";
+        font-size: 15pt;
+    }
+
+        #menu a.selected {
+            font-size: 30pt;
+            border-bottom-color: #989898;
+            border-bottom-width: thin;
+            border-bottom-style: solid;
+        }
+
+        #menu a:hover {
+            text-decoration: none;
+            color: black;
+        }
+
+table.ng-table th {
+    text-align: left;
+}
+
+.ng-table-rowselected tr {
+    cursor: pointer;
+}
+
+.navbar-default {
+    background-color: transparent !important;
+    margin: 1px;
+    text-transform: uppercase;
+}
+
+.row {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.navbar {
+    border-radius: 2px !important;
+}
+
+#read-nav {
+    margin-top: 25px;
+}
+
+.expander {
+    border: 1px solid black;
+    width: 250px;
+}
+
+    .expander > .title {
+        background-color: gray;
+        color: white;
+        padding: .1em .3em;
+        cursor: pointer;
+    }
+
+    .expander > .body {
+        padding: .1em .3em;
+    }
+
+.closed {
+    display: none;
+}
+
+a.dropdown-toggle {
+    color: gray;
+}
+
+.form-horizontal .form-group {
+    margin-left: 0;
+}
+
+.glyphicon {
+    cursor: pointer;
+}
+
+[contenteditable="true"] {
+    height: 250px;
+	overflow-y: auto;
+}
+
+[ng-model='agenda.Text']  [contenteditable="true"] {
+	height: 550px;
+	overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+ [ng-model='treaty.Text']  [contenteditable="true"]{
+	height: 450px;
+	overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+ [ng-model='explication.Content']  [contenteditable="true"]{
+	height: 450px;
+	overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+.note {
+    border-width: 1px;
+    border-color: black;
+    border-style: dotted;
+    border-radius: 5px;
+    padding: 3px;
+    font-size: 90%;
+    margin-top: 10px;
+    margin-bottom: 45px;
+}
+
+.author {
+    float: right;
+}
+
+.actions {
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.actions.rigth {
+    float: right;
+}
+
+.culture {
+    font-weight: bold;
+    font-size: 85%;
+    font-style: italic;
+    color: gray;
+}
+
+.meaning {
+    margin-top: 40px;
+}
+
+.btn-group-small {
+    margin-bottom: 25px;
+}
+
+.treaty-badge {
+    margin-bottom: 25px;
+}

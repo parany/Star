@@ -41,3 +41,11 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Parany ignore list
+obj
+bin
+packages
+.user
+.csproj.user
+.v12.suo
