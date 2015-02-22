@@ -19,13 +19,13 @@
             </div>
         </div>
         <div>
-            <p ng-show="data.length > 0"><strong>Already in this date: </strong></p>
+            <p ng-show="news.length > 0"><strong>Already in this date: </strong></p>
             <table ng-table="tableNews" class="table ng-table-rowselected">
                 <thead>
                 </thead>
                 <tbody>
                     <tr ng-repeat="model in $data">
-                        <td><span>{{ model }}</span></td>
+                        <td><span>{{ model.Title }}</span></td>
                     </tr>
                 </tbody>
             </table>

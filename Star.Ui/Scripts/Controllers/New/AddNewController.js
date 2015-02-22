@@ -48,9 +48,9 @@ starApp.controller('AddNewController', function ($scope, $routeParams, $http, $l
     $scope.$watch('new.Date', function () {
         if ($scope.new.Date == undefined || $scope.new.Date == '') return;
         $http.get(apiUrl + 'New/GetByDate/' + auth.getUserName() + '/' + $scope.new.Date).success(function (data) {
-            $scope.data = data.News;
+            $scope.news = data.News;
             if (id != undefined) {
-                $scope.data = $scope.data.filter(function (t) { return t.Id != id; });
+                $scope.data = $scope.news.filter(function (t) { return t.Id != id; });
             }
             $scope.tableNews.reload();
         });

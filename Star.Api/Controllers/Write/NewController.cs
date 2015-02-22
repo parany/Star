@@ -31,5 +31,13 @@ namespace Star.Api.Controllers.Write
                 Next = nextDate
             };
         }
+
+        [HttpGet]
+        public List<New> Search(string param)
+        {
+            string textToSearch = param;
+            var treaties = Repository.FindList(a => a.Title.Contains(textToSearch) || a.Content.Contains(textToSearch));
+            return treaties;
+        }
     }
 }

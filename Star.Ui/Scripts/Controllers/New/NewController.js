@@ -75,14 +75,14 @@
     }
 
     $scope.promptDelete = function (id) {
-        var response = confirm("Are you sure you want to delete this explication?");
+        var response = confirm("Are you sure you want to delete this new?");
         if (response) {
-            $http.get(apiUrl + 'Explication/Delete/' + id).success(function () {
+            $http.get(apiUrl + 'New/Delete/' + id).success(function () {
             }).success(function () {
-                $scope.explications = $scope.explications.filter(function (d) { return d.Id != id; });
-                if ($scope.explications.length > 0)
-                    $scope.changeExplicationSelected($scope.explications[0]);
-                $scope.tableExplications.reload();
+                $scope.News = $scope.News.filter(function (d) { return d.Id != id; });
+                if ($scope.News.length > 0)
+                    $scope.changeNewSelected($scope.News[0]);
+                $scope.tableNews.reload();
             });
         }
     }
@@ -93,14 +93,14 @@
         clearTimeout(searchTimeout);
         searchTimeout = setTimeout(function () {
             if (!$scope.textToSearch || $scope.textToSearch.length < 1) return;
-            $http.get(apiUrl + 'Explication/Search/' + $scope.textToSearch).success(function (data) {
-                $scope.explications = data;
-                $scope.tableExplications.reload();
+            $http.get(apiUrl + 'New/Search/' + $scope.textToSearch).success(function (data) {
+                $scope.News = data;
+                $scope.tableNews.reload();
 
-                $scope.explication = data.length > 0 ? data[0] : {};
+                $scope.New = data.length > 0 ? data[0] : {};
                 if (data.length > 0) {
-                    $scope.Title = $scope.explication.Title + ' (' + $scope.explication.Date.split('T')[0] + ')';
-                    $scope.explication.$selected = true;
+                    $scope.Title = $scope.New.Title + ' (' + $scope.New.Date.split('T')[0] + ')';
+                    $scope.New.$selected = true;
                 }
             });
         }, searchDelay);
