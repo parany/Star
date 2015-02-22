@@ -165,3 +165,7 @@ a.dropdown-toggle {
 .treaty-badge {
     margin-bottom: 25px;
 }
+
+blockquote {
+    font-size: 14.5px !important;
+}

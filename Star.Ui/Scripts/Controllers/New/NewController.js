@@ -1,45 +1,47 @@
 ﻿starApp.controller('NewController', function ($rootScope, $scope, $http, $location, ngTableParams, apiUrl, auth) {
     $scope.Date = '';
     $scope.Date = new Date().toISOString().split('T')[0];
-    $scope.explication = {};
-    $scope.verses = [];
-    $scope.explications = [];
+    $scope.News = [];
+    $scope.New = {};
+    $scope.New.Citations = [];
 
-    $scope.tableExplications = new ngTableParams({
+    $scope.tableNews = new ngTableParams({
         page: 1,
         total: 1,
         count: 5
     }, {
         counts: [],
         getData: function ($defer, params) {
-            $defer.resolve($scope.explications.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+            $defer.resolve($scope.News.slice((params.page() - 1) * params.count(), params.page() * params.count()));
         },
         $scope: { $data: {} }
     });
+    $scope.tableNews.settings().scope = $scope;
 
-    $scope.tableVerses = new ngTableParams({
+    $scope.tableCitations = new ngTableParams({
         page: 1,
         total: 1,
         count: 5
     }, {
         counts: [],
         getData: function ($defer, params) {
-            $defer.resolve($scope.verses.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+            $defer.resolve($scope.New.Citations.slice((params.page() - 1) * params.count(), params.page() * params.count()));
         },
         $scope: { $data: {} }
     });
+    $scope.tableCitations.settings().scope = $scope;
 
     $scope.$watch('Date', function () {
         $scope.textToSearch = '';
-        $http.get(apiUrl + 'Explication/GetByDate/' + auth.getUserName() + '/' + $scope.Date).success(function (data) {
-            if (data.Explications.length == 0) {
-                data.Explications = [];
+        $http.get(apiUrl + 'New/GetByDate/' + auth.getUserName() + '/' + $scope.Date).success(function (data) {
+            $scope.News = data.News;
+            if (data.News.length == 0) {
+                $scope.News = [];
             }
-            $scope.explications = data.Explications;
-            $scope.tableExplications.reload();
-            $scope.explication = data.Explications.length > 0 ? data.Explications[0] : {};
-            if ($scope.explications.length > 0)
-                $scope.changeExplicationSelected($scope.explication);
+            $scope.tableNews.reload();
+            $scope.New = data.News.length > 0 ? data.News[0] : {};
+            if ($scope.News.length > 0)
+                $scope.changeNewSelected($scope.New);
 
             $scope.prev = data.Prev;
             $scope.next = data.Next;
@@ -48,29 +50,28 @@
         });
     });
 
-    $scope.prevExplication = function () {
+    $scope.prevNew = function () {
         if ($scope.prev == null) return;
         $scope.Date = $scope.prev;
     }
 
-    $scope.nextExplication = function () {
+    $scope.nextNew = function () {
         if ($scope.next == null) return;
         $scope.Date = $scope.next;
     }
 
-    $scope.changeExplicationSelected = function (model) {
-        angular.forEach($scope.explications, function (d) {
+    $scope.changeNewSelected = function (model) {
+        angular.forEach($scope.News, function (d) {
             d.$selected = false;
         });
-        $scope.explication = model;
-        $scope.verses = $scope.explication.VerseReadList;
-        $scope.tableVerses.reload();
+        $scope.New = model;
+        $scope.tableCitations.reload();
         if ($scope.textToSearch.length > 0) {
-            $scope.Title = $scope.explication.Title + ' (' + model.Date.split('T')[0] + ')';
+            $scope.Title = $scope.New.Title + ' (' + model.Date.split('T')[0] + ')';
         } else {
-            $scope.Title = $scope.explication.Title;
+            $scope.Title = $scope.New.Title;
         }
-        $scope.explication.$selected = true;
+        $scope.New.$selected = true;
     }
 
     $scope.promptDelete = function (id) {

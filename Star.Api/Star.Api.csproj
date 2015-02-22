@@ -139,10 +139,12 @@
     <Compile Include="Controllers\Core\GenericController.cs" />
     <Compile Include="Controllers\Read\BookController.cs" />
     <Compile Include="Controllers\Read\TestamentController.cs" />
+    <Compile Include="Controllers\Write\SourceController.cs" />
     <Compile Include="Controllers\Write\NewController.cs" />
     <Compile Include="Controllers\Write\TreatyController.cs" />
     <Compile Include="Controllers\Write\DicoController.cs" />
     <Compile Include="Dto\Artricle\DtoExplication.cs" />
+    <Compile Include="Dto\Write\DtoNew.cs" />
     <Compile Include="Dto\Write\DtoTreaty.cs" />
     <Compile Include="Dto\Artricle\DtoAgenda.cs" />
     <Compile Include="Dto\Dico\DtoSearchRequest.cs" />
