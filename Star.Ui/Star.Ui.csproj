@@ -58,6 +58,8 @@
     <Content Include="Scripts\Controllers\Agenda\EditAgendaController.js" />
     <Content Include="Scripts\Controllers\Agenda\AddAgendaController.js" />
     <Content Include="Scripts\Controllers\Agenda\AgendaController.js" />
+    <Content Include="Scripts\Controllers\New\AddNewController.js" />
+    <Content Include="Scripts\Controllers\New\NewController.js" />
     <Content Include="Scripts\Controllers\Explication\AddExplicationController.js" />
     <Content Include="Scripts\Controllers\Explication\ExplicationController.js" />
     <Content Include="Scripts\Controllers\Explication\VerseController.js" />
@@ -97,6 +99,8 @@
     <Content Include="Views\Pages\Agenda\Index.html" />
     <Content Include="Views\Pages\Dico\Add.html" />
     <Content Include="Views\Pages\Dico\Index.html" />
+    <Content Include="Views\Pages\New\Add.html" />
+    <Content Include="Views\Pages\New\Index.html" />
     <Content Include="Views\Pages\Explication\Add.html" />
     <Content Include="Views\Pages\Explication\Index.html" />
     <Content Include="Views\Pages\Note\Edit.html" />

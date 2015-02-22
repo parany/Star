@@ -101,5 +101,23 @@
             access_level: ACCESS_LEVELS.Pub,
             menuId: 'explication'
         })
+        .when('/new', {
+            templateUrl: 'Views/Pages/New/Index.html',
+            controller: "NewController",
+            access_level: ACCESS_LEVELS.Pub,
+            menuId: 'new'
+        })
+        .when('/new/add', {
+            templateUrl: 'Views/Pages/New/Add.html',
+            controller: "AddNewController",
+            access_level: ACCESS_LEVELS.Pub,
+            menuId: 'new'
+        })
+        .when('/new/edit/:id', {
+            templateUrl: 'Views/Pages/New/Add.html',
+            controller: "AddNewController",
+            access_level: ACCESS_LEVELS.Pub,
+            menuId: 'new'
+        })
     ;
 });
