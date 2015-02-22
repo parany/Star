@@ -60,6 +60,8 @@
     <Compile Include="Models\Read\Testament.cs" />
     <Compile Include="Models\Read\Verse.cs" />
     <Compile Include="Models\Write\Dico.cs" />
+    <Compile Include="Models\Write\New.cs" />
+    <Compile Include="Models\Write\Source.cs" />
     <Compile Include="Models\Write\Treaty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />

@@ -53,6 +53,7 @@
     <Compile Include="Migrators\GenericMigrator.cs" />
     <Compile Include="Migrators\Read\BookMigrator.cs" />
     <Compile Include="Migrators\Read\TestamentMigrator.cs" />
+    <Compile Include="Migrators\Write\SourceMigrator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

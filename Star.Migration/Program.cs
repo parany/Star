@@ -2,6 +2,7 @@
 using Star.Migration.Migrators;
 using Star.Migration.Migrators.Account;
 using Star.Migration.Migrators.Core;
+using Star.Migration.Migrators.Write;
 
 namespace Star.Migration
 {
@@ -24,11 +25,14 @@ namespace Star.Migration
             //var userMigrator = new UserMigrator("verse.xml");
             //userMigrator.Execute();
 
-            var tagMigrator = new TagMigrator("testament.xml");
-            tagMigrator.Execute();
+            //var tagMigrator = new TagMigrator("testament.xml");
+            //tagMigrator.Execute();
 
             //var cultureMigrator = new CultureMigrator("testament.xml");
             //cultureMigrator.Execute();
+
+            var sourceMigrator = new SourceMigrator("testament.xml");
+            sourceMigrator.Execute();
 
             Console.WriteLine("Done");
             Console.ReadKey();
