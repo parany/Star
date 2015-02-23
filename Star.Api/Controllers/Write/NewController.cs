@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using Star.Api.Controllers.Core;
-using Star.Api.Dto.Dico;
 using Star.Api.Dto.Write;
-using Star.Model.Models.Core;
 using Star.Model.Models.Write;
-using Star.Model.Repositories;
 
 namespace Star.Api.Controllers.Write
 {
