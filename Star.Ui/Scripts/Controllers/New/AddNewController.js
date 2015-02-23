@@ -7,18 +7,20 @@ starApp.controller('AddNewController', function ($scope, $routeParams, $http, $l
     $scope.new.Citations = [];
     $scope.sources = [];
 
-    $http.get(apiUrl + 'Source/GetAll').success(function(data) {
+    $http.get(apiUrl + 'Source/GetAll').success(function (data) {
         $scope.sources = data;
+    }).then(function () {
+        if (id == undefined) {
+            $scope.new.Date = new Date().toISOString().split('T')[0];
+        } else {
+            $http.get(apiUrl + 'New/Get/' + id).success(function (data) {
+                $scope.new = data;
+                $scope.new.Date = data.Date.split('T')[0];
+                $scope.tableCitations.reload();
+                $scope.new.Source = $scope.sources[$scope.sources.map(function (s) { return s.Id; }).indexOf($scope.new.Source.Id)];
+            });
+        }
     });
-
-    if (id == undefined) {
-        $scope.new.Date = new Date().toISOString().split('T')[0];
-    } else {
-        $http.get(apiUrl + 'New/Get/' + id).success(function (data) {
-            $scope.new = data;
-            $scope.new.Date = data.Date.split('T')[0];
-        });
-    }
 
     $scope.tableNews = new ngTableParams({
         page: 1,
@@ -50,7 +52,7 @@ starApp.controller('AddNewController', function ($scope, $routeParams, $http, $l
         $http.get(apiUrl + 'New/GetByDate/' + auth.getUserName() + '/' + $scope.new.Date).success(function (data) {
             $scope.news = data.News;
             if (id != undefined) {
-                $scope.data = $scope.news.filter(function (t) { return t.Id != id; });
+                $scope.news = $scope.news.filter(function (t) { return t.Id != id; });
             }
             $scope.tableNews.reload();
         });
@@ -60,14 +62,14 @@ starApp.controller('AddNewController', function ($scope, $routeParams, $http, $l
         return $scope.new.Citations.length > 0 && $scope.new.Content.length > 0 && $scope.new.Source != undefined;
     }
 
-    $scope.addCitation = function(citation) {
+    $scope.addCitation = function (citation) {
         $scope.new.Citations.push(citation);
         $scope.tableCitations.reload();
         $scope.citation = '';
     }
 
-    $scope.removeCitation = function(citation) {
-        $scope.new.Citations = $scope.new.Citations.filter(function(c) { return c != citation; });
+    $scope.removeCitation = function (citation) {
+        $scope.new.Citations = $scope.new.Citations.filter(function (c) { return c != citation; });
         $scope.tableCitations.reload();
     }
 
