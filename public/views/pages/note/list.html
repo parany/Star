@@ -1,0 +1,62 @@
+﻿<div class="col-md-8">
+    <table ng-table="tableNote" class="table ng-table-rowselected">
+        <thead>
+        </thead>
+        <tbody>
+            <tr ng-repeat="model in $data"
+                ng-click="changeNoteSelected(model)"
+                ng-class="{'active': model.$selected}">
+                <td>
+                    <span><b>{{ model.Verse }}</b></span>
+                </td>
+                <td>
+                    <span>{{ model.Description }}</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-md-4">
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a data-toggle="tab" data-target="#tab-note" href="">Note</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab-note">
+            <div ng-if="dtoNote.MyNote == null">
+                <span ng-if="read.selected == null">
+                    Please select a verse you wish to view a note.
+                </span>
+                <span ng-if="read.selected != null">
+                    You don't have a note on this verse. Click
+                    <a ng-href="#/note/add/{{ read.selected.Id }}" href="">here</a>
+                    if you want to add a note for this verse
+                </span>
+            </div>
+            
+            <div ng-if="dtoNote.MyNote != null" class="note">
+                <h4>
+                    <strong>
+                        <ins>{{ dtoNote.MyNote.Description }}</ins>
+                        <a ng-href="#/note/edit/{{ dtoNote.MyNote._id }}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    </strong>
+                </h4>
+                <div ng-bind-html="dtoNote.MyNote.Content"></div>
+                <span ng-repeat="tag in dtoNote.MyNote.TagIdList"><span class="badge">{{ tag }}</span>&nbsp;</span>
+                <br />
+                <i class="author">By {{ dtoNote.MyNote.CreatedBy }}</i>
+            </div>
+
+            <div ng-repeat="note in dtoNote.OtherNotes" class="note">
+                <h4><strong><ins>{{ note.Description }}</ins></strong></h4>
+                <div ng-bind-html="note.Content"></div>
+                <span ng-repeat="tag in note.TagIdList"><span class="badge">{{ tag }}</span>&nbsp;</span>
+                <br />
+                <i class="author">By {{ note.CreatedBy }}</i>
+            </div>
+        </div>
+    </div>
+
+</div>
