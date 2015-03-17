@@ -12,24 +12,29 @@ Number.prototype.format = function () {
     return this;
 };
 
+Date.prototype.getFirstMs = function() {
+    return this.setUTCHours(0, 0, 0, 0);
+}
+
+Date.prototype.getLastMs = function() {
+    return this.setUTCHours(23, 59, 59, 999);
+}
+
 exports.getByDate = function (req, res) {
     var date = new Date(req.params.date);
-    agendasCollection.find({ CreatedBy: req.params.author, Date: { $in: [date, req.params.date + 'T00:00:00.000Z'] } }).toArray(function (err, docs) {
-        agendasCollection
-        .find({ Date: { $lt: date } }, { Date: 1 })
-        .sort({ Date: -1 }).limit(1)
-        .toArray(function (prevErr, prevs) {
-            agendasCollection
-                .find({ Date: { $gt: date } }, { Date: 1 })
-                .sort({ Date: -1 }).limit(1)
-                .toArray(function (nextErr, nexts) {
-                var results = {
-                    Prev: prevs.length == 0 ? null : prevs[0].Date.toAnyString(),
-                    Next: nexts.length == 0 ? null : nexts[0].Date.toAnyString(),
-                    Agendas: docs
-                };
-                res.send(results);
-            });
+    var dateTime = date.getTime();
+    agendasCollection.find({ CreatedBy: req.params.author }).toArray(function (err, docs) {
+        var agendas = docs.filter(function (a) {
+            return a.Date >= date.getFirstMs() && a.Date <= date.getLastMs();
         });
+        var dates = docs.map(function (a) { return a.Date; });
+        var prevs = dates.filter(function(d) { return d < dateTime; }).sort(function(d1, d2) { return d2 - d1; });
+        var nexts = dates.filter(function(d) { return d > dateTime; }).sort(function (d1, d2) { return d1 - d2; });
+        var results = {
+            Prev: prevs.length == 0 ? null : new Date(prevs[0]).toAnyString(),
+            Next: nexts.length == 0 ? null : new Date(nexts[0]).toAnyString(),
+            Agendas: agendas
+        };
+        res.send(results);
     });
 }
