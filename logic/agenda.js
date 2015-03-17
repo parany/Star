@@ -1,24 +1,9 @@
 ﻿var repository = require('../model/repository.js');
 var ObjectId = require('mongodb').ObjectID;
+require('../helpers/dateHelper.js');
+require('../helpers/numberHelper.js');
 
 var agendasCollection = repository.getCollection('agendas');
-
-Date.prototype.toAnyString = function () {
-    return this.getFullYear() + '-' + parseInt(this.getMonth() + 1).format() + '-' + this.getDate().format();
-}
-
-Number.prototype.format = function () {
-    if ((this + '').length < 2) return '0' + this;
-    return this;
-};
-
-Date.prototype.getFirstMs = function () {
-    return this.setUTCHours(0, 0, 0, 0);
-}
-
-Date.prototype.getLastMs = function () {
-    return this.setUTCHours(23, 59, 59, 999);
-}
 
 exports.getByDate = function (req, res) {
     var date = new Date(req.params.date);
