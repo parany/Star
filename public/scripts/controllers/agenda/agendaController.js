@@ -60,9 +60,9 @@
     $scope.promptDelete = function (id) {
         var response = confirm("Are you sure you want to delete this agenda?");
         if (response) {
-            $http.get(apiUrl + 'Agenda/Delete/' + id).success(function () {
+            $http.get('/agendas/delete/' + id).success(function () {
             }).success(function() {
-                $scope.data = $scope.data.filter(function (d) { return d.Id != id; });
+                $scope.data = $scope.data.filter(function (d) { return d._id != id; });
                 $scope.tableParams.reload();
             });
         }

@@ -33,3 +33,10 @@ exports.insert = function (req, res) {
         res.json(ret);
     });
 }
+
+exports.delete = function(req, res) {
+    var collection = repository.getCollection(req.params.collectionName);
+    collection.remove({ _id: new ObjectId(req.params.id) }, { atomic: true }, function(err, ret) {
+        res.json(ret);
+    });
+}
