@@ -8,6 +8,13 @@ exports.getAll = function (req, res) {
     });
 }
 
+exports.get = function (req, res) {
+    var collection = repository.getCollection(req.params.collectionName);
+    collection.findOne({ _id: new ObjectId(req.params.id) }, function (err, doc) {
+        res.send(doc);
+    });
+}
+
 exports.update = function (req, res) {
     var doc = req.body;
     doc._id = new ObjectId(doc._id);

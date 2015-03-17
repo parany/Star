@@ -27,13 +27,14 @@ var account = require('./logic/account.js');
 var read = require('./logic/read.js');
 var agenda = require('./logic/agenda.js');
 
-// read routes
+// routes
+app.post('/user/login', account.login);
+
 app.get('/:collectionName/getAll', genericRoute.getAll);
+app.get('/:collectionName/get/:id', genericRoute.get);
 app.post('/:collectionName/update', genericRoute.update);
 app.post('/:collectionName/insert', genericRoute.insert);
 
-// generic routes
-app.post('/user/login', account.login);
 app.get('/books/getByTestament/:testamentId', read.getBooksByTestament);
 app.get('/verse/getChapters/:bookId', read.getChapters);
 app.get('/verse/getParagraphs/:bookId/:chapter', read.getParagraphs);
