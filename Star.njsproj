@@ -20,6 +20,7 @@
     <Content Include="public\images\star.png" />
     <Compile Include="helpers\numberHelper.js" />
     <Compile Include="helpers\dateHelper.js" />
+    <Compile Include="logic\explication.js" />
     <Compile Include="logic\agenda.js" />
     <Compile Include="logic\genericLogic.js" />
     <Compile Include="logic\read.js" />

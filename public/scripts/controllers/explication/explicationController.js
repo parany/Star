@@ -31,7 +31,7 @@
 
     $scope.$watch('Date', function () {
         $scope.textToSearch = '';
-        $http.get(apiUrl + 'Explication/GetByDate/' + auth.getUserName() + '/' + $scope.Date).success(function (data) {
+        $http.get('/explications/getByDate/' + auth.getUserName() + '/' + $scope.Date).success(function (data) {
             if (data.Explications.length == 0) {
                 data.Explications = [];
             }

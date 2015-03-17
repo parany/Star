@@ -26,6 +26,7 @@ var genericRoute = require('./logic/genericLogic.js');
 var account = require('./logic/account.js');
 var read = require('./logic/read.js');
 var agenda = require('./logic/agenda.js');
+var explication = require('./logic/explication.js');
 
 // routes
 app.post('/user/login', account.login);
@@ -48,6 +49,9 @@ app.get('/note/search/:author', read.searchNotes);
 
 app.get('/agendas/getByDate/:author/:date', agenda.getByDate);
 app.get('/agendas/search/:text', agenda.search);
+
+app.get('/explications/getByDate/:author/:date', explication.getByDate);
+app.get('/explications/search/:text', explication.search);
 
 // launch the server
 http.createServer(app).listen(3333, function () {
