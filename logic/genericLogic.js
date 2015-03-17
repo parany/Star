@@ -11,7 +11,7 @@ exports.getAll = function (req, res) {
 exports.update = function (req, res) {
     var doc = req.body;
     doc._id = new ObjectId(doc._id);
-    doc.UpdatedOn = new Date();
+    doc.UpdatedOn = new Date().getTime();
     var collection = repository.getCollection(req.params.collectionName);
     collection.save(doc, { safe: true }, function (err, ret) {
         res.json(ret);
@@ -21,7 +21,7 @@ exports.update = function (req, res) {
 exports.insert = function (req, res) {
     var doc = req.body;
     var collection = repository.getCollection(req.params.collectionName);
-    doc.CreatedOn = doc.CreatedOn == undefined ? (new Date()).getTime() : (new Date(doc.CreatedOn)).getTime();
+    doc.CreatedOn = new Date().getTime();
     collection.insert(doc, { safe: true }, function (err, ret) {
         res.json(ret);
     });
