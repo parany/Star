@@ -50,7 +50,7 @@
         });
         $scope.agenda = model;
         if ($scope.textToSearch.length > 0) {
-            $scope.Title = $scope.agenda.Title + ' (' + model.Date.split('T')[0] + ')';
+            $scope.Title = $scope.agenda.Title + ' (' + new Date(model.Date).toISOString().split('T')[0] + ')';
         } else {
             $scope.Title = $scope.agenda.Title;
         }
@@ -74,13 +74,14 @@
         clearTimeout(searchTimeout);
         searchTimeout = setTimeout(function () {
             if (!$scope.textToSearch || $scope.textToSearch.length < 1) return;
-            $http.get(apiUrl + 'Agenda/Search/' + $scope.textToSearch).success(function (data) {
+            $http.get('/agendas/search/' + $scope.textToSearch).success(function (data) {
                 $scope.data = data;
                 $scope.tableParams.reload();
 
                 $scope.agenda = data.length > 0 ? data[0] : {};
                 if (data.length > 0) {
-                    $scope.Title = $scope.agenda.Title + ' (' + $scope.agenda.Date.split('T')[0] + ')';
+                    console.log($scope.agenda.Date);
+                    $scope.Title = $scope.agenda.Title + ' (' + new Date($scope.agenda.Date).toISOString().split('T')[0] + ')';
                     $scope.agenda.$selected = true;
                 }
             });

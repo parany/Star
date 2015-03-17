@@ -46,8 +46,8 @@ app.get('/note/getNoteById/:noteId/:author', read.getNoteById);
 app.get('/tag/getByType/:type', read.getTagsByType);
 app.get('/note/search/:author', read.searchNotes);
 
-// agenda routes
 app.get('/agendas/getByDate/:author/:date', agenda.getByDate);
+app.get('/agendas/search/:text', agenda.search);
 
 // launch the server
 http.createServer(app).listen(3333, function () {

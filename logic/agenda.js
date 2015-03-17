@@ -12,11 +12,11 @@ Number.prototype.format = function () {
     return this;
 };
 
-Date.prototype.getFirstMs = function() {
+Date.prototype.getFirstMs = function () {
     return this.setUTCHours(0, 0, 0, 0);
 }
 
-Date.prototype.getLastMs = function() {
+Date.prototype.getLastMs = function () {
     return this.setUTCHours(23, 59, 59, 999);
 }
 
@@ -28,13 +28,19 @@ exports.getByDate = function (req, res) {
             return a.Date >= date.getFirstMs() && a.Date <= date.getLastMs();
         });
         var dates = docs.map(function (a) { return a.Date; });
-        var prevs = dates.filter(function(d) { return d < dateTime; }).sort(function(d1, d2) { return d2 - d1; });
-        var nexts = dates.filter(function(d) { return d > dateTime; }).sort(function (d1, d2) { return d1 - d2; });
+        var prevs = dates.filter(function (d) { return d < dateTime; }).sort(function (d1, d2) { return d2 - d1; });
+        var nexts = dates.filter(function (d) { return d > dateTime; }).sort(function (d1, d2) { return d1 - d2; });
         var results = {
             Prev: prevs.length == 0 ? null : new Date(prevs[0]).toAnyString(),
             Next: nexts.length == 0 ? null : new Date(nexts[0]).toAnyString(),
             Agendas: agendas
         };
         res.send(results);
+    });
+}
+
+exports.search = function (req, res) {
+    agendasCollection.find({ Title: { $regex: req.params.text }, Text: { $regex: req.params.text } }).toArray(function (err, agendas) {
+        res.send(agendas);
     });
 }
