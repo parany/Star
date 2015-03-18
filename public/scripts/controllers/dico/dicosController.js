@@ -4,15 +4,20 @@
     $scope.dicos = [];
     $scope.filter = {};
 
-    $http.get(apiUrl + 'Culture/GetAll').success(function (data) {
+    $http.get('/cultures/getAll').success(function (data) {
         $scope.cultures = data;
     }).then(function () {
-        $http.get(apiUrl + 'Dico/GetAll').success(function (data) {
+        $http.get('/dicos/getAll').success(function (data) {
+            data.sort(function(a, b) {
+                if (a.Text < b.Text) return -1;
+                if (a.Text > b.Text) return 1;
+                return 0;
+            });
             $scope.dicos = data;
             $scope.dico = $scope.dicos.length > 0 ? $scope.dicos[0] : {};
             $scope.dico.$selected = true;
-            $scope.dico.From = $scope.cultures.filter(function (d) { return d.Id == $scope.dico.FromId; })[0].Description;
-            $scope.dico.To = $scope.cultures.filter(function (d) { return d.Id == $scope.dico.ToId; })[0].Description;
+            $scope.dico.From = $scope.cultures.filter(function (d) { return d._id == $scope.dico.FromId; })[0].Description;
+            $scope.dico.To = $scope.cultures.filter(function (d) { return d._id == $scope.dico.ToId; })[0].Description;
             $scope.illustrations = $scope.dico.Illustrations;
             $scope.tableIllustration.reload();
 
@@ -38,8 +43,8 @@
         });
         model.$selected = !model.$selected;
         $scope.dico = model;
-        $scope.dico.From = $scope.cultures.filter(function (d) { return d.Id == $scope.dico.FromId; })[0].Description;
-        $scope.dico.To = $scope.cultures.filter(function (d) { return d.Id == $scope.dico.ToId; })[0].Description;
+        $scope.dico.From = $scope.cultures.filter(function (d) { return d._id == $scope.dico.FromId; })[0].Description;
+        $scope.dico.To = $scope.cultures.filter(function (d) { return d._id == $scope.dico.ToId; })[0].Description;
         $scope.illustrations = $scope.dico.Illustrations;
         $scope.tableIllustration.reload();
     }
