@@ -76,9 +76,9 @@
     $scope.promptDelete = function (id) {
         var response = confirm("Are you sure you want to delete this explication?");
         if (response) {
-            $http.get(apiUrl + 'Explication/Delete/' + id).success(function () {
+            $http.get('/explications/delete/' + id).success(function () {
             }).success(function () {
-                $scope.explications = $scope.explications.filter(function (d) { return d.Id != id; });
+                $scope.explications = $scope.explications.filter(function (d) { return d._id != id; });
                 if ($scope.explications.length > 0)
                     $scope.changeExplicationSelected($scope.explications[0]);
                 $scope.tableExplications.reload();
