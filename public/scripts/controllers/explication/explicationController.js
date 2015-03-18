@@ -66,7 +66,7 @@
         $scope.verses = $scope.explication.VerseReadList;
         $scope.tableVerses.reload();
         if ($scope.textToSearch.length > 0) {
-            $scope.Title = $scope.explication.Title + ' (' + model.Date.split('T')[0] + ')';
+            $scope.Title = $scope.explication.Title + ' (' + new Date(model.Date).toISOString().split('T')[0] + ')';
         } else {
             $scope.Title = $scope.explication.Title;
         }
@@ -92,13 +92,13 @@
         clearTimeout(searchTimeout);
         searchTimeout = setTimeout(function () {
             if (!$scope.textToSearch || $scope.textToSearch.length < 1) return;
-            $http.get(apiUrl + 'Explication/Search/' + $scope.textToSearch).success(function (data) {
+            $http.get('/explications/search/' + $scope.textToSearch).success(function (data) {
                 $scope.explications = data;
                 $scope.tableExplications.reload();
 
                 $scope.explication = data.length > 0 ? data[0] : {};
                 if (data.length > 0) {
-                    $scope.Title = $scope.explication.Title + ' (' + $scope.explication.Date.split('T')[0] + ')';
+                    $scope.Title = $scope.explication.Title + ' (' + new Date($scope.explication.Date).toISOString().split('T')[0] + ')';
                     $scope.explication.$selected = true;
                 }
             });

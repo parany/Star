@@ -34,7 +34,17 @@ exports.getByDate = function (req, res) {
 }
 
 exports.search = function (req, res) {
-    explicationsCollection.find({ Title: { $regex: req.params.text }, Text: { $regex: req.params.text } }).toArray(function (err, agendas) {
-        res.send(agendas);
+    explicationsCollection.find({ $or: [
+            { Title: { $regex: req.params.text } }, 
+            { Content: { $regex: req.params.text } }]
+    }).toArray(function (explicationErr, explicationDocs) {
+        tagsCollection.find({ Type: 'Explication' }).toArray(function (tagErr, tagDocs) {
+            for (var i = 0; i < explicationDocs.length; i++) {
+                for (var j = 0; j < explicationDocs[i].TagIdList.length; j++) {
+                    explicationDocs[i].TagIdList[j] = tagDocs.filter(function (t) { return t._id.equals(new ObjectId(explicationDocs[i].TagIdList[j])); })[0].Description;
+                }
+            }
+            res.send(explicationDocs);
+        });
     });
 }
