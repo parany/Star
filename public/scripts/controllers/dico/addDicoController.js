@@ -5,13 +5,13 @@
     $scope.illustrations = [];
 
     var id = $routeParams.id;
-    $http.get(apiUrl + 'Culture/GetAll').success(function(data) {
+    $http.get('/cultures/getAll').success(function(data) {
         $scope.cultures = data;
         $scope.dico.To = $scope.cultures[2];
         $scope.dico.From = $scope.cultures[1];
     }).then(function() {
         if (id != undefined) {
-            $http.get(apiUrl + 'Dico/Get/' + id).success(function (data) {
+            $http.get('/dicos/get/' + id).success(function (data) {
                 $scope.dico = data;
                 $scope.dico.To = $scope.cultures[$scope.cultures.map(function(c) { return c.Id; }).indexOf(data.ToId)];
                 $scope.dico.From = $scope.cultures[$scope.cultures.map(function (c) { return c.Id; }).indexOf(data.FromId)];
@@ -77,16 +77,18 @@
     }
 
     $scope.save = function () {
-        var data = $scope.dico;
-        data.FromId = data.From.Id;
-        data.ToId = data.To.Id;
+        var data = JSON.parse(JSON.stringify($scope.dico));
+        data.FromId = data.From._id;
+        data.ToId = data.To._id;
+        delete data.From;
+        delete data.To;
         var url;
         if (id == undefined) {
             data.CreatedBy = auth.getUserName();
-            url = apiUrl + '/Dico/Insert';
+            url = '/dicos/insert';
         } else {
             data.UpdatedBy = auth.getUserName();
-            url = apiUrl + '/Dico/Update';
+            url = '/dicos/Update';
         }
         data.Illustrations = $scope.illustrations.map(function (i) { return i.Text; });
         $http({
