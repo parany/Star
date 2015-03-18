@@ -3,7 +3,8 @@ var repository = require('../model/repository.js');
 
 var columnDefinitions = {
     'agendas': ['CreatedOn', 'UpdatedOn', 'Date'],
-    'explications': ['CreatedOn', 'UpdatedOn', 'Date']
+    'explications': ['CreatedOn', 'UpdatedOn', 'Date'],
+    'treaties': ['CreatedOn', 'UpdatedOn', 'Date']
 };
 
 var args = process.argv.slice(2);
