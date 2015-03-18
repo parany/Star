@@ -25,7 +25,11 @@ exports.getByDate = function (req, res) {
 }
 
 exports.search = function (req, res) {
-    agendasCollection.find({ Title: { $regex: req.params.text }, Text: { $regex: req.params.text } }).toArray(function (err, agendas) {
+    agendasCollection.find({
+        $or: [
+            { Title: { $regex: req.params.text } }, 
+            { Text: { $regex: req.params.text } }]
+    }).toArray(function (err, agendas) {
         res.send(agendas);
     });
 }
