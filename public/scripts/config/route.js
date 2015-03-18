@@ -60,7 +60,7 @@
             menuId: 'dico'
         })
         .when('/dico/edit/:id', {
-            templateUrl: 'views/pages/eico/add.html',
+            templateUrl: 'views/pages/dico/add.html',
             controller: "addDicoController",
             access_level: ACCESS_LEVELS.Pub,
             menuId: 'dico'

@@ -13,8 +13,8 @@
         if (id != undefined) {
             $http.get('/dicos/get/' + id).success(function (data) {
                 $scope.dico = data;
-                $scope.dico.To = $scope.cultures[$scope.cultures.map(function(c) { return c.Id; }).indexOf(data.ToId)];
-                $scope.dico.From = $scope.cultures[$scope.cultures.map(function (c) { return c.Id; }).indexOf(data.FromId)];
+                $scope.dico.To = $scope.cultures[$scope.cultures.map(function(c) { return c._id; }).indexOf(data.ToId)];
+                $scope.dico.From = $scope.cultures[$scope.cultures.map(function (c) { return c._id; }).indexOf(data.FromId)];
                 $scope.illustrations = data.Illustrations.map(function (i) { return { Text: i }; });
                 $scope.tableIllustration.reload();
             });
@@ -88,7 +88,7 @@
             url = '/dicos/insert';
         } else {
             data.UpdatedBy = auth.getUserName();
-            url = '/dicos/Update';
+            url = '/dicos/update';
         }
         data.Illustrations = $scope.illustrations.map(function (i) { return i.Text; });
         $http({

@@ -28,6 +28,7 @@ var read = require('./logic/read.js');
 var agenda = require('./logic/agenda.js');
 var treaty = require('./logic/treaty.js');
 var explication = require('./logic/explication.js');
+var dico = require('./logic/dico.js');
 
 // routes
 app.post('/user/login', account.login);
@@ -56,6 +57,8 @@ app.get('/explications/search/:text', explication.search);
 
 app.get('/treaties/getByDate/:author/:date', treaty.getByDate);
 app.get('/treaties/search/:text', treaty.search);
+
+app.get('/dicos/search/:text', dico.search);
 
 // launch the server
 http.createServer(app).listen(3333, function () {

@@ -74,16 +74,10 @@
     }
 
     $scope.search = function () {
-        var data = {
-            Text: $scope.filter.Text == null ? '' : $scope.filter.Text,
-            FromId: $scope.filter.From != null ? $scope.filter.From.Id : '',
-            ToId: $scope.filter.To != null ? $scope.filter.To.Id : ''
-        };
-        $http({
-            method: 'POST',
-            data: data,
-            url: apiUrl + 'Dico/Search'
-        }).success(function (response) {
+        var url = '/dicos/search/' + $scope.filter.Text;
+        if ($scope.filter.Text == undefined)
+            url = '/dicos/getAll';
+        $http.get(url).success(function (response) {
             $scope.dicos = response;
             if (response.length == 0)
                 $scope.dicos = [];
