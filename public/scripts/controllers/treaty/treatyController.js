@@ -50,7 +50,7 @@ starApp.controller('treatyController', function ($scope, $routeParams, $http, $l
         });
         $scope.treaty = model;
         if ($scope.textToSearch.length > 0) {
-            $scope.Title = $scope.treaty.Title + ' (' + model.Date.split('T')[0] + ')';
+            $scope.Title = $scope.treaty.Title + ' (' + new Date(model.Date).toISOString().split('T')[0] + ')';
         } else {
             $scope.Title = $scope.treaty.Title;
         }
@@ -74,13 +74,13 @@ starApp.controller('treatyController', function ($scope, $routeParams, $http, $l
         clearTimeout(searchTimeout);
         searchTimeout = setTimeout(function () {
             if (!$scope.textToSearch || $scope.textToSearch.length < 1) return;
-            $http.get('treaties/search/' + $scope.textToSearch).success(function (data) {
+            $http.get('/treaties/search/' + $scope.textToSearch).success(function (data) {
                 $scope.data = data;
                 $scope.tableParams.reload();
                 
                 $scope.treaty = data.length > 0 ? data[0] : {};
                 if (data.length > 0) {
-                    $scope.Title = $scope.treaty.Title + ' (' + $scope.treaty.Date.split('T')[0] + ')';
+                    $scope.Title = $scope.treaty.Title + ' (' + new Date($scope.treaty.Date).toISOString().split('T')[0] + ')';
                     $scope.treaty.$selected = true;
                 }
             });

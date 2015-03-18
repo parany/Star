@@ -55,6 +55,7 @@ app.get('/explications/getByDate/:author/:date', explication.getByDate);
 app.get('/explications/search/:text', explication.search);
 
 app.get('/treaties/getByDate/:author/:date', treaty.getByDate);
+app.get('/treaties/search/:text', treaty.search);
 
 // launch the server
 http.createServer(app).listen(3333, function () {

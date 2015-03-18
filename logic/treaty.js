@@ -34,18 +34,18 @@ exports.getByDate = function (req, res) {
 }
 
 exports.search = function (req, res) {
-    explicationsCollection.find({
+    treatiesCollection.find({
         $or: [
             { Title: { $regex: req.params.text } }, 
-            { Content: { $regex: req.params.text } }]
-    }).toArray(function (explicationErr, explicationDocs) {
-        tagsCollection.find({ Type: 'Explication' }).toArray(function (tagErr, tagDocs) {
-            for (var i = 0; i < explicationDocs.length; i++) {
-                for (var j = 0; j < explicationDocs[i].TagIdList.length; j++) {
-                    explicationDocs[i].TagIdList[j] = tagDocs.filter(function (t) { return t._id.equals(new ObjectId(explicationDocs[i].TagIdList[j])); })[0].Description;
+            { Text: { $regex: req.params.text } }]
+    }).toArray(function (treatyErr, treatyDocs) {
+        tagsCollection.find({ Type: 'Treaty' }).toArray(function (tagErr, tagDocs) {
+            for (var i = 0; i < treatyDocs.length; i++) {
+                for (var j = 0; j < treatyDocs[i].TagIdList.length; j++) {
+                    treatyDocs[i].TagIdList[j] = tagDocs.filter(function (t) { return t._id.equals(new ObjectId(treatyDocs[i].TagIdList[j])); })[0].Description;
                 }
             }
-            res.send(explicationDocs);
+            res.send(treatyDocs);
         });
     });
 }
