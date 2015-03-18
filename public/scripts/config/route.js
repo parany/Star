@@ -91,7 +91,7 @@
         })
         .when('/explication/add', {
             templateUrl: 'views/pages/explication/Add.html',
-            controller: "eddExplicationController",
+            controller: "addExplicationController",
             access_level: ACCESS_LEVELS.Pub,
             menuId: 'explication'
         })

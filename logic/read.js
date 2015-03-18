@@ -51,12 +51,6 @@ exports.search = function (req, res) {
     });
 }
 
-exports.getTagsByType = function (req, res) {
-    tagsCollection.find({ Type: req.params.type }).toArray(function (err, docs) {
-        res.send(docs);
-    });
-}
-
 exports.getNotesByVerseId = function (req, res) {
     notesCollection.find({ 'VerseId': { $in: [new ObjectId(req.params.verseId), req.params.verseId] } }).toArray(function (err, docs) {
         var notes = docs;

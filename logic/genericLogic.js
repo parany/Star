@@ -34,9 +34,16 @@ exports.insert = function (req, res) {
     });
 }
 
-exports.delete = function(req, res) {
+exports.delete = function (req, res) {
     var collection = repository.getCollection(req.params.collectionName);
-    collection.remove({ _id: new ObjectId(req.params.id) }, { atomic: true }, function(err, ret) {
+    collection.remove({ _id: new ObjectId(req.params.id) }, { atomic: true }, function (err, ret) {
         res.json(ret);
+    });
+}
+
+exports.getTagsByType = function (req, res) {
+    var tagsCollection = repository.getCollection('tags');
+    tagsCollection.find({ Type: req.params.type }).toArray(function (err, docs) {
+        res.send(docs);
     });
 }

@@ -36,6 +36,7 @@ app.get('/:collectionName/get/:id', genericRoute.get);
 app.post('/:collectionName/update', genericRoute.update);
 app.post('/:collectionName/insert', genericRoute.insert);
 app.get('/:collectionName/delete/:id', genericRoute.delete);
+app.get('/tag/getByType/:type', genericRoute.getTagsByType);
 
 app.get('/books/getByTestament/:testamentId', read.getBooksByTestament);
 app.get('/verse/getChapters/:bookId', read.getChapters);
@@ -44,7 +45,6 @@ app.post('/verse/getList', read.getList);
 app.get('/verse/search/:version/:text', read.search);
 app.get('/note/getNotesByVerseId/:verseId/:author', read.getNotesByVerseId);
 app.get('/note/getNoteById/:noteId/:author', read.getNoteById);
-app.get('/tag/getByType/:type', read.getTagsByType);
 app.get('/note/search/:author', read.searchNotes);
 
 app.get('/agendas/getByDate/:author/:date', agenda.getByDate);
