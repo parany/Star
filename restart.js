@@ -2,9 +2,11 @@
 
 // Create a new service object
 var svc = new Service({
-    name: 'HelloWorld',
-    script: require('path').join(__dirname, 'app.js')
+    name: 'Agenda',
+    script: require('path').join(__dirname, 'server.js')
 });
+
+svc.restart();
 
 svc.on('start', function () {
     console.log('Trying to start..');
@@ -15,6 +17,3 @@ svc.on('stop', function () {
     console.log('Stopping...');
     console.log('Stopped.');
 });
-
-// Uninstall the service.
-svc.restart();
