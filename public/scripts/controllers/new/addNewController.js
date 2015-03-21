@@ -15,9 +15,9 @@ starApp.controller('addNewController', function ($scope, $routeParams, $http, $l
         } else {
             $http.get('/news/get/' + id).success(function (data) {
                 $scope.new = data;
-                $scope.new.Date = data.Date.split('T')[0];
+                $scope.new.Date = new Date(data.Date).toISOString().split('T')[0];
                 $scope.tableCitations.reload();
-                $scope.new.Source = $scope.sources[$scope.sources.map(function (s) { return s.Id; }).indexOf($scope.new.Source.Id)];
+                $scope.new.Source = $scope.sources[$scope.sources.map(function (s) { return s._id; }).indexOf($scope.new.Source._id)];
             });
         }
     });
@@ -52,7 +52,7 @@ starApp.controller('addNewController', function ($scope, $routeParams, $http, $l
         $http.get('/news/getByDate/' + auth.getUserName() + '/' + $scope.new.Date).success(function (data) {
             $scope.news = data.News;
             if (id != undefined) {
-                $scope.news = $scope.news.filter(function (t) { return t.Id != id; });
+                $scope.news = $scope.news.filter(function (t) { return t._id != id; });
             }
             $scope.tableNews.reload();
         });
