@@ -1,0 +1,78 @@
+<div class="col-md-3" id="read-nav">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <div>
+                <input type="date"
+                       placeholder="Date"
+                       class="form-control"
+                       ng-model="Date">
+            </div>
+        </div>
+        <div class="form-group">
+            <div>
+                <input type="text"
+                       placeholder="Search"
+                       class="form-control"
+                       ng-change="search()"
+                       ng-model="textToSearch">
+            </div>
+        </div>
+        <div class="form-group">
+            <table ng-table="tableNews" class="table ng-table-rowselected">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="model in $data"
+                        ng-click="changeNewSelected(model)"
+                        ng-class="{'active': model.$selected}">
+                        <td>
+                            <span style="color: gray;">{{ model.Title }}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <a class="btn btn-success" ng-href="#/new/add">Add</a>
+            &nbsp;
+            <a class="btn btn-success" ng-href="#/new/edit/{{ New._id }}" ng-disa ng-disabled="New._id == undefined">Edit</a>
+            &nbsp;
+            <a class="btn btn-default" ng-click="promptDelete(New._id)">Delete</a>
+        </div>
+    </form>
+</div>
+
+<div class="col-md-6">
+    <h3 style="text-align: center;">
+        <span ng-if="!textToSearch || textToSearch.length < 1"
+              class="glyphicon glyphicon-chevron-left"
+              ng-click="prevNew()"
+              style="opacity: 1;">
+        </span>
+        {{ Title }}
+        <span ng-if="!textToSearch || textToSearch.length < 1"
+              class="glyphicon glyphicon-chevron-right"
+              ng-click="nextNew()"
+              style="opacity: 1;">
+        </span>
+    </h3>
+    <div ng-bind-html="New.Content"></div>
+</div>
+
+<div class="col-md-3">
+    <h4>Citations</h4>
+    <table ng-table="tableCitations" class="table ng-table-rowselected">
+        <thead>
+        </thead>
+        <tbody>
+            <tr ng-repeat="citation in $data">
+                <td>
+                    <blockquote>
+                        <p>{{ citation }}</p>
+                        <footer>Source <cite title="Source Title">{{ New.Source.Description }}</cite></footer>
+                    </blockquote>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
