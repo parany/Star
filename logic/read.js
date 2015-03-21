@@ -92,45 +92,6 @@ exports.getNoteById = function (req, res) {
     });
 }
 
-exports.getBooksByTestament = function (req, res) {
-    booksCollection
-        .find({ 'TestamentId': new ObjectId(req.params.testamentId) })
-        .sort({ DisplayOrder: 1 })
-        .toArray(function (err, docs) {
-        res.send(docs);
-    });
-}
-
-exports.getChapters = function (req, res) {
-    versesCollection
-        .find({ BookId: ObjectId(req.params.bookId) }, { Chapter: 1 })
-        .sort({ Chapter: -1 })
-        .limit(1)
-        .toArray(function (err, docs) {
-        var chapters = [];
-        var maxChapter = docs[0].Chapter;
-        for (var i = 1; i < maxChapter;) {
-            chapters.push(i++);
-        }
-        res.send(chapters);
-    });
-}
-
-exports.getParagraphs = function (req, res) {
-    versesCollection
-        .find({ BookId: ObjectId(req.params.bookId), Chapter: parseInt(req.params.chapter) }, { Paragraph: 1 })
-        .sort({ Paragraph: -1 })
-        .limit(1)
-        .toArray(function (err, docs) {
-        var paragraphs = [];
-        var maxParagraph = docs[0].Paragraph;
-        for (var i = 1; i < maxParagraph;) {
-            paragraphs.push(i++);
-        }
-        res.send(paragraphs);
-    });
-}
-
 exports.getList = function (req, res) {
     versesCollection
         .find({

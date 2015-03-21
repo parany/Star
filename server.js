@@ -35,9 +35,6 @@ app.post('/:collectionName/insert', genericRoute.insert);
 app.get('/:collectionName/delete/:id', genericRoute.delete);
 app.get('/tag/getByType/:type', genericRoute.getTagsByType);
 
-app.get('/books/getByTestament/:testamentId', read.getBooksByTestament);
-app.get('/verse/getChapters/:bookId', read.getChapters);
-app.get('/verse/getParagraphs/:bookId/:chapter', read.getParagraphs);
 app.post('/verse/getList', read.getList);
 app.get('/verse/search/:version/:text', read.search);
 app.get('/note/getNotesByVerseId/:verseId/:author', read.getNotesByVerseId);

@@ -11,7 +11,26 @@ exports.findAllv2 = function (req, res) {
 
 exports.findv2 = function (req, res) {
     var repository = new Repository(req.params.collectionName);
-    repository.find(req.body).then(function (docs) {
+    var filters = req.body;
+    for (var filter in filters) {
+        if (filter.indexOf('Id') > 0) {
+            filters[filter] = new ObjectId(filters[filter]);
+        }
+        if (filters[filter] instanceof Object) {
+            var subFilters = filters[filter];
+            for (var subFilter in subFilters) {
+                if (subFilter == 'lte') {
+                    subFilters.$lte = subFilters[subFilter];
+                    delete subFilters.lte;
+                }
+                if (subFilter == 'gte') {
+                    subFilters.$gte = subFilters[subFilter];
+                    delete subFilters.gte;
+                }
+            }
+        }
+    }
+    repository.find(filters).then(function (docs) {
         res.send(docs);
     });
 }

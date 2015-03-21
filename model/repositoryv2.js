@@ -15,7 +15,17 @@ function Repository(collectionName) {
 
 Repository.prototype.find = function (filters) {
     var deferred = Q.defer();
-    this.collection.find(filters).toArray(function (err, doc) {
+    var sort = filters.sort || {};
+    var limit = filters.limit || config.db.limit;
+
+    delete filters.sort;
+    delete filters.limit;
+    
+    this.collection
+    .find(filters)
+    .sort(sort)
+    .limit(limit)
+    .toArray(function (err, doc) {
         if (err) return deferred.reject(err);
         return deferred.resolve(doc);
     });
