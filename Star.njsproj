@@ -16,10 +16,12 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Compile Include="uninstall.js" />
     <Content Include="public\index.html" />
     <Content Include="public\images\star.png" />
     <Compile Include="helpers\numberHelper.js" />
     <Compile Include="helpers\dateHelper.js" />
+    <Compile Include="install.js" />
     <Compile Include="logic\news.js" />
     <Compile Include="logic\dico.js" />
     <Compile Include="logic\treaty.js" />
@@ -28,6 +30,7 @@
     <Compile Include="logic\genericLogic.js" />
     <Compile Include="logic\read.js" />
     <Compile Include="migration\formatDate.js" />
+    <Compile Include="restart.js" />
     <Compile Include="server.js" />
     <Compile Include="logic\account.js" />
     <Compile Include="model\repository.js" />
