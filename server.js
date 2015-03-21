@@ -35,7 +35,6 @@ app.post('/:collectionName/insert', genericRoute.insert);
 app.get('/:collectionName/delete/:id', genericRoute.delete);
 app.get('/tag/getByType/:type', genericRoute.getTagsByType);
 
-app.post('/verse/getList', read.getList);
 app.get('/verse/search/:version/:text', read.search);
 app.get('/note/getNotesByVerseId/:verseId/:author', read.getNotesByVerseId);
 app.get('/note/getNoteById/:noteId/:author', read.getNoteById);

@@ -91,17 +91,3 @@ exports.getNoteById = function (req, res) {
         });
     });
 }
-
-exports.getList = function (req, res) {
-    versesCollection
-        .find({
-        BookId: ObjectId(req.body.BookId),
-        Chapter: req.body.Chapter,
-        Paragraph: { $gte: req.body.ParagraphMin, $lte: req.body.ParagraphMax },
-        Version: req.body.Version
-    })
-        .sort({ Paragraph: 1 })
-        .toArray(function (err, docs) {
-        res.send(docs);
-    });
-}
