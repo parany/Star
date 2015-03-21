@@ -1,0 +1,63 @@
+﻿<div class="col-md-2" id="read-nav">
+    <div class="form-group">
+        <div>
+            <select class="form-control"
+                    ng-model="filter.From"
+                    ng-options="culture.Description for culture in cultures"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div>
+            <select class="form-control"
+                    ng-model="filter.To"
+                    ng-options="culture.Description for culture in cultures"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div>
+            <input type="text"
+                   placeholder="Text"
+                   class="form-control"
+                   ng-model="filter.Text"
+                   ng-change="search()"
+                   required />
+        </div>
+    </div>
+    <table ng-table="tableDico" class="table ng-table-rowselected">
+        <thead>
+        </thead>
+        <tbody>
+            <tr ng-repeat="model in $data"
+                ng-click="changeLabelSelected(model)"
+                ng-class="{'active': model.$selected}">
+                <td>
+                    <span>{{ model.Text }}</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-md-6">
+    <div class="actions">
+        <a ng-href="#/dico/add" class="btn btn-success">Add</a>
+        <a ng-href="#/dico/edit/{{ dico._id }}" class="btn btn-primary">Edit</a>
+        <button ng-click="remove(dico._id)" class="btn btn-default">Delete</button>
+    </div>
+    <span class="culture">{{ dico.From }} <span class="glyphicon glyphicon-arrow-right"></span> {{ dico.To }}</span>
+    <div ng-bind-html="dico.Meaning" class="meaning"></div>
+</div>
+
+<div class="col-md-4">
+    <table ng-table="tableIllustration" class="table ng-table-rowselected">
+        <thead>
+        </thead>
+        <tbody>
+            <tr ng-repeat="model in $data">
+                <td>
+                    <span>{{ model }}</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,52 @@
+<div class="col-md-3" id="read-nav">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <div>
+                <input type="date"
+                       placeholder="Date"
+                       class="form-control"
+                       ng-model="Date">
+            </div>
+        </div>
+        <div class="form-group">
+            <div>
+                <input type="text"
+                       placeholder="Search"
+                       class="form-control"
+                       ng-change="search()"
+                       ng-model="textToSearch">
+            </div>
+        </div>
+        <div class="form-group">
+            <table ng-table="tableParams" class="table ng-table-rowselected">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="model in $data"
+                        ng-click="changeAgendaSelected(model)"
+                        ng-class="{'active': model.$selected}">
+                        <td data-title="'Verset'" width="60">
+                            <span style="color: gray;">{{ model.Title }}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <a class="btn btn-success" ng-href="#/agenda/add">Add</a>
+            &nbsp;
+            <a class="btn btn-success" ng-href="#/agenda/edit/{{ agenda._id }}" ng-disabled="agenda._id == undefined">Edit</a>
+            &nbsp;
+            <a class="btn btn-default" ng-click="promptDelete(agenda._id)">Delete</a>
+        </div>
+    </form>
+</div>
+
+<div class="col-md-8">
+    <h3 style="text-align: center;">
+        <span ng-if="!textToSearch || textToSearch.length < 1" class="glyphicon glyphicon-chevron-left" ng-click="prevAgenda()" style="opacity: 1;"></span>
+        {{ Title }}
+        <span ng-if="!textToSearch || textToSearch.length < 1" class="glyphicon glyphicon-chevron-right" ng-click="nextAgenda()" style="opacity: 1;"></span>
+    </h3>
+    <div ng-bind-html="agenda.Text"></div>
+</div>
