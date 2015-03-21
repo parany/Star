@@ -1,0 +1,1 @@
+starApp = angular.module("starApp", ['ngRoute', 'ngTable', 'ngCookies', 'textAngular']);
