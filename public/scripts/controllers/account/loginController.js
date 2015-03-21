@@ -1,4 +1,4 @@
-﻿starApp.controller('loginController', function ($rootScope, $scope, $http, $location, apiUrl, auth) {
+﻿starApp.controller('loginController', function ($rootScope, $scope, $http, $location, auth) {
     $scope.login = function () {
         $http({
             method: 'POST',

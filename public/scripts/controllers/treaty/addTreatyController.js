@@ -1,4 +1,4 @@
-starApp.controller('addTreatyController', function ($scope, $routeParams, $http, $location, ngTableParams, apiUrl, auth) {
+starApp.controller('addTreatyController', function ($scope, $routeParams, $http, $location, ngTableParams, auth) {
     var id = $routeParams.id;
     $scope.Date = '';
 

@@ -1,4 +1,4 @@
-﻿starApp.controller('tableReadController', function ($scope, $rootScope, $http, $cookieStore, ngTableParams, apiUrl) {
+﻿starApp.controller('tableReadController', function ($scope, $rootScope, $http, $cookieStore, ngTableParams) {
     $scope.dataRead = [];
 
     var lastRead = $cookieStore.get('lastRead');

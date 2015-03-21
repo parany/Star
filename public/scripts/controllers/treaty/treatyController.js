@@ -1,4 +1,4 @@
-starApp.controller('treatyController', function ($scope, $routeParams, $http, $location, ngTableParams, apiUrl, auth) {
+starApp.controller('treatyController', function ($scope, $routeParams, $http, $location, ngTableParams, auth) {
     $scope.Date = '';
     $scope.Date = new Date().toISOString().split('T')[0];
     $scope.treaty = {};

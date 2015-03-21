@@ -1,4 +1,4 @@
-﻿starApp.controller('tableSearchController', function ($scope, $http, $rootScope, ngTableParams, apiUrl) {
+﻿starApp.controller('tableSearchController', function ($scope, $http, $rootScope, ngTableParams) {
     $scope.dataSearch = [];
 
     $scope.changeResultSelected = function (model) {

@@ -17,6 +17,7 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
     <Compile Include="uninstall.js" />
+    <Content Include="config.json" />
     <Content Include="public\index.html" />
     <Content Include="public\images\star.png" />
     <Compile Include="helpers\numberHelper.js" />
@@ -36,7 +37,6 @@
     <Compile Include="model\repository.js" />
     <Compile Include="public\scripts\app.js" />
     <Compile Include="public\scripts\config\accesLevel.js" />
-    <Compile Include="public\scripts\config\apiUrl.js" />
     <Compile Include="public\scripts\config\events.js" />
     <Compile Include="public\scripts\config\route.js" />
     <Compile Include="public\scripts\services\auth.js" />

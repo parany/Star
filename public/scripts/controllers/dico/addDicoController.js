@@ -1,4 +1,4 @@
-﻿starApp.controller('addDicoController', function ($rootScope, $scope, $routeParams, $http, $location, ngTableParams, apiUrl, auth) {
+﻿starApp.controller('addDicoController', function ($rootScope, $scope, $routeParams, $http, $location, ngTableParams, auth) {
     $scope.cultures = [];
     $scope.dico = {};
     $scope.dico.Meaning = '';

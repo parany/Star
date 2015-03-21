@@ -1,4 +1,4 @@
-﻿starApp.controller('explicationController', function ($rootScope, $scope, $http, $location, ngTableParams, apiUrl, auth) {
+﻿starApp.controller('explicationController', function ($rootScope, $scope, $http, $location, ngTableParams, auth) {
     $scope.Date = '';
     $scope.Date = new Date().toISOString().split('T')[0];
     $scope.explication = {};

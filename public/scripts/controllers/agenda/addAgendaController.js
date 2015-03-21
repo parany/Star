@@ -1,4 +1,4 @@
-﻿starApp.controller('addAgendaController', function ($scope, $routeParams, $http, $location, ngTableParams, apiUrl, auth) {
+﻿starApp.controller('addAgendaController', function ($scope, $routeParams, $http, $location, ngTableParams, auth) {
     $scope.agenda = {};
     $scope.Date = '';
     $scope.Date = new Date().toISOString().split('T')[0];

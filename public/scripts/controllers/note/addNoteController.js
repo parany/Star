@@ -1,4 +1,4 @@
-﻿starApp.controller('addNoteController', function ($scope, $routeParams, $http, $location, apiUrl, auth) {
+﻿starApp.controller('addNoteController', function ($scope, $routeParams, $http, $location, auth) {
     $scope.tags = [];
     $http.get('/tag/getByType/Note').success(function (data) {
         $scope.tags = data;

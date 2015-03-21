@@ -1,4 +1,4 @@
-﻿starApp.controller('listNoteController', function ($scope, $http, ngTableParams, apiUrl, auth) {
+﻿starApp.controller('listNoteController', function ($scope, $http, ngTableParams, auth) {
     $scope.notes = [];
     
     $scope.tableNote = new ngTableParams({

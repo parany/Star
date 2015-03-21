@@ -1,4 +1,4 @@
-﻿starApp.controller('editNoteController', function ($scope, $routeParams, $http, $location, apiUrl, auth) {
+﻿starApp.controller('editNoteController', function ($scope, $routeParams, $http, $location, auth) {
     $scope.tags = [];
     
     $http.get('/note/getNoteById/' + $routeParams.id + '/' + auth.getUserName()).success(function (data) {

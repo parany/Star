@@ -3,10 +3,11 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var connect = require('connect');
+var config = require('./config.json');
 
 // set up environments
 var app = express();
-app.set('port', 3333);
+app.set('port', config.port);
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.json());
@@ -15,11 +16,7 @@ app.use(express.methodOverride());
 app.use(app.router);
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
-
-// development only
-if ('development' == app.get('env')) {
-    app.use(express.errorHandler());
-}
+app.configure('developpement', function () { app.use(express.errorHandler()); });
 
 // include logics
 var genericRoute = require('./logic/genericLogic.js');
@@ -65,6 +62,6 @@ app.get('/news/getByDate/:author/:date', news.getByDate);
 app.get('/news/search/:text', news.search);
 
 // launch the server
-http.createServer(app).listen(3333, function () {
-    console.log('Express server listening on port 3333');
+http.createServer(app).listen(config.port, function () {
+    console.log('Express server listening on port ' + config.port);
 });
