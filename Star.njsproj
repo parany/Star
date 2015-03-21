@@ -27,7 +27,7 @@
     <Compile Include="logic\agenda.js" />
     <Compile Include="logic\genericLogic.js" />
     <Compile Include="logic\read.js" />
-    <Compile Include="migration\date-migration.js" />
+    <Compile Include="migration\formatDate.js" />
     <Compile Include="server.js" />
     <Compile Include="logic\account.js" />
     <Compile Include="model\repository.js" />
