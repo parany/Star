@@ -77,9 +77,9 @@
     $scope.promptDelete = function (id) {
         var response = confirm("Are you sure you want to delete this new?");
         if (response) {
-            $http.get(apiUrl + 'New/Delete/' + id).success(function () {
+            $http.get('/news/delete/' + id).success(function () {
             }).success(function () {
-                $scope.News = $scope.News.filter(function (d) { return d.Id != id; });
+                $scope.News = $scope.News.filter(function (d) { return d._id != id; });
                 if ($scope.News.length > 0)
                     $scope.changeNewSelected($scope.News[0]);
                 $scope.tableNews.reload();
