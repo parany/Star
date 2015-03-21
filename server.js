@@ -62,7 +62,7 @@ app.get('/treaties/search/:text', treaty.search);
 app.get('/dicos/search/:text', dico.search);
 
 app.get('/news/getByDate/:author/:date', news.getByDate);
-//app.get('/treaties/search/:text', treaty.search);
+app.get('/news/search/:text', news.search);
 
 // launch the server
 http.createServer(app).listen(3333, function () {
