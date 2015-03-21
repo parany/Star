@@ -49,3 +49,5 @@ packages
 .user
 .csproj.user
 .v12.suo
+.ntvs_analysis.dat.tmp
+.ntvs_analysis.dat
