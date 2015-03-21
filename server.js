@@ -20,7 +20,6 @@ app.configure('developpement', function () { app.use(express.errorHandler()); })
 
 // include logics
 var genericRoute = require('./logic/genericLogic.js');
-var account = require('./logic/account.js');
 var read = require('./logic/read.js');
 var agenda = require('./logic/agenda.js');
 var treaty = require('./logic/treaty.js');
@@ -29,8 +28,6 @@ var dico = require('./logic/dico.js');
 var news = require('./logic/news.js');
 
 // routes
-app.post('/user/login', account.login);
-
 app.get('/:collectionName/getAll', genericRoute.getAll);
 app.get('/:collectionName/get/:id', genericRoute.get);
 app.post('/:collectionName/update', genericRoute.update);
@@ -60,6 +57,12 @@ app.get('/dicos/search/:text', dico.search);
 
 app.get('/news/getByDate/:author/:date', news.getByDate);
 app.get('/news/search/:text', news.search);
+
+// v2
+var genericRoutev2 = require('./logic/genericLogicv2.js');
+
+app.get('/:collectionName/findAllv2', genericRoutev2.findAllv2);
+app.post('/:collectionName/findv2', genericRoutev2.findv2);
 
 // launch the server
 http.createServer(app).listen(config.port, function () {

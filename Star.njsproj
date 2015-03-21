@@ -16,6 +16,8 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Compile Include="logic\genericLogicv2.js" />
+    <Compile Include="model\repositoryv2.js" />
     <Compile Include="uninstall.js" />
     <Content Include="config.json" />
     <Content Include="public\index.html" />
@@ -33,7 +35,6 @@
     <Compile Include="migration\formatDate.js" />
     <Compile Include="restart.js" />
     <Compile Include="server.js" />
-    <Compile Include="logic\account.js" />
     <Compile Include="model\repository.js" />
     <Compile Include="public\scripts\app.js" />
     <Compile Include="public\scripts\config\accesLevel.js" />
