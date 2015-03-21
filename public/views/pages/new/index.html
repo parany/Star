@@ -35,9 +35,9 @@
         <div>
             <a class="btn btn-success" ng-href="#/new/add">Add</a>
             &nbsp;
-            <a class="btn btn-success" ng-href="#/new/edit/{{ New.Id }}" ng-disa ng-disabled="New.Id == undefined">Edit</a>
+            <a class="btn btn-success" ng-href="#/new/edit/{{ New._id }}" ng-disa ng-disabled="New._id == undefined">Edit</a>
             &nbsp;
-            <a class="btn btn-default" ng-click="promptDelete(New.Id)">Delete</a>
+            <a class="btn btn-default" ng-click="promptDelete(New._id)">Delete</a>
         </div>
     </form>
 </div>

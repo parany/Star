@@ -7,13 +7,13 @@ starApp.controller('addNewController', function ($scope, $routeParams, $http, $l
     $scope.new.Citations = [];
     $scope.sources = [];
 
-    $http.get(apiUrl + 'Source/GetAll').success(function (data) {
+    $http.get('/sources/getAll').success(function (data) {
         $scope.sources = data;
     }).then(function () {
         if (id == undefined) {
             $scope.new.Date = new Date().toISOString().split('T')[0];
         } else {
-            $http.get(apiUrl + 'New/Get/' + id).success(function (data) {
+            $http.get('/news/get/' + id).success(function (data) {
                 $scope.new = data;
                 $scope.new.Date = data.Date.split('T')[0];
                 $scope.tableCitations.reload();
@@ -49,7 +49,7 @@ starApp.controller('addNewController', function ($scope, $routeParams, $http, $l
 
     $scope.$watch('new.Date', function () {
         if ($scope.new.Date == undefined || $scope.new.Date == '') return;
-        $http.get(apiUrl + 'New/GetByDate/' + auth.getUserName() + '/' + $scope.new.Date).success(function (data) {
+        $http.get('/news/getByDate/' + auth.getUserName() + '/' + $scope.new.Date).success(function (data) {
             $scope.news = data.News;
             if (id != undefined) {
                 $scope.news = $scope.news.filter(function (t) { return t.Id != id; });
@@ -74,12 +74,13 @@ starApp.controller('addNewController', function ($scope, $routeParams, $http, $l
     }
 
     $scope.save = function () {
-        var data = $scope.new;
+        var data = JSON.parse(JSON.stringify($scope.new));
+        data.Date = new Date($scope.new.Date).getTime();
         data.CreatedBy = auth.getUserName();
-        var url = apiUrl + 'New/Insert';
+        var url = '/news/insert';
         if (id != undefined) {
             data.Id = id;
-            url = apiUrl + 'New/Update';
+            url = '/news/update';
             data.UpdatedBy = auth.getUserName();
         }
         $http({

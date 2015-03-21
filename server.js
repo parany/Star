@@ -29,6 +29,7 @@ var agenda = require('./logic/agenda.js');
 var treaty = require('./logic/treaty.js');
 var explication = require('./logic/explication.js');
 var dico = require('./logic/dico.js');
+var news = require('./logic/news.js');
 
 // routes
 app.post('/user/login', account.login);
@@ -59,6 +60,9 @@ app.get('/treaties/getByDate/:author/:date', treaty.getByDate);
 app.get('/treaties/search/:text', treaty.search);
 
 app.get('/dicos/search/:text', dico.search);
+
+app.get('/news/getByDate/:author/:date', news.getByDate);
+//app.get('/treaties/search/:text', treaty.search);
 
 // launch the server
 http.createServer(app).listen(3333, function () {

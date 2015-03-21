@@ -33,7 +33,7 @@
 
     $scope.$watch('Date', function () {
         $scope.textToSearch = '';
-        $http.get(apiUrl + 'New/GetByDate/' + auth.getUserName() + '/' + $scope.Date).success(function (data) {
+        $http.get('/news/getByDate/' + auth.getUserName() + '/' + $scope.Date).success(function (data) {
             $scope.News = data.News;
             if (data.News.length == 0) {
                 $scope.News = [];
