@@ -1,32 +1,12 @@
 ﻿starApp.controller('editNoteController', function ($scope, $routeParams, $http, $location, auth) {
     $scope.tags = [];
 
-    var note;
-    var tags = [];
-    $http.get('/notes/findOnev2/' + $routeParams.id).then(function(data) {
-        note = data.data;
-        return $http({
-            method: 'POST',
-            url: '/tags/findv2',
-            data: { Type: 'Note' }
-        });
-    }).then(function(data) {
-        tags = data.data;
-        for (var j = 0; j < note.TagIdList.length; j++) {
-            note.TagIdList[j] = tags.filter(function (tag) { return tag._id == note.TagIdList[j]; })[0].Description;
-        }
-        for (var i = 0; i < tags.length; i++) {
-            tags[i].IsActive = note.TagIdList.indexOf(tags[i].Description) != -1;
-        }
-        var result = {
-            Note: note,
-            Tags: tags
-        };
-        $scope.note._id = result.Note._id;
-        $scope.note.VerseId = result.Note.VerseId;
-        $scope.note.Description = result.Note.Description;
-        $scope.note.Content = result.Note.Content;
-        $scope.tags = result.Tags;
+    $http.get('/notes/getNoteById/' + $routeParams.id).success(function(data) {
+        $scope.note._id = data.Note._id;
+        $scope.note.VerseId = data.Note.VerseId;
+        $scope.note.Description = data.Note.Description;
+        $scope.note.Content = data.Note.Content;
+        $scope.tags = data.Tags;
         $scope.tags.forEach(function (tag) { tag.Selected = tag.IsActive; });
     });
     
