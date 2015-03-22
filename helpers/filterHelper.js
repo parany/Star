@@ -17,6 +17,10 @@ Object.prototype.toAnyFilter = function () {
                     subFilters.$gte = subFilters[subFilter];
                     delete subFilters.gte;
                 }
+                if (subFilter == 'in') {
+                    subFilters.$in = subFilters[subFilter].map(function (s) { return new ObjectId(s); });
+                    delete subFilters.in;
+                }
             }
         }
     }

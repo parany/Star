@@ -36,9 +36,6 @@ app.get('/:collectionName/delete/:id', genericRoute.delete);
 app.get('/tag/getByType/:type', genericRoute.getTagsByType);
 
 app.get('/verse/search/:version/:text', read.search);
-app.get('/note/getNotesByVerseId/:verseId/:author', read.getNotesByVerseId);
-app.get('/note/getNoteById/:noteId/:author', read.getNoteById);
-app.get('/note/search/:author', read.searchNotes);
 
 app.get('/agendas/getByDate/:author/:date', agenda.getByDate);
 app.get('/agendas/search/:text', agenda.search);
