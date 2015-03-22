@@ -1,4 +1,4 @@
-﻿starApp.controller('tableReadController', function ($scope, $rootScope, $http, $cookieStore, ngTableParams) {
+﻿starApp.controller('tableReadController', function ($scope, $rootScope, $http, $cookieStore, ngTableParams, _) {
     $scope.dataRead = [];
     
     var lastRead = $cookieStore.get('lastRead');
@@ -51,6 +51,7 @@
         }).success(function (data) {
             var chapters = [];
             var maxChapter = data[0].Chapter;
+            console.log(_.range(maxChapter));
             for (var i = 1; i < maxChapter;) {
                 chapters.push(i++);
             }

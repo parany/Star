@@ -50,7 +50,6 @@ app.get('/news/search/:text', news.search);
 
 // v2
 var genericRoutev2 = require('./logic/genericLogicv2.js');
-
 app.get('/:collectionName/findAllv2', genericRoutev2.findAllv2);
 app.post('/:collectionName/findv2', genericRoutev2.findv2);
 app.get('/:collectionName/findOnev2/:id', genericRoutev2.findOnev2);
