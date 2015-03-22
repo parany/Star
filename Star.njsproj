@@ -17,7 +17,7 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
     <Compile Include="helpers\filterHelper.js" />
-    <Compile Include="logic\note.js" />
+    <Compile Include="logic\notes.js" />
     <Compile Include="logic\genericLogicv2.js" />
     <Compile Include="model\repositoryv2.js" />
     <Compile Include="public\scripts\config\_.js" />

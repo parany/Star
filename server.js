@@ -50,11 +50,15 @@ app.get('/news/search/:text', news.search);
 
 // v2
 var genericRoutev2 = require('./logic/genericLogicv2.js');
+var notes = require('./logic/notes.js');
+
 app.get('/:collectionName/findAllv2', genericRoutev2.findAllv2);
 app.post('/:collectionName/findv2', genericRoutev2.findv2);
 app.get('/:collectionName/findOnev2/:id', genericRoutev2.findOnev2);
 app.post('/:collectionName/updatev2', genericRoutev2.updatev2);
 app.post('/:collectionName/insertv2', genericRoutev2.insertv2);
+
+app.get('/notes/getNotesByVerseId/:author/:verseId', notes.getNotesByVerseId);
 
 // launch the server
 http.createServer(app).listen(config.port, function () {

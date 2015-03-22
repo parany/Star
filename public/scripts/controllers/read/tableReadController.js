@@ -49,12 +49,7 @@
                 limit: 1
             }
         }).success(function (data) {
-            var chapters = [];
-            var maxChapter = data[0].Chapter;
-            console.log(_.range(maxChapter));
-            for (var i = 1; i < maxChapter;) {
-                chapters.push(i++);
-            }
+            var chapters = _.range(1, data[0].Chapter + 1);
             $scope.read.chapters = chapters;
             $scope.read.chapter = $scope.read.chapters[0];
             if (firstLoad && lastRead != undefined)
@@ -78,11 +73,7 @@
                 limit: 1
             }
         }).success(function (data) {
-            var paragraphs = [];
-            var maxParagraph = data[0].Paragraph;
-            for (var i = 1; i < maxParagraph;) {
-                paragraphs.push(i++);
-            }
+            var paragraphs = _.range(1, data[0].Paragraph + 1);
             $scope.read.paragraphs = paragraphs;
             $scope.read.paragraphMin = $scope.read.paragraphs[0];
             $scope.read.paragraphMax = $scope.read.paragraphs[$scope.read.paragraphs.length - 1];
