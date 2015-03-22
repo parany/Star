@@ -46,7 +46,7 @@
         };
         $http({
             method: 'POST',
-            url: '/notes/update',
+            url: '/notes/updatev2',
             data: data
         }).success(function () {
             $location.path('/');

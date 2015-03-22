@@ -43,10 +43,18 @@ Repository.prototype.findOne = function (filters) {
 
 Repository.prototype.insert = function (obj) {
     var deferred = Q.defer();
-    obj.IsActive = 0;
     this.collection.insert(obj, function (err, ret) {
         if (err) return deferred.reject(err);
         return deferred.resolve(ret);
+    });
+    return deferred.promise;
+};
+
+Repository.prototype.save = function (obj) {
+    var deferred = Q.defer();
+    this.collection.save(obj, { safe: true }, function (err, doc) {
+        if (err) return deferred.reject(err);
+        return deferred.resolve(doc);
     });
     return deferred.promise;
 };

@@ -23,3 +23,13 @@ exports.findOnev2 = function (req, res) {
         res.send(docs);
     });
 }
+
+exports.updatev2 = function (req, res) {
+    var repository = new Repository(req.params.collectionName);
+    var obj = req.body;
+    obj._id = new ObjectId(obj._id);
+    obj.UpdatedOn = new Date().getTime();
+    repository.save(obj).then(function (ret) {
+        res.json(ret);
+    });
+}
