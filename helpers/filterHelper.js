@@ -21,6 +21,10 @@ Object.prototype.toAnyFilter = function () {
                     subFilters.$in = subFilters[subFilter].map(function (s) { return new ObjectId(s); });
                     delete subFilters.in;
                 }
+                if (subFilter == 'regex') {
+                    subFilters.$regex = subFilters[subFilter];
+                    delete subFilters.regex;
+                }
             }
         }
     }
