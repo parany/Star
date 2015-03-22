@@ -18,8 +18,8 @@ exports.findv2 = function (req, res) {
 }
 
 exports.findOnev2 = function (req, res) {
-    var collection = repository.getCollection(req.params.collectionName);
-    collection.get({ _id: new ObjectId(req.params.id) }).then(function (err, doc) {
-        res.send(doc);
+    var repository = new Repository(req.params.collectionName);
+    repository.findOne({_id : new ObjectId(req.params.id) }).then(function (docs) {
+        res.send(docs);
     });
 }
