@@ -9,7 +9,7 @@ var tagsCollection = repository.getCollection('tags');
 
 exports.searchNotes = function (req, res) {
     notesCollection.find({ CreatedBy: req.params.author }).toArray(function (noteErr, notes) {
-        var versesId = notes.map(function (note) { return note.VerseId; });
+        var versesId = notes.map(function (note) { return new ObjectId(note.VerseId); });
         versesCollection.find({ _id: { $in: versesId } }).toArray(function (verseErr, verses) {
             booksCollection.find({}).toArray(function (booErr, books) {
                 for (var i = 0; i < notes.length; i++) {

@@ -6,7 +6,7 @@
         total: 1,
         count: 250
     }, {
-        counts: [], // hide page counts control
+        counts: [],
         getData: function ($defer, params) {
             $defer.resolve($scope.notes.slice((params.page() - 1) * params.count(), params.page() * params.count()));
         }
@@ -28,8 +28,33 @@
             m.$selected = false;
         });
         model.$selected = !model.$selected;
-        $http.get('/note/getNotesByVerseId/' + model.VerseId + '/' + auth.getUserName()).success(function (data) {
-            $scope.dtoNote = data;
+        var notes = [];
+        var tags = [];
+        $http({
+            method: 'POST',
+            url: '/notes/findv2',
+            data: { VerseId: model.VerseId }
+        }).then(function (data) {
+            notes = data.data;
+            return $http({
+                method: 'POST',
+                url: '/tags/findv2',
+                data: { Type: 'Note' }
+            });
+        }).then(function (data) {
+            tags = data.data;
+            for (var i = 0; i < notes.length; i++) {
+                for (var j = 0; j < notes[i].TagIdList.length; j++) {
+                    notes[i].TagIdList[j] = tags.filter(function (tag) { return tag._id == notes[i].TagIdList[j]; })[0].Description;
+                }
+            }
+            var myNote = notes.filter(function (note) { return note.CreatedBy == auth.getUserName(); })[0];
+            var otherNotes = notes.filter(function (note) { return note.CreatedBy != auth.getUserName(); });
+            var results = {
+                MyNote: myNote,
+                OtherNotes: otherNotes
+            };
+            $scope.dtoNote = results;
         });
     }
 });
