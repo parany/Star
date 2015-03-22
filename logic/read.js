@@ -1,5 +1,6 @@
-﻿var repository = require('../model/repository.js');
-var ObjectId = require('mongodb').ObjectID;
+﻿var ObjectId = require('mongodb').ObjectID;
+var repository = require('../model/repository.js');
+var Repository = require('../model/repositoryv2.js');
 
 var booksCollection = repository.getCollection('books');
 var versesCollection = repository.getCollection('verses');
@@ -52,23 +53,27 @@ exports.search = function (req, res) {
 }
 
 exports.getNotesByVerseId = function (req, res) {
-    notesCollection.find({ 'VerseId': { $in: [new ObjectId(req.params.verseId), req.params.verseId] } }).toArray(function (err, docs) {
-        var notes = docs;
-        tagsCollection.find({ 'Type': 'Note' }).toArray(function (tagErr, tagDocs) {
-            var tags = tagDocs;
-            for (var i = 0; i < notes.length; i++) {
-                for (var j = 0; j < notes[i].TagIdList.length; j++) {
-                    notes[i].TagIdList[j] = tags.filter(function (tag) { return tag._id == notes[i].TagIdList[j]; })[0].Description;
-                }
+    var notesRepository = new Repository('notes');
+    var tagsRepository = new Repository('tags');
+    var notes = [];
+    var tags = [];
+    notesRepository.find({ 'VerseId':  req.params.verseId }).then(function (docs) {
+        notes = docs;
+        return tagsRepository.find({ 'Type': 'Note' });;
+    }).then(function (tagDocs) {
+        tags = tagDocs;
+        for (var i = 0; i < notes.length; i++) {
+            for (var j = 0; j < notes[i].TagIdList.length; j++) {
+                notes[i].TagIdList[j] = tags.filter(function (tag) { return tag._id == notes[i].TagIdList[j]; })[0].Description;
             }
-            var myNote = notes.filter(function (note) { return note.CreatedBy == req.params.author; })[0];
-            var otherNotes = notes.filter(function (note) { return note.CreatedBy != req.params.author; });
-            var results = {
-                MyNote: myNote,
-                OtherNotes: otherNotes
-            };
-            res.send(results);
-        });
+        }
+        var myNote = notes.filter(function (note) { return note.CreatedBy == req.params.author; })[0];
+        var otherNotes = notes.filter(function (note) { return note.CreatedBy != req.params.author; });
+        var results = {
+            MyNote: myNote,
+            OtherNotes: otherNotes
+        };
+        res.send(results);
     });
 }
 

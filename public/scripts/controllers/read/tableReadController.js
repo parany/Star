@@ -25,7 +25,7 @@
             url: '/books/findv2',
             data: {
                 TestamentId: $scope.read.testament._id, 
-                sort: { 'DisplayOrder': 1 }
+                sort: { DisplayOrder: 1 }
             }
         }).success(function (data) {
             $scope.read.books = data;
@@ -73,7 +73,7 @@
             data: {
                 BookId: $scope.read.book._id,
                 Chapter: parseInt($scope.read.chapter), 
-                sort: { 'Paragraph': -1 }, 
+                sort: { Paragraph: -1 }, 
                 limit: 1
             }
         }).success(function (data) {
@@ -105,17 +105,16 @@
             ParagraphMax: $scope.read.paragraphMax,
             VersionIndex: $scope.read.versions.map(function (v) { return v.Code; }).indexOf($scope.read.version.Code)
         });
-        var filters = {
-            BookId: $scope.read.book._id,
-            Chapter: $scope.read.chapter,
-            Paragraph: { gte: parseInt($scope.read.paragraphMin), lte: parseInt($scope.read.paragraphMax) },
-            Version: $scope.read.version.Code,
-            sort: { Paragraph: 1 }
-        };
         $http({
             method: 'POST',
             url: '/verses/findv2',
-            data: filters
+            data: {
+                BookId: $scope.read.book._id,
+                Chapter: $scope.read.chapter,
+                Paragraph: { gte: parseInt($scope.read.paragraphMin), lte: parseInt($scope.read.paragraphMax) },
+                Version: $scope.read.version.Code,
+                sort: { Paragraph: 1 }
+            }
         }).success(function (data) {
             $scope.dataRead = data;
             $scope.tableRead.reload();
