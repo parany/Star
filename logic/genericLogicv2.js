@@ -33,3 +33,12 @@ exports.updatev2 = function (req, res) {
         res.json(ret);
     });
 }
+
+exports.insertv2 = function (req, res) {
+    var repository = new Repository(req.params.collectionName);
+    var obj = req.body;
+    obj.CreatedOn = new Date().getTime();
+    repository.insert(obj).then(function (ret) {
+        res.json(ret);
+    });
+}

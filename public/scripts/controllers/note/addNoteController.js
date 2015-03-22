@@ -1,15 +1,19 @@
 ﻿starApp.controller('addNoteController', function ($scope, $routeParams, $http, $location, auth) {
     $scope.tags = [];
-    $http.get('/tag/getByType/Note').success(function (data) {
+    $http({
+        method: 'POST',
+        url: '/tags/findv2',
+        data: { Type: 'Note' }
+    }).success(function (data) {
         $scope.tags = data;
     });
-
+    
     $scope.Content = '';
-
+    
     $scope.valid = function () {
         return $scope.tags.filter(function (t) { return t.Selected == true; }).length > 0;
     }
-
+    
     $scope.save = function () {
         var data = {
             'Description': $scope.Description,
@@ -20,7 +24,7 @@
         };
         $http({
             method: 'POST',
-            url: '/notes/insert',
+            url: '/notes/insertv2',
             data: data
         }).success(function () {
             $location.path('/');
