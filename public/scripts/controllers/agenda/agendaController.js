@@ -1,4 +1,4 @@
-﻿starApp.controller('agendaController', function ($scope, $routeParams, $http, $location, ngTableParams, auth) {
+﻿starApp.controller('agendaController', function ($scope, $routeParams, $http, $location, ngTableParams, auth, dateHelper) {
     $scope.Date = '';
     $scope.Date = new Date().toISOString().split('T')[0];
     $scope.agenda = {};
@@ -82,6 +82,7 @@
                 if (data.length > 0) {
                     console.log($scope.agenda.Date);
                     $scope.Title = $scope.agenda.Title + ' (' + new Date($scope.agenda.Date).toISOString().split('T')[0] + ')';
+                    var d = new Date($scope.agenda.Date);
                     $scope.agenda.$selected = true;
                 }
             });
