@@ -16,26 +16,9 @@
         clearTimeout(searchTimeout);
         searchTimeout = setTimeout(function () {
             if (!$scope.search.textToSearch || $scope.search.textToSearch.length < 1) return;
-            var verses;
-            var books;
-            $http({
-                method: 'POST',
-                url: '/verses/findv2',
-                data: {
-                    Version: $scope.read.version.Code,
-                    Content: { regex: $scope.search.textToSearch }
-                }
-            }).then(function (data) {
-                verses = data.data;
-                return $http.get('/books/findAllv2');
-            }).then(function (data) {
-                books = data.data;
-                for (var i = 0; i < verses.length; i++) {
-                    var book = books.filter(function (b) { return b._id == verses[i].BookId; })[0].Description;
-                    verses[i].BookId = book + ' ' + verses[i].Chapter + ' ' + verses[i].Paragraph;
-                }
-                $scope.dataSearch = verses;
-                $scope.tableSearch.settings().total = verses.length;
+            $http.get('/verses/search/' + $scope.read.version.Code + '/' + $scope.search.textToSearch).success(function (data) {
+                $scope.dataSearch = data;
+                $scope.tableSearch.settings().total = data.length;
                 $scope.tableSearch.parameters().page = 1;
                 $scope.tableSearch.reload();
             });
