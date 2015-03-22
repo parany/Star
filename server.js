@@ -20,7 +20,6 @@ app.configure('developpement', function () { app.use(express.errorHandler()); })
 
 // include logics
 var genericRoute = require('./logic/genericLogic.js');
-var read = require('./logic/read.js');
 var agenda = require('./logic/agenda.js');
 var treaty = require('./logic/treaty.js');
 var explication = require('./logic/explication.js');
@@ -34,8 +33,6 @@ app.post('/:collectionName/update', genericRoute.update);
 app.post('/:collectionName/insert', genericRoute.insert);
 app.get('/:collectionName/delete/:id', genericRoute.delete);
 app.get('/tag/getByType/:type', genericRoute.getTagsByType);
-
-app.get('/verse/search/:version/:text', read.search);
 
 app.get('/agendas/getByDate/:author/:date', agenda.getByDate);
 app.get('/agendas/search/:text', agenda.search);

@@ -32,7 +32,6 @@
     <Compile Include="logic\explication.js" />
     <Compile Include="logic\agenda.js" />
     <Compile Include="logic\genericLogic.js" />
-    <Compile Include="logic\read.js" />
     <Compile Include="migration\formatDate.js" />
     <Compile Include="restart.js" />
     <Compile Include="server.js" />
