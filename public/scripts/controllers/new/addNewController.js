@@ -1,4 +1,4 @@
-starApp.controller('addNewController', function ($scope, $routeParams, $http, $location, ngTableParams, apiUrl, auth) {
+starApp.controller('addNewController', function ($scope, $routeParams, $http, $location, ngTableParams, auth) {
     var id = $routeParams.id;
     $scope.news = [];
     $scope.new = {};

@@ -1,4 +1,4 @@
-﻿starApp.controller('dicosController', function ($rootScope, $scope, $http, $location, ngTableParams, apiUrl) {
+﻿starApp.controller('dicosController', function ($rootScope, $scope, $http, $location, ngTableParams) {
     $scope.cultures = [];
     $scope.dico = {};
     $scope.dicos = [];

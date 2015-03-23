@@ -1,4 +1,4 @@
-﻿starApp.controller('verseController', function ($scope, $rootScope, $http, $cookieStore, ngTableParams, apiUrl) {
+﻿starApp.controller('verseController', function ($scope, $rootScope, $http, $cookieStore, ngTableParams) {
     $http.get('/versions/getAll').success(function (data) {
         $scope.read.versions = data;
         $scope.read.version = $scope.read.versions[0];
