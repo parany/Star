@@ -34,7 +34,7 @@ exports.getNoteById = function (req, res) {
         return tagsRepository.find({ Type: 'Note' });
     }).then(function (tags) {
         for (var j = 0; j < note.TagIdList.length; j++) {
-            note.TagIdList[j] = tags.filter(function (tag) { return tag._id == note.TagIdList[j]; })[0].Description;
+            note.TagIdList[j] = _.find(tags, function (tag) { return tag._id == note.TagIdList[j]; }).Description;
         }
         for (var i = 0; i < tags.length; i++) {
             tags[i].IsActive = note.TagIdList.indexOf(tags[i].Description) != -1;
@@ -44,5 +44,42 @@ exports.getNoteById = function (req, res) {
             Tags: tags
         };
         res.send(result);
+    });
+}
+
+exports.getAllNotesWithAssociatedBooks = function (req, res) {
+    var notesRepository = new Repository('notes'),
+        versesRepository = new Repository('verses'),
+        booksRepository = new Repository('books'),
+        notes = [],
+        verses = [];
+    notesRepository.find({ CreatedBy: req.params.author }).then(function (docs) {
+        notes = docs;
+        var versesId = notes.map(function (n) { return new ObjectId(n.VerseId); });
+        return versesRepository.find({ _id: { $in: versesId } });
+    }).then(function (docs) {
+        verses = docs;
+        return booksRepository.find({});
+    }).then(function (books) {
+        for (var i = 0; i < notes.length; i++) {
+            var verse = _.find(verses, function (v) { return notes[i].VerseId.toString() == v._id.toString(); });
+            var book = _.find(books, function (b) { return b._id.equals(verse.BookId); });
+            notes[i].Verse = book.Description + ' ' + verse.Chapter + ',' + verse.Paragraph;
+            notes[i].DisplayOrder = book.DisplayOrder;
+            notes[i].Chapter = verse.Chapter;
+            notes[i].Paragraph = verse.Paragraph;
+            notes[i].VerseId = verse._id;
+            notes[i].NoteId = notes[i]._id;
+        }
+        notes.sort(function (n1, n2) {
+            if (n1.DisplayOrder > n2.DisplayOrder) return 1;
+            if (n1.DisplayOrder < n2.DisplayOrder) return -1;
+            if (n1.Chapter > n2.Chapter) return 1;
+            if (n1.Chapter < n2.Chapter) return -1;
+            if (n1.Paragraph > n2.Paragraph) return 1;
+            if (n1.Paragraph < n2.Paragraph) return -1;
+            return 0;
+        });
+        res.send(notes);
     });
 }

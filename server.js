@@ -59,10 +59,11 @@ app.get('/:collectionName/findOnev2/:id', genericRoutev2.findOnev2);
 app.post('/:collectionName/updatev2', genericRoutev2.updatev2);
 app.post('/:collectionName/insertv2', genericRoutev2.insertv2);
 
+app.get('/verses/search/:version/:text', verses.search);
+
 app.get('/notes/getNotesByVerseId/:author/:verseId', notes.getNotesByVerseId);
 app.get('/notes/getNoteById/:id', notes.getNoteById);
-
-app.get('/verses/search/:version/:text', verses.search);
+app.get('/notes/getAllNotesWithAssociatedBooks/:author', notes.getAllNotesWithAssociatedBooks);
 
 // launch the server
 http.createServer(app).listen(config.port, function () {
