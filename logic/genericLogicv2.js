@@ -42,3 +42,18 @@ exports.insertv2 = function (req, res) {
         res.json(ret);
     });
 }
+
+exports.search = function (req, res) {
+    var repository = new Repository(req.params.collectionName);
+    var columns = req.body.filters;
+    var filters = columns.map(function (column) {
+        var filter = {};
+        filter[column] = { $regex: req.params.text };
+        return filter;
+    });
+    repository.find({
+        $or: filters
+    }).then(function (agendas) {
+        res.send(agendas);
+    });
+}

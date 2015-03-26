@@ -19,7 +19,7 @@ exports.getByDate = function (req, res) {
             var nexts = dates.filter(function (d) { return d > dateTime; }).sort(function (d1, d2) { return d1 - d2; });
             for (var i = 0; i < explications.length; i++) {
                 for (var j = 0; j < explications[i].TagIdList.length; j++) {
-                    explications[i].TagIdList[j] = tagDocs.filter(function(t) { return t._id.equals(new ObjectId(explications[i].TagIdList[j])); })[0].Description;
+                    explications[i].TagIdList[j] = tagDocs.filter(function (t) { return t._id.equals(new ObjectId(explications[i].TagIdList[j])); })[0].Description;
                 }
             }
             var results = {
@@ -34,7 +34,8 @@ exports.getByDate = function (req, res) {
 }
 
 exports.search = function (req, res) {
-    explicationsCollection.find({ $or: [
+    explicationsCollection.find({
+        $or: [
             { Title: { $regex: req.params.text } }, 
             { Content: { $regex: req.params.text } }]
     }).toArray(function (explicationErr, explicationDocs) {

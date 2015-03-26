@@ -20,7 +20,6 @@ app.configure('developpement', function () { app.use(express.errorHandler()); })
 
 // include logics
 var genericRoute = require('./logic/genericLogic.js');
-var agenda = require('./logic/agenda.js');
 var treaty = require('./logic/treaty.js');
 var explication = require('./logic/explication.js');
 var dico = require('./logic/dico.js');
@@ -33,9 +32,6 @@ app.post('/:collectionName/update', genericRoute.update);
 app.post('/:collectionName/insert', genericRoute.insert);
 app.get('/:collectionName/delete/:id', genericRoute.delete);
 app.get('/tag/getByType/:type', genericRoute.getTagsByType);
-
-app.get('/agendas/getByDate/:author/:date', agenda.getByDate);
-app.get('/agendas/search/:text', agenda.search);
 
 app.get('/explications/getByDate/:author/:date', explication.getByDate);
 app.get('/explications/search/:text', explication.search);
@@ -52,18 +48,22 @@ app.get('/news/search/:text', news.search);
 var genericRoutev2 = require('./logic/genericLogicv2.js');
 var notes = require('./logic/notes.js');
 var verses = require('./logic/verses.js');
+var agendas = require('./logic/agendas.js');
 
 app.get('/:collectionName/findAllv2', genericRoutev2.findAllv2);
 app.post('/:collectionName/findv2', genericRoutev2.findv2);
 app.get('/:collectionName/findOnev2/:id', genericRoutev2.findOnev2);
 app.post('/:collectionName/updatev2', genericRoutev2.updatev2);
 app.post('/:collectionName/insertv2', genericRoutev2.insertv2);
+app.post('/:collectionName/search/:text', genericRoutev2.search);
 
 app.get('/verses/search/:version/:text', verses.search);
 
 app.get('/notes/getNotesByVerseId/:author/:verseId', notes.getNotesByVerseId);
 app.get('/notes/getNoteById/:id', notes.getNoteById);
 app.get('/notes/getAllNotesWithAssociatedBooks/:author', notes.getAllNotesWithAssociatedBooks);
+
+app.get('/agendas/getByDate/:author/:date', agendas.getByDate);
 
 // launch the server
 http.createServer(app).listen(config.port, function () {

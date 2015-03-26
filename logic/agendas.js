@@ -1,14 +1,14 @@
-﻿var repository = require('../model/repository.js');
-var ObjectId = require('mongodb').ObjectID;
+﻿var ObjectId = require('mongodb').ObjectID;
+var Repository = require('../model/repositoryv2.js');
 require('../helpers/dateHelper.js');
 require('../helpers/numberHelper.js');
 
-var agendasCollection = repository.getCollection('agendas');
+var agendasRepository = new Repository('agendas');
 
 exports.getByDate = function (req, res) {
     var date = new Date(req.params.date);
     var dateTime = date.getTime();
-    agendasCollection.find({ CreatedBy: req.params.author }).toArray(function (err, docs) {
+    agendasRepository.find({ CreatedBy: req.params.author }).then(function (docs) {
         var agendas = docs.filter(function (a) {
             return a.Date >= date.getFirstMs() && a.Date <= date.getLastMs();
         });
@@ -21,15 +21,5 @@ exports.getByDate = function (req, res) {
             Agendas: agendas
         };
         res.send(results);
-    });
-}
-
-exports.search = function (req, res) {
-    agendasCollection.find({
-        $or: [
-            { Title: { $regex: req.params.text } }, 
-            { Text: { $regex: req.params.text } }]
-    }).toArray(function (err, agendas) {
-        res.send(agendas);
     });
 }
