@@ -51,7 +51,7 @@ exports.getByDate = function (req, res) {
         var records = docs.filter(function (a) {
             return a.Date >= date.getFirstMs() && a.Date <= date.getLastMs();
         });
-        var dates = docs.map(function (a) { return a.Date; });
+        var dates = docs.map(function (a) { return a.Date; }).filter(function (d) { return d < date.getFirstMs() || d > date.getLastMs(); });
         var prevs = dates.filter(function (d) { return d < dateTime; }).sort(function (d1, d2) { return d2 - d1; });
         var nexts = dates.filter(function (d) { return d > dateTime; }).sort(function (d1, d2) { return d1 - d2; });
         var results = {

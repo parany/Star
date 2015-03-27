@@ -34,12 +34,12 @@
     $scope.$watch('Date', function () {
         $scope.textToSearch = '';
         $http.get('/news/getByDate/' + auth.getUserName() + '/' + $scope.Date).success(function (data) {
-            $scope.News = data.News;
-            if (data.News.length == 0) {
+            $scope.News = data.Docs;
+            if (data.Docs.length == 0) {
                 $scope.News = [];
             }
             $scope.tableNews.reload();
-            $scope.New = data.News.length > 0 ? data.News[0] : {};
+            $scope.New = data.Docs.length > 0 ? data.Docs[0] : {};
             if ($scope.News.length > 0)
                 $scope.changeNewSelected($scope.New);
             
@@ -65,6 +65,8 @@
             d.$selected = false;
         });
         $scope.New = model;
+        if ($scope.New.Citations == undefined)
+            $scope.New.Citations = [];
         $scope.tableCitations.reload();
         if ($scope.textToSearch.length > 0) {
             $scope.Title = $scope.New.Title + ' (' + new Date(model.Date).toISOString().split('T')[0] + ')';
@@ -77,11 +79,13 @@
     $scope.promptDelete = function (id) {
         var response = confirm("Are you sure you want to delete this new?");
         if (response) {
-            $http.get('/news/delete/' + id).success(function () {
+            $http.get('/news/deletev2/' + id).success(function () {
             }).success(function () {
                 $scope.News = $scope.News.filter(function (d) { return d._id != id; });
                 if ($scope.News.length > 0)
                     $scope.changeNewSelected($scope.News[0]);
+                else
+                    $scope.changeNewSelected({});
                 $scope.tableNews.reload();
             });
         }
@@ -93,7 +97,7 @@
         clearTimeout(searchTimeout);
         searchTimeout = setTimeout(function () {
             if (!$scope.textToSearch || $scope.textToSearch.length < 1) return;
-            $http.get('/news/search/' + $scope.textToSearch).success(function (data) {
+            $http.post('/news/searchv2/' + $scope.textToSearch, { 'filters': ['Title', 'Text'] }).success(function (data) {
                 $scope.News = data;
                 $scope.tableNews.reload();
                 
