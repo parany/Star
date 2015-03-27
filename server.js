@@ -21,7 +21,6 @@ app.configure('developpement', function () { app.use(express.errorHandler()); })
 // include logics
 var genericRoute = require('./logic/genericLogic.js');
 var treaty = require('./logic/treaty.js');
-var explication = require('./logic/explication.js');
 var dico = require('./logic/dico.js');
 var news = require('./logic/news.js');
 
@@ -32,9 +31,6 @@ app.post('/:collectionName/update', genericRoute.update);
 app.post('/:collectionName/insert', genericRoute.insert);
 app.get('/:collectionName/delete/:id', genericRoute.delete);
 app.get('/tag/getByType/:type', genericRoute.getTagsByType);
-
-app.get('/explications/getByDate/:author/:date', explication.getByDate);
-app.get('/explications/search/:text', explication.search);
 
 app.get('/treaties/getByDate/:author/:date', treaty.getByDate);
 app.get('/treaties/search/:text', treaty.search);
@@ -49,6 +45,18 @@ var genericLogic2 = require('./logic/genericLogicv2.js');
 var notes = require('./logic/notes.js');
 var verses = require('./logic/verses.js');
 var agendas = require('./logic/agendas.js');
+var explications = require('./logic/explications.js');
+
+app.get('/verses/search/:version/:text', verses.search);
+
+app.get('/notes/getNotesByVerseId/:author/:verseId', notes.getNotesByVerseId);
+app.get('/notes/getNoteById/:id', notes.getNoteById);
+app.get('/notes/getAllNotesWithAssociatedBooks/:author', notes.getAllNotesWithAssociatedBooks);
+
+app.get('/explications/getByDate/:author/:date', explications.getByDate);
+app.get('/explications/search/:text', explications.search);
+
+app.get('/agendas/getByDate/:author/:date', agendas.getByDate);
 
 app.get('/:collectionName/findAllv2', genericLogic2.findAllv2);
 app.post('/:collectionName/findv2', genericLogic2.findv2);
@@ -58,13 +66,7 @@ app.post('/:collectionName/insertv2', genericLogic2.insertv2);
 app.get('/:collectionName/deletev2/:id', genericLogic2.deletev2);
 app.post('/:collectionName/searchv2/:text', genericLogic2.searchv2);
 
-app.get('/verses/search/:version/:text', verses.search);
 
-app.get('/notes/getNotesByVerseId/:author/:verseId', notes.getNotesByVerseId);
-app.get('/notes/getNoteById/:id', notes.getNoteById);
-app.get('/notes/getAllNotesWithAssociatedBooks/:author', notes.getAllNotesWithAssociatedBooks);
-
-app.get('/agendas/getByDate/:author/:date', agendas.getByDate);
 
 // launch the server
 http.createServer(app).listen(config.port, function () {
