@@ -21,7 +21,6 @@ app.configure('developpement', function () { app.use(express.errorHandler()); })
 // include logics
 var genericRoute = require('./logic/genericLogic.js');
 
-var dico = require('./logic/dico.js');
 var news = require('./logic/news.js');
 
 // routes
@@ -31,8 +30,6 @@ app.post('/:collectionName/update', genericRoute.update);
 app.post('/:collectionName/insert', genericRoute.insert);
 app.get('/:collectionName/delete/:id', genericRoute.delete);
 app.get('/tag/getByType/:type', genericRoute.getTagsByType);
-
-app.get('/dicos/search/:text', dico.search);
 
 app.get('/news/getByDate/:author/:date', news.getByDate);
 app.get('/news/search/:text', news.search);
