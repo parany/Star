@@ -63,9 +63,10 @@
             $http.get('/agendas/deletev2/' + id).success(function () {
             }).success(function () {
                 $scope.data = $scope.data.filter(function (d) { return d._id != id; });
-                if ($scope.data.length == 0) {
-                    $scope.Title = '';
-                    $scope.agenda.Text = '';
+                if ($scope.data.length > 0) {
+                    $scope.changeAgendaSelected($scope.data[0]);
+                } else {
+                    $scope.changeAgendaSelected({});
                 }
                 $scope.tableParams.reload();
             });
