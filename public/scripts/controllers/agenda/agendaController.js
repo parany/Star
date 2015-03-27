@@ -20,10 +20,10 @@
     $scope.$watch('Date', function () {
         $scope.textToSearch = '';
         $http.get('/agendas/getByDate/' + auth.getUserName() + '/' + $scope.Date).success(function (data) {
-            $scope.data = data.Agendas;
+            $scope.data = data.Docs;
             $scope.tableParams.reload();
             
-            $scope.agenda = data.Agendas.length > 0 ? data.Agendas[0] : {};
+            $scope.agenda = data.Docs.length > 0 ? data.Docs[0] : {};
             $scope.Title = $scope.agenda.Title;
             $scope.agenda.$selected = true;
             

@@ -20,7 +20,7 @@
     
     $scope.$watch('Date', function () {
         $http.get('/agendas/getByDate/' + auth.getUserName() + '/' + $scope.Date).success(function (data) {
-            $scope.data = data.Agendas;
+            $scope.data = data.Docs;
             $scope.tableParams.reload();
         });
     });
