@@ -45,17 +45,18 @@ app.get('/news/getByDate/:author/:date', news.getByDate);
 app.get('/news/search/:text', news.search);
 
 // v2
-var genericRoutev2 = require('./logic/genericLogicv2.js');
+var genericLogic2 = require('./logic/genericLogicv2.js');
 var notes = require('./logic/notes.js');
 var verses = require('./logic/verses.js');
 var agendas = require('./logic/agendas.js');
 
-app.get('/:collectionName/findAllv2', genericRoutev2.findAllv2);
-app.post('/:collectionName/findv2', genericRoutev2.findv2);
-app.get('/:collectionName/findOnev2/:id', genericRoutev2.findOnev2);
-app.post('/:collectionName/updatev2', genericRoutev2.updatev2);
-app.post('/:collectionName/insertv2', genericRoutev2.insertv2);
-app.post('/:collectionName/search/:text', genericRoutev2.search);
+app.get('/:collectionName/findAllv2', genericLogic2.findAllv2);
+app.post('/:collectionName/findv2', genericLogic2.findv2);
+app.get('/:collectionName/findOnev2/:id', genericLogic2.findOnev2);
+app.post('/:collectionName/updatev2', genericLogic2.updatev2);
+app.post('/:collectionName/insertv2', genericLogic2.insertv2);
+app.get('/:collectionName/deletev2/:id', genericLogic2.deletev2);
+app.post('/:collectionName/searchv2/:text', genericLogic2.searchv2);
 
 app.get('/verses/search/:version/:text', verses.search);
 

@@ -43,7 +43,7 @@ exports.insertv2 = function (req, res) {
     });
 }
 
-exports.search = function (req, res) {
+exports.searchv2 = function (req, res) {
     var repository = new Repository(req.params.collectionName);
     var columns = req.body.filters;
     var filters = columns.map(function (column) {
@@ -55,5 +55,12 @@ exports.search = function (req, res) {
         $or: filters
     }).then(function (agendas) {
         res.send(agendas);
+    });
+}
+
+exports.deletev2 = function(req, res) {
+    var repository = new Repository(req.params.collectionName);
+    repository.delete(new ObjectId(req.params.id)).then(function(ret) {
+        res.json(ret);
     });
 }
