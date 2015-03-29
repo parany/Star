@@ -25,8 +25,8 @@
     $scope.$watch('Date', function () {
         if ($scope.Date == undefined || $scope.Date == '') return;
         $scope.Date = $scope.Date.split('T')[0];
-        $http.get('agendas/getByDate/' + auth.getUserName() + '/' + $scope.Date).success(function (data) {
-            $scope.data = data.Agendas.filter(function (d) { return d._id != id; });
+        $http.get('/agendas/getByDate/' + auth.getUserName() + '/' + $scope.Date).success(function (data) {
+            $scope.data = data.Docs.filter(function (d) { return d._id != id; });
             $scope.tableParams.reload();
         });
     });

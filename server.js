@@ -20,10 +20,7 @@ app.configure('developpement', function () { app.use(express.errorHandler()); })
 
 // include logics
 var genericRoute = require('./logic/genericLogic.js');
-var agenda = require('./logic/agenda.js');
-var treaty = require('./logic/treaty.js');
-var explication = require('./logic/explication.js');
-var dico = require('./logic/dico.js');
+
 var news = require('./logic/news.js');
 
 // routes
@@ -34,35 +31,36 @@ app.post('/:collectionName/insert', genericRoute.insert);
 app.get('/:collectionName/delete/:id', genericRoute.delete);
 app.get('/tag/getByType/:type', genericRoute.getTagsByType);
 
-app.get('/agendas/getByDate/:author/:date', agenda.getByDate);
-app.get('/agendas/search/:text', agenda.search);
-
-app.get('/explications/getByDate/:author/:date', explication.getByDate);
-app.get('/explications/search/:text', explication.search);
-
-app.get('/treaties/getByDate/:author/:date', treaty.getByDate);
-app.get('/treaties/search/:text', treaty.search);
-
-app.get('/dicos/search/:text', dico.search);
-
-app.get('/news/getByDate/:author/:date', news.getByDate);
-app.get('/news/search/:text', news.search);
+//app.get('/news/getByDate/:author/:date', news.getByDate);
+//app.get('/news/search/:text', news.search);
 
 // v2
-var genericRoutev2 = require('./logic/genericLogicv2.js');
+var genericLogic2 = require('./logic/genericLogicv2.js');
 var notes = require('./logic/notes.js');
 var verses = require('./logic/verses.js');
+var explications = require('./logic/explications.js');
+var treaties = require('./logic/treaties.js');
 
-app.get('/:collectionName/findAllv2', genericRoutev2.findAllv2);
-app.post('/:collectionName/findv2', genericRoutev2.findv2);
-app.get('/:collectionName/findOnev2/:id', genericRoutev2.findOnev2);
-app.post('/:collectionName/updatev2', genericRoutev2.updatev2);
-app.post('/:collectionName/insertv2', genericRoutev2.insertv2);
+app.get('/verses/search/:version/:text', verses.search);
 
 app.get('/notes/getNotesByVerseId/:author/:verseId', notes.getNotesByVerseId);
 app.get('/notes/getNoteById/:id', notes.getNoteById);
+app.get('/notes/getAllNotesWithAssociatedBooks/:author', notes.getAllNotesWithAssociatedBooks);
 
-app.get('/verses/search/:version/:text', verses.search);
+app.get('/explications/getByDate/:author/:date', explications.getByDate);
+app.get('/explications/search/:text', explications.search);
+
+app.get('/treaties/getByDate/:author/:date', treaties.getByDate);
+app.get('/treaties/search/:text', treaties.search);
+
+app.get('/:collectionName/findAllv2', genericLogic2.findAllv2);
+app.post('/:collectionName/findv2', genericLogic2.findv2);
+app.get('/:collectionName/findOnev2/:id', genericLogic2.findOnev2);
+app.post('/:collectionName/updatev2', genericLogic2.updatev2);
+app.post('/:collectionName/insertv2', genericLogic2.insertv2);
+app.get('/:collectionName/getByDate/:author/:date', genericLogic2.getByDate);
+app.get('/:collectionName/deletev2/:id', genericLogic2.deletev2);
+app.post('/:collectionName/searchv2/:text', genericLogic2.searchv2);
 
 // launch the server
 http.createServer(app).listen(config.port, function () {

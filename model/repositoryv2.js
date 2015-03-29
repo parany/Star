@@ -17,7 +17,7 @@ Repository.prototype.find = function (filters) {
     var deferred = Q.defer();
     var sort = filters.sort || {};
     var limit = filters.limit || config.db.limit;
-
+    
     delete filters.sort;
     delete filters.limit;
     
@@ -53,6 +53,15 @@ Repository.prototype.insert = function (obj) {
 Repository.prototype.save = function (obj) {
     var deferred = Q.defer();
     this.collection.save(obj, { safe: true }, function (err, doc) {
+        if (err) return deferred.reject(err);
+        return deferred.resolve(doc);
+    });
+    return deferred.promise;
+};
+
+Repository.prototype.delete = function (id) {
+    var deferred = Q.defer();
+    this.collection.remove({ _id: id }, { atomic: true }, function (err, doc) {
         if (err) return deferred.reject(err);
         return deferred.resolve(doc);
     });

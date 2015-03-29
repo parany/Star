@@ -20,7 +20,7 @@
     
     $scope.$watch('Date', function () {
         $http.get('/agendas/getByDate/' + auth.getUserName() + '/' + $scope.Date).success(function (data) {
-            $scope.data = data.Agendas;
+            $scope.data = data.Docs;
             $scope.tableParams.reload();
         });
     });
@@ -32,7 +32,7 @@
         $http({
             method: 'POST',
             data: data,
-            url: 'agendas/insert'
+            url: '/agendas/insertv2'
         }).success(function () {
             $location.path('/agenda/index');
         }).error(function (err) {
