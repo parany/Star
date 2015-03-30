@@ -34,7 +34,7 @@
             data: data,
             url: '/agendas/insert'
         }).success(function () {
-            $location.path('/agenda/index');
+            $location.path('/agenda');
         }).error(function (err) {
             console.log(err);
         });
