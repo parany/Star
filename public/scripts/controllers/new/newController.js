@@ -1,6 +1,6 @@
-﻿starApp.controller('newController', function ($rootScope, $scope, $http, $location, ngTableParams, auth) {
+﻿starApp.controller('newController', function ($rootScope, $scope, $http, $location, $cookieStore, ngTableParams, auth) {
     $scope.Date = '';
-    $scope.Date = new Date().toISOString().split('T')[0];
+    $scope.Date = $cookieStore.get('lastNew') || new Date().toISOString().split('T')[0];
     $scope.News = [];
     $scope.New = {};
     $scope.New.Citations = [];
@@ -33,6 +33,7 @@
     
     $scope.$watch('Date', function () {
         $scope.textToSearch = '';
+        $cookieStore.put('lastNew', $scope.Date);
         $http.get('/news/getByDate/' + auth.getUserName() + '/' + $scope.Date).success(function (data) {
             $scope.News = data.Docs;
             if (data.Docs.length == 0) {

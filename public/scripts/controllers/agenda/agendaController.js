@@ -1,6 +1,7 @@
-﻿starApp.controller('agendaController', function ($scope, $routeParams, $http, $location, ngTableParams, auth, dateHelper) {
+﻿starApp.controller('agendaController', function ($scope, $routeParams, $http, $location, $cookieStore, ngTableParams, auth) {
     $scope.Date = '';
-    $scope.Date = new Date().toISOString().split('T')[0];
+    $scope.Date = $cookieStore.get('lastAgenda') || new Date().toISOString().split('T')[0];
+    
     $scope.agenda = {};
     $scope.data = [];
     
@@ -19,6 +20,7 @@
     
     $scope.$watch('Date', function () {
         $scope.textToSearch = '';
+        $cookieStore.put('lastAgenda', $scope.Date);
         $http.get('/agendas/getByDate/' + auth.getUserName() + '/' + $scope.Date).success(function (data) {
             $scope.data = data.Docs;
             $scope.tableParams.reload();

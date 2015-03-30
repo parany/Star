@@ -1,4 +1,4 @@
-starApp.controller('addTreatyController', function ($scope, $routeParams, $http, $location, ngTableParams, auth) {
+starApp.controller('addTreatyController', function ($scope, $routeParams, $http, $location, $cookieStore, ngTableParams, auth) {
     var id = $routeParams.id;
     $scope.Date = '';
 
@@ -75,6 +75,7 @@ starApp.controller('addTreatyController', function ($scope, $routeParams, $http,
             data: data,
             url: url
         }).success(function () {
+            $cookieStore.put('lastTreaty', $scope.Date);
             $location.path('/treaty');
         }).error(function (err) {
             console.log(err);

@@ -1,4 +1,4 @@
-﻿starApp.controller('addAgendaController', function ($scope, $routeParams, $http, $location, ngTableParams, auth) {
+﻿starApp.controller('addAgendaController', function ($scope, $routeParams, $http, $location, $cookieStore, ngTableParams, auth) {
     $scope.agenda = {};
     $scope.Date = '';
     $scope.Date = new Date().toISOString().split('T')[0];
@@ -34,6 +34,7 @@
             data: data,
             url: '/agendas/insert'
         }).success(function () {
+            $cookieStore.put('lastAgenda', $scope.Date);
             $location.path('/agenda');
         }).error(function (err) {
             console.log(err);

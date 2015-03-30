@@ -1,6 +1,6 @@
-﻿starApp.controller('explicationController', function ($rootScope, $scope, $http, $location, ngTableParams, auth) {
+﻿starApp.controller('explicationController', function ($rootScope, $scope, $http, $location, $cookieStore, ngTableParams, auth) {
     $scope.Date = '';
-    $scope.Date = new Date().toISOString().split('T')[0];
+    $scope.Date = $cookieStore.get('lastExplication') || new Date().toISOString().split('T')[0];
     $scope.explication = {};
     $scope.verses = [];
     $scope.explications = [];
@@ -31,6 +31,7 @@
     
     $scope.$watch('Date', function () {
         $scope.textToSearch = '';
+        $cookieStore.put('lastExplication', $scope.Date);
         $http.get('/explications/getByDate/' + auth.getUserName() + '/' + $scope.Date).success(function (data) {
             if (data.Explications.length == 0) {
                 data.Explications = [];

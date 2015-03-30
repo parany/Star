@@ -1,4 +1,4 @@
-starApp.controller('addNewController', function ($scope, $routeParams, $http, $location, ngTableParams, auth) {
+starApp.controller('addNewController', function ($scope, $routeParams, $http, $location, $cookieStore, ngTableParams, auth) {
     var id = $routeParams.id;
     $scope.news = [];
     $scope.new = {};
@@ -88,6 +88,7 @@ starApp.controller('addNewController', function ($scope, $routeParams, $http, $l
             data: data,
             url: url
         }).success(function () {
+            $cookieStore.put('lastNew', $scope.new.Date);
             $location.path('/new');
         }).error(function (err) {
             console.log(err);

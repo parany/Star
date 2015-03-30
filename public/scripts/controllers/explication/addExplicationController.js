@@ -1,4 +1,4 @@
-starApp.controller('addExplicationController', function ($scope, $routeParams, $http, $location, ngTableParams, auth) {
+starApp.controller('addExplicationController', function ($scope, $routeParams, $http, $location, $cookieStore, ngTableParams, auth) {
     var id = $routeParams.id;
     
     $scope.read = {};
@@ -92,6 +92,7 @@ starApp.controller('addExplicationController', function ($scope, $routeParams, $
             data: data,
             url: url
         }).success(function () {
+            $cookieStore.put('lastExplication', $scope.explication.Date);
             $location.path('/explication');
         }).error(function (err) {
             console.log(err);

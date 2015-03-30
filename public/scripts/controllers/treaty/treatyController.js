@@ -1,6 +1,6 @@
-starApp.controller('treatyController', function ($scope, $routeParams, $http, $location, ngTableParams, auth) {
+starApp.controller('treatyController', function ($scope, $routeParams, $http, $location, $cookieStore, ngTableParams, auth) {
     $scope.Date = '';
-    $scope.Date = new Date().toISOString().split('T')[0];
+    $scope.Date = $cookieStore.get('lastTreaty') || new Date().toISOString().split('T')[0];
     $scope.treaty = {};
     $scope.data = [];
     
@@ -19,6 +19,7 @@ starApp.controller('treatyController', function ($scope, $routeParams, $http, $l
     
     $scope.$watch('Date', function () {
         $scope.textToSearch = '';
+        $cookieStore.put('lastTreaty', $scope.Date);
         $http.get('/treaties/getByDate/' + auth.getUserName() + '/' + $scope.Date).success(function (data) {
             $scope.data = data.Treaties;
             $scope.tableParams.reload();
