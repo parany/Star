@@ -166,6 +166,10 @@ a.dropdown-toggle {
     margin-bottom: 25px;
 }
 
+.treaty-badge span {
+    font-size: 13px;
+}
+
 blockquote {
     font-size: 14.5px !important;
 }
