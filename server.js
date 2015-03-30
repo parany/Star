@@ -2,7 +2,6 @@
 var express = require('express');
 var http = require('http');
 var path = require('path');
-var connect = require('connect');
 var config = require('./config.json');
 
 // set up environments
@@ -19,22 +18,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.configure('developpement', function () { app.use(express.errorHandler()); });
 
 // include logics
-var genericRoute = require('./logic/genericLogic.js');
-
-var news = require('./logic/news.js');
-
-// routes
-app.get('/:collectionName/getAll', genericRoute.getAll);
-app.get('/:collectionName/get/:id', genericRoute.get);
-app.post('/:collectionName/update', genericRoute.update);
-app.post('/:collectionName/insert', genericRoute.insert);
-app.get('/:collectionName/delete/:id', genericRoute.delete);
-app.get('/tag/getByType/:type', genericRoute.getTagsByType);
-
-//app.get('/news/getByDate/:author/:date', news.getByDate);
-//app.get('/news/search/:text', news.search);
-
-// v2
 var genericLogic2 = require('./logic/genericLogicv2.js');
 var notes = require('./logic/notes.js');
 var verses = require('./logic/verses.js');
