@@ -32,7 +32,7 @@
         $http({
             method: 'POST',
             data: data,
-            url: '/agendas/insertv2'
+            url: '/agendas/insert'
         }).success(function () {
             $location.path('/agenda/index');
         }).error(function (err) {

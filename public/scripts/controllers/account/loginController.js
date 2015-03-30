@@ -2,7 +2,7 @@
     $scope.login = function () {
         $http({
             method: 'POST',
-            url: '/users/findv2',
+            url: '/users/find',
             data: { UserName: $scope.user.UserName, Password: $scope.user.Password }
         }).success(function (data) {
             if (data != "") {

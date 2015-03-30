@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.configure('developpement', function () { app.use(express.errorHandler()); });
 
 // include logics
-var genericLogic2 = require('./logic/genericLogicv2.js');
+var genericLogic = require('./logic/genericLogic.js');
 var notes = require('./logic/notes.js');
 var verses = require('./logic/verses.js');
 var explications = require('./logic/explications.js');
@@ -36,14 +36,14 @@ app.get('/explications/search/:text', explications.search);
 app.get('/treaties/getByDate/:author/:date', treaties.getByDate);
 app.get('/treaties/search/:text', treaties.search);
 
-app.get('/:collectionName/findAllv2', genericLogic2.findAllv2);
-app.post('/:collectionName/findv2', genericLogic2.findv2);
-app.get('/:collectionName/findOnev2/:id', genericLogic2.findOnev2);
-app.post('/:collectionName/updatev2', genericLogic2.updatev2);
-app.post('/:collectionName/insertv2', genericLogic2.insertv2);
-app.get('/:collectionName/getByDate/:author/:date', genericLogic2.getByDate);
-app.get('/:collectionName/deletev2/:id', genericLogic2.deletev2);
-app.post('/:collectionName/searchv2/:text', genericLogic2.searchv2);
+app.get('/:collectionName/findAll', genericLogic.findAll);
+app.post('/:collectionName/find', genericLogic.find);
+app.get('/:collectionName/findOne/:id', genericLogic.findOne);
+app.post('/:collectionName/update', genericLogic.update);
+app.post('/:collectionName/insert', genericLogic.insert);
+app.get('/:collectionName/getByDate/:author/:date', genericLogic.getByDate);
+app.get('/:collectionName/delete/:id', genericLogic.delete);
+app.post('/:collectionName/search/:text', genericLogic.search);
 
 // launch the server
 http.createServer(app).listen(config.port, function () {

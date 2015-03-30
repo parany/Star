@@ -3,7 +3,7 @@
     $scope.Date = '';
     $scope.agenda = {};
     $scope.data = [];
-    $http.get('/agendas/get/' + id).success(function (data) {
+    $http.get('/agendas/findOne/' + id).success(function (data) {
         $scope.agenda = data;
         $scope.Date = new Date(data.Date).toISOString();
         $scope.tableParams.reload();

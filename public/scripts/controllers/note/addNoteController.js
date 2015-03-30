@@ -2,7 +2,7 @@
     $scope.tags = [];
     $http({
         method: 'POST',
-        url: '/tags/findv2',
+        url: '/tags/find',
         data: { Type: 'Note' }
     }).success(function (data) {
         $scope.tags = data;
@@ -24,7 +24,7 @@
         };
         $http({
             method: 'POST',
-            url: '/notes/insertv2',
+            url: '/notes/insert',
             data: data
         }).success(function () {
             $location.path('/');

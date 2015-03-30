@@ -1,17 +1,17 @@
 ﻿starApp.controller('verseController', function ($scope, $rootScope, $http, $cookieStore, ngTableParams) {
-    $http.get('/versions/getAll').success(function (data) {
+    $http.get('/versions/findAll').success(function (data) {
         $scope.read.versions = data;
         $scope.read.version = $scope.read.versions[0];
     });
     
-    $http.get('/testaments/getAll').success(function (data) {
+    $http.get('/testaments/findAll').success(function (data) {
         $scope.read.testaments = data;
         $scope.read.testament = $scope.read.testaments[0];
     });
     
     $scope.$watch("read.testament", function () {
         if (!$scope.read.testament) return;
-        $http.post('/books/findv2', {
+        $http.post('/books/find', {
             TestamentId: $scope.read.testament._id, 
             sort: { DisplayOrder: 1 }
         }).success(function (data) {
@@ -23,7 +23,7 @@
     
     $scope.$watch("read.book", function () {
         if (!$scope.read.book) return;
-        $http.post('/verses/findv2', {
+        $http.post('/verses/find', {
             BookId: $scope.read.book._id, 
             sort: { Chapter: -1 }, 
             limit: 1
@@ -37,7 +37,7 @@
     
     $scope.$watch("read.chapter + read.book.Id", function () {
         if (!$scope.read.chapter) return;
-        $http.post('/verses/findv2', {
+        $http.post('/verses/find', {
             BookId: $scope.read.book._id,
             Chapter: parseInt($scope.read.chapter), 
             sort: { Paragraph: -1 }, 

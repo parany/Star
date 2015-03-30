@@ -19,8 +19,8 @@
     <Compile Include="helpers\filterHelper.js" />
     <Compile Include="logic\verses.js" />
     <Compile Include="logic\notes.js" />
-    <Compile Include="logic\genericLogicv2.js" />
-    <Compile Include="model\repositoryv2.js" />
+    <Compile Include="logic\genericLogic.js" />
+    <Compile Include="model\repository.js" />
     <Compile Include="public\scripts\config\_.js" />
     <Compile Include="public\scripts\services\numberHelper.js" />
     <Compile Include="public\scripts\services\dateHelper.js" />
@@ -32,14 +32,11 @@
     <Compile Include="helpers\numberHelper.js" />
     <Compile Include="helpers\dateHelper.js" />
     <Compile Include="install.js" />
-    <Compile Include="logic\news.js" />
     <Compile Include="logic\treaties.js" />
     <Compile Include="logic\explications.js" />
-    <Compile Include="logic\genericLogic.js" />
     <Compile Include="migration\formatDate.js" />
     <Compile Include="restart.js" />
     <Compile Include="server.js" />
-    <Compile Include="model\repository.js" />
     <Compile Include="public\scripts\app.js" />
     <Compile Include="public\scripts\config\accesLevel.js" />
     <Compile Include="public\scripts\config\events.js" />

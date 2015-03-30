@@ -60,7 +60,7 @@ starApp.controller('treatyController', function ($scope, $routeParams, $http, $l
     $scope.promptDelete = function (id) {
         var response = confirm("Are you sure you want to delete this treaty?");
         if (response) {
-            $http.get('/treaties/deletev2/' + id).success(function () {
+            $http.get('/treaties/delete/' + id).success(function () {
             }).success(function () {
                 $scope.data = $scope.data.filter(function (d) { return d._id != id; });
                 if ($scope.data.length > 0)

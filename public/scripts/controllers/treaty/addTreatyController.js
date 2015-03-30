@@ -8,13 +8,13 @@ starApp.controller('addTreatyController', function ($scope, $routeParams, $http,
 
     $scope.tags = [];
 
-    $http.post('/tags/findv2', { 'Type': 'Treaty' }).success(function (data) {
+    $http.post('/tags/find', { 'Type': 'Treaty' }).success(function (data) {
         $scope.tags = data;
     }).then(function () {
         if (id == undefined) {
             $scope.Date = new Date().toISOString().split('T')[0];
         } else {
-            $http.get('/treaties/findOnev2/' + id).success(function (data) {
+            $http.get('/treaties/findOne/' + id).success(function (data) {
                 $scope.treaty = data;
                 $scope.Date = new Date(data.Date).toISOString().split('T')[0];
 
@@ -64,10 +64,10 @@ starApp.controller('addTreatyController', function ($scope, $routeParams, $http,
         data.CreatedBy = auth.getUserName();
         data.TagIdList = $scope.tags.filter(function (t) { return t.Selected == true; }).map(function (t) { return t._id; });
 
-        var url = '/treaties/insertv2';
+        var url = '/treaties/insert';
         if (id != undefined) {
             data._id = id;
-            url = '/treaties/updatev2';
+            url = '/treaties/update';
             data.UpdatedBy = auth.getUserName();
         }
         $http({

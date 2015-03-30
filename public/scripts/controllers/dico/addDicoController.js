@@ -5,13 +5,13 @@
     $scope.illustrations = [];
 
     var id = $routeParams.id;
-    $http.get('/cultures/findAllv2').success(function(data) {
+    $http.get('/cultures/findAll').success(function(data) {
         $scope.cultures = data;
         $scope.dico.To = $scope.cultures[2];
         $scope.dico.From = $scope.cultures[1];
     }).then(function() {
         if (id != undefined) {
-            $http.get('/dicos/findOnev2/' + id).success(function (data) {
+            $http.get('/dicos/findOne/' + id).success(function (data) {
                 $scope.dico = data;
                 $scope.dico.To = $scope.cultures[$scope.cultures.map(function(c) { return c._id; }).indexOf(data.ToId)];
                 $scope.dico.From = $scope.cultures[$scope.cultures.map(function (c) { return c._id; }).indexOf(data.FromId)];
@@ -85,10 +85,10 @@
         var url;
         if (id == undefined) {
             data.CreatedBy = auth.getUserName();
-            url = '/dicos/insertv2';
+            url = '/dicos/insert';
         } else {
             data.UpdatedBy = auth.getUserName();
-            url = '/dicos/updatev2';
+            url = '/dicos/update';
         }
         data.Illustrations = $scope.illustrations.map(function (i) { return i.Text; });
         $http({

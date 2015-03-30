@@ -60,7 +60,7 @@
     $scope.promptDelete = function (id) {
         var response = confirm("Are you sure you want to delete this agenda?");
         if (response) {
-            $http.get('/agendas/deletev2/' + id).success(function () {
+            $http.get('/agendas/delete/' + id).success(function () {
             }).success(function () {
                 $scope.data = $scope.data.filter(function (d) { return d._id != id; });
                 if ($scope.data.length > 0) {
@@ -80,7 +80,7 @@
         searchTimeout = setTimeout(function () {
             if (!$scope.textToSearch || $scope.textToSearch.length < 1) return;
             $http({
-                url: '/agendas/searchv2/' + $scope.textToSearch,
+                url: '/agendas/search/' + $scope.textToSearch,
                 method: 'POST',
                 data: { 'filters': ['Title', 'Text'] }
             }).success(function (data) {
