@@ -1,4 +1,4 @@
-starApp.controller('addNewController', function ($scope, $routeParams, $http, $location, ngTableParams, auth) {
+starApp.controller('addNewController', function ($scope, $routeParams, $http, $location, $cookieStore, ngTableParams, auth) {
     var id = $routeParams.id;
     $scope.news = [];
     $scope.new = {};
@@ -7,13 +7,13 @@ starApp.controller('addNewController', function ($scope, $routeParams, $http, $l
     $scope.new.Citations = [];
     $scope.sources = [];
 
-    $http.get('/sources/findAllv2').success(function (data) {
+    $http.get('/sources/findAll').success(function (data) {
         $scope.sources = data;
     }).then(function () {
         if (id == undefined) {
             $scope.new.Date = new Date().toISOString().split('T')[0];
         } else {
-            $http.get('/news/findOnev2/' + id).success(function (data) {
+            $http.get('/news/findOne/' + id).success(function (data) {
                 $scope.new = data;
                 $scope.new.Date = new Date(data.Date).toISOString().split('T')[0];
                 $scope.tableCitations.reload();
@@ -77,10 +77,10 @@ starApp.controller('addNewController', function ($scope, $routeParams, $http, $l
         var data = JSON.parse(JSON.stringify($scope.new));
         data.Date = new Date($scope.new.Date).getTime();
         data.CreatedBy = auth.getUserName();
-        var url = '/news/insertv2';
+        var url = '/news/insert';
         if (id != undefined) {
             data.Id = id;
-            url = '/news/updatev2';
+            url = '/news/update';
             data.UpdatedBy = auth.getUserName();
         }
         $http({
@@ -88,6 +88,7 @@ starApp.controller('addNewController', function ($scope, $routeParams, $http, $l
             data: data,
             url: url
         }).success(function () {
+            $cookieStore.put('lastNew', $scope.new.Date);
             $location.path('/new');
         }).error(function (err) {
             console.log(err);

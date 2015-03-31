@@ -1,6 +1,6 @@
 ﻿var ObjectId = require('mongodb').ObjectID;
 var _ = require('underscore');
-var Repository = require('../model/repositoryv2.js');
+var Repository = require('../model/repository.js');
 
 exports.search = function (req, res) {
     var versesRepository = new Repository('verses');

@@ -30,7 +30,7 @@
             access_level: ACCESS_LEVELS.Pub,
             menuId: 'read'
         })
-        .when('/agenda/index', {
+        .when('/agenda', {
             templateUrl: 'views/pages/agenda/index.html',
             controller: "agendaController",
             access_level: ACCESS_LEVELS.Pub,

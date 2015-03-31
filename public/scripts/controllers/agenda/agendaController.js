@@ -1,6 +1,7 @@
-﻿starApp.controller('agendaController', function ($scope, $routeParams, $http, $location, ngTableParams, auth, dateHelper) {
+﻿starApp.controller('agendaController', function ($scope, $routeParams, $http, $location, $cookieStore, ngTableParams, auth) {
     $scope.Date = '';
-    $scope.Date = new Date().toISOString().split('T')[0];
+    $scope.Date = $cookieStore.get('lastAgenda') || new Date().toISOString().split('T')[0];
+    
     $scope.agenda = {};
     $scope.data = [];
     
@@ -19,6 +20,7 @@
     
     $scope.$watch('Date', function () {
         $scope.textToSearch = '';
+        $cookieStore.put('lastAgenda', $scope.Date);
         $http.get('/agendas/getByDate/' + auth.getUserName() + '/' + $scope.Date).success(function (data) {
             $scope.data = data.Docs;
             $scope.tableParams.reload();
@@ -60,7 +62,7 @@
     $scope.promptDelete = function (id) {
         var response = confirm("Are you sure you want to delete this agenda?");
         if (response) {
-            $http.get('/agendas/deletev2/' + id).success(function () {
+            $http.get('/agendas/delete/' + id).success(function () {
             }).success(function () {
                 $scope.data = $scope.data.filter(function (d) { return d._id != id; });
                 if ($scope.data.length > 0) {
@@ -80,7 +82,7 @@
         searchTimeout = setTimeout(function () {
             if (!$scope.textToSearch || $scope.textToSearch.length < 1) return;
             $http({
-                url: '/agendas/searchv2/' + $scope.textToSearch,
+                url: '/agendas/search/' + $scope.textToSearch,
                 method: 'POST',
                 data: { 'filters': ['Title', 'Text'] }
             }).success(function (data) {

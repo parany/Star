@@ -1,6 +1,6 @@
-﻿starApp.controller('newController', function ($rootScope, $scope, $http, $location, ngTableParams, auth) {
+﻿starApp.controller('newController', function ($rootScope, $scope, $http, $location, $cookieStore, ngTableParams, auth) {
     $scope.Date = '';
-    $scope.Date = new Date().toISOString().split('T')[0];
+    $scope.Date = $cookieStore.get('lastNew') || new Date().toISOString().split('T')[0];
     $scope.News = [];
     $scope.New = {};
     $scope.New.Citations = [];
@@ -33,6 +33,7 @@
     
     $scope.$watch('Date', function () {
         $scope.textToSearch = '';
+        $cookieStore.put('lastNew', $scope.Date);
         $http.get('/news/getByDate/' + auth.getUserName() + '/' + $scope.Date).success(function (data) {
             $scope.News = data.Docs;
             if (data.Docs.length == 0) {
@@ -79,7 +80,7 @@
     $scope.promptDelete = function (id) {
         var response = confirm("Are you sure you want to delete this new?");
         if (response) {
-            $http.get('/news/deletev2/' + id).success(function () {
+            $http.get('/news/delete/' + id).success(function () {
             }).success(function () {
                 $scope.News = $scope.News.filter(function (d) { return d._id != id; });
                 if ($scope.News.length > 0)
@@ -97,7 +98,7 @@
         clearTimeout(searchTimeout);
         searchTimeout = setTimeout(function () {
             if (!$scope.textToSearch || $scope.textToSearch.length < 1) return;
-            $http.post('/news/searchv2/' + $scope.textToSearch, { 'filters': ['Title', 'Text'] }).success(function (data) {
+            $http.post('/news/search/' + $scope.textToSearch, { 'filters': ['Title', 'Text'] }).success(function (data) {
                 $scope.News = data;
                 $scope.tableNews.reload();
                 

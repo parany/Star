@@ -42,7 +42,7 @@
     </form>
 </div>
 
-<div class="col-md-8">
+<div class="col-md-6">
     <h3 style="text-align: center;">
         <span   ng-if="!textToSearch || textToSearch.length < 1" 
                 class="glyphicon glyphicon-chevron-left" 
@@ -56,8 +56,12 @@
                 style="opacity: 1;">
         </span>
     </h3>
+    <div ng-bind-html="treaty.Text"></div>
+</div>
+
+<div class="col-md-3">
+    <h3>Tags</h3>
     <div class="treaty-badge">
         <span ng-repeat="tag in treaty.TagIdList"><span class="badge">{{ tag }}</span>&nbsp;</span>
     </div>
-    <div ng-bind-html="treaty.Text"></div>
 </div>

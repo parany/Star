@@ -4,14 +4,14 @@
     var lastRead = $cookieStore.get('lastRead');
     var firstLoad = true;
     
-    $http.get('/versions/findAllv2').success(function (data) {
+    $http.get('/versions/findAll').success(function (data) {
         $scope.read.versions = data;
         $scope.read.version = $scope.read.versions[0];
         if (firstLoad && lastRead != undefined)
             $scope.read.version = $scope.read.versions[lastRead.VersionIndex];
     });
     
-    $http.get('/testaments/findAllv2').success(function (data) {
+    $http.get('/testaments/findAll').success(function (data) {
         $scope.read.testaments = data;
         $scope.read.testament = $scope.read.testaments[0];
         if (firstLoad && lastRead != undefined)
@@ -22,7 +22,7 @@
         if (!$scope.read.testament) return;
         $http({
             method: 'POST',
-            url: '/books/findv2',
+            url: '/books/find',
             data: {
                 TestamentId: $scope.read.testament._id, 
                 sort: { DisplayOrder: 1 }
@@ -42,7 +42,7 @@
         if (!$scope.read.book) return;
         $http({
             method: 'POST',
-            url: '/verses/findv2',
+            url: '/verses/find',
             data: {
                 BookId: $scope.read.book._id, 
                 sort: { Chapter: -1 }, 
@@ -65,7 +65,7 @@
         if (!$scope.read.chapter) return;
         $http({
             method: 'POST',
-            url: '/verses/findv2',
+            url: '/verses/find',
             data: {
                 BookId: $scope.read.book._id,
                 Chapter: parseInt($scope.read.chapter), 
@@ -99,7 +99,7 @@
         });
         $http({
             method: 'POST',
-            url: '/verses/findv2',
+            url: '/verses/find',
             data: {
                 BookId: $scope.read.book._id,
                 Chapter: $scope.read.chapter,

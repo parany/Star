@@ -56,9 +56,6 @@
               style="opacity: 1;">
         </span>
     </h3>
-    <div class="treaty-badge">
-        <span ng-repeat="tag in explication.TagIdList"><span class="badge">{{ tag }}</span>&nbsp;</span>
-    </div>
     <div ng-bind-html="explication.Content"></div>
 </div>
 
@@ -73,4 +70,8 @@
             </tr>
         </tbody>
     </table>
+    <h3>Tags</h3>
+    <div class="treaty-badge">
+        <span ng-repeat="tag in explication.TagIdList"><span class="badge">{{ tag }}</span>&nbsp;</span>
+    </div>
 </div>

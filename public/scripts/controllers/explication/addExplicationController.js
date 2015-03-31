@@ -1,4 +1,4 @@
-starApp.controller('addExplicationController', function ($scope, $routeParams, $http, $location, ngTableParams, auth) {
+starApp.controller('addExplicationController', function ($scope, $routeParams, $http, $location, $cookieStore, ngTableParams, auth) {
     var id = $routeParams.id;
     
     $scope.read = {};
@@ -10,13 +10,13 @@ starApp.controller('addExplicationController', function ($scope, $routeParams, $
     $scope.explication.Date = '';
     $scope.explication.Content = '';
     
-    $http.post('/tags/findv2', { 'Type': 'Explication' }).success(function (data) {
+    $http.post('/tags/find', { 'Type': 'Explication' }).success(function (data) {
         $scope.tags = data;
     }).then(function () {
         if (id == undefined) {
             $scope.explication.Date = new Date().toISOString().split('T')[0];
         } else {
-            $http.get('/explications/findOnev2/' + id).success(function (data) {
+            $http.get('/explications/findOne/' + id).success(function (data) {
                 $scope.explication = data;
                 $scope.explication.Date = new Date(data.Date).toISOString().split('T')[0];
                 
@@ -81,10 +81,10 @@ starApp.controller('addExplicationController', function ($scope, $routeParams, $
         data.CreatedBy = auth.getUserName();
         data.TagIdList = $scope.tags.filter(function (t) { return t.Selected == true; }).map(function (t) { return t._id; });
         data.VerseReadList = $scope.read.verses;
-        var url = '/explications/insertv2';
+        var url = '/explications/insert';
         if (id != undefined) {
             data._id = id;
-            url = '/explications/updatev2';
+            url = '/explications/update';
             data.UpdatedBy = auth.getUserName();
         }
         $http({
@@ -92,6 +92,7 @@ starApp.controller('addExplicationController', function ($scope, $routeParams, $
             data: data,
             url: url
         }).success(function () {
+            $cookieStore.put('lastExplication', $scope.explication.Date);
             $location.path('/explication');
         }).error(function (err) {
             console.log(err);

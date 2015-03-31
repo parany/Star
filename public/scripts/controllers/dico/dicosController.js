@@ -4,10 +4,10 @@
     $scope.dicos = [];
     $scope.filter = {};
     
-    $http.get('/cultures/findAllv2').success(function (data) {
+    $http.get('/cultures/findAll').success(function (data) {
         $scope.cultures = data;
     }).then(function () {
-        $http.get('/dicos/findAllv2').success(function (data) {
+        $http.get('/dicos/findAll').success(function (data) {
             data.sort(function (a, b) {
                 if (a.Text < b.Text) return -1;
                 if (a.Text > b.Text) return 1;
@@ -65,7 +65,7 @@
     $scope.remove = function (id) {
         var response = confirm("Are you sure you want to delete this dico?");
         if (response) {
-            $http.get('/dicos/deletev2/' + id).success(function () {
+            $http.get('/dicos/delete/' + id).success(function () {
             }).success(function () {
                 $scope.dicos = $scope.dicos.filter(function (d) { return d._id != id; });
                 $scope.tableDico.reload();
@@ -74,9 +74,9 @@
     }
     
     $scope.search = function () {
-        var action = $http.post('/dicos/searchv2/' + $scope.filter.Text, { 'filters': ['Text'] });
+        var action = $http.post('/dicos/search/' + $scope.filter.Text, { 'filters': ['Text'] });
         if ($scope.filter.Text == undefined)
-            action = $http.get('/dicos/findAllv2');
+            action = $http.get('/dicos/findAll');
         action.success(function (response) {
             $scope.dicos = response;
             if (response.length == 0)
