@@ -7,12 +7,6 @@
     $scope.general = [];
     $scope.operations = [];
 
-    $scope.general = [
-        'Total number of items: 4',
-        'First added: "Un test comme les autres"',
-        'Last added: "La nature et la créature"'
-    ];
-    
     $scope.operations = [
         'Add "La vie et la nature" on 12/08/2015',
         'Edit "Une journée..." on 11/06/2015',
@@ -71,6 +65,15 @@
             $defer.resolve($scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
         },
         $scope: { $data: {} }
+    });
+
+    $http.get('/agendas/getActivities/' + auth.getUserName()).success(function(data) {
+        $scope.general = [
+            'Total number of items: ' + data.nbOfItems,
+            'First added: "' + data.firstAdded + '"',
+            'Last added: "' + data.lastAdded + '"'
+        ];
+        $scope.tableGeneral.reload();
     });
     
     $scope.$watch('Date', function () {

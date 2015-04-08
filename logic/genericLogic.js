@@ -1,4 +1,5 @@
 ﻿var ObjectId = require('mongodb').ObjectID;
+var _ = require('underscore');
 var Repository = require('../model/repository.js');
 require('../helpers/filterHelper.js');
 
@@ -19,7 +20,7 @@ exports.find = function (req, res) {
 
 exports.findOne = function (req, res) {
     var repository = new Repository(req.params.collectionName);
-    repository.findOne({_id : new ObjectId(req.params.id) }).then(function (docs) {
+    repository.findOne({ _id : new ObjectId(req.params.id) }).then(function (docs) {
         res.send(docs);
     });
 }
@@ -63,6 +64,18 @@ exports.getByDate = function (req, res) {
     });
 }
 
+exports.getActivities = function (req, res) {
+    var repository = new Repository(req.params.collectionName);
+    repository.find({ CreatedBy: req.params.author, sort: { date: 1 } }).then(function (docs) {
+        var item = {
+            nbOfItems: docs.length,
+            firstAdded: _.first(docs).Title,
+            lastAdded: _.last(docs).Title
+    };
+        res.send(item);
+    });
+}
+
 exports.search = function (req, res) {
     var repository = new Repository(req.params.collectionName);
     var columns = req.body.filters;
@@ -78,9 +91,9 @@ exports.search = function (req, res) {
     });
 }
 
-exports.delete = function(req, res) {
+exports.delete = function (req, res) {
     var repository = new Repository(req.params.collectionName);
-    repository.delete(new ObjectId(req.params.id)).then(function(ret) {
+    repository.delete(new ObjectId(req.params.id)).then(function (ret) {
         res.json(ret);
     });
 }
