@@ -39,6 +39,61 @@
             &nbsp;
             <a class="btn btn-default" ng-click="promptDelete(agenda._id)">Delete</a>
         </div>
+
+        <div id="activity">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a data-toggle="tab" data-target="#tab-general" href="">General</a>
+                </li>
+                <li>
+                    <a data-toggle="tab" data-target="#tab-note" href="">Operations</a>
+                </li>
+                <li>
+                    <a data-target="#tab-related" data-toggle="tab" href="">Activities</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab-general">
+                    <table ng-table="tableGeneral" class="table">
+                        <thead>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="model in $data">
+                                <td>
+                                    <span class="activity">{{ model }}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane" id="tab-note">
+                    <table ng-table="tableOperations" class="table">
+                        <thead>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="model in $data">
+                                <td>
+                                    <span class="activity">{{ model }}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane" id="tab-related">
+                    <table ng-table="tableActivities" class="table">
+                        <thead>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="model in $data">
+                                <td>
+                                    <span class="activity">{{ model }}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
 
