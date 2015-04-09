@@ -77,11 +77,21 @@ starApp.controller('addNewController', function ($scope, $routeParams, $http, $l
         var data = JSON.parse(JSON.stringify($scope.new));
         data.Date = new Date($scope.new.Date).getTime();
         data.CreatedBy = auth.getUserName();
-        var url = '/news/insert';
+        var userAction = {
+            'collection': 'news',
+            'date': new Date().getTime(),
+            'title': data.Title,
+            'createdBy': auth.getUserName()
+        };
+        var url;
         if (id != undefined) {
             data.Id = id;
             url = '/news/update';
             data.UpdatedBy = auth.getUserName();
+            userAction.operation = 'Edit';
+        } else {
+            url = '/news/insert';
+            userAction.operation = 'Add';
         }
         $http({
             method: 'POST',
@@ -93,5 +103,6 @@ starApp.controller('addNewController', function ($scope, $routeParams, $http, $l
         }).error(function (err) {
             console.log(err);
         });
+        $http.post('/userActions/insert', userAction);
     }
 });
