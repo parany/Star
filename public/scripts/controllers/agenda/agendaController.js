@@ -4,51 +4,13 @@
     
     $scope.agenda = {};
     $scope.data = [];
-    $scope.general = [];
-    $scope.activities = [];
-    $scope.operations = [];
+    $scope.activity = {};
 
     $scope.operations = [
         'Add "La vie et la nature" on 12/08/2015',
         'Edit "Une journée..." on 11/06/2015',
         'Delete "Difficulté passagère" on 21/11/2016'
     ];
-    
-    $scope.tableActivities = new ngTableParams({
-        page: 1,
-        total: 1,
-        count: 5
-    }, {
-        counts: [],
-        getData: function ($defer, params) {
-            $defer.resolve($scope.activities.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: { $data: {} }
-    });
-    
-    $scope.tableOperations = new ngTableParams({
-        page: 1,
-        total: 1,
-        count: 5
-    }, {
-        counts: [],
-        getData: function ($defer, params) {
-            $defer.resolve($scope.operations.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: { $data: {} }
-    });
-
-    $scope.tableGeneral = new ngTableParams({
-        page: 1,
-        total: 1,
-        count: 5
-    }, {
-        counts: [],
-        getData: function ($defer, params) {
-            $defer.resolve($scope.general.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: { $data: {} }
-    });
     
     $scope.tableParams = new ngTableParams({
         page: 1,
@@ -62,20 +24,8 @@
         $scope: { $data: {} }
     });
 
-    $http.get('/agendas/getActivities/' + auth.getUserName()).success(function(data) {
-        $scope.general = [
-            'Total number of items: ' + data.nbOfItems,
-            'First added: "' + data.firstAdded + '"',
-            'Last added: "' + data.lastAdded + '"'
-        ];
-        $scope.tableGeneral.reload();
-
-        $scope.activities = [
-            'Added this year: ' + data.nbOfYearItems,
-            'Added this month: ' + data.nbOfMonthItems,
-            'Added this week: ' + data.nbOfWeekItems
-        ];
-        $scope.tableActivities.reload();
+    $http.get('/agendas/getActivities/' + auth.getUserName()).success(function (data) {
+        $scope.activity = data;
     });
     
     $scope.$watch('Date', function () {

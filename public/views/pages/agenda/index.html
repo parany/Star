@@ -46,47 +46,71 @@
                     <a data-toggle="tab" data-target="#tab-general" href="">General</a>
                 </li>
                 <li>
-                    <a data-toggle="tab" data-target="#tab-note" href="">Operations</a>
+                    <a data-toggle="tab" data-target="#tab-operations" href="">Operations</a>
                 </li>
                 <li>
-                    <a data-target="#tab-related" data-toggle="tab" href="">Activities</a>
+                    <a data-target="#tab-activities" data-toggle="tab" href="">Activities</a>
                 </li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="tab-general">
-                    <table ng-table="tableGeneral" class="table">
-                        <thead>
-                        </thead>
+                    <table class="table ng-table">
                         <tbody>
-                            <tr ng-repeat="model in $data">
+                            <tr>
                                 <td>
-                                    <span class="activity">{{ model }}</span>
+                                    <span class="activity">Total number of items: <span class="badge">{{ activity.nbOfItems }}</span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="activity">First added: <span class="badge">{{ activity.firstAdded }}</span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="activity">Last added: <span class="badge">{{ activity.lastAdded }}</span></span>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="tab-pane" id="tab-note">
-                    <table ng-table="tableOperations" class="table">
-                        <thead>
-                        </thead>
+                <div class="tab-pane" id="tab-operations">
+                    <table class="table ng-table">
                         <tbody>
-                            <tr ng-repeat="model in $data">
+                            <tr>
                                 <td>
-                                    <span class="activity">{{ model }}</span>
+                                    <span class="activity">Add <span class="badge">Une journee...</span> on 11/06/2015</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="activity">Edit <span class="badge">La vie et la nature</span> on 12/08/2015</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="activity">Delete <span class="badge">Difficulte passagere</span> on 21/11/2016</span>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="tab-pane" id="tab-related">
-                    <table ng-table="tableActivities" class="table">
-                        <thead>
-                        </thead>
+                <div class="tab-pane" id="tab-activities">
+                    <table class="table ng-table">
                         <tbody>
-                            <tr ng-repeat="model in $data">
+                            <tr>
                                 <td>
-                                    <span class="activity">{{ model }}</span>
+                                    <span class="activity">Added this year: <span class="badge">{{ activity.nbOfYearItems }}</span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="activity">Added this month: <span class="badge">{{ activity.nbOfMonthItems }}</span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="activity">Added this week: <span class="badge">{{ activity.nbOfWeekItems }}</span></span>
                                 </td>
                             </tr>
                         </tbody>
