@@ -4,6 +4,26 @@
     $scope.explication = {};
     $scope.verses = [];
     $scope.explications = [];
+    $scope.activity = {};
+    $scope.activity.operations = [];
+    
+    $scope.tableOperations = new ngTableParams({
+        page: 1,
+        total: 1,
+        count: 5
+    }, {
+        counts: [],
+        getData: function ($defer, params) {
+            $defer.resolve($scope.activity.operations.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+        },
+        $scope: { $data: {} }
+    });
+    
+    $http.get('/explications/getActivities/' + auth.getUserName()).success(function (data) {
+        $scope.activity = data;
+        $scope.activity.operations.forEach(function (value) { value.date = new Date(value.date); });
+        $scope.tableOperations.reload();
+    });
     
     $scope.tableExplications = new ngTableParams({
         page: 1,
@@ -75,18 +95,26 @@
         $scope.explication.$selected = true;
     }
     
-    $scope.promptDelete = function (id) {
+    $scope.promptDelete = function (model) {
         var response = confirm("Are you sure you want to delete this explication?");
         if (response) {
-            $http.get('/explications/delete/' + id).success(function () {
+            $http.get('/explications/delete/' + model._id).success(function () {
             }).success(function () {
-                $scope.explications = $scope.explications.filter(function (d) { return d._id != id; });
+                $scope.explications = $scope.explications.filter(function (d) { return d._id != model._id; });
                 if ($scope.explications.length > 0)
                     $scope.changeExplicationSelected($scope.explications[0]);
                 else
                     $scope.changeExplicationSelected({});
                 $scope.tableExplications.reload();
             });
+            var userAction = {
+                'collection': 'explications',
+                'operation': 'Delete',
+                'date': new Date().getTime(),
+                'title': model.Title,
+                'createdBy': auth.getUserName()
+            };
+            $http.post('/userActions/insert', userAction);
         }
     }
     

@@ -4,6 +4,26 @@
     
     $scope.agenda = {};
     $scope.data = [];
+    $scope.activity = {};
+    $scope.activity.operations = [];
+    
+    $scope.tableOperations = new ngTableParams({
+        page: 1,
+        total: 1,
+        count: 5
+    }, {
+        counts: [],
+        getData: function ($defer, params) {
+            $defer.resolve($scope.activity.operations.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+        },
+        $scope: { $data: {} }
+    });
+    
+    $http.get('/agendas/getActivities/' + auth.getUserName()).success(function (data) {
+        $scope.activity = data;
+        $scope.activity.operations.forEach(function (value) { value.date = new Date(value.date); });
+        $scope.tableOperations.reload();
+    });
     
     $scope.tableParams = new ngTableParams({
         page: 1,
@@ -16,7 +36,6 @@
         },
         $scope: { $data: {} }
     });
-    $scope.tableParams.settings().$scope = $scope;
     
     $scope.$watch('Date', function () {
         $scope.textToSearch = '';
@@ -59,12 +78,11 @@
         $scope.agenda.$selected = true;
     }
     
-    $scope.promptDelete = function (id) {
+    $scope.promptDelete = function (model) {
         var response = confirm("Are you sure you want to delete this agenda?");
         if (response) {
-            $http.get('/agendas/delete/' + id).success(function () {
-            }).success(function () {
-                $scope.data = $scope.data.filter(function (d) { return d._id != id; });
+            $http.get('/agendas/delete/' + model._id).success(function () {
+                $scope.data = $scope.data.filter(function (d) { return d._id != model._id; });
                 if ($scope.data.length > 0) {
                     $scope.changeAgendaSelected($scope.data[0]);
                 } else {
@@ -72,6 +90,14 @@
                 }
                 $scope.tableParams.reload();
             });
+            var userAction = {
+                'collection': 'agendas',
+                'operation': 'Delete',
+                'date': new Date().getTime(),
+                'title': model.Title,
+                'createdBy': auth.getUserName()
+            };
+            $http.post('/userActions/insert', userAction);
         }
     }
     

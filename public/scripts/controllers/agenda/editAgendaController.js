@@ -48,5 +48,13 @@
         }).error(function (err) {
             console.log(err);
         });
+        var userAction = {
+            'collection': 'agendas',
+            'operation': 'Edit',
+            'date': new Date().getTime(),
+            'title': data.Title,
+            'createdBy': auth.getUserName()
+        };
+        $http.post('/userActions/insert', userAction);
     }
 });
