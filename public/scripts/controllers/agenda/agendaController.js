@@ -7,18 +7,6 @@
     $scope.activity = {};
     $scope.activity.operations = [];
     
-    $scope.tableParams = new ngTableParams({
-        page: 1,
-        total: 1,
-        count: 5
-    }, {
-        counts: [],
-        getData: function ($defer, params) {
-            $defer.resolve($scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: { $data: {} }
-    });
-    
     $scope.tableOperations = new ngTableParams({
         page: 1,
         total: 1,
@@ -33,8 +21,20 @@
     
     $http.get('/agendas/getActivities/' + auth.getUserName()).success(function (data) {
         $scope.activity = data;
-        $scope.activity.operations.forEach(function(value) { value.date = new Date(value.date); });
+        $scope.activity.operations.forEach(function (value) { value.date = new Date(value.date); });
         $scope.tableOperations.reload();
+    });
+    
+    $scope.tableParams = new ngTableParams({
+        page: 1,
+        total: 1,
+        count: 5
+    }, {
+        counts: [],
+        getData: function ($defer, params) {
+            $defer.resolve($scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+        },
+        $scope: { $data: {} }
     });
     
     $scope.$watch('Date', function () {
