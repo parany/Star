@@ -135,6 +135,10 @@
 </div>
 
 <div class="col-md-3">
+    <h3>Tags</h3>
+    <div class="treaty-badge">
+        <span ng-repeat="tag in explication.TagIdList"><span class="badge">{{ tag }}</span>&nbsp;</span>
+    </div>
     <h3>Verses</h3>
     <table ng-table="tableVerses" class="table ng-table-rowselected">
         <thead>
@@ -145,8 +149,4 @@
             </tr>
         </tbody>
     </table>
-    <h3>Tags</h3>
-    <div class="treaty-badge">
-        <span ng-repeat="tag in explication.TagIdList"><span class="badge">{{ tag }}</span>&nbsp;</span>
-    </div>
 </div>
