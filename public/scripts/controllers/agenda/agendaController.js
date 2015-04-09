@@ -5,18 +5,13 @@
     $scope.agenda = {};
     $scope.data = [];
     $scope.general = [];
+    $scope.activities = [];
     $scope.operations = [];
 
     $scope.operations = [
         'Add "La vie et la nature" on 12/08/2015',
         'Edit "Une journée..." on 11/06/2015',
         'Delete "Difficulté passagère" on 21/11/2016'
-    ];
-    
-    $scope.activities = [
-        'Added this year: 125',
-        'Added this month: 6',
-        'Added this week: 3'
     ];
     
     $scope.tableActivities = new ngTableParams({
@@ -74,6 +69,13 @@
             'Last added: "' + data.lastAdded + '"'
         ];
         $scope.tableGeneral.reload();
+
+        $scope.activities = [
+            'Added this year: ' + data.nbOfYearItems,
+            'Added this month: ' + data.nbOfMonthItems,
+            'Added this week: ' + data.nbOfWeekItems
+        ];
+        $scope.tableActivities.reload();
     });
     
     $scope.$watch('Date', function () {
