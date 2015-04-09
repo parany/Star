@@ -54,8 +54,8 @@ exports.getByDate = function (req, res) {
         var records = docs.filter(function (a) {
             return a.Date >= firstMsOfDay && a.Date <= lastMsOfDay;
         });
-        var dates = docs.map(function (a) { return a.Date; }).filter(function(d) {
-             return d < firstMsOfDay || d > lastMsOfDay;
+        var dates = docs.map(function (a) { return a.Date; }).filter(function (d) {
+            return d < firstMsOfDay || d > lastMsOfDay;
         });
         var prevs = dates.filter(function (d) { return d < dateTime; }).sort(function (d1, d2) { return d2 - d1; });
         var nexts = dates.filter(function (d) { return d > dateTime; }).sort(function (d1, d2) { return d1 - d2; });
@@ -70,7 +70,12 @@ exports.getByDate = function (req, res) {
 
 exports.getActivities = function (req, res) {
     var repository = new Repository(req.params.collectionName);
-    repository.find({ CreatedBy: req.params.author, sort: { date: 1 } }).then(function (docs) {
+    var userActionRepository = new Repository('userActions');
+    var operations = [];
+    userActionRepository.find({ collection: req.params.collectionName, sort: { date: -1 }, limit: 3 }).then(function (docs) {
+        operations = docs;
+        return repository.find({ CreatedBy: req.params.author, sort: { date: 1 } });
+    }).then(function (docs) {
         var date = new Date();
         var firstTimeOfYear = date.getFirstMsOfYear();
         var lastTimeOfYear = date.getLastMsOfYear();
@@ -95,7 +100,8 @@ exports.getActivities = function (req, res) {
             lastAdded: _.last(docs).Title,
             nbOfYearItems: yearItems.length,
             nbOfMonthItems: monthItems.length,
-            nbOfWeekItems: weekItems.length
+            nbOfWeekItems: weekItems.length,
+            operations: operations
         };
         res.send(item);
     });

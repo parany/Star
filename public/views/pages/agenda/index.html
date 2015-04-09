@@ -37,7 +37,7 @@
             &nbsp;
             <a class="btn btn-success" ng-href="#/agenda/edit/{{ agenda._id }}" ng-disabled="agenda._id == undefined">Edit</a>
             &nbsp;
-            <a class="btn btn-default" ng-click="promptDelete(agenda._id)">Delete</a>
+            <a class="btn btn-default" ng-click="promptDelete(agenda)">Delete</a>
         </div>
 
         <div id="activity">
@@ -75,21 +75,13 @@
                     </table>
                 </div>
                 <div class="tab-pane" id="tab-operations">
-                    <table class="table ng-table">
+                    <table ng-table="tableOperations" class="table">
+                        <thead>
+                        </thead>
                         <tbody>
-                            <tr>
+                            <tr ng-repeat="model in $data">
                                 <td>
-                                    <span class="activity">Add <span class="badge">Une journee...</span> on 11/06/2015</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span class="activity">Edit <span class="badge">La vie et la nature</span> on 12/08/2015</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span class="activity">Delete <span class="badge">Difficulte passagere</span> on 21/11/2016</span>
+                                    <span class="activity">{{ model.operation }} <span class="badge">{{ model.title }}</span> on {{ model.date | date: "dd MMM yyyy" }}</span>
                                 </td>
                             </tr>
                         </tbody>
