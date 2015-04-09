@@ -16,12 +16,24 @@ exports.getByDate = function (req, res) {
         treatiesDocs = docs;
         return tagsRepository.find({ Type: 'Treaty' });
     }).then(function (tagDocs) {
+        var firstMsOfDay = date.getFirstMsOfDay();
+        var lastMsOfDay = date.getLastMsOfDay();
         var explications = treatiesDocs.filter(function (a) {
-            return a.Date >= date.getFirstMs() && a.Date <= date.getLastMs();
+            return a.Date >= firstMsOfDay && a.Date <= lastMsOfDay;
         });
-        var dates = treatiesDocs.map(function (a) { return a.Date; }).filter(function (d) { return d < date.getFirstMs() || d > date.getLastMs(); });
-        var prevs = dates.filter(function (d) { return d < dateTime; }).sort(function (d1, d2) { return d2 - d1; });
-        var nexts = dates.filter(function (d) { return d > dateTime; }).sort(function (d1, d2) { return d1 - d2; });
+        var dates = treatiesDocs.map(function (a) { return a.Date; }).filter(function (d) {
+            return d < firstMsOfDay || d > lastMsOfDay;
+        });
+        var prevs = dates.filter(function (d) {
+            return d < dateTime;
+        }).sort(function (d1, d2) {
+            return d2 - d1;
+        });
+        var nexts = dates.filter(function (d) {
+            return d > dateTime;
+        }).sort(function (d1, d2) {
+            return d1 - d2;
+        });
         for (var i = 0; i < explications.length; i++) {
             for (var j = 0; j < explications[i].TagIdList.length; j++) {
                 explications[i].TagIdList[j] = _.find(tagDocs, function (t) {
