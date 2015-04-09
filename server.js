@@ -44,6 +44,7 @@ app.post('/:collectionName/insert', genericLogic.insert);
 app.get('/:collectionName/getByDate/:author/:date', genericLogic.getByDate);
 app.get('/:collectionName/delete/:id', genericLogic.delete);
 app.post('/:collectionName/search/:text', genericLogic.search);
+app.get('/:collectionName/getActivities/:author', genericLogic.getActivities);
 
 // launch the server
 http.createServer(app).listen(config.port, function () {

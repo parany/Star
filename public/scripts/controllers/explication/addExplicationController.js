@@ -81,11 +81,21 @@ starApp.controller('addExplicationController', function ($scope, $routeParams, $
         data.CreatedBy = auth.getUserName();
         data.TagIdList = $scope.tags.filter(function (t) { return t.Selected == true; }).map(function (t) { return t._id; });
         data.VerseReadList = $scope.read.verses;
-        var url = '/explications/insert';
+        var userAction = {
+            'collection': 'explications',
+            'date': new Date().getTime(),
+            'title': data.Title,
+            'createdBy': auth.getUserName()
+        };
+        var url;
         if (id != undefined) {
             data._id = id;
             url = '/explications/update';
             data.UpdatedBy = auth.getUserName();
+            userAction.operation = 'Edit';
+        } else {
+            url = '/explications/insert';
+            userAction.operation = 'Add';
         }
         $http({
             method: 'POST',
@@ -97,5 +107,6 @@ starApp.controller('addExplicationController', function ($scope, $routeParams, $
         }).error(function (err) {
             console.log(err);
         });
+        $http.post('/userActions/insert', userAction);
     }
 });
