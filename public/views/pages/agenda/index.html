@@ -81,7 +81,10 @@
                         <tbody>
                             <tr ng-repeat="model in $data">
                                 <td>
-                                    <span class="activity">{{ model.operation }} <span class="badge">{{ model.title }}</span> on {{ model.date | date: "dd MMM yyyy" }}</span>
+                                    <span class="activity">
+                                        {{ model.operation }} <span class="badge">{{ model.title }}</span>
+                                        on {{ model.date | date: "dd MMM yyyy" }}
+                                    </span>
                                 </td>
                             </tr>
                         </tbody>
