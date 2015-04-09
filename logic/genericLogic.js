@@ -72,7 +72,12 @@ exports.getActivities = function (req, res) {
     var repository = new Repository(req.params.collectionName);
     var userActionRepository = new Repository('userActions');
     var operations = [];
-    userActionRepository.find({ collection: req.params.collectionName, sort: { date: -1 }, limit: 3 }).then(function (docs) {
+    userActionRepository.find({
+        collection: req.params.collectionName, 
+        createdBy: req.params.author, 
+        sort: { date: -1 }, 
+        limit: 3
+    }).then(function (docs) {
         operations = docs;
         return repository.find({ CreatedBy: req.params.author, sort: { date: 1 } });
     }).then(function (docs) {
