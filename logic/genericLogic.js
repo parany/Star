@@ -79,7 +79,7 @@ exports.getActivities = function (req, res) {
         limit: 3
     }).then(function (docs) {
         operations = docs;
-        return repository.find({ CreatedBy: req.params.author, sort: { date: 1 } });
+        return repository.find({ CreatedBy: req.params.author, sort: { Date: 1 } });
     }).then(function (docs) {
         var date = new Date();
         var firstTimeOfYear = date.getFirstMsOfYear();

@@ -3,6 +3,26 @@ starApp.controller('treatyController', function ($scope, $routeParams, $http, $l
     $scope.Date = $cookieStore.get('lastTreaty') || new Date().toISOString().split('T')[0];
     $scope.treaty = {};
     $scope.data = [];
+    $scope.activity = {};
+    $scope.activity.operations = [];
+    
+    $scope.tableOperations = new ngTableParams({
+        page: 1,
+        total: 1,
+        count: 5
+    }, {
+        counts: [],
+        getData: function ($defer, params) {
+            $defer.resolve($scope.activity.operations.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+        },
+        $scope: { $data: {} }
+    });
+    
+    $http.get('/treaties/getActivities/' + auth.getUserName()).success(function (data) {
+        $scope.activity = data;
+        $scope.activity.operations.forEach(function (value) { value.date = new Date(value.date); });
+        $scope.tableOperations.reload();
+    });
     
     $scope.tableParams = new ngTableParams({
         page: 1,
@@ -58,18 +78,26 @@ starApp.controller('treatyController', function ($scope, $routeParams, $http, $l
         $scope.treaty.$selected = true;
     }
     
-    $scope.promptDelete = function (id) {
+    $scope.promptDelete = function (model) {
         var response = confirm("Are you sure you want to delete this treaty?");
         if (response) {
-            $http.get('/treaties/delete/' + id).success(function () {
+            $http.get('/treaties/delete/' + model._id).success(function () {
             }).success(function () {
-                $scope.data = $scope.data.filter(function (d) { return d._id != id; });
+                $scope.data = $scope.data.filter(function (d) { return d._id != model._id; });
                 if ($scope.data.length > 0)
                     $scope.changeTreatySelected($scope.data[0]);
                 else
                     $scope.changeTreatySelected({});
                 $scope.tableParams.reload();
             });
+            var userAction = {
+                'collection': 'treaties',
+                'operation': 'Delete',
+                'date': new Date().getTime(),
+                'title': model.Title,
+                'createdBy': auth.getUserName()
+            };
+            $http.post('/userActions/insert', userAction);
         }
     }
     

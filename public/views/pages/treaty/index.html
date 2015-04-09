@@ -37,23 +37,98 @@
             &nbsp;
             <a class="btn btn-success" ng-href="#/treaty/edit/{{ treaty._id }}" ng-disabled="treaty._id == undefined">Edit</a>
             &nbsp;
-            <a class="btn btn-default" ng-click="promptDelete(treaty._id)">Delete</a>
+            <a class="btn btn-default" ng-click="promptDelete(treaty)">Delete</a>
         </div>
     </form>
+
+    <div id="activity">
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a data-toggle="tab" data-target="#tab-general" href="">General</a>
+            </li>
+            <li>
+                <a data-toggle="tab" data-target="#tab-operations" href="">Operations</a>
+            </li>
+            <li>
+                <a data-target="#tab-activities" data-toggle="tab" href="">Activities</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab-general">
+                <table class="table ng-table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span class="activity">Total number of items: <span class="badge">{{ activity.nbOfItems }}</span></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="activity">First added: <span class="badge">{{ activity.firstAdded }}</span></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="activity">Last added: <span class="badge">{{ activity.lastAdded }}</span></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane" id="tab-operations">
+                <table ng-table="tableOperations" class="table">
+                    <thead>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="model in $data">
+                            <td>
+                                <span class="activity">
+                                    {{ model.operation }} <span class="badge">{{ model.title }}</span>
+                                    on {{ model.date | date: "dd MMM yyyy" }}
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane" id="tab-activities">
+                <table class="table ng-table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span class="activity">Added this year: <span class="badge">{{ activity.nbOfYearItems }}</span></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="activity">Added this month: <span class="badge">{{ activity.nbOfMonthItems }}</span></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="activity">Added this week: <span class="badge">{{ activity.nbOfWeekItems }}</span></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <div class="col-md-6">
     <h3 style="text-align: center;">
-        <span   ng-if="!textToSearch || textToSearch.length < 1" 
-                class="glyphicon glyphicon-chevron-left" 
-                ng-click="prevTreaty()"
-                style="opacity: 1;">
+        <span ng-if="!textToSearch || textToSearch.length < 1"
+              class="glyphicon glyphicon-chevron-left"
+              ng-click="prevTreaty()"
+              style="opacity: 1;">
         </span>
         {{ Title }}
-        <span   ng-if="!textToSearch || textToSearch.length < 1" 
-                class="glyphicon glyphicon-chevron-right" 
-                ng-click="nextTreaty()" 
-                style="opacity: 1;">
+        <span ng-if="!textToSearch || textToSearch.length < 1"
+              class="glyphicon glyphicon-chevron-right"
+              ng-click="nextTreaty()"
+              style="opacity: 1;">
         </span>
     </h3>
     <div ng-bind-html="treaty.Text"></div>
