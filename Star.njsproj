@@ -20,6 +20,7 @@
     <Compile Include="logic\verses.js" />
     <Compile Include="logic\notes.js" />
     <Compile Include="logic\genericLogic.js" />
+    <Compile Include="migration\faker.js" />
     <Compile Include="model\repository.js" />
     <Compile Include="public\scripts\config\_.js" />
     <Compile Include="public\scripts\services\numberHelper.js" />
