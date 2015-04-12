@@ -16,11 +16,13 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Compile Include="faker\fakeTag.js" />
+    <Compile Include="faker\faker.js" />
     <Compile Include="helpers\filterHelper.js" />
     <Compile Include="logic\verses.js" />
     <Compile Include="logic\notes.js" />
     <Compile Include="logic\genericLogic.js" />
-    <Compile Include="migration\faker.js" />
+    <Compile Include="faker\index.js" />
     <Compile Include="model\repository.js" />
     <Compile Include="public\scripts\config\_.js" />
     <Compile Include="public\scripts\services\numberHelper.js" />
@@ -112,6 +114,7 @@
     <Folder Include="migration\" />
     <Folder Include="model\" />
     <Folder Include="helpers\" />
+    <Folder Include="faker\" />
     <Folder Include="public\views\" />
     <Folder Include="public\views\directives\" />
     <Folder Include="public\views\directives\core\" />
