@@ -27,7 +27,6 @@
     "buffer-crc32": "0.2.1",
     "range-parser": "0.0.4",
     "q": "1.2.0",
-    "underscore": "1.8.2",
-    "phony": "0.0.2"
+    "underscore": "1.8.2"
   }
 }
