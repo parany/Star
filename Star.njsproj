@@ -12,17 +12,17 @@
     <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <NodeExeArguments>
+    </NodeExeArguments>
+    <StartWebBrowser>True</StartWebBrowser>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
-    <Compile Include="faker\fakeTag.js" />
-    <Compile Include="faker\faker.js" />
     <Compile Include="helpers\filterHelper.js" />
     <Compile Include="logic\verses.js" />
     <Compile Include="logic\notes.js" />
     <Compile Include="logic\genericLogic.js" />
-    <Compile Include="faker\index.js" />
     <Compile Include="model\repository.js" />
     <Compile Include="public\scripts\config\_.js" />
     <Compile Include="public\scripts\services\numberHelper.js" />
@@ -114,7 +114,6 @@
     <Folder Include="migration\" />
     <Folder Include="model\" />
     <Folder Include="helpers\" />
-    <Folder Include="faker\" />
     <Folder Include="public\views\" />
     <Folder Include="public\views\directives\" />
     <Folder Include="public\views\directives\core\" />
