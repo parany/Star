@@ -23,19 +23,21 @@
                    required />
         </div>
     </div>
-    <table ng-table="tableDico" class="table ng-table-rowselected">
-        <thead>
-        </thead>
-        <tbody>
-            <tr ng-repeat="model in $data"
-                ng-click="changeLabelSelected(model)"
-                ng-class="{'active': model.$selected}">
-                <td>
-                    <span>{{ model.Text }}</span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="resizable">
+        <table ng-table="tableDico" class="table ng-table-rowselected">
+            <thead>
+            </thead>
+            <tbody>
+                <tr ng-repeat="model in $data"
+                    ng-click="changeLabelSelected(model)"
+                    ng-class="{'active': model.$selected}">
+                    <td>
+                        <span>{{ model.Text }}</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <div class="col-md-6">

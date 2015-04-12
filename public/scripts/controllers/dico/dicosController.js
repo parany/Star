@@ -1,4 +1,4 @@
-﻿starApp.controller('dicosController', function ($rootScope, $scope, $http, $location, ngTableParams) {
+﻿starApp.controller('dicosController', function ($rootScope, $scope, $http, $location, ngTableParams, _) {
     $scope.cultures = [];
     $scope.dico = {};
     $scope.dicos = [];
@@ -8,11 +8,7 @@
         $scope.cultures = data;
     }).then(function () {
         $http.get('/dicos/findAll').success(function (data) {
-            data.sort(function (a, b) {
-                if (a.Text < b.Text) return -1;
-                if (a.Text > b.Text) return 1;
-                return 0;
-            });
+            data = _.sortBy(data, 'Text');
             $scope.dicos = data;
             $scope.dico = $scope.dicos.length > 0 ? $scope.dicos[0] : {};
             $scope.dico.$selected = true;
@@ -27,7 +23,7 @@
     
     $scope.tableDico = new ngTableParams({
         page: 1,
-        count: 10
+        count: 100
     }, {
         counts: [], // hide page counts control
         getData: function ($defer, params) {
