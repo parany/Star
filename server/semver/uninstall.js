@@ -3,7 +3,7 @@
 // Create a new service object
 var svc = new Service({
     name: 'Agenda',
-    script: require('path').join(__dirname, 'server.js')
+    script: require('path').join(__dirname, '/../server.js')
 });
 
 // Listen for the "uninstall" event so we know when it's done.

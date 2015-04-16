@@ -4,7 +4,7 @@
 var svc = new Service({
     name: 'Agenda',
     description: 'The agenda, ... web server.',
-    script: require('path').join(__dirname, 'server.js'),
+    script: require('path').join(__dirname, '/../server.js'),
     env: {
         name: "NODE_ENV",
         value: "production"
