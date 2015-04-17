@@ -1,5 +1,4 @@
-﻿// includes
-var repository = require('../model/repository.js');
+﻿var repository = require('../model/repository.js');
 
 var columnDefinitions = {
     books: ['CreatedOn', 'UpdatedOn'],
