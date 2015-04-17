@@ -9,9 +9,9 @@ var tags = [];
 var nbMin = 4;
 var nbMax = 10;
 
-types.forEach(function(value, index){
+types.forEach(function(value, index) {
 	var nbs = _.range(0, _.random(nbMin, nbMax));
-	nbs.forEach(function(){
+	nbs.forEach(function() {
 		var tag = {
 			CreatedBy: 'System',
 			CreatedOn: new Date().getTime(),
