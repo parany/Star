@@ -1,41 +1,41 @@
-Temporary Items
 bin
-.AppleDB
-# Directories potentially created on remote AFP share
-obj
-# OSX
-ehthumbs.db
-*.lnk
-# Operating System Files
-.AppleDouble
-Network Trash Folder
-$RECYCLE.BIN/
-# Windows shortcuts
 *.cab
-# Parany ignore list
-.ntvs_analysis.dat
-.v12.suo
-# Files that might appear on external disk
-# Windows Installer files
-.AppleDesktop
-Thumbs.db
-# Recycle Bin used on file shares
-# Folder config file
-*.msm
-*.msi
-.user
-/node_modules
-*.msp
+.AppleDB
+obj
 # =========================
+# OSX
 .Trashes
-.apdisk
-.LSOverride
-.Spotlight-V100
+Thumbs.db
+.AppleDouble
+# Windows shortcuts
+# Windows image file caches
+# Thumbnails
+ehthumbs.db
+# Operating System Files
+/node_modules
+.user
+# Folder config file
+Temporary Items
+# Parany ignore list
 Desktop.ini
 .DS_Store
-# Windows image file caches
+$RECYCLE.BIN/
+.apdisk
+# Recycle Bin used on file shares
+.Spotlight-V100
+Network Trash Folder
+.ntvs_analysis.dat
+# Files that might appear on external disk
+*.msm
+.AppleDesktop
+*.lnk
+*.msi
+# Directories potentially created on remote AFP share
 packages
-._*
-.csproj.user
-# Thumbnails
+.v12.suo
 .ntvs_analysis.dat.tmp
+.LSOverride
+# Windows Installer files
+.csproj.user
+*.msp
+._*
