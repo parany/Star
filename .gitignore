@@ -39,3 +39,4 @@ packages
 .csproj.user
 *.msp
 ._*
+node_modules
