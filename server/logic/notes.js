@@ -12,11 +12,11 @@ exports.getNotesByVerseId = function (req, res) {
     }).then(function (tags) {
         for (var i = 0; i < notes.length; i++) {
             for (var j = 0; j < notes[i].TagIdList.length; j++) {
-                notes[i].TagIdList[j] = _.find(tags, function (tag) { return tag._id == notes[i].TagIdList[j]; }).Description;
+                notes[i].TagIdList[j] = _.find(tags, function (tag) { return tag._id === notes[i].TagIdList[j]; }).Description;
             }
         }
-        var myNote = _.find(notes, function (note) { return note.CreatedBy == req.params.author; });
-        var otherNotes = notes.filter(function (note) { return note.CreatedBy != req.params.author; });
+        var myNote = _.find(notes, function (note) { return note.CreatedBy === req.params.author; });
+        var otherNotes = notes.filter(function (note) { return note.CreatedBy !== req.params.author; });
         var results = {
             MyNote: myNote,
             OtherNotes: otherNotes
@@ -34,10 +34,10 @@ exports.getNoteById = function (req, res) {
         return tagsRepository.find({ Type: 'Note' });
     }).then(function (tags) {
         for (var j = 0; j < note.TagIdList.length; j++) {
-            note.TagIdList[j] = _.find(tags, function (tag) { return tag._id == note.TagIdList[j]; }).Description;
+            note.TagIdList[j] = _.find(tags, function (tag) { return tag._id === note.TagIdList[j]; }).Description;
         }
         for (var i = 0; i < tags.length; i++) {
-            tags[i].IsActive = note.TagIdList.indexOf(tags[i].Description) != -1;
+            tags[i].IsActive = note.TagIdList.indexOf(tags[i].Description) !== -1;
         }
         var result = {
             Note: note,
@@ -62,12 +62,8 @@ exports.getAllNotesWithAssociatedBooks = function (req, res) {
         return booksRepository.find({});
     }).then(function (books) {
         for (var i = 0; i < notes.length; i++) {
-            var verse = _.find(verses, function(v) {
-                return notes[i].VerseId.toString() === v._id.toString();
-            });
-            var book = _.find(books, function(b) {
-                return b._id.equals(verse.BookId);
-            });
+            var verse = _.find(verses, function (v) { return notes[i].VerseId.toString() === v._id.toString(); });
+            var book = _.find(books, function (b) { return b._id.equals(verse.BookId); });
             notes[i].Verse = book.Description + ' ' + verse.Chapter + ',' + verse.Paragraph;
             notes[i].DisplayOrder = book.DisplayOrder;
             notes[i].TestamentId = book.TestamentId;
