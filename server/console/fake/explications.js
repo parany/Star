@@ -21,7 +21,9 @@ var versesWithBooks = [];
 tagsRepository.find({
 	Type: 'Explication'
 }).then(function(docTags) {
-	allTags = docTags.map(function(t){ return t._id.toString(); });
+	allTags = docTags.map(function(t) {
+		return t._id.toString();
+	});
 	return booksRepository.find({});
 }).then(function(docBooks) {
 	allBooks = docBooks;
