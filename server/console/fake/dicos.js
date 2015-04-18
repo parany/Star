@@ -13,7 +13,7 @@ nbOfItems.forEach(function() {
 		CreatedOn: new Date().getTime(),
 		UpdatedBy: 'parany',
 		UpdatedOn: new Date().getTime(),
-		FromId: '54d75e77e328290d200128d8',
+		FromId: '54d75e77e328290d200128d7',
 		ToId: '54d75e77e328290d200128d8',
 		Text: phony.word(),
 		Meaning: '<p>' + phony.lorem_paragraph() + '</p>',

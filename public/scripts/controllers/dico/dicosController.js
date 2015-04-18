@@ -4,25 +4,23 @@
     $scope.dicos = [];
     $scope.filter = {};
 
-    $http.get('/cultures/findAll').success(function(data) {
-        $scope.cultures = data;
-    }).then(function() {
-        $http.get('/dicos/findAll').success(function(data) {
-            data = _.sortBy(data, 'Text');
-            $scope.dicos = data;
-            $scope.dico = $scope.dicos.length > 0 ? $scope.dicos[0] : {};
-            $scope.dico.$selected = true;
-            $scope.dico.From = $scope.cultures.filter(function(d) {
-                return d._id === $scope.dico.FromId;
-            })[0].Description;
-            $scope.dico.To = $scope.cultures.filter(function(d) {
-                return d._id === $scope.dico.ToId;
-            })[0].Description;
-            $scope.illustrations = $scope.dico.Illustrations;
-            $scope.tableIllustration.reload();
-
-            $scope.tableDico.reload();
-        });
+    $http.get('/cultures/findAll').then(function(cultures) {
+        $scope.cultures = cultures.data;
+        return $http.get('/dicos/findAll');
+    }).then(function(dicos) {
+        $scope.dicos = dicos.data;
+        $scope.dicos = _.sortBy($scope.dicos, 'Text');
+        $scope.dico = $scope.dicos.length > 0 ? $scope.dicos[0] : {};
+        $scope.dico.$selected = true;
+        $scope.dico.From = _.findWhere($scope.cultures, {
+            _id: $scope.dico.FromId
+        }).Description;
+        $scope.dico.To = _.findWhere($scope.cultures, {
+            _id: $scope.dico.ToId
+        }).Description;
+        $scope.illustrations = $scope.dico.Illustrations;
+        $scope.tableIllustration.reload();
+        $scope.tableDico.reload();
     });
 
     $scope.tableDico = new ngTableParams({
@@ -45,12 +43,14 @@
         });
         model.$selected = !model.$selected;
         $scope.dico = model;
-        $scope.dico.From = $scope.cultures.filter(function(d) {
-            return d._id === $scope.dico.FromId;
-        })[0].Description;
-        $scope.dico.To = $scope.cultures.filter(function(d) {
-            return d._id === $scope.dico.ToId;
-        })[0].Description;
+
+        $scope.dico.From = _.findWhere($scope.cultures, {
+            _id: $scope.dico.FromId
+        }).Description;
+        $scope.dico.To = _.findWhere($scope.cultures, {
+            _id: $scope.dico.ToId
+        }).Description;
+
         $scope.illustrations = $scope.dico.Illustrations;
         $scope.tableIllustration.reload();
     };
