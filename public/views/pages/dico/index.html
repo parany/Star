@@ -46,7 +46,9 @@
         <a ng-href="#/dico/edit/{{ dico._id }}" class="btn btn-primary">Edit</a>
         <button ng-click="remove(dico._id)" class="btn btn-default">Delete</button>
     </div>
-    <span class="culture">{{ dico.From }} <span class="glyphicon glyphicon-arrow-right"></span> {{ dico.To }}</span>
+    <span class="badge">{{ dico.From }}</span>
+    <span class="glyphicon glyphicon-arrow-right"></span>
+    <span class="badge">{{ dico.To }}</span>
     <div ng-bind-html="dico.Meaning" class="meaning"></div>
 </div>
 
