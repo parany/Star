@@ -21,7 +21,7 @@ tagsRepository.find({
 		return t._id.toString();
 	});
 	return versesRepository.find({
-		limit: 62193,
+		limit: 31090,
 		projection: {
 			_id: 1
 		}
