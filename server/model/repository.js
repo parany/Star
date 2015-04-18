@@ -17,12 +17,14 @@ Repository.prototype.find = function (filters) {
     var deferred = Q.defer();
     var sort = filters.sort || {};
     var limit = filters.limit || config.db.limit;
+    var projection = filters.projection || {};
     
     delete filters.sort;
     delete filters.limit;
+    delete filters.projection;
     
     this.collection
-    .find(filters)
+    .find(filters, projection)
     .sort(sort)
     .limit(limit)
     .toArray(function (err, doc) {
