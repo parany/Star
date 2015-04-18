@@ -78,6 +78,7 @@
             if (response.length == 0)
                 $scope.dicos = [];
             
+            $scope.dicos = _.sortBy($scope.dicos, 'Text');
             $scope.dico = $scope.dicos.length > 0 ? $scope.dicos[0] : {};
             $scope.dico.$selected = true;
             
