@@ -62,16 +62,23 @@ exports.getAllNotesWithAssociatedBooks = function (req, res) {
         return booksRepository.find({});
     }).then(function (books) {
         for (var i = 0; i < notes.length; i++) {
-            var verse = _.find(verses, function (v) { return notes[i].VerseId.toString() == v._id.toString(); });
-            var book = _.find(books, function (b) { return b._id.equals(verse.BookId); });
+            var verse = _.find(verses, function(v) {
+                return notes[i].VerseId.toString() === v._id.toString();
+            });
+            var book = _.find(books, function(b) {
+                return b._id.equals(verse.BookId);
+            });
             notes[i].Verse = book.Description + ' ' + verse.Chapter + ',' + verse.Paragraph;
             notes[i].DisplayOrder = book.DisplayOrder;
+            notes[i].TestamentId = book.TestamentId;
             notes[i].Chapter = verse.Chapter;
             notes[i].Paragraph = verse.Paragraph;
             notes[i].VerseId = verse._id;
             notes[i].NoteId = notes[i]._id;
         }
         notes.sort(function (n1, n2) {
+            if (n1.TestamentId > n2.TestamentId) return 1;
+            if (n1.TestamentId < n2.TestamentId) return -1;
             if (n1.DisplayOrder > n2.DisplayOrder) return 1;
             if (n1.DisplayOrder < n2.DisplayOrder) return -1;
             if (n1.Chapter > n2.Chapter) return 1;
