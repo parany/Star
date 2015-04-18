@@ -9,7 +9,7 @@ var tags = [];
 var nbMin = 4;
 var nbMax = 10;
 
-types.forEach(function(value, index) {
+types.forEach(function(value) {
 	var nbs = _.range(0, _.random(nbMin, nbMax));
 	nbs.forEach(function() {
 		var tag = {
