@@ -77,6 +77,5 @@ tagsRepository.find({
 			});
 		});
 	});
-	console.log(explications[0]);
 	explicationsRepository.save(explications);
 });
