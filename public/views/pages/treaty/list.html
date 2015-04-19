@@ -1,0 +1,38 @@
+<div class="col-md-8" id="read-nav">
+    <table ng-table="tableSearch" class="table ng-table-rowselected">
+        <thead>
+        </thead>
+        <tbody>
+            <tbody ng-repeat="group in $groups">
+                <tr class="ng-table-group">
+                    <td colspan="{{ $columns.length }}">
+                        <a href="" ng-click="group.$hideRows = !group.$hideRows" ng-init="group.$hideRows = false">
+                            <span class="glyphicon" 
+                                  ng-class="{ 
+                                    'glyphicon-chevron-right': group.$hideRows, 
+                                    'glyphicon-chevron-down': !group.$hideRows }">
+                            </span>
+                            <strong>{{ group.value }} ({{ group.data.length }})</strong>
+                        </a>
+                    </td>
+                </tr>
+                <tr ng-hide="group.$hideRows" ng-repeat="model in group.data" ng-click="goToDetail(model)">
+                    <td>
+                        <span class="title-detail"><b>{{ model.Title }}</b></span><br/>
+                        <span class="text-detail">
+                            Created By<i> <u>{{ model.CreatedBy }}</u></i>
+                            On<i> <u>{{ model.Date | date:"dd/MM/yyyy hh:mm:ss" }}</u></i>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-md-4">
+    <h3>Tags</h3>
+    <div class="treaty-badge">
+        <span ng-repeat="tag in treaty.TagIdList"><span class="badge">{{ tag }}</span>&nbsp;</span>
+    </div>
+</div>

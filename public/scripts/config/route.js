@@ -71,6 +71,12 @@
             access_level: ACCESS_LEVELS.Pub,
             menuId: 'treaty'
         })
+         .when('/treaty/list', {
+            templateUrl: 'views/pages/treaty/list.html',
+            controller: "listTreatyController",
+            access_level: ACCESS_LEVELS.Pub,
+            menuId: 'treaty'
+        })
         .when('/treaty/add', {
             templateUrl: 'views/pages/treaty/add.html',
             controller: "addTreatyController",

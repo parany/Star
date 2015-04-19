@@ -196,3 +196,24 @@ blockquote {
     max-width: 304px;
     max-height: 500px;
 }
+
+.over {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -o-text-overflow: ellipsis;
+      margin-bottom: -10px;
+}
+
+.table>tbody+tbody {
+    border-top: 3px solid #ddd;
+}
+
+span.title-detail {
+    font-size: 16px;
+}
+
+span.text-detail {
+    font-size: 11px;
+    color: gray;
+}
