@@ -217,3 +217,23 @@ span.text-detail {
     font-size: 11px;
     color: gray;
 }
+
+.panel-heading {
+    padding: 5px;
+}
+
+.list-sidebar {
+    margin-top: 20px;
+}
+
+.activity .panel-body {
+    padding: 0;
+}
+
+.activity .ng-table {
+    margin-bottom: 0;
+}
+
+[ng-table="tableOperations"] {
+    margin-bottom: -40px !important;
+}

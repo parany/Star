@@ -21,7 +21,7 @@
                         <span class="title-detail"><b>{{ model.Title }}</b></span><br/>
                         <span class="text-detail">
                             Created By<i> <u>{{ model.CreatedBy }}</u></i>
-                            On<i> <u>{{ model.Date | date:"dd/MM/yyyy hh:mm:ss" }}</u></i>
+                            On<i> <u>{{ model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}</u></i>
                         </span>
                     </td>
                 </tr>
@@ -30,9 +30,75 @@
     </table>
 </div>
 
-<div class="col-md-4">
-    <h3>Tags</h3>
-    <div class="treaty-badge">
-        <span ng-repeat="tag in treaty.TagIdList"><span class="badge">{{ tag }}</span>&nbsp;</span>
+<div class="col-md-4 list-sidebar">
+    <div class="panel panel-default activity">
+        <div class="panel-heading">General</div>
+        <div class="panel-body">
+            <table class="table ng-table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="activity">Total number of items: <span class="badge">{{ activity.nbOfItems }}</span></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity">First added: <span class="badge">{{ activity.firstAdded }}</span></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity">Last added: <span class="badge">{{ activity.lastAdded }}</span></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+     <div class="panel panel-default activity">
+        <div class="panel-heading">Operations</div>
+        <div class="panel-body">
+            <table ng-table="tableOperations" class="table">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="model in $data">
+                        <td>
+                            <span class="activity">
+                                {{ model.operation }} 
+                                <span class="badge">{{ model.title }}</span>
+                                on {{ model.date | date: "dd MMM yyyy" }}
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel panel-default activity">
+        <div class="panel-heading">Activities</div>
+        <div class="panel-body">
+            <table class="table ng-table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="activity">Added this year: <span class="badge">{{ activity.nbOfYearItems }}</span></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity">Added this month: <span class="badge">{{ activity.nbOfMonthItems }}</span></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity">Added this week: <span class="badge">{{ activity.nbOfWeekItems }}</span></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

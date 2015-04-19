@@ -76,7 +76,7 @@ exports.getActivities = function (req, res) {
         collection: req.params.collectionName, 
         createdBy: req.params.author, 
         sort: { date: -1 }, 
-        limit: 3
+        limit: 6
     }).then(function (docs) {
         operations = docs;
         return repository.find({ CreatedBy: req.params.author, sort: { Date: 1 } });
