@@ -1,4 +1,4 @@
-﻿starApp.config(function ($routeProvider, ACCESS_LEVELS) {
+﻿starApp.config(function($routeProvider, ACCESS_LEVELS) {
     $routeProvider
         .when('/login', {
             templateUrl: 'views/pages/account/login.html',
@@ -71,9 +71,15 @@
             access_level: ACCESS_LEVELS.Pub,
             menuId: 'treaty'
         })
-         .when('/treaty/list', {
+        .when('/treaty/list', {
             templateUrl: 'views/pages/treaty/list.html',
             controller: "listTreatyController",
+            access_level: ACCESS_LEVELS.Pub,
+            menuId: 'treaty'
+        })
+        .when('/treaty/detail/:id', {
+            templateUrl: 'views/pages/treaty/detail.html',
+            controller: "detailTreatyController",
             access_level: ACCESS_LEVELS.Pub,
             menuId: 'treaty'
         })
@@ -124,6 +130,5 @@
             controller: "addNewController",
             access_level: ACCESS_LEVELS.Pub,
             menuId: 'new'
-        })
-    ;
+        });
 });

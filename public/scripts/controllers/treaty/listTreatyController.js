@@ -63,6 +63,6 @@ starApp.controller('listTreatyController', function($scope, $routeParams, $filte
     });
 
     $scope.goToDetail = function(model) {
-        alert(model._id);
+        $location.path('/treaty/detail/' + model._id);
     };
 });
