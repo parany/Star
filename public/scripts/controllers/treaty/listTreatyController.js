@@ -19,16 +19,18 @@ starApp.controller('listTreatyController', function($scope, $routeParams, $filte
         }
     });
 
-     $scope.tableOperations = new ngTableParams({
+    $scope.tableOperations = new ngTableParams({
         page: 1,
         total: 1,
         count: 10
     }, {
         counts: [],
-        getData: function ($defer, params) {
+        getData: function($defer, params) {
             $defer.resolve($scope.activity.operations.slice((params.page() - 1) * params.count(), params.page() * params.count()));
         },
-        $scope: { $data: {} }
+        $scope: {
+            $data: {}
+        }
     });
 
     $http.post('/treaties/find', {
@@ -52,9 +54,11 @@ starApp.controller('listTreatyController', function($scope, $routeParams, $filte
         $scope.tableSearch.reload();
     });
 
-    $http.get('/agendas/getActivities/' + auth.getUserName()).success(function (data) {
+    $http.get('/treaties/getActivities/' + auth.getUserName()).success(function(data) {
         $scope.activity = data;
-        $scope.activity.operations.forEach(function (value) { value.date = new Date(value.date); });
+        $scope.activity.operations.forEach(function(value) {
+            value.date = new Date(value.date);
+        });
         $scope.tableOperations.reload();
     });
 
