@@ -237,3 +237,11 @@ span.text-detail {
 [ng-table="tableOperations"] {
     margin-bottom: -40px !important;
 }
+
+.btn-left {
+    float: left;
+}
+
+.btn-right {
+    float: right;
+}
