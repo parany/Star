@@ -1,4 +1,9 @@
 <div class="col-md-8" id="read-nav">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <input type="search" placeholder="Search" class="form-control" ng-model="search" />
+        </div>
+    </form>
     <table ng-table="tableSearch" class="table ng-table-rowselected">
         <thead>
         </thead>
@@ -7,8 +12,7 @@
                 <tr class="ng-table-group">
                     <td colspan="{{ $columns.length }}">
                         <a href="" ng-click="group.$hideRows = !group.$hideRows" ng-init="group.$hideRows = false">
-                            <span class="glyphicon" 
-                                  ng-class="{ 
+                            <span class="glyphicon" ng-class="{ 
                                     'glyphicon-chevron-right': group.$hideRows, 
                                     'glyphicon-chevron-down': !group.$hideRows }">
                             </span>
@@ -18,7 +22,8 @@
                 </tr>
                 <tr ng-hide="group.$hideRows" ng-repeat="model in group.data" ng-click="goToDetail(model)">
                     <td>
-                        <span class="title-detail"><b>{{ model.Title }}</b></span><br/>
+                        <span class="title-detail"><b>{{ model.Title }}</b></span>
+                        <br/>
                         <span class="text-detail">
                             Created By<i> <u>{{ model.CreatedBy }}</u></i>
                             On<i> <u>{{ model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}</u></i>
@@ -29,7 +34,6 @@
         </tbody>
     </table>
 </div>
-
 <div class="col-md-4 list-sidebar">
     <div class="panel panel-default activity">
         <div class="panel-heading">General</div>
@@ -55,8 +59,7 @@
             </table>
         </div>
     </div>
-
-     <div class="panel panel-default activity">
+    <div class="panel panel-default activity">
         <div class="panel-heading">Operations</div>
         <div class="panel-body">
             <table ng-table="tableOperations" class="table">
@@ -67,8 +70,7 @@
                         <td>
                             <span class="activity">
                                 {{ model.operation }} 
-                                <span class="badge">{{ model.title }}</span>
-                                on {{ model.date | date: "dd MMM yyyy hh:mm:ss" }}
+                                <span class="badge">{{ model.title }}</span> on {{ model.date | date: "dd MMM yyyy hh:mm:ss" }}
                             </span>
                         </td>
                     </tr>
@@ -76,7 +78,6 @@
             </table>
         </div>
     </div>
-
     <div class="panel panel-default activity">
         <div class="panel-heading">Activities</div>
         <div class="panel-body">

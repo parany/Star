@@ -4,17 +4,34 @@
     <div class="treaty-badge">
         <span ng-repeat="tag in treaty.TagIdList"><span class="badge">{{ tag }}</span>&nbsp;</span>
     </div>
-
-     <form class="form-horizontal">
+    <form class="form-horizontal">
         <div class="btn-left">
             <a class="btn btn-default" ng-href="#/treaty/list">Back</a>
         </div>
         <div class="btn-right">
             <a class="btn btn-primary" ng-click="promptDelete(treaty)">Delete</a>
-            <a class="btn btn-success" ng-href="#/treaty/edit/{{ treaty._id }}" ng-disabled="treaty._id == undefined">Save</a>
+            <a class="btn btn-success" ng-href="#/treaty/edit/{{ treaty._id }}" ng-disabled="treaty._id == undefined">Edit</a>
         </div>
     </form>
 </div>
-
-<div class="col-md-2">
+<div class="col-md-4 list-sidebar">
+    <div class="panel panel-default activity" ng-if="sameDate.length">
+        <div class="panel-heading">In the same date</div>
+        <div class="panel-body">
+            <table ng-table="tableSameDate" class="table">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="model in $data">
+                        <td>
+                            <span class="activity">
+                                <a href="#/treaty/detail/{{ model._id }}">{{ model.Title }}</a>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div
+    >
 </div>

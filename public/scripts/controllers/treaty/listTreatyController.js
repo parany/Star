@@ -5,7 +5,7 @@ starApp.controller('listTreatyController', function($scope, $routeParams, $filte
 
     $scope.tableSearch = new ngTableParams({
         page: 1,
-        count: 5,
+        count: 10,
     }, {
         counts: [], // hide page counts control
         groupBy: 'DateGroup',
