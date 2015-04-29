@@ -2,6 +2,7 @@ starApp.controller('detailTreatyController', function($scope, $routeParams, $htt
     var id = $routeParams.id;
     var tags;
     $scope.sameDate = [];
+    $scope.articles = [];
 
     $scope.tableSameDate = new ngTableParams({
         page: 1,
@@ -11,6 +12,20 @@ starApp.controller('detailTreatyController', function($scope, $routeParams, $htt
         counts: [],
         getData: function($defer, params) {
             $defer.resolve($scope.sameDate.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+        },
+        $scope: {
+            $data: {}
+        }
+    });
+
+    $scope.tableOtherArticles = new ngTableParams({
+        page: 1,
+        total: 1,
+        count: 10
+    }, {
+        counts: [],
+        getData: function($defer, params) {
+            $defer.resolve($scope.articles.slice((params.page() - 1) * params.count(), params.page() * params.count()));
         },
         $scope: {
             $data: {}
@@ -31,15 +46,22 @@ starApp.controller('detailTreatyController', function($scope, $routeParams, $htt
         });
     }).then(function() {
         var date = new Date($scope.treaty.Date);
-        $http.post('/treaties/find', {
-            Date: {
-                gte: date.getFirstMsOfDay(),
-                lte: date.getLastMsOfDay()
-            }
-        }).success(function(data) {
-            $scope.sameDate = data.filter(function(d){
+        $http.get('/treaties/getArticlesInTheSameDate/' + date.getTime()).success(function(data) {
+            $scope.sameDate = data.treaties.filter(function(d) {
                 return d._id !== id;
             });
+            for (var prop in data) {
+                if (prop !== 'treaties') {
+                    data[prop].forEach(function(d) {
+                        $scope.articles.push({
+                            _id: d._id,
+                            Title: d.Title,
+                            Type: prop
+                        });
+                    });
+                }
+            }
+            console.log($scope.articles);
         });
     });
 

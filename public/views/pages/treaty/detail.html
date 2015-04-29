@@ -16,9 +16,9 @@
 </div>
 <div class="col-md-4 list-sidebar">
     <div class="panel panel-default activity" ng-if="sameDate.length">
-        <div class="panel-heading">In the same date</div>
+        <div class="panel-heading">Treaties in the same date</div>
         <div class="panel-body">
-            <table ng-table="tableSameDate" class="table">
+            <table ng-table="tableSameDate" class="table operation">
                 <thead>
                 </thead>
                 <tbody>
@@ -32,6 +32,23 @@
                 </tbody>
             </table>
         </div>
-    </div
-    >
+    </div>
+    <div class="panel panel-default activity" ng-if="articles.length">
+        <div class="panel-heading">Other articles in the same date</div>
+        <div class="panel-body">
+            <table ng-table="tableOtherArticles" class="table operation">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="model in $data">
+                        <td>
+                            <span class="activity">
+                                <a href="#/news/detail/{{ model._id }}">{{ model.Title }} ({{ model.Type }})</a>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

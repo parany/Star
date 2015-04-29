@@ -234,7 +234,7 @@ span.text-detail {
     margin-bottom: 0;
 }
 
-[ng-table="tableOperations"] {
+.operation {
     margin-bottom: -40px !important;
 }
 

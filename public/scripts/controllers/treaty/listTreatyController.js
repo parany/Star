@@ -6,6 +6,7 @@ starApp.controller('listTreatyController', function($scope, $routeParams, $filte
     $scope.tableSearch = new ngTableParams({
         page: 1,
         count: 10,
+        sorting: {Date: 'asc'}
     }, {
         counts: [], // hide page counts control
         groupBy: 'DateGroup',
@@ -47,7 +48,7 @@ starApp.controller('listTreatyController', function($scope, $routeParams, $filte
         $scope.datas.forEach(function(d) {
             d.CreatedBy = auth.getUserName();
             d.Date = new Date(d.Date);
-            d.DateGroup = d.Date.toAnyString();
+            d.DateGroup = d.Date.toCompareString();
         });
         $scope.tableSearch.settings().total = $scope.datas.length;
         $scope.tableSearch.parameters().page = 1;

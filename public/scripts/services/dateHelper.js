@@ -3,6 +3,10 @@
 		return this.getFullYear() + '-' + parseInt(this.getMonth() + 1).format() + '-' + this.getDate().format();
 	};
 
+	Date.prototype.toCompareString = function() {
+		return parseInt(this.getMonth() + 1).format() + '/' + this.getDate().format() + '/' + this.getFullYear();
+	};
+
 	Date.prototype.getFirstMsOfDay = function() {
 		return this.setHours(0, 0, 0, 0);
 	};
