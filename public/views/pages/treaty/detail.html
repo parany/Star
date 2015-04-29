@@ -43,7 +43,43 @@
                     <tr ng-repeat="model in $data">
                         <td>
                             <span class="activity">
-                                <a href="#/news/detail/{{ model._id }}">{{ model.Title }} ({{ model.Type }})</a>
+                                <a href="#/news/detail/{{ model._id }}">{{ model.Title }}<a/> ({{ model.Type }})
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="panel panel-default activity" ng-if="prevs.length">
+        <div class="panel-heading">Near prevs</div>
+        <div class="panel-body">
+            <table ng-table="tablePrevs" class="table operation">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="model in $data">
+                        <td>
+                            <span class="activity">
+                                <a href="#/treaty/detail/{{ model._id }}">{{ model.Title }}</a> on {{ model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="panel panel-default activity" ng-if="nexts.length">
+        <div class="panel-heading">Near nexts</div>
+        <div class="panel-body">
+            <table ng-table="tableNexts" class="table operation">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="model in $data">
+                        <td>
+                            <span class="activity">
+                                <a href="#/treaty/detail/{{ model._id }}">{{ model.Title }}</a> on {{ model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
                             </span>
                         </td>
                     </tr>

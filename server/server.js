@@ -46,6 +46,8 @@ app.get('/:collectionName/delete/:id', genericLogic.delete);
 app.post('/:collectionName/search/:text', genericLogic.search);
 app.get('/:collectionName/getActivities/:author', genericLogic.getActivities);
 app.get('/:collectionName/getArticlesInTheSameDate/:date', genericLogic.getArticlesInTheSameDate);
+app.get('/:collectionName/getPrevNearArticles/:date', genericLogic.getPrevNearArticles);
+app.get('/:collectionName/getNextNearArticles/:date', genericLogic.getNextNearArticles);
 
 // launch the server
 http.createServer(app).listen(config.port, function () {

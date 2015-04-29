@@ -3,6 +3,36 @@ starApp.controller('detailTreatyController', function($scope, $routeParams, $htt
     var tags;
     $scope.sameDate = [];
     $scope.articles = [];
+    $scope.prevs = [];
+    $scope.nexts = [];
+
+    $scope.tableNexts = new ngTableParams({
+        page: 1,
+        total: 1,
+        count: 10
+    }, {
+        counts: [],
+        getData: function($defer, params) {
+            $defer.resolve($scope.nexts.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+        },
+        $scope: {
+            $data: {}
+        }
+    });
+
+    $scope.tablePrevs = new ngTableParams({
+        page: 1,
+        total: 1,
+        count: 10
+    }, {
+        counts: [],
+        getData: function($defer, params) {
+            $defer.resolve($scope.prevs.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+        },
+        $scope: {
+            $data: {}
+        }
+    });
 
     $scope.tableSameDate = new ngTableParams({
         page: 1,
@@ -61,7 +91,20 @@ starApp.controller('detailTreatyController', function($scope, $routeParams, $htt
                     });
                 }
             }
-            console.log($scope.articles);
+        });
+
+        $http.get('/treaties/getPrevNearArticles/' + date.getTime()).success(function(data) {
+            $scope.prevs = data;
+            $scope.prevs.forEach(function(d) {
+                d.Date = new Date(d.Date);
+            });
+        });
+
+        $http.get('/treaties/getNextNearArticles/' + date.getTime()).success(function(data) {
+            $scope.nexts = data;
+            $scope.nexts.forEach(function(d) {
+                d.Date = new Date(d.Date);
+            });
         });
     });
 

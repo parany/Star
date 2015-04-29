@@ -75,8 +75,8 @@ exports.getByDate = function(req, res) {
             return d1 - d2;
         });
         var results = {
-            Prev: prevs.length == 0 ? null : new Date(prevs[0]).toAnyString(),
-            Next: nexts.length == 0 ? null : new Date(nexts[0]).toAnyString(),
+            Prev: prevs.length === 0 ? null : new Date(prevs[0]).toAnyString(),
+            Next: nexts.length === 0 ? null : new Date(nexts[0]).toAnyString(),
             Docs: records
         };
         res.send(results);
@@ -182,5 +182,49 @@ exports.getArticlesInTheSameDate = function(req, res) {
         results[articles[2]] = list2;
         results[articles[3]] = list3;
         res.send(results);
+    });
+};
+
+exports.getPrevNearArticles = function(req, res) {
+    var date = new Date(parseInt(req.params.date));
+    console.log(date);
+    var dateTime = date.getTime();
+    var repository = new Repository(req.params.collectionName);
+    repository.find({
+        Date: {
+            $lt: dateTime
+        },
+        sort: {
+            Date: -1
+        },
+        projection: {
+            Date: 1,
+            Title: 1
+        },
+        limit: 5
+    }).then(function(docs) {
+        res.send(docs);
+    });
+};
+
+exports.getNextNearArticles = function(req, res) {
+    var date = new Date(parseInt(req.params.date));
+    console.log(date);
+    var dateTime = date.getTime();
+    var repository = new Repository(req.params.collectionName);
+    repository.find({
+        Date: {
+            $gt: dateTime
+        },
+        sort: {
+            Date: 1
+        },
+        projection: {
+            Date: 1,
+            Title: 1
+        },
+        limit: 5
+    }).then(function(docs) {
+        res.send(docs);
     });
 };
