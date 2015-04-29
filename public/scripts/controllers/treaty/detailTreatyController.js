@@ -1,4 +1,4 @@
-starApp.controller('detailTreatyController', function($scope, $routeParams, $http, ngTableParams, _, auth, dateHelper) {
+starApp.controller('detailTreatyController', function($scope, $routeParams, $http, ngTableParams, _, auth, dateHelper, $location) {
     var id = $routeParams.id;
     var tags;
     $scope.sameDate = [];
@@ -112,15 +112,8 @@ starApp.controller('detailTreatyController', function($scope, $routeParams, $htt
     $scope.promptDelete = function(model) {
         var response = confirm("Are you sure you want to delete this treaty?");
         if (response) {
-            $http.get('/treaties/delete/' + model._id).success(function() {}).success(function() {
-                $scope.data = $scope.data.filter(function(d) {
-                    return d._id !== model._id;
-                });
-                if ($scope.data.length > 0)
-                    $scope.changeTreatySelected($scope.data[0]);
-                else
-                    $scope.changeTreatySelected({});
-                $scope.tableParams.reload();
+            $http.get('/treaties/delete/' + model._id).success(function() {
+                $location.path('/treaty/list');
             });
             var userAction = {
                 'collection': 'treaties',
