@@ -1,4 +1,4 @@
-starApp.controller('treatyController', function ($scope, $routeParams, $filter, $http, $location, $cookieStore, ngTableParams, auth, dateHelper) {
+starApp.controller('treatyController', function ($scope, $routeParams, $filter, $http, $location, ngTableParams, auth, dateHelper) {
     $scope.datas = [];
     $scope.activity = {};
     $scope.activity.operations = [];
