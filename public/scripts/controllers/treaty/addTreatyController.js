@@ -63,7 +63,7 @@ starApp.controller('addTreatyController', function ($scope, $routeParams, $http,
         if (id) {
             $location.path('/treaty/detail/' + id);
         } else {
-            $location.path('/treaty/list');
+            $location.path('/treaty');
         }
     };
 
@@ -92,9 +92,9 @@ starApp.controller('addTreatyController', function ($scope, $routeParams, $http,
             method: 'POST',
             data: data,
             url: url
-        }).success(function () {
+        }).success(function (ret) {
             $cookieStore.put('lastTreaty', $scope.Date);
-            $location.path('/treaty/detail/' + id);
+            $location.path('/treaty/detail/' + ret[0]._id);
         }).error(function (err) {
             console.log(err);
         });

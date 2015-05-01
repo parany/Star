@@ -113,7 +113,7 @@ starApp.controller('detailTreatyController', function($scope, $routeParams, $htt
         var response = confirm("Are you sure you want to delete this treaty?");
         if (response) {
             $http.get('/treaties/delete/' + model._id).success(function() {
-                $location.path('/treaty/list');
+                $location.path('/treaty');
             });
             var userAction = {
                 'collection': 'treaties',
