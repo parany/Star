@@ -30,18 +30,25 @@
         access_level: ACCESS_LEVELS.Pub,
         menuId: 'read'
     })
-        .when('/agenda', {
+        .when('/agendas', {
         templateUrl: 'views/pages/agenda/index.html',
         controller: "agendaController",
         access_level: ACCESS_LEVELS.Pub,
         menuId: 'agenda'
-    }).when('/agenda/add', {
+    })
+        .when('/agendas/detail/:id', {
+        templateUrl: 'views/pages/agenda/detail.html',
+        controller: "detailAgendaController",
+        access_level: ACCESS_LEVELS.Pub,
+        menuId: 'agenda'
+    })
+    .when('/agendas/add', {
         templateUrl: 'views/pages/agenda/add.html',
         controller: "addAgendaController",
         access_level: ACCESS_LEVELS.Pub,
         menuId: 'agenda'
     })
-        .when('/agenda/edit/:id', {
+        .when('/agendas/edit/:id', {
         templateUrl: 'views/pages/agenda/edit.html',
         controller: "editAgendaController",
         access_level: ACCESS_LEVELS.Pub,
@@ -65,25 +72,25 @@
         access_level: ACCESS_LEVELS.Pub,
         menuId: 'dico'
     })
-        .when('/treaty', {
+        .when('/treaties', {
         templateUrl: 'views/pages/treaty/index.html',
         controller: "treatyController",
         access_level: ACCESS_LEVELS.Pub,
         menuId: 'treaty'
     })
-        .when('/treaty/detail/:id', {
+        .when('/treaties/detail/:id', {
         templateUrl: 'views/pages/treaty/detail.html',
         controller: "detailTreatyController",
         access_level: ACCESS_LEVELS.Pub,
         menuId: 'treaty'
     })
-        .when('/treaty/add', {
+        .when('/treaties/add', {
         templateUrl: 'views/pages/treaty/add.html',
         controller: "addTreatyController",
         access_level: ACCESS_LEVELS.Pub,
         menuId: 'treaty'
     })
-        .when('/treaty/edit/:id', {
+        .when('/treaties/edit/:id', {
         templateUrl: 'views/pages/treaty/add.html',
         controller: "addTreatyController",
         access_level: ACCESS_LEVELS.Pub,

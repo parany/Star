@@ -19,17 +19,22 @@
                                 </li>
                             </ul>
                         </li>
-                        <li id="agenda">
-                            <a ng-href="#/agenda">agenda</a>
+                        <li id="agenda" class="dropdown active">
+                            <a data-toggle="dropdown" class="dropdown-toggle" ng-href="#/agendas">agenda<b class="caret"></b></a>
+                            <ul role="menu" class="dropdown-menu">
+                                <li>
+                                    <a ng-href="#/agendas/add">Add</a>
+                                </li>
+                            </ul>
                         </li>
                         <li id="explication">
                             <a ng-href="#/explication">explication</a>
                         </li>
                         <li id="treaty" class="dropdown active">
-                            <a data-toggle="dropdown" class="dropdown-toggle" ng-href="#/treaty">treaty<b class="caret"></b></a>
+                            <a data-toggle="dropdown" class="dropdown-toggle" ng-href="#/treaties">treaty<b class="caret"></b></a>
                             <ul role="menu" class="dropdown-menu">
                                 <li>
-                                    <a ng-href="#/treaty/add">Add</a>
+                                    <a ng-href="#/treaties/add">Add</a>
                                 </li>
                             </ul>
                         </li>

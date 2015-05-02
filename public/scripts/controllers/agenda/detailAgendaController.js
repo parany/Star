@@ -1,6 +1,5 @@
-starApp.controller('detailTreatyController', function($scope, $routeParams, $http, ngTableParams, _, auth, dateHelper, $location) {
+starApp.controller('detailAgendaController', function($scope, $routeParams, $http, ngTableParams, _, auth, dateHelper, $location) {
     var id = $routeParams.id;
-    var tags;
     $scope.sameDate = [];
     $scope.articles = [];
     $scope.prevs = [];
@@ -62,26 +61,16 @@ starApp.controller('detailTreatyController', function($scope, $routeParams, $htt
         }
     });
 
-    $http.post('/tags/find', {
-        'Type': 'Treaty'
-    }).then(function(dataTags) {
-        tags = dataTags.data;
-        return $http.get('/treaties/findOne/' + id);
-    }).then(function(dataTreaty) {
-        $scope.treaty = dataTreaty.data;
-        $scope.treaty.TagIdList.forEach(function(tag, index, array) {
-            array[index] = _.findWhere(tags, {
-                '_id': tag
-            }).Description;
-        });
+    $http.get('/agendas/findOne/' + id).then(function(dataAgenda) {
+        $scope.agenda = dataAgenda.data;
     }).then(function() {
-        var date = new Date($scope.treaty.Date);
-        $http.get('/treaties/getArticlesInTheSameDate/' + date.getTime()).success(function(data) {
-            $scope.sameDate = data.treaties.filter(function(d) {
+        var date = new Date($scope.agenda.Date);
+        $http.get('/agendas/getArticlesInTheSameDate/' + date.getTime()).success(function(data) {
+            $scope.sameDate = data.agendas.filter(function(d) {
                 return d._id !== id;
             });
             for (var prop in data) {
-                if (prop !== 'treaties') {
+                if (prop !== 'agendas') {
                     data[prop].forEach(function(d) {
                         $scope.articles.push({
                             _id: d._id,
@@ -93,14 +82,14 @@ starApp.controller('detailTreatyController', function($scope, $routeParams, $htt
             }
         });
 
-        $http.get('/treaties/getPrevNearArticles/' + date.getTime()).success(function(data) {
+        $http.get('/agendas/getPrevNearArticles/' + date.getTime()).success(function(data) {
             $scope.prevs = data;
             $scope.prevs.forEach(function(d) {
                 d.Date = new Date(d.Date);
             });
         });
 
-        $http.get('/treaties/getNextNearArticles/' + date.getTime()).success(function(data) {
+        $http.get('/agendas/getNextNearArticles/' + date.getTime()).success(function(data) {
             $scope.nexts = data;
             $scope.nexts.forEach(function(d) {
                 d.Date = new Date(d.Date);
@@ -110,13 +99,13 @@ starApp.controller('detailTreatyController', function($scope, $routeParams, $htt
 
 
     $scope.promptDelete = function(model) {
-        var response = confirm("Are you sure you want to delete this treaty?");
+        var response = confirm("Are you sure you want to delete this agenda?");
         if (response) {
-            $http.get('/treaties/delete/' + model._id).success(function() {
-                $location.path('/treaties');
+            $http.get('/agendas/delete/' + model._id).success(function() {
+                $location.path('/agendas');
             });
             var userAction = {
-                'collection': 'treaties',
+                'collection': 'agendas',
                 'operation': 'Delete',
                 'date': new Date().getTime(),
                 'title': model.Title,

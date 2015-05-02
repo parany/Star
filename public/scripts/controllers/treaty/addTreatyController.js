@@ -61,9 +61,9 @@ starApp.controller('addTreatyController', function ($scope, $routeParams, $http,
 
     $scope.cancel = function () {
         if (id) {
-            $location.path('/treaty/detail/' + id);
+            $location.path('/treaties/detail/' + id);
         } else {
-            $location.path('/treaty');
+            $location.path('/treaties');
         }
     };
 
@@ -93,7 +93,11 @@ starApp.controller('addTreatyController', function ($scope, $routeParams, $http,
             data: data,
             url: url
         }).success(function (ret) {
-            $location.path('/treaty/detail/' + ret[0]._id);
+            if (id != undefined){
+                $location.path('/treaties/detail/' + id);
+            } else {
+                $location.path('/treaties/detail/' + ret[0]._id);
+            }
         }).error(function (err) {
             console.log(err);
         });

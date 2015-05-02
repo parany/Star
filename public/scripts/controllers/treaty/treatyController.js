@@ -64,7 +64,7 @@ starApp.controller('treatyController', function ($scope, $routeParams, $filter, 
     });
 
     $scope.goToDetail = function (model) {
-        $location.path('/treaty/detail/' + model._id);
+        $location.path('/treaties/detail/' + model._id);
     };
 
     $scope.search = function () {
