@@ -66,4 +66,25 @@ starApp.controller('treatyController', function ($scope, $routeParams, $filter, 
     $scope.goToDetail = function (model) {
         $location.path('/treaty/detail/' + model._id);
     };
+
+    $scope.search = function () {
+        if (!$scope.txtSearch || $scope.txtSearch.length < 1) {
+            return;
+        }
+        $http({
+            url: '/treaties/search/' + $scope.txtSearch,
+            method: 'POST',
+            data: { 'filters': ['Title', 'Text'], 'projection': { Date:1, Title: 1, Text: 1 } }
+        }).success(function (data) {
+            $scope.datas = data;
+            $scope.datas.forEach(function (d) {
+                d.CreatedBy = auth.getUserName();
+                d.Date = new Date(d.Date);
+                d.DateGroup = d.Date.toCompareString();
+            });
+            $scope.tableSearch.settings().total = $scope.datas.length;
+            $scope.tableSearch.parameters().page = 1;
+            $scope.tableSearch.reload();
+        });
+    };
 });

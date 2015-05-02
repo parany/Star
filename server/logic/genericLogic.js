@@ -145,7 +145,8 @@ exports.search = function(req, res) {
         return filter;
     });
     repository.find({
-        $or: filters
+        $or: filters,
+        projection: req.body.projection || {}
     }).then(function(agendas) {
         res.send(agendas);
     });
