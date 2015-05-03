@@ -116,8 +116,8 @@ starApp.controller('detailNewController', function ($scope, $routeParams, $http,
     $scope.promptDelete = function (model) {
         var response = confirm("Are you sure you want to delete this new?");
         if (response) {
-            $http.get('/new/delete/' + model._id).success(function () {
-                $location.path('/new');
+            $http.get('/news/delete/' + model._id).success(function () {
+                $location.path('/news');
             });
             var userAction = {
                 'collection': 'news',
