@@ -245,3 +245,7 @@ span.text-detail {
 .btn-right {
     float: right;
 }
+
+.citation {
+    font-size: 9pt;
+}

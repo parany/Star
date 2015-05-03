@@ -42,7 +42,7 @@
         access_level: ACCESS_LEVELS.Pub,
         menuId: 'agenda'
     })
-    .when('/agendas/add', {
+        .when('/agendas/add', {
         templateUrl: 'views/pages/agenda/add.html',
         controller: "addAgendaController",
         access_level: ACCESS_LEVELS.Pub,
@@ -114,25 +114,31 @@
         access_level: ACCESS_LEVELS.Pub,
         menuId: 'explication'
     })
-    .when('/explications/detail/:id', {
+        .when('/explications/detail/:id', {
         templateUrl: 'views/pages/explication/detail.html',
         controller: "detailExplicationController",
         access_level: ACCESS_LEVELS.Pub,
         menuId: 'explication'
     })
-        .when('/new', {
+        .when('/news', {
         templateUrl: 'views/pages/new/index.html',
         controller: "newController",
         access_level: ACCESS_LEVELS.Pub,
         menuId: 'new'
     })
-        .when('/new/add', {
+        .when('/news/detail/:id', {
+        templateUrl: 'views/pages/new/detail.html',
+        controller: "detailNewController",
+        access_level: ACCESS_LEVELS.Pub,
+        menuId: 'new'
+    })
+        .when('/news/add', {
         templateUrl: 'views/pages/new/add.html',
         controller: "addNewController",
         access_level: ACCESS_LEVELS.Pub,
         menuId: 'new'
     })
-        .when('/new/edit/:id', {
+        .when('/news/edit/:id', {
         templateUrl: 'views/pages/new/add.html',
         controller: "addNewController",
         access_level: ACCESS_LEVELS.Pub,

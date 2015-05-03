@@ -43,8 +43,13 @@
                                 </li>
                             </ul>
                         </li>
-                        <li id="new">
-                            <a ng-href="#/new">new</a>
+                        <li id="new" class="dropdown active">
+                            <a data-toggle="dropdown" class="dropdown-toggle" ng-href="#/news">new<b class="caret"></b></a>
+                            <ul role="menu" class="dropdown-menu">
+                                <li>
+                                    <a ng-href="#/news/add">Add</a>
+                                </li>
+                            </ul>
                         </li>
                         <li id="dico">
                             <a ng-href="#/dicos">dico</a>

@@ -60,17 +60,25 @@ starApp.controller('addNewController', function ($scope, $routeParams, $http, $l
 
     $scope.valid = function () {
         return $scope.new.Citations.length > 0 && $scope.new.Content.length > 0 && $scope.new.Source != undefined;
-    }
+    };
 
     $scope.addCitation = function (citation) {
         $scope.new.Citations.push(citation);
         $scope.tableCitations.reload();
         $scope.citation = '';
-    }
+    };
 
     $scope.removeCitation = function (citation) {
         $scope.new.Citations = $scope.new.Citations.filter(function (c) { return c != citation; });
         $scope.tableCitations.reload();
+    };
+    
+    $scope.cancel = function(){
+        if (id) {
+            $location.path('/news/detail/' + id);
+        } else {
+            $location.path('/news');
+        }
     }
 
     $scope.save = function () {
@@ -97,9 +105,12 @@ starApp.controller('addNewController', function ($scope, $routeParams, $http, $l
             method: 'POST',
             data: data,
             url: url
-        }).success(function () {
-            $cookieStore.put('lastNew', $scope.new.Date);
-            $location.path('/new');
+        }).success(function (ret) {
+            if (id != undefined) {
+                $location.path('/news/detail/' + id);
+            } else {
+                $location.path('news/detail/' + ret[0]._id);
+            }
         }).error(function (err) {
             console.log(err);
         });
