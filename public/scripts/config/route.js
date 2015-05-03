@@ -96,21 +96,27 @@
         access_level: ACCESS_LEVELS.Pub,
         menuId: 'treaty'
     })
-        .when('/explication', {
+        .when('/explications', {
         templateUrl: 'views/pages/explication/index.html',
         controller: "explicationController",
         access_level: ACCESS_LEVELS.Pub,
         menuId: 'explication'
     })
-        .when('/explication/add', {
+        .when('/explications/add', {
         templateUrl: 'views/pages/explication/Add.html',
         controller: "addExplicationController",
         access_level: ACCESS_LEVELS.Pub,
         menuId: 'explication'
     })
-        .when('/explication/edit/:id', {
+        .when('/explications/edit/:id', {
         templateUrl: 'views/pages/explication/add.html',
         controller: "addExplicationController",
+        access_level: ACCESS_LEVELS.Pub,
+        menuId: 'explication'
+    })
+    .when('/explications/detail/:id', {
+        templateUrl: 'views/pages/explication/detail.html',
+        controller: "detailExplicationController",
         access_level: ACCESS_LEVELS.Pub,
         menuId: 'explication'
     })

@@ -1,27 +1,37 @@
 <div class="col-md-2">
     <h3>Tags</h3>
     <div class="treaty-badge">
-        <span ng-repeat="tag in treaty.TagIdList"><span class="badge">{{ tag }}</span>&nbsp;</span>
+        <span ng-repeat="tag in explication.TagIdList"><span class="badge">{{ tag }}</span>&nbsp;</span>
     </div>
+    <h3>Verses</h3>
+    <table ng-table="tableVerses" class="table ng-table-rowselected">
+        <thead>
+        </thead>
+        <tbody>
+            <tr ng-repeat="verseRead in $data">
+                <td><span>{{ verseRead.Book + ' ' + verseRead.Chapter + ',' + verseRead.ParagraphMin + '-' + verseRead.ParagraphMax }}</span></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 <div class="col-md-6">
-    <h3 style="text-align: center;">{{ treaty.Title }}</h3>
-    <div ng-bind-html="treaty.Text"></div>
+    <h3 style="text-align: center;">{{ explication.Title }}</h3>
+    <div ng-bind-html="explication.Content"></div>
     <form class="form-horizontal">
         <div class="btn-left">
-            <a class="btn btn-default" ng-href="#/treaties">Back to list</a>
+            <a class="btn btn-default" ng-href="#/explications">Back to list</a>
         </div>
         <div class="btn-right">
-            <a class="btn btn-primary" ng-click="promptDelete(treaty)">Delete</a>
-            <a class="btn btn-success" ng-href="#/treaties/edit/{{ treaty._id }}" ng-disabled="treaty._id == undefined">Edit</a>
+            <a class="btn btn-primary" ng-click="promptDelete(explication)">Delete</a>
+            <a class="btn btn-success" ng-href="#/explications/edit/{{ explication._id }}" ng-disabled="explication._id == undefined">Edit</a>
         </div>
     </form>
 </div>
 
 <div class="col-md-4 list-sidebar">
     <div class="panel panel-default activity" ng-if="sameDate.length">
-        <div class="panel-heading">Treaties in the same date</div>
+        <div class="panel-heading">Explications in the same date</div>
         <div class="panel-body">
             <table ng-table="tableSameDate" class="table operation">
                 <thead>
@@ -30,7 +40,7 @@
                     <tr ng-repeat="model in $data">
                         <td>
                             <span class="activity">
-                                <a href="#/treaties/detail/{{ model._id }}">{{ model.Title }}</a>
+                                <a href="#/explications/detail/{{ model._id }}">{{ model.Title }}</a>
                             </span>
                         </td>
                     </tr>
@@ -66,7 +76,7 @@
                     <tr ng-repeat="model in $data">
                         <td>
                             <span class="activity">
-                                <a href="#/treaties/detail/{{ model._id }}">{{ model.Title }}</a> on {{ model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
+                                <a href="#/explications/detail/{{ model._id }}">{{ model.Title }}</a> on {{ model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
                             </span>
                         </td>
                     </tr>
@@ -84,7 +94,7 @@
                     <tr ng-repeat="model in $data">
                         <td>
                             <span class="activity">
-                                <a href="#/treaties/detail/{{ model._id }}">{{ model.Title }}</a> on {{ model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
+                                <a href="#/explications/detail/{{ model._id }}">{{ model.Title }}</a> on {{ model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
                             </span>
                         </td>
                     </tr>
