@@ -2,18 +2,18 @@ body {
     font-family: monospace;
 }
 
-    #account a {
-        cursor: pointer;
-        color: #989898;
-        text-transform: uppercase;
-        margin-right: 20px;
-        font-family: monospace;
-    }
+#account a {
+    cursor: pointer;
+    color: #989898;
+    text-transform: uppercase;
+    margin-right: 20px;
+    font-family: monospace;
+}
 
-        #account a:hover {
-            text-decoration: none;
-            color: black;
-        }
+    #account a:hover {
+        text-decoration: none;
+        color: black;
+    }
 
 #menu {
     padding-left: 0;
@@ -101,24 +101,24 @@ a.dropdown-toggle {
 
 [contenteditable="true"] {
     height: 250px;
-	overflow-y: auto;
+    overflow-y: auto;
 }
 
-[ng-model='agenda.Text']  [contenteditable="true"] {
-	height: 550px;
-	overflow-y: auto;
+[ng-model='agenda.Text'] [contenteditable="true"] {
+    height: 550px;
+    overflow-y: auto;
     margin-bottom: 10px;
 }
 
- [ng-model='treaty.Text']  [contenteditable="true"]{
-	height: 450px;
-	overflow-y: auto;
+[ng-model='treaty.Text'] [contenteditable="true"] {
+    height: 450px;
+    overflow-y: auto;
     margin-bottom: 10px;
 }
 
- [ng-model='explication.Content']  [contenteditable="true"]{
-	height: 450px;
-	overflow-y: auto;
+[ng-model='explication.Content'] [contenteditable="true"] {
+    height: 450px;
+    overflow-y: auto;
     margin-bottom: 10px;
 }
 
@@ -143,9 +143,9 @@ a.dropdown-toggle {
     margin-bottom: 20px;
 }
 
-.actions.rigth {
-    float: right;
-}
+    .actions.rigth {
+        float: right;
+    }
 
 .culture {
     font-weight: bold;
@@ -166,9 +166,9 @@ a.dropdown-toggle {
     margin-bottom: 25px;
 }
 
-.treaty-badge span {
-    font-size: 13px;
-}
+    .treaty-badge span {
+        font-size: 13px;
+    }
 
 blockquote {
     font-size: 14.5px !important;
@@ -178,9 +178,9 @@ blockquote {
     margin-top: 30px;
 }
 
-#activity li a {
-    font-size: 12px;
-}
+    #activity li a {
+        font-size: 12px;
+    }
 
 .nav-tabs a {
     color: black;
@@ -188,4 +188,64 @@ blockquote {
 
 .activity {
     font-size: 12px;
+}
+
+.resizable {
+    height: 400px;
+    overflow: auto;
+    max-width: 304px;
+    max-height: 500px;
+}
+
+.over {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -o-text-overflow: ellipsis;
+      margin-bottom: -10px;
+}
+
+.table>tbody+tbody {
+    border-top: 3px solid #ddd;
+}
+
+span.title-detail {
+    font-size: 16px;
+}
+
+span.text-detail {
+    font-size: 11px;
+    color: gray;
+}
+
+.panel-heading {
+    padding: 5px;
+}
+
+.list-sidebar {
+    margin-top: 20px;
+}
+
+.activity .panel-body {
+    padding: 0;
+}
+
+.activity .ng-table {
+    margin-bottom: 0;
+}
+
+.operation {
+    margin-bottom: -40px !important;
+}
+
+.btn-left {
+    float: left;
+}
+
+.btn-right {
+    float: right;
+}
+
+.citation {
+    font-size: 9pt;
 }

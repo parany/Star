@@ -33,9 +33,9 @@
             method: 'POST',
             data: data,
             url: '/agendas/insert'
-        }).success(function () {
+        }).success(function (ret) {
             $cookieStore.put('lastAgenda', $scope.Date);
-            $location.path('/agenda');
+            $location.path('/agendas/detail/' + ret[0]._id);
         }).error(function (err) {
             console.log(err);
         });

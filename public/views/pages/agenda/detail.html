@@ -1,0 +1,87 @@
+<div class="col-md-8">
+    <h3 style="text-align: center;">{{ agenda.Title }}</h3>
+    <div ng-bind-html="agenda.Text"></div>
+    <form class="form-horizontal">
+        <div class="btn-left">
+            <a class="btn btn-default" ng-href="#/agendas">Back to list</a>
+        </div>
+        <div class="btn-right">
+            <a class="btn btn-primary" ng-click="promptDelete(agenda)">Delete</a>
+            <a class="btn btn-success" ng-href="#/agendas/edit/{{ agenda._id }}" ng-disabled="agenda._id == undefined">Edit</a>
+        </div>
+    </form>
+</div>
+<div class="col-md-4 list-sidebar">
+    <div class="panel panel-default activity" ng-if="sameDate.length">
+        <div class="panel-heading">Agendas in the same date</div>
+        <div class="panel-body">
+            <table ng-table="tableSameDate" class="table operation">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="model in $data">
+                        <td>
+                            <span class="activity">
+                                <a href="#/agendas/detail/{{ model._id }}">{{ model.Title }}</a>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="panel panel-default activity" ng-if="articles.length">
+        <div class="panel-heading">Other articles in the same date</div>
+        <div class="panel-body">
+            <table ng-table="tableOtherArticles" class="table operation">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="model in $data">
+                        <td>
+                            <span class="activity">
+                                <a href="#/{{ model.Type }}/detail/{{ model._id }}">{{ model.Title }}<a/> ({{ model.Type }})
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="panel panel-default activity" ng-if="prevs.length">
+        <div class="panel-heading">Near prevs</div>
+        <div class="panel-body">
+            <table ng-table="tablePrevs" class="table operation">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="model in $data">
+                        <td>
+                            <span class="activity">
+                                <a href="#/agendas/detail/{{ model._id }}">{{ model.Title }}</a> on {{ model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="panel panel-default activity" ng-if="nexts.length">
+        <div class="panel-heading">Near nexts</div>
+        <div class="panel-body">
+            <table ng-table="tableNexts" class="table operation">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="model in $data">
+                        <td>
+                            <span class="activity">
+                                <a href="#/agendas/detail/{{ model._id }}">{{ model.Title }}</a> on {{ model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,139 +1,90 @@
-﻿starApp.controller('explicationController', function ($rootScope, $scope, $http, $location, $cookieStore, ngTableParams, auth) {
-    $scope.Date = '';
-    $scope.Date = $cookieStore.get('lastExplication') || new Date().toISOString().split('T')[0];
-    $scope.explication = {};
-    $scope.verses = [];
-    $scope.explications = [];
+starApp.controller('explicationController', function ($scope, $routeParams, $filter, $http, $location, ngTableParams, auth, dateHelper) {
+    $scope.datas = [];
     $scope.activity = {};
     $scope.activity.operations = [];
-    
+
+    $scope.tableSearch = new ngTableParams({
+        page: 1,
+        count: 10,
+        sorting: { Date: 'desc' }
+    }, {
+            counts: [], // hide page counts control
+            groupBy: 'DateGroup',
+            total: $scope.datas.length,
+            getData: function ($defer, params) {
+                var orderedData = params.sorting() ? $filter('orderBy')($scope.datas, $scope.tableSearch.orderBy()) : $scope.datas.length;
+                $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+            },
+            $scope: {
+                $data: {}
+            }
+        });
+
     $scope.tableOperations = new ngTableParams({
         page: 1,
         total: 1,
-        count: 5
+        count: 10
     }, {
-        counts: [],
-        getData: function ($defer, params) {
-            $defer.resolve($scope.activity.operations.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+            counts: [],
+            getData: function ($defer, params) {
+                $defer.resolve($scope.activity.operations.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+            },
+            $scope: {
+                $data: {}
+            }
+        });
+
+    $http.post('/explications/find', {
+        CreatedBy: auth.getUserName(),
+        sort: {
+            Date: -1
         },
-        $scope: { $data: {} }
+        projection: {
+            Title: 1,
+            Date: 1
+        }
+    }).success(function (data) {
+        $scope.datas = data;
+        $scope.datas.forEach(function (d) {
+            d.CreatedBy = auth.getUserName();
+            d.Date = new Date(d.Date);
+            d.DateGroup = d.Date.toCompareString();
+        });
+        $scope.tableSearch.settings().total = $scope.datas.length;
+        $scope.tableSearch.parameters().page = 1;
+        $scope.tableSearch.reload();
     });
-    
+
     $http.get('/explications/getActivities/' + auth.getUserName()).success(function (data) {
         $scope.activity = data;
-        $scope.activity.operations.forEach(function (value) { value.date = new Date(value.date); });
+        $scope.activity.operations.forEach(function (value) {
+            value.date = new Date(value.date);
+        });
         $scope.tableOperations.reload();
     });
-    
-    $scope.tableExplications = new ngTableParams({
-        page: 1,
-        total: 1,
-        count: 5
-    }, {
-        counts: [],
-        getData: function ($defer, params) {
-            $defer.resolve($scope.explications.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: { $data: {} }
-    });
-    
-    $scope.tableVerses = new ngTableParams({
-        page: 1,
-        total: 1,
-        count: 5
-    }, {
-        counts: [],
-        getData: function ($defer, params) {
-            $defer.resolve($scope.verses.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: { $data: {} }
-    });
-    
-    $scope.$watch('Date', function () {
-        $scope.textToSearch = '';
-        $cookieStore.put('lastExplication', $scope.Date);
-        $http.get('/explications/getByDate/' + auth.getUserName() + '/' + $scope.Date).success(function (data) {
-            if (data.Explications.length == 0) {
-                data.Explications = [];
-            }
-            $scope.explications = data.Explications;
-            $scope.tableExplications.reload();
-            $scope.explication = data.Explications.length > 0 ? data.Explications[0] : {};
-            if ($scope.explications.length > 0)
-                $scope.changeExplicationSelected($scope.explication);
-            
-            $scope.prev = data.Prev;
-            $scope.next = data.Next;
-            angular.element('.glyphicon-chevron-left').css('opacity', $scope.prev == null ? '0.4' : '1.0');
-            angular.element('.glyphicon-chevron-right').css('opacity', $scope.next == null ? '0.4' : '1.0');
-        });
-    });
-    
-    $scope.prevExplication = function () {
-        if ($scope.prev == null) return;
-        $scope.Date = $scope.prev;
-    }
-    
-    $scope.nextExplication = function () {
-        if ($scope.next == null) return;
-        $scope.Date = $scope.next;
-    }
-    
-    $scope.changeExplicationSelected = function (model) {
-        angular.forEach($scope.explications, function (d) {
-            d.$selected = false;
-        });
-        $scope.explication = model;
-        $scope.verses = $scope.explication.VerseReadList;
-        if ($scope.verses == undefined) $scope.verses = [];
-        $scope.tableVerses.reload();
-        if ($scope.textToSearch.length > 0) {
-            $scope.Title = $scope.explication.Title + ' (' + new Date(model.Date).toISOString().split('T')[0] + ')';
-        } else {
-            $scope.Title = $scope.explication.Title;
-        }
-        $scope.explication.$selected = true;
-    }
-    
-    $scope.promptDelete = function (model) {
-        var response = confirm("Are you sure you want to delete this explication?");
-        if (response) {
-            $http.get('/explications/delete/' + model._id).success(function () {
-            }).success(function () {
-                $scope.explications = $scope.explications.filter(function (d) { return d._id != model._id; });
-                if ($scope.explications.length > 0)
-                    $scope.changeExplicationSelected($scope.explications[0]);
-                else
-                    $scope.changeExplicationSelected({});
-                $scope.tableExplications.reload();
-            });
-            var userAction = {
-                'collection': 'explications',
-                'operation': 'Delete',
-                'date': new Date().getTime(),
-                'title': model.Title,
-                'createdBy': auth.getUserName()
-            };
-            $http.post('/userActions/insert', userAction);
-        }
-    }
-    
-    var searchTimeout;
-    var searchDelay = 200;
+
+    $scope.goToDetail = function (model) {
+        $location.path('/explications/detail/' + model._id);
+    };
+
     $scope.search = function () {
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(function () {
-            if (!$scope.textToSearch || $scope.textToSearch.length < 1) return;
-            $http.get('/explications/search/' + $scope.textToSearch).success(function (data) {
-                $scope.explications = data;
-                $scope.tableExplications.reload();
-                
-                $scope.explication = data.length > 0 ? data[0] : {};
-                if (data.length > 0) {
-                    $scope.Title = $scope.explication.Title + ' (' + new Date($scope.explication.Date).toISOString().split('T')[0] + ')';
-                    $scope.explication.$selected = true;
-                }
+        if (!$scope.txtSearch || $scope.txtSearch.length < 1) {
+            return;
+        }
+        $http({
+            url: '/explications/search/' + $scope.txtSearch,
+            method: 'POST',
+            data: { 'filters': ['Title', 'Text'], 'projection': { Date:1, Title: 1, Text: 1 } }
+        }).success(function (data) {
+            $scope.datas = data;
+            $scope.datas.forEach(function (d) {
+                d.CreatedBy = auth.getUserName();
+                d.Date = new Date(d.Date);
+                d.DateGroup = d.Date.toCompareString();
             });
-        }, searchDelay);
-    }
+            $scope.tableSearch.settings().total = $scope.datas.length;
+            $scope.tableSearch.parameters().page = 1;
+            $scope.tableSearch.reload();
+        });
+    };
 });
