@@ -23,19 +23,21 @@
                    required />
         </div>
     </div>
-    <table ng-table="tableDico" class="table ng-table-rowselected">
-        <thead>
-        </thead>
-        <tbody>
-            <tr ng-repeat="model in $data"
-                ng-click="changeLabelSelected(model)"
-                ng-class="{'active': model.$selected}">
-                <td>
-                    <span>{{ model.Text }}</span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="resizable">
+        <table ng-table="tableDico" class="table ng-table-rowselected">
+            <thead>
+            </thead>
+            <tbody>
+                <tr ng-repeat="model in $data"
+                    ng-click="changeLabelSelected(model)"
+                    ng-class="{'active': model.$selected}">
+                    <td>
+                        <span>{{ model.Text }}</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <div class="col-md-6">
@@ -44,7 +46,9 @@
         <a ng-href="#/dico/edit/{{ dico._id }}" class="btn btn-primary">Edit</a>
         <button ng-click="remove(dico._id)" class="btn btn-default">Delete</button>
     </div>
-    <span class="culture">{{ dico.From }} <span class="glyphicon glyphicon-arrow-right"></span> {{ dico.To }}</span>
+    <span class="badge">{{ dico.From }}</span>
+    <span class="glyphicon glyphicon-arrow-right"></span>
+    <span class="badge">{{ dico.To }}</span>
     <div ng-bind-html="dico.Meaning" class="meaning"></div>
 </div>
 

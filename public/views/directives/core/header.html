@@ -5,36 +5,96 @@
     <div>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
-                <div class="navbar-header">
-                </div>
+                <div class="navbar-header"></div>
                 <div id="navbarCollapse" class="collapse navbar-collapse" ng-if="isLoggedIn">
                     <ul class="nav navbar-nav">
                         <li id="read" class="dropdown active">
-                            <a data-toggle="dropdown" class="dropdown-toggle" ng-href="#/">read<b class="caret"></b></a>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="">read<b class="caret"></b></a>
                             <ul role="menu" class="dropdown-menu">
-                                <li><a ng-href="#/notes">Notes</a></li>
-                                <li><a ng-href="#/relatedverses">Related verses</a></li>
+                                <li>
+                                    <a ng-href="#/">Home</a>
+                                </li>
+                                <li>
+                                    <a ng-href="#/notes">Notes</a>
+                                </li>
+                                <li>
+                                    <a ng-href="#/relatedverses">Related verses</a>
+                                </li>
                             </ul>
                         </li>
-                        <li id="agenda"><a ng-href="#/agenda">agenda</a></li>
-                        <li id="explication"><a ng-href="#/explication">explication</a></li>
-                        <li id="treaty"><a ng-href="#/treaty">treaty</a></li>
-                        <li id="new"><a ng-href="#/new">news</a></li>
-                        <li id="dico"><a ng-href="#/dicos">dico</a></li>
+                        <li id="agenda" class="dropdown active">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="">agenda<b class="caret"></b></a>
+                            <ul role="menu" class="dropdown-menu">
+                                <li>
+                                    <a ng-href="#/agendas">Home</a>
+                                </li>
+                                <li>
+                                    <a ng-href="#/agendas/add">Add</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li id="explication" class="dropdown active">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="">explication<b class="caret"></b></a>
+                            <ul role="menu" class="dropdown-menu">
+                                <li>
+                                    <a ng-href="#/explications">Home</a>
+                                </li>
+                                <li>
+                                    <a ng-href="#/explications/add">Add</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li id="treaty" class="dropdown active">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="">treaty<b class="caret"></b></a>
+                            <ul role="menu" class="dropdown-menu">
+                                <li>
+                                    <a ng-href="#/treaties">Home</a>
+                                </li>
+                                <li>
+                                    <a ng-href="#/treaties/add">Add</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li id="new" class="dropdown active">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="">new<b class="caret"></b></a>
+                            <ul role="menu" class="dropdown-menu">
+                                <li>
+                                    <a ng-href="#/news">Home</a>
+                                </li>
+                                <li>
+                                    <a ng-href="#/news/add">Add</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li id="dico">
+                            <a ng-href="#/dicos">dico</a>
+                        </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right" id="account">
-                        <li><a href="#">{{ fullName }}</a></li>
+                        <li>
+                            <a href="#">{{ fullName }}</a>
+                        </li>
                         <li class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">notifications(6)<b class="caret"></b></a>
                             <ul role="menu" class="dropdown-menu">
-                                <li><a href="#">new commentary(2)</a></li>
-                                <li><a href="#">commentary replay(2)</a></li>
-                                <li><a href="#">like(2)</a></li>
+                                <li>
+                                    <a href="#">new commentary(2)</a>
+                                </li>
+                                <li>
+                                    <a href="#">commentary replay(2)</a>
+                                </li>
+                                <li>
+                                    <a href="#">like(2)</a>
+                                </li>
                                 <li class="divider"></li>
-                                <li><a href="#">history</a></li>
+                                <li>
+                                    <a href="#">history</a>
+                                </li>
                             </ul>
                         </li>
-                        <li><a ng-click="logout()">Logout</a></li>
+                        <li>
+                            <a ng-click="logout()">Logout</a>
+                        </li>
                     </ul>
                 </div>
             </div>

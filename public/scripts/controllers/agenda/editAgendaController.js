@@ -43,8 +43,8 @@
             method: 'POST',
             data: data,
             url: '/agendas/update'
-        }).success(function () {
-            $location.path('/agenda');
+        }).success(function (ret) {
+            $location.path('/agendas/detail/' + id);
         }).error(function (err) {
             console.log(err);
         });
