@@ -8,7 +8,7 @@
                 <div class="navbar-header"></div>
                 <div id="navbarCollapse" class="collapse navbar-collapse" ng-if="isLoggedIn">
                     <ul class="nav navbar-nav">
-                        <li id="read" class="dropdown active">
+                        <li id="read" class="dropdown" ng-class="read ? 'active': ''">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="">read<b class="caret"></b></a>
                             <ul role="menu" class="dropdown-menu">
                                 <li>
@@ -22,7 +22,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li id="agenda" class="dropdown active">
+                        <li id="agenda" class="dropdown" ng-class="agenda ? 'active': ''">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="">agenda<b class="caret"></b></a>
                             <ul role="menu" class="dropdown-menu">
                                 <li>
@@ -33,7 +33,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li id="explication" class="dropdown active">
+                        <li id="explication" class="dropdown" ng-class="explication ? 'active' : ''">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="">explication<b class="caret"></b></a>
                             <ul role="menu" class="dropdown-menu">
                                 <li>
@@ -44,7 +44,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li id="treaty" class="dropdown active">
+                        <li id="treaty" class="dropdown" ng-class="treaty ? 'active': ''">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="">treaty<b class="caret"></b></a>
                             <ul role="menu" class="dropdown-menu">
                                 <li>
@@ -55,7 +55,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li id="new" class="dropdown active">
+                        <li id="new" class="dropdown" ng-class="new ? 'active' : ''">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="">new<b class="caret"></b></a>
                             <ul role="menu" class="dropdown-menu">
                                 <li>
@@ -66,7 +66,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li id="dico">
+                        <li id="dico" ng-class="dico ? 'active' : ''">
                             <a ng-href="#/dicos">dico</a>
                         </li>
                     </ul>
