@@ -3,8 +3,12 @@
     $scope.Date = '';
     $scope.agenda = {};
     $scope.data = [];
+    
+    $scope.page.title = 'Agenda - Edit - ';
+    
     $http.get('/agendas/findOne/' + id).success(function (data) {
         $scope.agenda = data;
+        $scope.page.title += $scope.agenda.Title;
         $scope.Date = new Date(data.Date).toISOString();
         $scope.tableParams.reload();
     });

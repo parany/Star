@@ -1,5 +1,7 @@
 ﻿starApp.controller('listNoteController', function($scope, $http, ngTableParams, auth) {
     $scope.notes = [];
+    
+    $scope.page.title = 'Note - List';
 
     $scope.tableNote = new ngTableParams({
         page: 1,
@@ -24,6 +26,7 @@
             m.$selected = false;
         });
         model.$selected = !model.$selected;
+        $scope.page.title = 'Note - ' + model.Verse;
         $http.get('/notes/getNotesByVerseId/' + auth.getUserName() + '/' + model.VerseId).success(function(data) {
             $scope.dtoNote = data;
         });

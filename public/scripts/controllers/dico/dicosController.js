@@ -5,6 +5,8 @@
     $scope.dicos = [];
     $scope.filter = {};
     $scope.illustrations = [];
+    
+    $scope.page.title = 'Dico - Home page';
 
     $scope.tableDico = new ngTableParams({
         page: 1,
