@@ -3,6 +3,8 @@ starApp.controller('agendaController', function ($scope, $routeParams, $filter, 
     $scope.activity = {};
     $scope.activity.operations = [];
 
+    $scope.page.title = 'Agenda - Home page';
+
     $scope.tableSearch = new ngTableParams({
         page: 1,
         count: 10,
@@ -74,7 +76,7 @@ starApp.controller('agendaController', function ($scope, $routeParams, $filter, 
         $http({
             url: '/agendas/search/' + $scope.txtSearch,
             method: 'POST',
-            data: { 'filters': ['Title', 'Text'], 'projection': { Date:1, Title: 1, Text: 1 } }
+            data: { 'filters': ['Title', 'Text'], 'projection': { Date: 1, Title: 1, Text: 1 } }
         }).success(function (data) {
             $scope.datas = data;
             $scope.datas.forEach(function (d) {

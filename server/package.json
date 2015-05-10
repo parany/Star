@@ -8,14 +8,9 @@
     "email": "ramilison.andriamparany@gmail.com"
   },
   "dependencies": {
-    "express": "3.4.4",
-    "jade": "*",
-    "stylus": "*",
-    "mongoose": "2.6.5",
     "mongodb": "1.0.2",
-    "node-windows": "0.1.7",
-    "cors": "2.5.3",
     "connect": "2.11.0",
+    "node-windows": "0.1.7",
     "cookie-signature": "1.0.1",
     "debug": "1.0.1",
     "send": "0.1.4",

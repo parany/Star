@@ -2,6 +2,8 @@ starApp.controller('treatyController', function ($scope, $routeParams, $filter, 
     $scope.datas = [];
     $scope.activity = {};
     $scope.activity.operations = [];
+    
+    $scope.page.title = 'Treaty - Home page';
 
     $scope.tableSearch = new ngTableParams({
         page: 1,

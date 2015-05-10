@@ -249,3 +249,7 @@ span.text-detail {
 .citation {
     font-size: 9pt;
 }
+
+.btn-actions {
+    margin-bottom: 100px;
+}

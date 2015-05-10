@@ -5,6 +5,8 @@
     $scope.data = [];
     $scope.agenda.Text = '';
     
+    $scope.page.title = 'Agenda - Add';
+    
     $scope.tableParams = new ngTableParams({
         page: 1,  
         total: 1, 

@@ -1,4 +1,7 @@
 ﻿starApp.controller('loginController', function ($rootScope, $scope, $http, $location, auth) {
+
+    $scope.page.title = 'Login';
+
     $scope.login = function () {
         $http({
             method: 'POST',

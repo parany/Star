@@ -6,6 +6,8 @@ starApp.controller('addTreatyController', function ($scope, $routeParams, $http,
     $scope.data = [];
     $scope.treaty = {};
     $scope.treaty.Text = '';
+    
+    $scope.page.title = 'Treaty - ';
 
     $scope.tags = [];
 
@@ -14,9 +16,11 @@ starApp.controller('addTreatyController', function ($scope, $routeParams, $http,
     }).then(function () {
         if (id == undefined) {
             $scope.Date = new Date().toISOString().split('T')[0];
+            $scope.page.title += 'Add';
         } else {
             $http.get('/treaties/findOne/' + id).success(function (data) {
                 $scope.treaty = data;
+                $scope.page.title += 'Edit ' + $scope.treaty.Title;
                 $scope.Date = new Date(data.Date).toISOString().split('T')[0];
 
                 for (var i = $scope.tags.length - 1; i >= 0; i--) {

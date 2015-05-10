@@ -7,6 +7,8 @@ starApp.controller('detailExplicationController', function($scope, $routeParams,
     $scope.articles = [];
     $scope.prevs = [];
     $scope.nexts = [];
+    
+    $scope.page.title = 'Explication - Detail - ';
 
     $scope.tableNexts = new ngTableParams({
         page: 1,
@@ -83,6 +85,7 @@ starApp.controller('detailExplicationController', function($scope, $routeParams,
         return $http.get('/explications/findOne/' + id);
     }).then(function(dataExplication) {
         $scope.explication = dataExplication.data;
+        $scope.page.title += $scope.explication.Title;
         $scope.explication.TagIdList.forEach(function(tag, index, array) {
             array[index] = _.findWhere(tags, {
                 '_id': tag

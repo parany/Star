@@ -89,6 +89,11 @@
     $scope.$watch("read.paragraphMin + read.paragraphMax + read.version.Code", function () {
         $scope.search.textToSearch = '';
         if (!$scope.read.paragraphMin) return;
+        
+        $scope.page.title = 'Read';
+        $scope.page.title += ' ' + $scope.read.book.Description;
+        $scope.page.title += ' ' + $scope.read.chapter;
+        
         $cookieStore.put('lastRead', {
             TestamentIndex: $scope.read.testaments.map(function (t) { return t._id; }).indexOf($scope.read.testament._id),
             BookIndex: $scope.read.book.DisplayOrder - 1,
