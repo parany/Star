@@ -4,6 +4,8 @@ starApp.controller('detailAgendaController', function($scope, $routeParams, $htt
     $scope.articles = [];
     $scope.prevs = [];
     $scope.nexts = [];
+    
+    $scope.page.title = 'Agenda - Detail - ';
 
     $scope.tableNexts = new ngTableParams({
         page: 1,
@@ -63,6 +65,7 @@ starApp.controller('detailAgendaController', function($scope, $routeParams, $htt
 
     $http.get('/agendas/findOne/' + id).then(function(dataAgenda) {
         $scope.agenda = dataAgenda.data;
+        $scope.page.title += $scope.agenda.Title;
     }).then(function() {
         var date = new Date($scope.agenda.Date);
         $http.get('/agendas/getArticlesInTheSameDate/' + date.getTime()).success(function(data) {

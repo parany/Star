@@ -2,6 +2,8 @@ starApp.controller('newController', function ($scope, $routeParams, $filter, $ht
     $scope.datas = [];
     $scope.activity = {};
     $scope.activity.operations = [];
+    
+    $scope.page.title = 'New - Home page';
 
     $scope.tableSearch = new ngTableParams({
         page: 1,

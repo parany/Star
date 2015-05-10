@@ -5,6 +5,8 @@ starApp.controller('detailTreatyController', function($scope, $routeParams, $htt
     $scope.articles = [];
     $scope.prevs = [];
     $scope.nexts = [];
+    
+    $scope.page.title = 'Treaty - Detail - ';
 
     $scope.tableNexts = new ngTableParams({
         page: 1,
@@ -69,6 +71,7 @@ starApp.controller('detailTreatyController', function($scope, $routeParams, $htt
         return $http.get('/treaties/findOne/' + id);
     }).then(function(dataTreaty) {
         $scope.treaty = dataTreaty.data;
+        $scope.page.title += $scope.treaty.Title;
         $scope.treaty.TagIdList.forEach(function(tag, index, array) {
             array[index] = _.findWhere(tags, {
                 '_id': tag

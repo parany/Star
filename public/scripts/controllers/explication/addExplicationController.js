@@ -9,6 +9,8 @@ starApp.controller('addExplicationController', function ($scope, $routeParams, $
     $scope.explication = {};
     $scope.explication.Date = '';
     $scope.explication.Content = '';
+    
+    $scope.page.title = 'Explication - ';
 
     $http.post('/tags/find', { 'Type': 'Explication' }).success(function (data) {
         $scope.tags = data;
@@ -65,6 +67,9 @@ starApp.controller('addExplicationController', function ($scope, $routeParams, $
             $scope.data = data.Explications;
             if (id != undefined) {
                 $scope.data = $scope.data.filter(function (t) { return t._id != id; });
+                $scope.page.title += 'Edit - ' + $scope.explication.Title;
+            } else {
+                $scope.page.title += 'Add';
             }
             $scope.tableParams.reload();
         });

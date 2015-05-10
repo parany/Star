@@ -1,10 +1,10 @@
 ﻿<!doctype html>
-<html ng-app="starApp">
+<html ng-app="starApp" ng-controller="pageController">
 <head>
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Start - Read</title>
+    <title>Star - {{ page.title }}</title>
     <link href="/styles/Vendor/bootstrap.min.css" rel="stylesheet">
     <link href="/styles/Vendor/font-awesome.min.css" rel="stylesheet">
     <link href="/styles/Vendor/ng-table.css" rel="stylesheet">
@@ -42,9 +42,8 @@
     <script src="/scripts/services/numberHelper.js"></script>
 
     <script src="/scripts/directives/core/header.js"></script>
-    <script src="/scripts/directives/read/expander.js"></script>
-    <script src="/scripts/directives/read/accordion.js"></script>
-
+        
+    <script src="/scripts/controllers/page/pageController.js"></script>
     <script src="/scripts/controllers/account/loginController.js"></script>
     <script src="/scripts/controllers/read/readController.js"></script>
     <script src="/scripts/controllers/read/tableReadController.js"></script>

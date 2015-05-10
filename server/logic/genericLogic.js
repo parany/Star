@@ -123,8 +123,6 @@ exports.getActivities = function(req, res) {
         });
         var item = {
             nbOfItems: docs.length,
-            firstAdded: _.first(docs).Title,
-            lastAdded: _.last(docs).Title,
             nbOfYearItems: yearItems.length,
             nbOfMonthItems: monthItems.length,
             nbOfWeekItems: weekItems.length,

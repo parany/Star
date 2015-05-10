@@ -2,6 +2,8 @@ starApp.controller('explicationController', function ($scope, $routeParams, $fil
     $scope.datas = [];
     $scope.activity = {};
     $scope.activity.operations = [];
+    
+    $scope.page.title = 'Explication - Home page';
 
     $scope.tableSearch = new ngTableParams({
         page: 1,

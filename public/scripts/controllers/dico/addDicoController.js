@@ -3,6 +3,8 @@
     $scope.dico = {};
     $scope.dico.Meaning = '';
     $scope.illustrations = [];
+    
+    $scope.page.title = 'Dico - ';
 
     var id = $routeParams.id;
     $http.get('/cultures/findAll').success(function(data) {
@@ -13,11 +15,14 @@
         if (id != undefined) {
             $http.get('/dicos/findOne/' + id).success(function (data) {
                 $scope.dico = data;
+                $scope.page.title += 'Edit - ' + $scope.dico.Text;
                 $scope.dico.To = $scope.cultures[$scope.cultures.map(function(c) { return c._id; }).indexOf(data.ToId)];
                 $scope.dico.From = $scope.cultures[$scope.cultures.map(function (c) { return c._id; }).indexOf(data.FromId)];
                 $scope.illustrations = data.Illustrations.map(function (i) { return { Text: i }; });
                 $scope.tableIllustration.reload();
             });
+        } else {
+            $scope.page.title += 'Add';
         }
     });
 

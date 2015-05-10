@@ -7,6 +7,8 @@ starApp.controller('detailNewController', function ($scope, $routeParams, $http,
     $scope.prevs = [];
     $scope.nexts = [];
 
+    $scope.page.title = 'New - Detail - ';
+
     $scope.tableNexts = new ngTableParams({
         page: 1,
         total: 1,
@@ -77,6 +79,7 @@ starApp.controller('detailNewController', function ($scope, $routeParams, $http,
 
     $http.get('/news/findOne/' + id).then(function (dataNew) {
         $scope.new = dataNew.data;
+        $scope.page.title += $scope.new.Title;
         $scope.tableCitations.reload();
         
         var date = new Date($scope.new.Date);

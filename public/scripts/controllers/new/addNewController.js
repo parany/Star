@@ -6,15 +6,19 @@ starApp.controller('addNewController', function ($scope, $routeParams, $http, $l
     $scope.new.Content = '';
     $scope.new.Citations = [];
     $scope.sources = [];
+    
+    $scope.page.title = 'New - ';
 
     $http.get('/sources/findAll').success(function (data) {
         $scope.sources = data;
     }).then(function () {
         if (id == undefined) {
             $scope.new.Date = new Date().toISOString().split('T')[0];
+            $scope.page.title += 'Add';
         } else {
             $http.get('/news/findOne/' + id).success(function (data) {
                 $scope.new = data;
+                $scope.page.title += 'Edit - ' + $scope.new.Title;
                 $scope.new.Date = new Date(data.Date).toISOString().split('T')[0];
                 $scope.tableCitations.reload();
                 $scope.new.Source = $scope.sources[$scope.sources.map(function (s) { return s._id; }).indexOf($scope.new.Source._id)];
