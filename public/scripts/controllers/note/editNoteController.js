@@ -12,7 +12,7 @@
     
     $scope.valid = function () {
         return $scope.tags.filter(function (t) { return t.Selected == true; }).length > 0;
-    }
+    };
     
     $scope.save = function () {
         var data = {
@@ -33,5 +33,5 @@
         }).error(function (error) {
             console.log(error);
         });
-    }
+    };
 });

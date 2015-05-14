@@ -64,7 +64,7 @@ starApp.controller('addExplicationController', function ($scope, $routeParams, $
     $scope.$watch('explication.Date', function () {
         if ($scope.explication.Date == undefined || $scope.explication.Date == '') return;
         $http.get('/explications/getByDate/' + auth.getUserName() + '/' + $scope.explication.Date).success(function (data) {
-            $scope.data = data.Explications;
+            $scope.data = data;
             if (id != undefined) {
                 $scope.data = $scope.data.filter(function (t) { return t._id != id; });
                 $scope.page.title += 'Edit - ' + $scope.explication.Title;

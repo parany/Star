@@ -1,3 +1,4 @@
+/* global starApp */
 starApp.controller('addNewController', function ($scope, $routeParams, $http, $location, $cookieStore, ngTableParams, auth) {
     var id = $routeParams.id;
     $scope.news = [];
@@ -54,7 +55,7 @@ starApp.controller('addNewController', function ($scope, $routeParams, $http, $l
     $scope.$watch('new.Date', function () {
         if ($scope.new.Date == undefined || $scope.new.Date == '') return;
         $http.get('/news/getByDate/' + auth.getUserName() + '/' + $scope.new.Date).success(function (data) {
-            $scope.news = data.Docs;
+            $scope.news = data;
             if (id != undefined) {
                 $scope.news = $scope.news.filter(function (t) { return t._id != id; });
             }

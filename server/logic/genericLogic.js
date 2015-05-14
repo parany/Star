@@ -49,37 +49,14 @@ exports.insert = function(req, res) {
 
 exports.getByDate = function(req, res) {
     var date = new Date(req.params.date);
-    var dateTime = date.getTime();
+    var firstMsOfDay = date.getFirstMsOfDay();
+    var lastMsOfDay = date.getLastMsOfDay();
     var repository = new Repository(req.params.collectionName);
     repository.find({
-        CreatedBy: req.params.author
+        CreatedBy: req.params.author,
+        Date: { $gte: firstMsOfDay, $lte: lastMsOfDay }
     }).then(function(docs) {
-        var firstMsOfDay = date.getFirstMsOfDay();
-        var lastMsOfDay = date.getLastMsOfDay();
-        var records = docs.filter(function(a) {
-            return a.Date >= firstMsOfDay && a.Date <= lastMsOfDay;
-        });
-        var dates = docs.map(function(a) {
-            return a.Date;
-        }).filter(function(d) {
-            return d < firstMsOfDay || d > lastMsOfDay;
-        });
-        var prevs = dates.filter(function(d) {
-            return d < dateTime;
-        }).sort(function(d1, d2) {
-            return d2 - d1;
-        });
-        var nexts = dates.filter(function(d) {
-            return d > dateTime;
-        }).sort(function(d1, d2) {
-            return d1 - d2;
-        });
-        var results = {
-            Prev: prevs.length === 0 ? null : new Date(prevs[0]).toAnyString(),
-            Next: nexts.length === 0 ? null : new Date(nexts[0]).toAnyString(),
-            Docs: records
-        };
-        res.send(results);
+        res.send(docs);
     });
 };
 
