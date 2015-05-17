@@ -1,5 +1,5 @@
 /* global starApp */
-starApp.controller('addNewController', function ($scope, $routeParams, $http, $location, $cookieStore, ngTableParams, auth) {
+starApp.controller('addNewController', function ($scope, $routeParams, $http, $location, $cookieStore, ngTableParams, auth, _) {
     var id = $routeParams.id;
     $scope.news = [];
     $scope.new = {};
@@ -22,7 +22,8 @@ starApp.controller('addNewController', function ($scope, $routeParams, $http, $l
                 $scope.page.title += 'Edit - ' + $scope.new.Title;
                 $scope.new.Date = new Date(data.Date).toISOString().split('T')[0];
                 $scope.tableCitations.reload();
-                $scope.new.Source = $scope.sources[$scope.sources.map(function (s) { return s._id; }).indexOf($scope.new.Source._id)];
+                var sourcesId = _.pluck($scope.sources, '_id');
+                $scope.new.Source = $scope.sources[sourcesId.indexOf($scope.new.Source._id)];
             });
         }
     });

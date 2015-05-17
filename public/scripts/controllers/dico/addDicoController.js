@@ -1,23 +1,25 @@
-﻿starApp.controller('addDicoController', function ($rootScope, $scope, $routeParams, $http, $location, ngTableParams, auth) {
+﻿/* global starApp */
+starApp.controller('addDicoController', function ($rootScope, $scope, $routeParams, $http, $location, ngTableParams, auth, _) {
     $scope.cultures = [];
     $scope.dico = {};
     $scope.dico.Meaning = '';
     $scope.illustrations = [];
-    
+
     $scope.page.title = 'Dico - ';
 
     var id = $routeParams.id;
-    $http.get('/cultures/findAll').success(function(data) {
+    $http.get('/cultures/findAll').success(function (data) {
         $scope.cultures = data;
         $scope.dico.To = $scope.cultures[2];
         $scope.dico.From = $scope.cultures[1];
-    }).then(function() {
+    }).then(function () {
         if (id != undefined) {
             $http.get('/dicos/findOne/' + id).success(function (data) {
                 $scope.dico = data;
                 $scope.page.title += 'Edit - ' + $scope.dico.Text;
-                $scope.dico.To = $scope.cultures[$scope.cultures.map(function(c) { return c._id; }).indexOf(data.ToId)];
-                $scope.dico.From = $scope.cultures[$scope.cultures.map(function (c) { return c._id; }).indexOf(data.FromId)];
+                var culturesId = _.pluck($scope.cultures, '_id');
+                $scope.dico.To = $scope.cultures[culturesId.indexOf(data.ToId)];
+                $scope.dico.From = $scope.cultures[culturesId.indexOf(data.FromId)];
                 $scope.illustrations = data.Illustrations.map(function (i) { return { Text: i }; });
                 $scope.tableIllustration.reload();
             });
@@ -30,24 +32,24 @@
         page: 1,
         count: 10
     }, {
-        counts: [],
-        getData: function ($defer, params) {
-            $defer.resolve($scope.dicos.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: { dicos: {} }
-    });
+            counts: [],
+            getData: function ($defer, params) {
+                $defer.resolve($scope.dicos.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+            },
+            $scope: { dicos: {} }
+        });
     $scope.tableDico.settings().$scope = $scope;
 
     $scope.tableIllustration = new ngTableParams({
         page: 1,
         count: 10
     }, {
-        counts: [],
-        getData: function ($defer, params) {
-            $defer.resolve($scope.illustrations.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: { illustrations: {} }
-    });
+            counts: [],
+            getData: function ($defer, params) {
+                $defer.resolve($scope.illustrations.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+            },
+            $scope: { illustrations: {} }
+        });
     $scope.tableDico.settings().$scope = $scope;
 
     $scope.addIllustration = function () {
@@ -100,9 +102,9 @@
             method: 'POST',
             url: url,
             data: data
-        }).success(function() {
+        }).success(function () {
             $location.path('dicos');
-        }).error(function(err) {
+        }).error(function (err) {
             console.log(err);
         });
     }
