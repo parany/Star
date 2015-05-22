@@ -1,4 +1,5 @@
-﻿var repository = require('../model/repository.js');
+﻿/// <reference path="../../../typings/node/node.d.ts"/>
+var repository = require('../model/repository.js');
 
 var columnDefinitions = {
     books: ['CreatedOn', 'UpdatedOn'],

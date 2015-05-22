@@ -13,8 +13,11 @@ exports.search = function (req, res) {
         verses = docs;
         return booksRepository.find({});
     }).then(function (books) {
+        books.forEach(function (b) {
+            b._id = b._id.toString();
+        });
         for (var i = 0; i < verses.length; i++) {
-            var book = _.find(books, function (b) { return b._id.equals(verses[i].BookId); }).Description;
+            var book = _.findWhere(books, { _id: verses[i].BookId.toString() }).Description;
             verses[i].BookId = book + ' ' + verses[i].Chapter + ' ' + verses[i].Paragraph;
         }
         res.send(verses);

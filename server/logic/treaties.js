@@ -23,11 +23,12 @@ exports.getByDate = function (req, res) {
             Type: 'Treaty'
         });
     }).then(function (tagDocs) {
+        tagDocs.forEach(function (tag) {
+            tag._id = tag._id.toString();
+        });
         for (var i = 0; i < treaties.length; i++) {
             for (var j = 0; j < treaties[i].TagIdList.length; j++) {
-                treaties[i].TagIdList[j] = _.find(tagDocs, function (t) {
-                    return t._id.equals(new ObjectId(treaties[i].TagIdList[j]));
-                }).Description;
+                treaties[i].TagIdList[j] = _.findWhere(tagDocs, { _id: treaties[i].TagIdList[j].toString() }).Description;
             }
         }
         res.send(treaties);
@@ -35,7 +36,6 @@ exports.getByDate = function (req, res) {
 };
 
 exports.search = function (req, res) {
-    var treatiesDocs = [];
     treatiesRepository.find({
         $or: [{
             Title: {
@@ -47,18 +47,6 @@ exports.search = function (req, res) {
                 }
             }]
     }).then(function (docs) {
-        treatiesDocs = docs;
-        return tagsRepository.find({
-            Type: 'Treaty'
-        });
-    }).then(function (tagDocs) {
-        for (var i = 0; i < treatiesDocs.length; i++) {
-            for (var j = 0; j < treatiesDocs[i].TagIdList.length; j++) {
-                treatiesDocs[i].TagIdList[j] = _.find(tagDocs, function (t) {
-                    return t._id.equals(new ObjectId(treatiesDocs[i].TagIdList[j]));
-                }).Description;
-            }
-        }
-        res.send(treatiesDocs);
+        res.send(docs);
     });
-}
+};
