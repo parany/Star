@@ -25,13 +25,20 @@ var treaties = require('./logic/treaties.js');
 
 // routes
 app.get('/verses/search/:version/:text', verses.search);
+
 app.get('/notes/getNotesByVerseId/:author/:verseId', notes.getNotesByVerseId);
 app.get('/notes/getNoteById/:id', notes.getNoteById);
 app.get('/notes/getAllNotesWithAssociatedBooks/:author', notes.getAllNotesWithAssociatedBooks);
+
 app.get('/explications/getByDate/:author/:date', explications.getByDate);
 app.get('/explications/search/:text', explications.search);
 app.get('/treaties/getByDate/:author/:date', treaties.getByDate);
+
 app.get('/treaties/search/:text', treaties.search);
+
+app.get('/getAllActivities/:author', genericLogic.getAllActivities);
+app.get('/getTotal/:author', genericLogic.getTotal);
+
 app.get('/:collectionName/findAll', genericLogic.findAll);
 app.post('/:collectionName/find', genericLogic.find);
 app.get('/:collectionName/findOne/:id', genericLogic.findOne);

@@ -2,7 +2,7 @@
     var _user = $cookieStore.get('user');
     return {
         isAuthorized: function (lvl) {
-            return _user != null && _user.Role == lvl;
+            return _user !== null && _user.Role === lvl;
         },
         setUser: function (user) {
             user.Role = ACCESS_LEVELS.pub;
@@ -10,7 +10,7 @@
             $cookieStore.put('user', _user);
         },
         isLoggedIn: function () {
-            return _user != null;
+            return _user !== null;
         },
         getUser: function () {
             return _user;
@@ -19,7 +19,7 @@
             return _user.UserName;
         },
         getUserFullName: function () {
-            return _user != null ? _user.FullName : '';
+            return _user !== null ? _user.FullName : '';
         },
         getId: function () {
             return _user ? _user._id : null;
@@ -28,5 +28,5 @@
             $cookieStore.remove('user');
             _user = null;
         }
-    }
+    };
 });

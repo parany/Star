@@ -143,5 +143,12 @@
         controller: "addNewController",
         access_level: ACCESS_LEVELS.Pub,
         menuId: 'new'
-    });
+    })
+        .when('/activities', {
+        templateUrl: 'views/pages/activity/index.html',
+        controller: "activityController",
+        access_level: ACCESS_LEVELS.Pub,
+        menuId: 'account'
+    })
+    ;
 });
