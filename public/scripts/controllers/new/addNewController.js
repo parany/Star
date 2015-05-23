@@ -85,7 +85,7 @@ starApp.controller('addNewController', function ($scope, $routeParams, $http, $l
         } else {
             $location.path('/news');
         }
-    }
+    };
 
     $scope.save = function () {
         var data = JSON.parse(JSON.stringify($scope.new));
@@ -121,5 +121,5 @@ starApp.controller('addNewController', function ($scope, $routeParams, $http, $l
             console.log(err);
         });
         $http.post('/userActions/insert', userAction);
-    }
+    };
 });

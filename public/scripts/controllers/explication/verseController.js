@@ -1,4 +1,4 @@
-﻿starApp.controller('verseController', function ($scope, $rootScope, $http, $cookieStore, ngTableParams) {
+﻿starApp.controller('verseController', function ($scope, $rootScope, $http, $cookieStore, ngTableParams, _) {
     $http.get('/versions/findAll').success(function (data) {
         $scope.read.versions = data;
         $scope.read.version = $scope.read.versions[0];
@@ -56,10 +56,10 @@
             Chapter: $scope.read.chapter,
             ParagraphMin: $scope.read.paragraphMin,
             ParagraphMax: $scope.read.paragraphMax
-        }
+        };
         $scope.read.verses.push(verseRead);
         $scope.tableVerses.reload();
-    }
+    };
     
     $scope.read.removeVerseRead = function (model) {
         $scope.read.verses = $scope.read.verses.filter(function (v) {
@@ -69,5 +69,5 @@
                 || model.ParagraphMax != v.ParagraphMax;
         });
         $scope.tableVerses.reload();
-    }
+    };
 });

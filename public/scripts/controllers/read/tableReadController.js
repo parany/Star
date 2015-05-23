@@ -122,7 +122,7 @@
     $scope.prevChapter = function () {
         if ($scope.read.chapter == 1) return;
         $scope.read.chapter--;
-    }
+    };
     
     $scope.nextChapter = function () {
         if ($scope.read.chapter == $scope.read.maxChapter) return;

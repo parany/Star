@@ -1,3 +1,4 @@
+/* global starApp */
 starApp.controller('detailAgendaController', function ($scope, $routeParams, $http, ngTableParams, _, auth, dateHelper, $location) {
     var id = $routeParams.id;
     $scope.sameDate = [];
@@ -72,14 +73,14 @@ starApp.controller('detailAgendaController', function ($scope, $routeParams, $ht
             $scope.sameDate = data.agendas.filter(function (d) {
                 return d._id !== id;
             });
+            delete data.agendas;
             for (var prop in data) {
-                if (prop !== 'agendas') {
-                    data[prop].forEach(function (d) {
-                        $scope.articles.push({
-                            _id: d._id,
-                            Title: d.Title,
-                            Type: prop
-                        });
+                for (var i = 0; i < data[prop].length; i++) {
+                    var article = data[prop][i];
+                    $scope.articles.push({
+                        _id: article._id,
+                        Title: article.Title,
+                        Type: prop
                     });
                 }
             }

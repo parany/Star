@@ -57,31 +57,31 @@ starApp.controller('addDicoController', function ($rootScope, $scope, $routePara
         $scope.tableIllustration.reload();
         $scope.newIllustration.Text = '';
         $scope.newIllustration.$edit = false;
-    }
+    };
 
     $scope.cancelAddIllustration = function () {
         $scope.newIllustration.Text = '';
         $scope.newIllustration.$edit = false;
-    }
+    };
 
     $scope.removeIllustration = function (model) {
         $scope.illustrations = $scope.illustrations.filter(function (i) { return i.Text != model.Text; });
         $scope.tableIllustration.reload();
-    }
+    };
 
     $scope.editIllustration = function (model) {
         model.editIllustration.$edit = false;
-    }
+    };
 
     $scope.cancelEditIllustration = function (model) {
         model.Text = currentIllustration;
         model.editIllustration.$edit = false;
-    }
+    };
 
     var currentIllustration = '';
     $scope.startEditIllustration = function (model) {
         currentIllustration = model.Text;
-    }
+    };
 
     $scope.save = function () {
         var data = JSON.parse(JSON.stringify($scope.dico));
@@ -107,5 +107,5 @@ starApp.controller('addDicoController', function ($rootScope, $scope, $routePara
         }).error(function (err) {
             console.log(err);
         });
-    }
+    };
 });

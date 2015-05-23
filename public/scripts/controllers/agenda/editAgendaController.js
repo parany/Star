@@ -60,5 +60,5 @@
             'createdBy': auth.getUserName()
         };
         $http.post('/userActions/insert', userAction);
-    }
+    };
 });

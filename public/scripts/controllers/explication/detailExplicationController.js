@@ -1,4 +1,4 @@
-starApp.controller('detailExplicationController', function($scope, $routeParams, $http, ngTableParams, _, auth, dateHelper, $location) {
+starApp.controller('detailExplicationController', function($scope, $routeParams, $http, $location, ngTableParams, _, auth, dateHelper) {
     var id = $routeParams.id;
     var tags;
     $scope.explication = {};
@@ -98,14 +98,14 @@ starApp.controller('detailExplicationController', function($scope, $routeParams,
             $scope.sameDate = data.explications.filter(function(d) {
                 return d._id !== id;
             });
+            delete data.explications;
             for (var prop in data) {
-                if (prop !== 'explications') {
-                    data[prop].forEach(function(d) {
-                        $scope.articles.push({
-                            _id: d._id,
-                            Title: d.Title,
-                            Type: prop
-                        });
+                for (var i = 0; i < data[prop].length; i++) {
+                    var article = data[prop][i];
+                    $scope.articles.push({
+                        _id: article._id,
+                        Title: article.Title,
+                        Type: prop
                     });
                 }
             }

@@ -1,3 +1,4 @@
+/* global starApp */
 starApp.controller('agendaController', function ($scope, $routeParams, $filter, $http, $location, ngTableParams, auth, dateHelper) {
     $scope.datas = [];
     $scope.activity = {};

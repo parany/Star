@@ -87,14 +87,14 @@ starApp.controller('detailNewController', function ($scope, $routeParams, $http,
             $scope.sameDate = data.news.filter(function (d) {
                 return d._id !== id;
             });
+            delete data.news;
             for (var prop in data) {
-                if (prop !== 'news') {
-                    data[prop].forEach(function (d) {
-                        $scope.articles.push({
-                            _id: d._id,
-                            Title: d.Title,
-                            Type: prop
-                        });
+                for (var i = 0; i < data[prop].length; i++) {
+                    var article = data[prop][i];
+                    $scope.articles.push({
+                        _id: article._id,
+                        Title: article.Title,
+                        Type: prop
                     });
                 }
             }

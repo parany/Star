@@ -125,5 +125,5 @@ starApp.controller('addExplicationController', function ($scope, $routeParams, $
             console.log(err);
         });
         $http.post('/userActions/insert', userAction);
-    }
+    };
 });
