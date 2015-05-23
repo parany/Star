@@ -47,7 +47,7 @@ app.post('/:collectionName/insert', genericLogic.insert);
 app.get('/:collectionName/getByDate/:author/:date', genericLogic.getByDate);
 app.get('/:collectionName/delete/:id', genericLogic.delete);
 app.post('/:collectionName/search/:text', genericLogic.search);
-app.get('/:collectionName/getActivities/:author', genericLogic.getActivities);
+app.get('/:collectionName/getActivities/:author/:limit?', genericLogic.getActivities);
 app.get('/:collectionName/getArticlesInTheSameDate/:date', genericLogic.getArticlesInTheSameDate);
 app.get('/:collectionName/getPrevNearArticles/:date', genericLogic.getPrevNearArticles);
 app.get('/:collectionName/getNextNearArticles/:date', genericLogic.getNextNearArticles);

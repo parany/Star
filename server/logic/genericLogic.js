@@ -64,13 +64,17 @@ exports.getActivities = function(req, res) {
     var repository = new Repository(req.params.collectionName);
     var userActionRepository = new Repository('userActions');
     var operations = [];
+    var limit = 6;
+    if (req.params.limit){
+        limit = parseInt(req.params.limit);
+    }
     userActionRepository.find({
         collection: req.params.collectionName,
         createdBy: req.params.author,
         sort: {
             date: -1
         },
-        limit: 6
+        limit: limit
     }).then(function(docs) {
         operations = docs;
         return repository.find({
