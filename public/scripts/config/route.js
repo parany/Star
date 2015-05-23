@@ -150,5 +150,11 @@
         access_level: ACCESS_LEVELS.Pub,
         menuId: 'account'
     })
+        .when('/error500', {
+        templateUrl: 'views/pages/error/500.html',
+        controller: "error500Controller",
+        access_level: ACCESS_LEVELS.Pub,
+        menuId: 'error'
+    })
     ;
 });
