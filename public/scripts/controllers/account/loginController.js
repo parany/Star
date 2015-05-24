@@ -1,4 +1,5 @@
-﻿starApp.controller('loginController', function ($rootScope, $scope, $http, $location, auth) {
+﻿/* global starApp */
+starApp.controller('loginController', function ($rootScope, $scope, $http, $location, auth) {
 
     $scope.page.title = 'Login';
 
@@ -16,5 +17,5 @@
         }).error(function (error) {
             console.log(error);
         });
-    }
+    };
 });

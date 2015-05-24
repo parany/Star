@@ -22,8 +22,8 @@
     });
 
     $scope.changeNoteSelected = function(model) {
-        angular.forEach($scope.notes, function(m) {
-            m.$selected = false;
+        $scope.notes.forEach(function(note){
+            note.$selected = false;
         });
         model.$selected = !model.$selected;
         $scope.page.title = 'Note - ' + model.Verse;

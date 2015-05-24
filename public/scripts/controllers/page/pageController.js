@@ -1,3 +1,3 @@
-starApp.controller('pageController', function ($scope, $routeParams, $http, $location, $cookieStore, ngTableParams, auth) {
+starApp.controller('pageController', function ($scope) {
 	$scope.page = {};
 });

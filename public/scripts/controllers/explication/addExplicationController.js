@@ -1,4 +1,4 @@
-starApp.controller('addExplicationController', function ($scope, $routeParams, $http, $location, $cookieStore, ngTableParams, auth) {
+starApp.controller('addExplicationController', function ($scope, $routeParams, $http, $location, $cookieStore, ngTableParams, auth, _) {
     var id = $routeParams.id;
 
     $scope.read = {};
@@ -9,7 +9,7 @@ starApp.controller('addExplicationController', function ($scope, $routeParams, $
     $scope.explication = {};
     $scope.explication.Date = '';
     $scope.explication.Content = '';
-    
+
     $scope.page.title = 'Explication - ';
 
     $http.post('/tags/find', { 'Type': 'Explication' }).success(function (data) {
@@ -64,7 +64,7 @@ starApp.controller('addExplicationController', function ($scope, $routeParams, $
     $scope.$watch('explication.Date', function () {
         if ($scope.explication.Date == undefined || $scope.explication.Date == '') return;
         $http.get('/explications/getByDate/' + auth.getUserName() + '/' + $scope.explication.Date).success(function (data) {
-            $scope.data = data.Explications;
+            $scope.data = data;
             if (id != undefined) {
                 $scope.data = $scope.data.filter(function (t) { return t._id != id; });
                 $scope.page.title += 'Edit - ' + $scope.explication.Title;
@@ -92,7 +92,7 @@ starApp.controller('addExplicationController', function ($scope, $routeParams, $
         var data = JSON.parse(JSON.stringify($scope.explication));
         data.Date = new Date($scope.explication.Date).getTime();
         data.CreatedBy = auth.getUserName();
-        data.TagIdList = $scope.tags.filter(function (t) { return t.Selected == true; }).map(function (t) { return t._id; });
+        data.TagIdList = _.pluck(_.where($scope.tags, { Selected: true }), '_id');
         data.VerseReadList = $scope.read.verses;
         var userAction = {
             'collection': 'explications',
@@ -125,5 +125,5 @@ starApp.controller('addExplicationController', function ($scope, $routeParams, $
             console.log(err);
         });
         $http.post('/userActions/insert', userAction);
-    }
+    };
 });

@@ -1,6 +1,8 @@
-﻿var mongodb = require('mongodb');
+﻿var ObjectId = require('mongodb').ObjectID;
+var mongodb = require('mongodb');
 var Q = require('Q');
 var config = require('../config.json');
+var log = require('../utils/log.js');
 
 module.exports = Repository;
 
@@ -58,8 +60,13 @@ Repository.prototype.insert = function(obj) {
 
 Repository.prototype.save = function(obj) {
     var deferred = Q.defer();
-    this.collection.save(obj, {
-        safe: true
+    obj.UpdatedOn = new Date().getTime();
+    var id = new ObjectId(obj._id);
+    delete obj._id;
+    this.collection.update({
+        _id: id
+    }, {
+        $set: obj
     }, function(err, doc) {
         if (err) return deferred.reject(err);
         return deferred.resolve(doc);
@@ -76,6 +83,24 @@ Repository.prototype.delete = function(id) {
     }, function(err, doc) {
         if (err) return deferred.reject(err);
         return deferred.resolve(doc);
+    });
+    return deferred.promise;
+};
+
+Repository.prototype.group = function(key, condition, reduce, initial) {
+    var deferred = Q.defer();
+    this.collection.group(key, condition, initial, reduce, {}, {}, function(err, doc) {
+        if (err) return deferred.reject(err);
+        return deferred.resolve(doc);
+    });
+    return deferred.promise;
+};
+
+Repository.prototype.count = function(filter) {
+    var deferred = Q.defer();
+    this.collection.count(filter, function(err, nb) {
+        if (err) return deferred.reject(err);
+        return deferred.resolve(nb);
     });
     return deferred.promise;
 };

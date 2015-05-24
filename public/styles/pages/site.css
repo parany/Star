@@ -253,3 +253,7 @@ span.text-detail {
 .btn-actions {
     margin-bottom: 100px;
 }
+
+.activity-general {
+    padding: 0px !important;
+}
