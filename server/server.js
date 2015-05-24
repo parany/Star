@@ -54,8 +54,18 @@ app.get('/:collectionName/getArticlesInTheSameDate/:date', genericLogic.getArtic
 app.get('/:collectionName/getPrevNearArticles/:date', genericLogic.getPrevNearArticles);
 app.get('/:collectionName/getNextNearArticles/:date', genericLogic.getNextNearArticles);
 
+// ERROR
+// error 404
+app.use(function(req, res) {
+	log.error('error 404 ' + req.url);
+});
+// error 500
+app.use(function(err, req, res, next) {
+	log.error(err.stack);
+});
+
 // LAUNCH THE SERVER
-http.createServer(app).listen(config.port, function () {
-    log.info('server created with success');
-    log.info('listening on port ' + config.port);
+http.createServer(app).listen(config.port, function() {
+	log.info('server created with success');
+	log.info('listening on port ' + config.port);
 });
