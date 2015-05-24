@@ -2,6 +2,7 @@
 var mongodb = require('mongodb');
 var Q = require('Q');
 var config = require('../config.json');
+var log = require('../utils/log.js');
 
 module.exports = Repository;
 

@@ -1,5 +1,6 @@
 ﻿/* global process */
-// dependencies
+
+// DEPENDENCIES
 var express = require('express');
 var http = require('http');
 var path = require('path');
@@ -7,8 +8,9 @@ var bodyParser = require('body-parser');
 var connect = require('connect');
 
 var config = require('./config.json');
+var log = require('./utils/log.js');
 
-// setting up environnements
+// SETTING UP ENVIRONNEMENTS
 var port = process.env.PORT || config.port;
 var app = express();
 app.set('port', port);
@@ -16,14 +18,14 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(process.cwd(), '/../public')));
 app.use(connect.logger('dev'));
 
-// include logics
+// INCLUDE LOGICS
 var genericLogic = require('./logic/genericLogic.js');
 var notes = require('./logic/notes.js');
 var verses = require('./logic/verses.js');
 var explications = require('./logic/explications.js');
 var treaties = require('./logic/treaties.js');
 
-// routes
+// ROUTES
 app.get('/verses/search/:version/:text', verses.search);
 
 app.get('/notes/getNotesByVerseId/:author/:verseId', notes.getNotesByVerseId);
@@ -52,7 +54,8 @@ app.get('/:collectionName/getArticlesInTheSameDate/:date', genericLogic.getArtic
 app.get('/:collectionName/getPrevNearArticles/:date', genericLogic.getPrevNearArticles);
 app.get('/:collectionName/getNextNearArticles/:date', genericLogic.getNextNearArticles);
 
-// launch the server
+// LAUNCH THE SERVER
 http.createServer(app).listen(config.port, function () {
-    console.log('Express server listening on port ' + config.port);
+    log.info('server created with success');
+    log.info('listening on port ' + config.port);
 });
