@@ -70,12 +70,9 @@
                             <a ng-href="#/dicos">dico</a>
                         </li>
                     </ul>
-                    <ul class="nav navbar-nav navbar-right" id="account">
-                        <li>
-                            <a href="#">{{ fullName }}</a>
-                        </li>
+                    <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">notifications(6)<b class="caret"></b></a>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="">notifications(6)<b class="caret"></b></a>
                             <ul role="menu" class="dropdown-menu">
                                 <li>
                                     <a href="#">new commentary(2)</a>
@@ -92,8 +89,19 @@
                                 </li>
                             </ul>
                         </li>
-                        <li>
-                            <a ng-click="logout()">Logout</a>
+                        <li id="account" class="dropdown" ng-class="account ? 'active' : ''">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="">{{ fullName }}<b class="caret"></b></a>
+                            <ul role="menu" class="dropdown-menu">
+                                <li>
+                                    <a href="#/activities">Activities</a>
+                                </li>
+                                <li>
+                                    <a href="#">Parameters</a>
+                                </li>
+                                <li>
+                                    <a ng-click="logout()">Logout</a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>

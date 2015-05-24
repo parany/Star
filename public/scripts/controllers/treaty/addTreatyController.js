@@ -51,7 +51,7 @@ starApp.controller('addTreatyController', function ($scope, $routeParams, $http,
     $scope.$watch('Date', function () {
         if ($scope.Date == undefined || $scope.Date == '') return;
         $http.get('/treaties/getByDate/' + auth.getUserName() + '/' + $scope.Date).success(function (data) {
-            $scope.data = data.Treaties;
+            $scope.data = data;
             if (id != undefined) {
                 $scope.data = $scope.data.filter(function (t) { return t._id != id; });
             }

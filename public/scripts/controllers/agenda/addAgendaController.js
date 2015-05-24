@@ -1,4 +1,5 @@
-﻿starApp.controller('addAgendaController', function ($scope, $routeParams, $http, $location, $cookieStore, ngTableParams, auth) {
+﻿/* global starApp */
+starApp.controller('addAgendaController', function ($scope, $routeParams, $http, $location, $cookieStore, ngTableParams, auth) {
     $scope.agenda = {};
     $scope.Date = '';
     $scope.Date = new Date().toISOString().split('T')[0];
@@ -22,7 +23,7 @@
     
     $scope.$watch('Date', function () {
         $http.get('/agendas/getByDate/' + auth.getUserName() + '/' + $scope.Date).success(function (data) {
-            $scope.data = data.Docs;
+            $scope.data = data;
             $scope.tableParams.reload();
         });
     });
@@ -49,5 +50,5 @@
             'createdBy': auth.getUserName()
         };
         $http.post('/userActions/insert', userAction);
-    }
+    };
 });

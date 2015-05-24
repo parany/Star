@@ -1,7 +1,7 @@
 ﻿starApp.controller('editNoteController', function ($scope, $routeParams, $http, $location, auth) {
     $scope.tags = [];
 
-    $http.get('/notes/getNoteById/' + $routeParams.id).success(function(data) {
+    $http.get('/notes/getNoteById/' + $routeParams.id).success(function (data) {
         $scope.note._id = data.Note._id;
         $scope.note.VerseId = data.Note.VerseId;
         $scope.note.Description = data.Note.Description;
@@ -9,11 +9,11 @@
         $scope.tags = data.Tags;
         $scope.tags.forEach(function (tag) { tag.Selected = tag.IsActive; });
     });
-    
+
     $scope.valid = function () {
         return $scope.tags.filter(function (t) { return t.Selected == true; }).length > 0;
-    }
-    
+    };
+
     $scope.save = function () {
         var data = {
             '_id': $scope.note._id,
@@ -33,5 +33,5 @@
         }).error(function (error) {
             console.log(error);
         });
-    }
+    };
 });

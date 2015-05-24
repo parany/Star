@@ -30,10 +30,7 @@ exports.findOne = function(req, res) {
 
 exports.update = function(req, res) {
     var repository = new Repository(req.params.collectionName);
-    var obj = req.body;
-    obj._id = new ObjectId(obj._id);
-    obj.UpdatedOn = new Date().getTime();
-    repository.save(obj).then(function(ret) {
+    repository.save(req.body).then(function(ret) {
         res.json(ret);
     });
 };
@@ -49,37 +46,17 @@ exports.insert = function(req, res) {
 
 exports.getByDate = function(req, res) {
     var date = new Date(req.params.date);
-    var dateTime = date.getTime();
+    var firstMsOfDay = date.getFirstMsOfDay();
+    var lastMsOfDay = date.getLastMsOfDay();
     var repository = new Repository(req.params.collectionName);
     repository.find({
-        CreatedBy: req.params.author
+        CreatedBy: req.params.author,
+        Date: {
+            $gte: firstMsOfDay,
+            $lte: lastMsOfDay
+        }
     }).then(function(docs) {
-        var firstMsOfDay = date.getFirstMsOfDay();
-        var lastMsOfDay = date.getLastMsOfDay();
-        var records = docs.filter(function(a) {
-            return a.Date >= firstMsOfDay && a.Date <= lastMsOfDay;
-        });
-        var dates = docs.map(function(a) {
-            return a.Date;
-        }).filter(function(d) {
-            return d < firstMsOfDay || d > lastMsOfDay;
-        });
-        var prevs = dates.filter(function(d) {
-            return d < dateTime;
-        }).sort(function(d1, d2) {
-            return d2 - d1;
-        });
-        var nexts = dates.filter(function(d) {
-            return d > dateTime;
-        }).sort(function(d1, d2) {
-            return d1 - d2;
-        });
-        var results = {
-            Prev: prevs.length === 0 ? null : new Date(prevs[0]).toAnyString(),
-            Next: nexts.length === 0 ? null : new Date(nexts[0]).toAnyString(),
-            Docs: records
-        };
-        res.send(results);
+        res.send(docs);
     });
 };
 
@@ -87,13 +64,17 @@ exports.getActivities = function(req, res) {
     var repository = new Repository(req.params.collectionName);
     var userActionRepository = new Repository('userActions');
     var operations = [];
+    var limit = 6;
+    if (req.params.limit){
+        limit = parseInt(req.params.limit);
+    }
     userActionRepository.find({
         collection: req.params.collectionName,
         createdBy: req.params.author,
         sort: {
             date: -1
         },
-        limit: 6
+        limit: limit
     }).then(function(docs) {
         operations = docs;
         return repository.find({
@@ -159,9 +140,6 @@ exports.delete = function(req, res) {
 
 exports.getArticlesInTheSameDate = function(req, res) {
     var articles = ['treaties', 'agendas', 'explications', 'news'];
-    articles = articles.sort(function(art) {
-        return req.params.collectionName !== art;
-    });
     var date = new Date(parseInt(req.params.date));
     var tasks = [];
     articles.forEach(function(article) {
@@ -186,7 +164,6 @@ exports.getArticlesInTheSameDate = function(req, res) {
 
 exports.getPrevNearArticles = function(req, res) {
     var date = new Date(parseInt(req.params.date));
-    console.log(date);
     var dateTime = date.getTime();
     var repository = new Repository(req.params.collectionName);
     repository.find({
@@ -208,7 +185,6 @@ exports.getPrevNearArticles = function(req, res) {
 
 exports.getNextNearArticles = function(req, res) {
     var date = new Date(parseInt(req.params.date));
-    console.log(date);
     var dateTime = date.getTime();
     var repository = new Repository(req.params.collectionName);
     repository.find({
@@ -225,5 +201,54 @@ exports.getNextNearArticles = function(req, res) {
         limit: 5
     }).then(function(docs) {
         res.send(docs);
+    });
+};
+
+exports.getAllActivities = function(req, res) {
+    var userActionRepository = new Repository('userActions');
+    userActionRepository.group({
+            operation: 1
+        }, {
+            createdBy: req.params.author
+        },
+        function(curr, result) {
+            result.total++;
+        }, {
+            total: 0
+        }
+    ).then(function(docs) {
+        res.send(docs);
+    });
+};
+
+exports.getTotal = function(req, res) {
+    var articles = ['treaties', 'agendas', 'explications', 'news'];
+    var tasks = [];
+    articles.forEach(function(article) {
+        var repository = new Repository(article);
+        var task = repository.count({
+            CreatedBy: req.params.author
+        });
+        tasks.push(task);
+    });
+    var results = [];
+    Q.all(tasks).spread(function(list0, list1, list2, list3) {
+        results.push({
+            'article': articles[0],
+            'total': list0
+        });
+        results.push({
+            'article': articles[1],
+            'total': list1
+        });
+        results.push({
+            'article': articles[2],
+            'total': list2
+        });
+        results.push({
+            'article': articles[3],
+            'total': list3
+        });
+        res.send(results);
     });
 };
