@@ -1,6 +1,4 @@
-﻿/* jshint node: true */
-
-var ObjectId = require('mongodb').ObjectID;
+﻿var ObjectId = require('mongodb').ObjectID;
 var mongodb = require('mongodb');
 var Q = require('Q');
 var dbConfig = require('../config/db.json');
