@@ -4,20 +4,13 @@
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Star - {{ page.title }}</title>
+    
     <link href="/styles/Vendor/bootstrap.min.css" rel="stylesheet">
     <link href="/styles/Vendor/font-awesome.min.css" rel="stylesheet">
     <link href="/styles/Vendor/ng-table.css" rel="stylesheet">
     <link href="/styles/Pages/Site.css" rel="stylesheet">
-</head>
-<body>
-    <div>
-        <header></header>
-
-        <div class="row">
-            <ng-view></ng-view>
-        </div>
-    </div>
 
     <script src="/scripts/vendor/jquery.min.js"></script>
     <script src="/scripts/vendor/bootstrap.min.js"></script>
@@ -73,5 +66,14 @@
     <script src="/scripts/controllers/new/addNewController.js"></script>
     <script src="/scripts/controllers/activity/activityController.js"></script>
     <script src="/scripts/controllers/error/error500Controller.js"></script>
+</head>
+<body>
+    <div>
+        <header></header>
+
+        <div class="row">
+            <ng-view></ng-view>
+        </div>
+    </div>
 </body>
 </html>
