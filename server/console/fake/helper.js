@@ -1,3 +1,5 @@
+/* jshint node: true */
+
 var _ = require('underscore');
 var phony = require('phony').make_phony();
 
