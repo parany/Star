@@ -7,7 +7,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var connect = require('connect');
 
-var config = require('./config.json');
+var config = require('./config/config.json');
 var log = require('./utils/log.js');
 
 // SETTING UP ENVIRONNEMENTS
