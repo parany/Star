@@ -1,0 +1,9 @@
+{
+  "browser": true,
+  "unused": true,
+  "undef": true,
+  "globals": {
+    "starApp": true,
+    "console": true
+  }
+}
