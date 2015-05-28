@@ -1,9 +1,12 @@
 /* jshint node: true */
 
 var fs = require('fs');
+var path = require('path');
 var Log = require('log');
 
-var log = new Log('debug', fs.createWriteStream('debug.log'), {
+var filename = path.join(__dirname, '/../logs/log.txt');
+
+var log = new Log('debug', fs.createWriteStream(filename), {
 	flag: "a"
 });
 

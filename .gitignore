@@ -40,3 +40,4 @@ packages
 *.msp
 ._*
 node_modules
+logs
