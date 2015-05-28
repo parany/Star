@@ -57,7 +57,7 @@ starApp.controller('explicationController', function ($scope, $routeParams, $fil
         $scope.tableSearch.reload();
     });
 
-    $http.get('/explications/getActivities/' + auth.getUserName()).success(function (data) {
+    $http.get('/activities/explications/' + auth.getUserName()).success(function (data) {
         $scope.activity = data;
         $scope.activity.operations.forEach(function (value) {
             value.date = new Date(value.date);

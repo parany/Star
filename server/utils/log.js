@@ -1,3 +1,5 @@
+/* jshint node: true */
+
 var fs = require('fs');
 var Log = require('log');
 
