@@ -3,5 +3,7 @@
         <input type="text" class="form-control" placeholder="User Name" ng-model="user.UserName" />
         <input type="password" class="form-control" placeholder="Password" ng-model="user.Password" />
         <button type="submit" class="btn-default" ng-click="login()">Login</button>
+        <br/><br/>
+        <span ng-if="error" class="error">Wrong credentials, please re-check</span>
     </form>
 </div>

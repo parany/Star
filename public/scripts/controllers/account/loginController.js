@@ -1,5 +1,4 @@
-﻿/* global starApp */
-starApp.controller('loginController', function ($rootScope, $scope, $http, $location, auth) {
+﻿starApp.controller('loginController', function ($rootScope, $scope, $http, $location, auth) {
 
     $scope.page.title = 'Login';
 
@@ -9,10 +8,12 @@ starApp.controller('loginController', function ($rootScope, $scope, $http, $loca
             url: '/users/find',
             data: { UserName: $scope.user.UserName, Password: $scope.user.Password }
         }).success(function (data) {
-            if (data != "") {
+            if (data.length) {
                 auth.setUser(data[0]);
                 $rootScope.$emit('account.loggedIn', data[0].FullName);
                 $location.path('/');
+            } else {
+                $scope.error = true;
             }
         }).error(function (error) {
             console.log(error);
