@@ -3,7 +3,17 @@
         <input type="text" class="form-control" placeholder="User Name" ng-model="user.UserName" />
         <input type="password" class="form-control" placeholder="Password" ng-model="user.Password" />
         <button type="submit" class="btn-default" ng-click="login()">Login</button>
-        <br/><br/>
+        <br/>
+        <br/>
         <span ng-if="error" class="error">Wrong credentials, please re-check</span>
     </form>
 </div>
+
+<script type='text/ng-template' id='message'>
+    <div class='modal-header'>
+        <h3 class='modal-title'>Star Application</h3>
+    </div>
+    <div class='modal-body'>
+        <p>Please wait while retrieving data from server.</p>
+    </div>
+</script>
