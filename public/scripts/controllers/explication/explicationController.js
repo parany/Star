@@ -1,4 +1,4 @@
-starApp.controller('explicationController', function ($scope, $routeParams, $filter, $http, $location, ngTableParams, auth, dateHelper) {
+starApp.controller('explicationController', function ($scope, $routeParams, $filter, $http, $location, ngTableParams, auth) {
     $scope.datas = [];
     $scope.activity = {};
     $scope.activity.operations = [];

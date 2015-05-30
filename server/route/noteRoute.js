@@ -5,6 +5,6 @@ var noteLogic = require('../logic/noteLogic.js');
 
 router.get('/getNotesByVerseId/:author/:verseId', noteLogic.getNotesByVerseId);
 router.get('/getNoteById/:id', noteLogic.getNoteById);
-router.get('/getAllNotesWithAssociatedBooks/:author', noteLogic.getAllNotesWithAssociatedBooks);
+router.get('/search/:author/:text?', noteLogic.search);
 
 module.exports = router;
