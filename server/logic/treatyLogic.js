@@ -1,5 +1,4 @@
-﻿var ObjectId = require('mongodb').ObjectID;
-var _ = require('underscore');
+﻿var _ = require('underscore');
 
 var Repository = require('../model/repository.js');
 require('../helpers/dateHelper.js');

@@ -7,7 +7,7 @@ var Log = require('log');
 var filename = path.join(__dirname, '/../logs/log.txt');
 
 var log = new Log('debug', fs.createWriteStream(filename), {
-	flag: "a"
+	flag: 'a'
 });
 
 exports.emergency = function(msg) {
