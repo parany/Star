@@ -58,7 +58,7 @@ starApp.controller('agendaController', function ($scope, $routeParams, $filter, 
         $scope.tableSearch.reload();
     });
 
-    $http.get('/agendas/getActivities/' + auth.getUserName()).success(function (data) {
+    $http.get('/activities/agendas/' + auth.getUserName()).success(function (data) {
         $scope.activity = data;
         $scope.activity.operations.forEach(function (value) {
             value.date = new Date(value.date);

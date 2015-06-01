@@ -10,7 +10,7 @@
             $cookieStore.put('user', _user);
         },
         isLoggedIn: function () {
-            return _user !== null;
+            return _user ? true : false;
         },
         getUser: function () {
             return _user;
@@ -19,7 +19,7 @@
             return _user.UserName;
         },
         getUserFullName: function () {
-            return _user !== null ? _user.FullName : '';
+            return _user ? _user.FullName : '';
         },
         getId: function () {
             return _user ? _user._id : null;

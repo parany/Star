@@ -1,52 +1,52 @@
-﻿var ObjectId = require('mongodb').ObjectID;
-var _ = require('underscore');
+﻿var _ = require('underscore');
 
 var Repository = require('../model/repository.js');
 require('../helpers/dateHelper.js');
 require('../helpers/numberHelper.js');
 
-var treatiesRepository = new Repository('treaties');
+var explicationsRepository = new Repository('explications');
 var tagsRepository = new Repository('tags');
 
 exports.getByDate = function (req, res) {
     var date = new Date(req.params.date);
-    var treaties = [];
+    var explications = [];
     var firstMsOfDay = date.getFirstMsOfDay();
     var lastMsOfDay = date.getLastMsOfDay();
-    treatiesRepository.find({
+    explicationsRepository.find({
         CreatedBy: req.params.author,
         sort: { Date: 1 },
         Date: { $gte: firstMsOfDay, $lte: lastMsOfDay }
     }).then(function (docs) {
-        treaties = docs;
+        explications = docs;
         return tagsRepository.find({
-            Type: 'Treaty'
+            Type: 'Explication'
         });
     }).then(function (tagDocs) {
         tagDocs.forEach(function (tag) {
             tag._id = tag._id.toString();
         });
-        for (var i = 0; i < treaties.length; i++) {
-            for (var j = 0; j < treaties[i].TagIdList.length; j++) {
-                treaties[i].TagIdList[j] = _.findWhere(tagDocs, { _id: treaties[i].TagIdList[j].toString() }).Description;
+        for (var i = 0; i < explications.length; i++) {
+            for (var j = 0; j < explications[i].TagIdList.length; j++) {
+                explications[i].TagIdList[j] = _.where(tagDocs, { _id: explications[i].TagIdList[j] }).Description;
             }
         }
-        res.send(treaties);
+        res.send(explications);
     });
 };
 
 exports.search = function (req, res) {
-    treatiesRepository.find({
-        $or: [{
-            Title: {
-                $regex: req.params.text
-            }
-        }, {
+    explicationsRepository.find({
+        $or: [
+            {
+                Title: {
+                    $regex: req.params.text
+                }
+            }, {
                 Content: {
                     $regex: req.params.text
                 }
             }]
-    }).then(function (docs) {
-        res.send(docs);
+    }).then(function (explications) {
+        res.send(explications);
     });
 };

@@ -2,18 +2,16 @@
 starApp.controller('activityController', function($scope, $http, ngTableParams, _, auth) {
 	$scope.page.title = 'Activity';
 
-
 	// GENERAL
-	$http.get('/getTotal/' + auth.getUserName()).success(function(data) {
+	$http.get('/summary/' + auth.getUserName()).success(function(data) {
 		$scope.generalLabels = _.pluck(data, 'article');
 		$scope.generalData = _.pluck(data, 'total');
 	});
 
-	$http.get('/getAllActivities/' + auth.getUserName()).success(function(data) {
+	$http.get('/activities/' + auth.getUserName()).success(function(data) {
 		$scope.operationsLabels = _.pluck(data, 'operation');
 		$scope.operationsData = _.pluck(data, 'total');
 	});
-
 
 	// AGENDA
 	$scope.agendaActivity = {};
@@ -32,7 +30,7 @@ starApp.controller('activityController', function($scope, $http, ngTableParams, 
 		}
 	});
 
-	$http.get('/agendas/getActivities/' + auth.getUserName() + '/250').success(function(data) {
+	$http.get('/activities/agendas/' + auth.getUserName() + '/250').success(function(data) {
 		$scope.agendaActivity = data;
 		$scope.agendaActivity.operations.forEach(function(value) {
 			value.date = new Date(value.date);
@@ -41,7 +39,6 @@ starApp.controller('activityController', function($scope, $http, ngTableParams, 
 		$scope.tableAgendaOperations.parameters().page = 1;
 		$scope.tableAgendaOperations.reload();
 	});
-
 
 	// EXPLICATION
 	$scope.explicationActivity = {};
@@ -60,7 +57,7 @@ starApp.controller('activityController', function($scope, $http, ngTableParams, 
 		}
 	});
 
-	$http.get('/explications/getActivities/' + auth.getUserName() + '/250').success(function(data) {
+	$http.get('/activities/explications/' + auth.getUserName() + '/250').success(function(data) {
 		$scope.explicationActivity = data;
 		$scope.explicationActivity.operations.forEach(function(value) {
 			value.date = new Date(value.date);
@@ -69,7 +66,6 @@ starApp.controller('activityController', function($scope, $http, ngTableParams, 
 		$scope.tableExplicationOperations.parameters().page = 1;
 		$scope.tableExplicationOperations.reload();
 	});
-
 
 	// TREATY
 	$scope.treatyActivity = {};
@@ -88,7 +84,7 @@ starApp.controller('activityController', function($scope, $http, ngTableParams, 
 		}
 	});
 
-	$http.get('/treaties/getActivities/' + auth.getUserName() + '/250').success(function(data) {
+	$http.get('/activities/treaties/' + auth.getUserName() + '/250').success(function(data) {
 		$scope.treatyActivity = data;
 		$scope.treatyActivity.operations.forEach(function(value) {
 			value.date = new Date(value.date);
@@ -97,7 +93,6 @@ starApp.controller('activityController', function($scope, $http, ngTableParams, 
 		$scope.tableTreatyOperations.parameters().page = 1;
 		$scope.tableTreatyOperations.reload();
 	});
-
 
 	// NEW
 	$scope.newActivity = {};
@@ -116,7 +111,7 @@ starApp.controller('activityController', function($scope, $http, ngTableParams, 
 		}
 	});
 
-	$http.get('/news/getActivities/' + auth.getUserName() + '/250').success(function(data) {
+	$http.get('/activities/treaties/' + auth.getUserName() + '/250').success(function(data) {
 		$scope.newActivity = data;
 		$scope.newActivity.operations.forEach(function(value) {
 			value.date = new Date(value.date);

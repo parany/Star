@@ -1,6 +1,6 @@
 ﻿starApp.controller('listNoteController', function($scope, $http, ngTableParams, auth) {
     $scope.notes = [];
-    
+
     $scope.page.title = 'Note - List';
 
     $scope.tableNote = new ngTableParams({
@@ -14,15 +14,24 @@
     });
     $scope.tableNote.settings().$scope = $scope;
 
-    $http.get('/notes/getAllNotesWithAssociatedBooks/' + auth.getUserName()).success(function(data) {
-        $scope.notes = data;
-        $scope.tableNote.settings().total = $scope.notes.length;
-        $scope.tableNote.parameters().page = 1;
-        $scope.tableNote.reload();
-    });
+    $scope.search = function() {
+        var url = '/notes/search/' + auth.getUserName();
+        if ($scope.txtSearch) {
+            url += '/' + $scope.txtSearch;
+        }
+        $http.get(url).success(function(data) {
+            $scope.notes = data;
+            console.log($scope.notes.length);
+            $scope.tableNote.settings().total = $scope.notes.length;
+            $scope.tableNote.parameters().page = 1;
+            $scope.tableNote.reload();
+        });
+    };
+
+    $scope.search();
 
     $scope.changeNoteSelected = function(model) {
-        $scope.notes.forEach(function(note){
+        $scope.notes.forEach(function(note) {
             note.$selected = false;
         });
         model.$selected = !model.$selected;

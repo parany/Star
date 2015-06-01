@@ -57,7 +57,7 @@ starApp.controller('newController', function ($scope, $routeParams, $filter, $ht
         $scope.tableSearch.reload();
     });
 
-    $http.get('/news/getActivities/' + auth.getUserName()).success(function (data) {
+    $http.get('/activities/news/' + auth.getUserName()).success(function (data) {
         $scope.activity = data;
         $scope.activity.operations.forEach(function (value) {
             value.date = new Date(value.date);

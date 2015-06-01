@@ -1,7 +1,8 @@
+/* jshint node: true */
+
 var phony = require('phony').make_phony();
 var _ = require('underscore');
 var Repository = require('../../model/repository.js');
-var helper = require('./helper.js');
 
 var dicosRepository = new Repository('dicos');
 var dicos = [];

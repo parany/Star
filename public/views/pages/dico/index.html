@@ -3,6 +3,7 @@
         <div>
             <select class="form-control"
                     ng-model="filter.From"
+                    ng-change="search()"
                     ng-options="culture.Description for culture in cultures"></select>
         </div>
     </div>
@@ -10,6 +11,7 @@
         <div>
             <select class="form-control"
                     ng-model="filter.To"
+                    ng-change="search()"
                     ng-options="culture.Description for culture in cultures"></select>
         </div>
     </div>

@@ -1,4 +1,5 @@
-﻿var ObjectId = require('mongodb').ObjectID;
+﻿/* jshint node: true */
+
 var _ = require('underscore');
 var Repository = require('../model/repository.js');
 

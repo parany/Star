@@ -1,4 +1,4 @@
-starApp.controller('explicationController', function ($scope, $routeParams, $filter, $http, $location, ngTableParams, auth, dateHelper) {
+starApp.controller('explicationController', function ($scope, $routeParams, $filter, $http, $location, ngTableParams, auth) {
     $scope.datas = [];
     $scope.activity = {};
     $scope.activity.operations = [];
@@ -57,7 +57,7 @@ starApp.controller('explicationController', function ($scope, $routeParams, $fil
         $scope.tableSearch.reload();
     });
 
-    $http.get('/explications/getActivities/' + auth.getUserName()).success(function (data) {
+    $http.get('/activities/explications/' + auth.getUserName()).success(function (data) {
         $scope.activity = data;
         $scope.activity.operations.forEach(function (value) {
             value.date = new Date(value.date);

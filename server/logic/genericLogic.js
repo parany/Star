@@ -1,6 +1,5 @@
 ﻿var ObjectId = require('mongodb').ObjectID;
 var Q = require('Q');
-var _ = require('underscore');
 var Repository = require('../model/repository.js');
 require('../helpers/filterHelper.js');
 
