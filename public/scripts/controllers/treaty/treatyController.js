@@ -57,7 +57,7 @@ starApp.controller('treatyController', function ($scope, $routeParams, $filter, 
         $scope.tableSearch.reload();
     });
 
-    $http.get('/treaties/getActivities/' + auth.getUserName()).success(function (data) {
+    $http.get('/activities/treaties/' + auth.getUserName()).success(function (data) {
         $scope.activity = data;
         $scope.activity.operations.forEach(function (value) {
             value.date = new Date(value.date);

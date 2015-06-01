@@ -2,28 +2,32 @@
 var _ = require('underscore');
 var Repository = require('../model/repository.js');
 
-exports.getNotesByVerseId = function (req, res) {
+exports.getNotesByVerseId = function(req, res) {
     var notesRepository = new Repository('notes');
     var tagsRepository = new Repository('tags');
     var notes;
     notesRepository.find({
         VerseId: req.params.verseId
-    }).then(function (docs) {
+    }).then(function(docs) {
         notes = docs;
         return tagsRepository.find({
             Type: 'Note'
         });
-    }).then(function (tags) {
-        tags.forEach(function (tag) {
+    }).then(function(tags) {
+        tags.forEach(function(tag) {
             tag._id = tag._id.toString();
         });
         for (var i = 0; i < notes.length; i++) {
             for (var j = 0; j < notes[i].TagIdList.length; j++) {
-                notes[i].TagIdList[j] = _.findWhere(tags, { _id: notes[i].TagIdList[j] }).Description;
+                notes[i].TagIdList[j] = _.findWhere(tags, {
+                    _id: notes[i].TagIdList[j]
+                }).Description;
             }
         }
-        var myNote = _.findWhere(notes, { CreatedBy: req.params.author });
-        var otherNotes = notes.filter(function (note) {
+        var myNote = _.findWhere(notes, {
+            CreatedBy: req.params.author
+        });
+        var otherNotes = notes.filter(function(note) {
             return note.CreatedBy !== req.params.author;
         });
         var results = {
@@ -34,23 +38,25 @@ exports.getNotesByVerseId = function (req, res) {
     });
 };
 
-exports.getNoteById = function (req, res) {
+exports.getNoteById = function(req, res) {
     var notesRepository = new Repository('notes');
     var tagsRepository = new Repository('tags');
     var note;
     notesRepository.findOne({
         _id: new ObjectId(req.params.id)
-    }).then(function (doc) {
+    }).then(function(doc) {
         note = doc;
         return tagsRepository.find({
             Type: 'Note'
         });
-    }).then(function (tags) {
-        tags.forEach(function (tag) {
+    }).then(function(tags) {
+        tags.forEach(function(tag) {
             tag._id = tag._id.toString();
         });
         for (var j = 0; j < note.TagIdList.length; j++) {
-            note.TagIdList[j] = _.findWhere(tags, { _id: note.TagIdList[j] }).Description;
+            note.TagIdList[j] = _.findWhere(tags, {
+                _id: note.TagIdList[j]
+            }).Description;
         }
         for (var i = 0; i < tags.length; i++) {
             tags[i].IsActive = note.TagIdList.indexOf(tags[i].Description) !== -1;
@@ -63,17 +69,26 @@ exports.getNoteById = function (req, res) {
     });
 };
 
-exports.getAllNotesWithAssociatedBooks = function (req, res) {
+exports.search = function(req, res) {
     var notesRepository = new Repository('notes'),
         versesRepository = new Repository('verses'),
         booksRepository = new Repository('books'),
         notes = [],
         verses = [];
     notesRepository.find({
-        CreatedBy: req.params.author
-    }).then(function (docs) {
+        CreatedBy: req.params.author,
+        $or: [{
+            Description: {
+                $regex: req.params.text
+            }
+        }, {
+            Content: {
+                $regex: req.params.text
+            }
+        }]
+    }).then(function(docs) {
         notes = docs;
-        var versesId = notes.map(function (n) {
+        var versesId = notes.map(function(n) {
             return new ObjectId(n.VerseId);
         });
         return versesRepository.find({
@@ -81,19 +96,23 @@ exports.getAllNotesWithAssociatedBooks = function (req, res) {
                 $in: versesId
             }
         });
-    }).then(function (docs) {
+    }).then(function(docs) {
         verses = docs;
         return booksRepository.find({});
-    }).then(function (books) {
-        verses.forEach(function(verse){
+    }).then(function(books) {
+        verses.forEach(function(verse) {
             verse._id = verse._id.toString();
         });
-        books.forEach(function(book){
-           book._id = book._id.toString(); 
+        books.forEach(function(book) {
+            book._id = book._id.toString();
         });
         for (var i = 0; i < notes.length; i++) {
-            var verse = _.findWhere(verses, { _id : notes[i].VerseId.toString() });
-            var book = _.findWhere(books, { _id: verse.BookId.toString() });
+            var verse = _.findWhere(verses, {
+                _id: notes[i].VerseId.toString()
+            });
+            var book = _.findWhere(books, {
+                _id: verse.BookId.toString()
+            });
             notes[i].Verse = book.Description + ' ' + verse.Chapter + ',' + verse.Paragraph;
             notes[i].DisplayOrder = book.DisplayOrder;
             notes[i].TestamentId = book.TestamentId;
@@ -102,7 +121,7 @@ exports.getAllNotesWithAssociatedBooks = function (req, res) {
             notes[i].VerseId = verse._id;
             notes[i].NoteId = notes[i]._id;
         }
-        notes.sort(function (n1, n2) {
+        notes.sort(function(n1, n2) {
             if (n1.TestamentId > n2.TestamentId) return 1;
             if (n1.TestamentId < n2.TestamentId) return -1;
             if (n1.DisplayOrder > n2.DisplayOrder) return 1;

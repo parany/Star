@@ -1,5 +1,4 @@
-﻿/// <reference path="../../../typings/node/node.d.ts"/>
-var repository = require('../model/repository.js');
+﻿var repository = require('../model/repository.js');
 
 var columnDefinitions = {
     books: ['CreatedOn', 'UpdatedOn'],
@@ -20,12 +19,12 @@ var columnDefinitions = {
 var args = process.argv.slice(2);
 var collectionName = args[0];
 
-if (collectionName == undefined) {
+if (collectionName === undefined) {
     console.log('No collection name provided');
     process.exit(0);
 }
 
-console.log("You're working on the " + collectionName + " collection.");
+console.log('You\'re working on the ' + collectionName + ' collection.');
 var collection = repository.getCollection(collectionName);
 
 collection.find({}).toArray(function (err, docs) {
@@ -34,7 +33,7 @@ collection.find({}).toArray(function (err, docs) {
             var column = columnDefinitions[collectionName][j];
             var value = docs[i][column];
             console.log(column + ' : ' + value);
-            if (value == undefined || !(value instanceof Date))
+            if (value === undefined || !(value instanceof Date))
                 continue;
             docs[i][column] = value.getTime();
         }

@@ -1,15 +1,14 @@
 ﻿var ObjectId = require('mongodb').ObjectID;
 var mongodb = require('mongodb');
 var Q = require('Q');
-var config = require('../config.json');
-var log = require('../utils/log.js');
+var dbConfig = require('../config/db.json');
 
 module.exports = Repository;
 
 function Repository(collectionName) {
     var db = new mongodb.Db(
-        config.db.name,
-        new mongodb.Server(config.db.host, config.db.port, {
+        dbConfig.name,
+        new mongodb.Server(dbConfig.host, dbConfig.port, {
             auto_reconnect: true,
             poolSize: 20
         }), {
@@ -22,7 +21,7 @@ function Repository(collectionName) {
 Repository.prototype.find = function(filters) {
     var deferred = Q.defer();
     var sort = filters.sort || {};
-    var limit = filters.limit || config.db.limit;
+    var limit = filters.limit || dbConfig.limit;
     var projection = filters.projection || {};
 
     delete filters.sort;

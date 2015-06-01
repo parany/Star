@@ -257,3 +257,7 @@ span.text-detail {
 .activity-general {
     padding: 0px !important;
 }
+
+span.error {
+    color: red;
+}
