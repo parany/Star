@@ -15,7 +15,7 @@ var port = process.env.PORT || config.port;
 var app = express();
 app.set('port', port);
 app.use(bodyParser.json());
-app.use(express.static(path.join(process.cwd(), '/../public')));
+app.use(express.static(path.join(__dirname, '/../public')));
 
 // INCLUDE LOGICS
 var genericLogic = require('./logic/genericLogic.js');
