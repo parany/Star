@@ -1,5 +1,4 @@
 ﻿starApp.controller('loginController', function($rootScope, $scope, $http, $location, $modal, auth) {
-
     $scope.page.title = 'Login';
 
     $scope.login = function() {

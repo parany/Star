@@ -79,9 +79,7 @@
 
     $scope.search = function() {
         $scope.dicos = _.filter(allDicos, function(d) {
-            return (!$scope.filter.To || $scope.filter.To._id === d.ToId) 
-                    && (!$scope.filter.From || $scope.filter.From._id === d.FromId) 
-                    && (!$scope.filter.Text || $scope.filter.Text === d.Text.substring(0, $scope.filter.Text.length));
+            return (!$scope.filter.To || $scope.filter.To._id === d.ToId) && (!$scope.filter.From || $scope.filter.From._id === d.FromId) && (!$scope.filter.Text || $scope.filter.Text === d.Text.substring(0, $scope.filter.Text.length));
         });
         updateDicosTable();
     };

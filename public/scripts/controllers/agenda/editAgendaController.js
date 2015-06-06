@@ -1,42 +1,46 @@
-﻿starApp.controller('editAgendaController', function ($scope, $routeParams, $http, $location, ngTableParams, auth) {
+﻿starApp.controller('editAgendaController', function($scope, $routeParams, $http, $location, ngTableParams, auth) {
     var id = $routeParams.id;
     $scope.Date = '';
     $scope.agenda = {};
     $scope.data = [];
-    
+
     $scope.page.title = 'Agenda - Edit - ';
-    
-    $http.get('/agendas/findOne/' + id).success(function (data) {
+
+    $http.get('/agendas/findOne/' + id).success(function(data) {
         $scope.agenda = data;
         $scope.page.title += $scope.agenda.Title;
         $scope.Date = new Date(data.Date).toISOString();
         $scope.tableParams.reload();
     });
-    
+
     $scope.tableParams = new ngTableParams({
         page: 1,
         total: 1,
         count: 5
     }, {
         counts: [],
-        getData: function ($defer, params) {
+        getData: function($defer, params) {
             $defer.resolve($scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
         },
-        $scope: { $data: {} }
+        $scope: {
+            $data: {}
+        }
     });
     $scope.tableParams.settings().$scope = $scope;
-    
-    $scope.$watch('Date', function () {
-        if ($scope.Date == undefined || $scope.Date == '') return;
+
+    $scope.$watch('Date', function() {
+        if ($scope.Date === undefined || $scope.Date === '') return;
         $scope.Date = $scope.Date.split('T')[0];
-        $http.get('/agendas/getByDate/' + auth.getUserName() + '/' + $scope.Date).success(function (data) {
-            $scope.data = data.filter(function (d) { return d._id != id; });
+        $http.get('/agendas/getByDate/' + auth.getUserName() + '/' + $scope.Date).success(function(data) {
+            $scope.data = data.filter(function(d) {
+                return d._id !== id;
+            });
             $scope.tableParams.reload();
         });
     });
-    
-    
-    $scope.save = function () {
+
+
+    $scope.save = function() {
         var data = $scope.agenda;
         data.Date = $scope.Date;
         data.CreatedBy = auth.getUserName();
@@ -47,9 +51,9 @@
             method: 'POST',
             data: data,
             url: '/agendas/update'
-        }).success(function (ret) {
+        }).success(function() {
             $location.path('/agendas/detail/' + id);
-        }).error(function (err) {
+        }).error(function(err) {
             console.log(err);
         });
         var userAction = {

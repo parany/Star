@@ -1,4 +1,4 @@
-starApp.controller('detailNewController', function ($scope, $routeParams, $http, ngTableParams, _, auth, dateHelper, $location) {
+starApp.controller('detailNewController', function($scope, $routeParams, $http, ngTableParams, _, auth, dateHelper, $location) {
     var id = $routeParams.id;
     $scope.new = {};
     $scope.new.Citations = [];
@@ -14,77 +14,79 @@ starApp.controller('detailNewController', function ($scope, $routeParams, $http,
         total: 1,
         count: 10
     }, {
-            counts: [],
-            getData: function ($defer, params) {
-                $defer.resolve($scope.nexts.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-            },
-            $scope: {
-                $data: {}
-            }
-        });
+        counts: [],
+        getData: function($defer, params) {
+            $defer.resolve($scope.nexts.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+        },
+        $scope: {
+            $data: {}
+        }
+    });
 
     $scope.tablePrevs = new ngTableParams({
         page: 1,
         total: 1,
         count: 10
     }, {
-            counts: [],
-            getData: function ($defer, params) {
-                $defer.resolve($scope.prevs.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-            },
-            $scope: {
-                $data: {}
-            }
-        });
+        counts: [],
+        getData: function($defer, params) {
+            $defer.resolve($scope.prevs.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+        },
+        $scope: {
+            $data: {}
+        }
+    });
 
     $scope.tableSameDate = new ngTableParams({
         page: 1,
         total: 1,
         count: 10
     }, {
-            counts: [],
-            getData: function ($defer, params) {
-                $defer.resolve($scope.sameDate.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-            },
-            $scope: {
-                $data: {}
-            }
-        });
+        counts: [],
+        getData: function($defer, params) {
+            $defer.resolve($scope.sameDate.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+        },
+        $scope: {
+            $data: {}
+        }
+    });
 
     $scope.tableOtherArticles = new ngTableParams({
         page: 1,
         total: 1,
         count: 10
     }, {
-            counts: [],
-            getData: function ($defer, params) {
-                $defer.resolve($scope.articles.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-            },
-            $scope: {
-                $data: {}
-            }
-        });
+        counts: [],
+        getData: function($defer, params) {
+            $defer.resolve($scope.articles.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+        },
+        $scope: {
+            $data: {}
+        }
+    });
 
     $scope.tableCitations = new ngTableParams({
         page: 1,
         total: 1,
         count: 5
     }, {
-            counts: [],
-            getData: function ($defer, params) {
-                $defer.resolve($scope.new.Citations.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-            },
-            $scope: { $data: {} }
-        });
+        counts: [],
+        getData: function($defer, params) {
+            $defer.resolve($scope.new.Citations.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+        },
+        $scope: {
+            $data: {}
+        }
+    });
 
-    $http.get('/news/findOne/' + id).then(function (dataNew) {
+    $http.get('/news/findOne/' + id).then(function(dataNew) {
         $scope.new = dataNew.data;
         $scope.page.title += $scope.new.Title;
         $scope.tableCitations.reload();
-        
+
         var date = new Date($scope.new.Date);
-        $http.get('/news/getArticlesInTheSameDate/' + date.getTime()).success(function (data) {
-            $scope.sameDate = data.news.filter(function (d) {
+        $http.get('/news/getArticlesInTheSameDate/' + date.getTime()).success(function(data) {
+            $scope.sameDate = data.news.filter(function(d) {
                 return d._id !== id;
             });
             delete data.news;
@@ -100,26 +102,26 @@ starApp.controller('detailNewController', function ($scope, $routeParams, $http,
             }
         });
 
-        $http.get('/news/getPrevNearArticles/' + date.getTime()).success(function (data) {
+        $http.get('/news/getPrevNearArticles/' + date.getTime()).success(function(data) {
             $scope.prevs = data;
-            $scope.prevs.forEach(function (d) {
+            $scope.prevs.forEach(function(d) {
                 d.Date = new Date(d.Date);
             });
         });
 
-        $http.get('/news/getNextNearArticles/' + date.getTime()).success(function (data) {
+        $http.get('/news/getNextNearArticles/' + date.getTime()).success(function(data) {
             $scope.nexts = data;
-            $scope.nexts.forEach(function (d) {
+            $scope.nexts.forEach(function(d) {
                 d.Date = new Date(d.Date);
             });
         });
     });
 
 
-    $scope.promptDelete = function (model) {
-        var response = confirm("Are you sure you want to delete this new?");
+    $scope.promptDelete = function(model) {
+        var response = confirm('Are you sure you want to delete this new?');
         if (response) {
-            $http.get('/news/delete/' + model._id).success(function () {
+            $http.get('/news/delete/' + model._id).success(function() {
                 $location.path('/news');
             });
             var userAction = {
