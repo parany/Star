@@ -22,8 +22,6 @@
             } else {
                 $scope.error = true;
             }
-        }).error(function(error) {
-            console.log(error);
         });
     };
 });
