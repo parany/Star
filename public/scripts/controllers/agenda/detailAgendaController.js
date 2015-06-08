@@ -1,5 +1,6 @@
 starApp.controller('detailAgendaController', function($scope, $routeParams, $http, ngTableParams, _, auth, $location) {
     var id = $routeParams.id;
+    var date;
     $scope.sameDate = [];
     $scope.articles = [];
     $scope.prevs = [];
@@ -63,20 +64,19 @@ starApp.controller('detailAgendaController', function($scope, $routeParams, $htt
         }
     });
 
-    var date;
-    $http.get('/agendas/findOne/' + id).success(function(dataAgenda) {
-        $scope.agenda = dataAgenda;
+    $http.get('/agendas/findOne/' + id).then(function(dataAgenda) {
+        $scope.agenda = dataAgenda.data;
         $scope.page.title += $scope.agenda.Title;
-        var date = new Date($scope.agenda.Date);
+        date = new Date($scope.agenda.Date);
         return $http.get('/agendas/getArticlesInTheSameDate/' + date.getTime());
     }).then(function(data) {
-        $scope.sameDate = data.agendas.filter(function(d) {
+        $scope.sameDate = data.data.agendas.filter(function(d) {
             return d._id !== id;
         });
-        delete data.agendas;
-        for (var prop in data) {
-            for (var i = 0; i < data[prop].length; i++) {
-                var article = data[prop][i];
+        delete data.data.agendas;
+        for (var prop in data.data) {
+            for (var i = 0; i < data.data[prop].length; i++) {
+                var article = data.data[prop][i];
                 $scope.articles.push({
                     _id: article._id,
                     Title: article.Title,
@@ -86,13 +86,13 @@ starApp.controller('detailAgendaController', function($scope, $routeParams, $htt
         }
         return $http.get('/agendas/getPrevNearArticles/' + date.getTime());
     }).then(function(data) {
-        $scope.prevs = data;
+        $scope.prevs = data.data;
         $scope.prevs.forEach(function(d) {
             d.Date = new Date(d.Date);
         });
         return $http.get('/agendas/getNextNearArticles/' + date.getTime());
     }).then(function(data) {
-        $scope.nexts = data;
+        $scope.nexts = data.data;
         $scope.nexts.forEach(function(d) {
             d.Date = new Date(d.Date);
         });
