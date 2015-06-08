@@ -39,6 +39,9 @@
         });
     });
 
+    $scope.cancel = function() {
+        $location.path('/agendas/detail/' + id);
+    };
 
     $scope.save = function() {
         var data = $scope.agenda;
@@ -47,15 +50,6 @@
         data.UpdatedBy = auth.getUserName();
         data._id = id;
         data.Date = (new Date($scope.Date)).getTime();
-        $http({
-            method: 'POST',
-            data: data,
-            url: '/agendas/update'
-        }).success(function() {
-            $location.path('/agendas/detail/' + id);
-        }).error(function(err) {
-            console.log(err);
-        });
         var userAction = {
             'collection': 'agendas',
             'operation': 'Edit',
@@ -63,6 +57,16 @@
             'title': data.Title,
             'createdBy': auth.getUserName()
         };
-        $http.post('/userActions/insert', userAction);
+        $http({
+            method: 'POST',
+            data: data,
+            url: '/agendas/update'
+        }).success(function() {
+            return $http.post('/userActions/insert', userAction);
+        }).then(function() {
+            $location.path('/agendas/detail/' + id);
+        });
+
+
     };
 });

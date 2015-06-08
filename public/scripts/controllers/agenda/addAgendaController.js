@@ -33,16 +33,6 @@
         var data = $scope.agenda;
         data.Date = (new Date($scope.Date)).getTime();
         data.CreatedBy = auth.getUserName();
-        $http({
-            method: 'POST',
-            data: data,
-            url: '/agendas/insert'
-        }).success(function(ret) {
-            $cookieStore.put('lastAgenda', $scope.Date);
-            $location.path('/agendas/detail/' + ret[0]._id);
-        }).error(function(err) {
-            console.log(err);
-        });
         var userAction = {
             'collection': 'agendas',
             'operation': 'Add',
@@ -50,6 +40,16 @@
             'title': data.Title,
             'createdBy': auth.getUserName()
         };
-        $http.post('/userActions/insert', userAction);
+        var id;
+        $http({
+            method: 'POST',
+            data: data,
+            url: '/agendas/insert'
+        }).success(function(ret) {
+            id = ret[0]._id;
+            return $http.post('/userActions/insert', userAction);
+        }).then(function() {
+            $location.path('/agendas/detail/' + id);
+        });
     };
 });

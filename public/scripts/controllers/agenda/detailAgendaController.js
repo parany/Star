@@ -1,4 +1,4 @@
-starApp.controller('detailAgendaController', function($scope, $routeParams, $http, ngTableParams, _, auth, dateHelper, $location) {
+starApp.controller('detailAgendaController', function($scope, $routeParams, $http, ngTableParams, _, auth, $location) {
     var id = $routeParams.id;
     $scope.sameDate = [];
     $scope.articles = [];
@@ -63,43 +63,40 @@ starApp.controller('detailAgendaController', function($scope, $routeParams, $htt
         }
     });
 
-    $http.get('/agendas/findOne/' + id).then(function(dataAgenda) {
-        $scope.agenda = dataAgenda.data;
+    var date;
+    $http.get('/agendas/findOne/' + id).success(function(dataAgenda) {
+        $scope.agenda = dataAgenda;
         $scope.page.title += $scope.agenda.Title;
-    }).then(function() {
         var date = new Date($scope.agenda.Date);
-        $http.get('/agendas/getArticlesInTheSameDate/' + date.getTime()).success(function(data) {
-            $scope.sameDate = data.agendas.filter(function(d) {
-                return d._id !== id;
-            });
-            delete data.agendas;
-            for (var prop in data) {
-                for (var i = 0; i < data[prop].length; i++) {
-                    var article = data[prop][i];
-                    $scope.articles.push({
-                        _id: article._id,
-                        Title: article.Title,
-                        Type: prop
-                    });
-                }
+        return $http.get('/agendas/getArticlesInTheSameDate/' + date.getTime());
+    }).then(function(data) {
+        $scope.sameDate = data.agendas.filter(function(d) {
+            return d._id !== id;
+        });
+        delete data.agendas;
+        for (var prop in data) {
+            for (var i = 0; i < data[prop].length; i++) {
+                var article = data[prop][i];
+                $scope.articles.push({
+                    _id: article._id,
+                    Title: article.Title,
+                    Type: prop
+                });
             }
+        }
+        return $http.get('/agendas/getPrevNearArticles/' + date.getTime());
+    }).then(function(data) {
+        $scope.prevs = data;
+        $scope.prevs.forEach(function(d) {
+            d.Date = new Date(d.Date);
         });
-
-        $http.get('/agendas/getPrevNearArticles/' + date.getTime()).success(function(data) {
-            $scope.prevs = data;
-            $scope.prevs.forEach(function(d) {
-                d.Date = new Date(d.Date);
-            });
-        });
-
-        $http.get('/agendas/getNextNearArticles/' + date.getTime()).success(function(data) {
-            $scope.nexts = data;
-            $scope.nexts.forEach(function(d) {
-                d.Date = new Date(d.Date);
-            });
+        return $http.get('/agendas/getNextNearArticles/' + date.getTime());
+    }).then(function(data) {
+        $scope.nexts = data;
+        $scope.nexts.forEach(function(d) {
+            d.Date = new Date(d.Date);
         });
     });
-
 
     $scope.promptDelete = function(model) {
         var response = confirm('Are you sure you want to delete this agenda?');
