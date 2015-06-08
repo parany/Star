@@ -114,19 +114,18 @@ starApp.controller('addNewController', function($scope, $routeParams, $http, $lo
             url = '/news/insert';
             userAction.operation = 'Add';
         }
-        $http({
-            method: 'POST',
-            data: data,
-            url: url
-        }).success(function(ret) {
+        $http.post('/userActions/insert', userAction).then(function() {
+            return $http({
+                method: 'POST',
+                data: data,
+                url: url
+            });
+        }).then(function(ret) {
             if (id !== undefined) {
                 $location.path('/news/detail/' + id);
             } else {
-                $location.path('news/detail/' + ret[0]._id);
+                $location.path('news/detail/' + ret.data[0]._id);
             }
-        }).error(function(err) {
-            console.log(err);
         });
-        $http.post('/userActions/insert', userAction);
     };
 });

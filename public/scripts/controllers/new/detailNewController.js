@@ -1,4 +1,4 @@
-starApp.controller('detailNewController', function($scope, $routeParams, $http, ngTableParams, _, auth, dateHelper, $location) {
+starApp.controller('detailNewController', function($scope, $routeParams, $http, ngTableParams, _, auth, $location) {
     var id = $routeParams.id;
     $scope.new = {};
     $scope.new.Citations = [];

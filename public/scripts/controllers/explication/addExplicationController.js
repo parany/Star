@@ -14,9 +14,8 @@ starApp.controller('addExplicationController', function($scope, $routeParams, $h
 
     $http.post('/tags/find', {
         'Type': 'Explication'
-    }).success(function(data) {
-        $scope.tags = data;
-    }).then(function() {
+    }).then(function(data) {
+        $scope.tags = data.data;
         if (id === undefined) {
             $scope.explication.Date = new Date().toISOString().split('T')[0];
         } else {
@@ -121,20 +120,18 @@ starApp.controller('addExplicationController', function($scope, $routeParams, $h
             url = '/explications/insert';
             userAction.operation = 'Add';
         }
-        $http({
-            method: 'POST',
-            data: data,
-            url: url
-        }).success(function(ret) {
-            $cookieStore.put('lastExplication', $scope.explication.Date);
+        $http.post('/userActions/insert', userAction).then(function() {
+            return $http({
+                method: 'POST',
+                data: data,
+                url: url
+            });
+        }).then(function(ret) {
             if (id !== undefined) {
                 $location.path('/explications/detail/' + id);
             } else {
-                $location.path('explications/detail/' + ret[0]._id);
+                $location.path('explications/detail/' + ret.data[0]._id);
             }
-        }).error(function(err) {
-            console.log(err);
         });
-        $http.post('/userActions/insert', userAction);
     };
 });

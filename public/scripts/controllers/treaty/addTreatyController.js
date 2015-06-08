@@ -103,19 +103,18 @@ starApp.controller('addTreatyController', function($scope, $routeParams, $http, 
             url = '/treaties/insert';
             userAction.operation = 'Add';
         }
-        $http({
-            method: 'POST',
-            data: data,
-            url: url
-        }).success(function(ret) {
+        $http.post('/userActions/insert', userAction).then(function() {
+            return $http({
+                method: 'POST',
+                data: data,
+                url: url
+            });
+        }).then(function(ret) {
             if (id !== undefined) {
                 $location.path('/treaties/detail/' + id);
             } else {
-                $location.path('/treaties/detail/' + ret[0]._id);
+                $location.path('/treaties/detail/' + ret.data[0]._id);
             }
-        }).error(function(err) {
-            console.log(err);
         });
-        $http.post('/userActions/insert', userAction);
     };
 });
