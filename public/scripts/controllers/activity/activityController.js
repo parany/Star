@@ -1,4 +1,3 @@
-/* global starApp */
 starApp.controller('activityController', function($scope, $http, ngTableParams, _, auth) {
 	$scope.page.title = 'Activity';
 

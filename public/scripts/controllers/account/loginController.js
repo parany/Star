@@ -1,5 +1,4 @@
 ﻿starApp.controller('loginController', function($rootScope, $scope, $http, $location, $modal, auth) {
-
     $scope.page.title = 'Login';
 
     $scope.login = function() {
@@ -23,8 +22,6 @@
             } else {
                 $scope.error = true;
             }
-        }).error(function(error) {
-            console.log(error);
         });
     };
 });

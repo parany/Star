@@ -1,11 +1,11 @@
-starApp.controller('detailTreatyController', function($scope, $routeParams, $http, ngTableParams, _, auth, dateHelper, $location) {
+starApp.controller('detailTreatyController', function($scope, $routeParams, $http, ngTableParams, _, auth, $location) {
     var id = $routeParams.id;
     var tags;
     $scope.sameDate = [];
     $scope.articles = [];
     $scope.prevs = [];
     $scope.nexts = [];
-    
+
     $scope.page.title = 'Treaty - Detail - ';
 
     $scope.tableNexts = new ngTableParams({
@@ -113,7 +113,7 @@ starApp.controller('detailTreatyController', function($scope, $routeParams, $htt
 
 
     $scope.promptDelete = function(model) {
-        var response = confirm("Are you sure you want to delete this treaty?");
+        var response = confirm('Are you sure you want to delete this treaty?');
         if (response) {
             $http.get('/treaties/delete/' + model._id).success(function() {
                 $location.path('/treaties');

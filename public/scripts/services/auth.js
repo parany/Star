@@ -1,30 +1,30 @@
-﻿starApp.factory('auth', function ($cookieStore, ACCESS_LEVELS) {
+﻿starApp.factory('auth', function($cookieStore, ACCESS_LEVELS) {
     var _user = $cookieStore.get('user');
     return {
-        isAuthorized: function (lvl) {
+        isAuthorized: function(lvl) {
             return _user !== null && _user.Role === lvl;
         },
-        setUser: function (user) {
+        setUser: function(user) {
             user.Role = ACCESS_LEVELS.pub;
             _user = user;
             $cookieStore.put('user', _user);
         },
-        isLoggedIn: function () {
+        isLoggedIn: function() {
             return _user ? true : false;
         },
-        getUser: function () {
+        getUser: function() {
             return _user;
         },
         getUserName: function() {
             return _user.UserName;
         },
-        getUserFullName: function () {
+        getUserFullName: function() {
             return _user ? _user.FullName : '';
         },
-        getId: function () {
+        getId: function() {
             return _user ? _user._id : null;
         },
-        logout: function () {
+        logout: function() {
             $cookieStore.remove('user');
             _user = null;
         }

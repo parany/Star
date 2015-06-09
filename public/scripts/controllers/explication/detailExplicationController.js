@@ -1,4 +1,4 @@
-starApp.controller('detailExplicationController', function($scope, $routeParams, $http, $location, ngTableParams, _, auth, dateHelper) {
+starApp.controller('detailExplicationController', function($scope, $routeParams, $http, $location, ngTableParams, _, auth) {
     var id = $routeParams.id;
     var tags;
     $scope.explication = {};
@@ -7,7 +7,7 @@ starApp.controller('detailExplicationController', function($scope, $routeParams,
     $scope.articles = [];
     $scope.prevs = [];
     $scope.nexts = [];
-    
+
     $scope.page.title = 'Explication - Detail - ';
 
     $scope.tableNexts = new ngTableParams({
@@ -65,17 +65,19 @@ starApp.controller('detailExplicationController', function($scope, $routeParams,
             $data: {}
         }
     });
-    
+
     $scope.tableVerses = new ngTableParams({
         page: 1,
         total: 1,
         count: 5
     }, {
         counts: [],
-        getData: function ($defer, params) {
+        getData: function($defer, params) {
             $defer.resolve($scope.explication.VerseReadList.slice((params.page() - 1) * params.count(), params.page() * params.count()));
         },
-        $scope: { $data: {} }
+        $scope: {
+            $data: {}
+        }
     });
 
     $http.post('/tags/find', {
@@ -128,7 +130,7 @@ starApp.controller('detailExplicationController', function($scope, $routeParams,
 
 
     $scope.promptDelete = function(model) {
-        var response = confirm("Are you sure you want to delete this explication?");
+        var response = confirm('Are you sure you want to delete this explication?');
         if (response) {
             $http.get('/explications/delete/' + model._id).success(function() {
                 $location.path('/explications');
