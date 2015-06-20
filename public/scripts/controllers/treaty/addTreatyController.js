@@ -1,4 +1,4 @@
-starApp.controller('addTreatyController', function($scope, $routeParams, $http, $location, ngTableParams, auth) {
+starApp.controller('addTreatyController', function($scope, $routeParams, $http, $location, ngTableParams, accountService) {
     var id = $routeParams.id;
     $scope.Date = '';
 
@@ -53,7 +53,7 @@ starApp.controller('addTreatyController', function($scope, $routeParams, $http, 
 
     $scope.$watch('Date', function() {
         if ($scope.Date === undefined || $scope.Date === '') return;
-        $http.get('/treaties/getByDate/' + auth.getUserName() + '/' + $scope.Date).success(function(data) {
+        $http.get('/treaties/getByDate/' + accountService.getUserName() + '/' + $scope.Date).success(function(data) {
             $scope.data = data;
             if (id !== undefined) {
                 $scope.data = $scope.data.filter(function(t) {
@@ -81,7 +81,7 @@ starApp.controller('addTreatyController', function($scope, $routeParams, $http, 
     $scope.save = function() {
         var data = JSON.parse(JSON.stringify($scope.treaty));
         data.Date = new Date($scope.Date).getTime();
-        data.CreatedBy = auth.getUserName();
+        data.CreatedBy = accountService.getUserName();
         data.TagIdList = $scope.tags.filter(function(t) {
             return t.Selected === true;
         }).map(function(t) {
@@ -91,13 +91,13 @@ starApp.controller('addTreatyController', function($scope, $routeParams, $http, 
             'collection': 'treaties',
             'date': new Date().getTime(),
             'title': data.Title,
-            'createdBy': auth.getUserName()
+            'createdBy': accountService.getUserName()
         };
         var url;
         if (id !== undefined) {
             data._id = id;
             url = '/treaties/update';
-            data.UpdatedBy = auth.getUserName();
+            data.UpdatedBy = accountService.getUserName();
             userAction.operation = 'Edit';
         } else {
             url = '/treaties/insert';

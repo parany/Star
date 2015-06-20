@@ -1,4 +1,4 @@
-starApp.controller('detailTreatyController', function($scope, $routeParams, $http, ngTableParams, _, auth, $location) {
+starApp.controller('detailTreatyController', function($scope, $routeParams, $http, ngTableParams, _, accountService, $location) {
     var id = $routeParams.id;
     var tags;
     $scope.sameDate = [];
@@ -123,7 +123,7 @@ starApp.controller('detailTreatyController', function($scope, $routeParams, $htt
                 'operation': 'Delete',
                 'date': new Date().getTime(),
                 'title': model.Title,
-                'createdBy': auth.getUserName()
+                'createdBy': accountService.getUserName()
             };
             $http.post('/userActions/insert', userAction);
         }

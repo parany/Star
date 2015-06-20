@@ -1,4 +1,4 @@
-starApp.controller('explicationController', function($scope, $routeParams, $filter, $http, $location, ngTableParams, auth) {
+starApp.controller('explicationController', function($scope, $routeParams, $filter, $http, $location, ngTableParams, accountService) {
     $scope.datas = [];
     $scope.activity = {};
     $scope.activity.operations = [];
@@ -39,7 +39,7 @@ starApp.controller('explicationController', function($scope, $routeParams, $filt
     });
 
     $http.post('/explications/find', {
-        CreatedBy: auth.getUserName(),
+        CreatedBy: accountService.getUserName(),
         sort: {
             Date: -1
         },
@@ -50,7 +50,7 @@ starApp.controller('explicationController', function($scope, $routeParams, $filt
     }).success(function(data) {
         $scope.datas = data;
         $scope.datas.forEach(function(d) {
-            d.CreatedBy = auth.getUserName();
+            d.CreatedBy = accountService.getUserName();
             d.Date = new Date(d.Date);
             d.DateGroup = d.Date.toCompareString();
         });
@@ -59,7 +59,7 @@ starApp.controller('explicationController', function($scope, $routeParams, $filt
         $scope.tableSearch.reload();
     });
 
-    $http.get('/activities/explications/' + auth.getUserName()).success(function(data) {
+    $http.get('/activities/explications/' + accountService.getUserName()).success(function(data) {
         $scope.activity = data;
         $scope.activity.operations.forEach(function(value) {
             value.date = new Date(value.date);
@@ -89,7 +89,7 @@ starApp.controller('explicationController', function($scope, $routeParams, $filt
         }).success(function(data) {
             $scope.datas = data;
             $scope.datas.forEach(function(d) {
-                d.CreatedBy = auth.getUserName();
+                d.CreatedBy = accountService.getUserName();
                 d.Date = new Date(d.Date);
                 d.DateGroup = d.Date.toCompareString();
             });

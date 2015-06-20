@@ -1,7 +1,7 @@
-﻿starApp.run(function($rootScope, $location, auth) {
+﻿starApp.run(function($rootScope, $location, accountService) {
     $rootScope.$on('$routeChangeStart',
         function(evt, next, curr) {
-            if (!auth.isLoggedIn()) {
+            if (!accountService.isLoggedIn()) {
                 $location.path('/login');
                 return;
             }

@@ -1,4 +1,4 @@
-starApp.controller('detailNewController', function($scope, $routeParams, $http, ngTableParams, _, auth, $location) {
+starApp.controller('detailNewController', function($scope, $routeParams, $http, ngTableParams, _, accountService, $location) {
     var id = $routeParams.id;
     $scope.new = {};
     $scope.new.Citations = [];
@@ -129,7 +129,7 @@ starApp.controller('detailNewController', function($scope, $routeParams, $http, 
                 'operation': 'Delete',
                 'date': new Date().getTime(),
                 'title': model.Title,
-                'createdBy': auth.getUserName()
+                'createdBy': accountService.getUserName()
             };
             $http.post('/userActions/insert', userAction);
         }

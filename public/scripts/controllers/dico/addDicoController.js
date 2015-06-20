@@ -1,4 +1,4 @@
-﻿starApp.controller('addDicoController', function($rootScope, $scope, $routeParams, $http, $location, ngTableParams, auth, _) {
+﻿starApp.controller('addDicoController', function($rootScope, $scope, $routeParams, $http, $location, ngTableParams, accountService, _) {
     $scope.cultures = [];
     $scope.dico = {};
     $scope.dico.Meaning = '';
@@ -102,10 +102,10 @@
         delete data.To;
         var url;
         if (id === undefined) {
-            data.CreatedBy = auth.getUserName();
+            data.CreatedBy = accountService.getUserName();
             url = '/dicos/insert';
         } else {
-            data.UpdatedBy = auth.getUserName();
+            data.UpdatedBy = accountService.getUserName();
             url = '/dicos/update';
         }
         data.Illustrations = $scope.illustrations.map(function(i) {

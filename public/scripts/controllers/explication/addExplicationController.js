@@ -1,4 +1,4 @@
-starApp.controller('addExplicationController', function($scope, $routeParams, $http, $location, $cookieStore, ngTableParams, auth, _) {
+starApp.controller('addExplicationController', function($scope, $routeParams, $http, $location, $cookieStore, ngTableParams, accountService, _) {
     var id = $routeParams.id;
 
     $scope.read = {};
@@ -68,7 +68,7 @@ starApp.controller('addExplicationController', function($scope, $routeParams, $h
 
     $scope.$watch('explication.Date', function() {
         if ($scope.explication.Date === undefined || $scope.explication.Date === '') return;
-        $http.get('/explications/getByDate/' + auth.getUserName() + '/' + $scope.explication.Date).success(function(data) {
+        $http.get('/explications/getByDate/' + accountService.getUserName() + '/' + $scope.explication.Date).success(function(data) {
             $scope.data = data;
             if (id !== undefined) {
                 $scope.data = $scope.data.filter(function(t) {
@@ -99,7 +99,7 @@ starApp.controller('addExplicationController', function($scope, $routeParams, $h
     $scope.save = function() {
         var data = JSON.parse(JSON.stringify($scope.explication));
         data.Date = new Date($scope.explication.Date).getTime();
-        data.CreatedBy = auth.getUserName();
+        data.CreatedBy = accountService.getUserName();
         data.TagIdList = _.pluck(_.where($scope.tags, {
             Selected: true
         }), '_id');
@@ -108,13 +108,13 @@ starApp.controller('addExplicationController', function($scope, $routeParams, $h
             'collection': 'explications',
             'date': new Date().getTime(),
             'title': data.Title,
-            'createdBy': auth.getUserName()
+            'createdBy': accountService.getUserName()
         };
         var url;
         if (id !== undefined) {
             data._id = id;
             url = '/explications/update';
-            data.UpdatedBy = auth.getUserName();
+            data.UpdatedBy = accountService.getUserName();
             userAction.operation = 'Edit';
         } else {
             url = '/explications/insert';

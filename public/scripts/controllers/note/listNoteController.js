@@ -1,4 +1,4 @@
-﻿starApp.controller('listNoteController', function($scope, $http, ngTableParams, auth) {
+﻿starApp.controller('listNoteController', function($scope, $http, ngTableParams, accountService) {
     $scope.notes = [];
 
     $scope.page.title = 'Note - List';
@@ -15,7 +15,7 @@
     $scope.tableNote.settings().$scope = $scope;
 
     $scope.search = function() {
-        var url = '/notes/search/' + auth.getUserName();
+        var url = '/notes/search/' + accountService.getUserName();
         if ($scope.txtSearch) {
             url += '/' + $scope.txtSearch;
         }
@@ -36,7 +36,7 @@
         });
         model.$selected = !model.$selected;
         $scope.page.title = 'Note - ' + model.Verse;
-        $http.get('/notes/getNotesByVerseId/' + auth.getUserName() + '/' + model.VerseId).success(function(data) {
+        $http.get('/notes/getNotesByVerseId/' + accountService.getUserName() + '/' + model.VerseId).success(function(data) {
             $scope.dtoNote = data;
         });
     };

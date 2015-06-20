@@ -1,4 +1,4 @@
-﻿starApp.controller('editAgendaController', function($scope, $routeParams, $http, $location, ngTableParams, auth) {
+﻿starApp.controller('editAgendaController', function($scope, $routeParams, $http, $location, ngTableParams, accountService) {
     var id = $routeParams.id;
     $scope.Date = '';
     $scope.agenda = {};
@@ -31,7 +31,7 @@
     $scope.$watch('Date', function() {
         if ($scope.Date === undefined || $scope.Date === '') return;
         $scope.Date = $scope.Date.split('T')[0];
-        $http.get('/agendas/getByDate/' + auth.getUserName() + '/' + $scope.Date).success(function(data) {
+        $http.get('/agendas/getByDate/' + accountService.getUserName() + '/' + $scope.Date).success(function(data) {
             $scope.data = data.filter(function(d) {
                 return d._id !== id;
             });
@@ -46,8 +46,8 @@
     $scope.save = function() {
         var data = $scope.agenda;
         data.Date = $scope.Date;
-        data.CreatedBy = auth.getUserName();
-        data.UpdatedBy = auth.getUserName();
+        data.CreatedBy = accountService.getUserName();
+        data.UpdatedBy = accountService.getUserName();
         data._id = id;
         data.Date = (new Date($scope.Date)).getTime();
         var userAction = {
@@ -55,7 +55,7 @@
             'operation': 'Edit',
             'date': new Date().getTime(),
             'title': data.Title,
-            'createdBy': auth.getUserName()
+            'createdBy': accountService.getUserName()
         };
         $http({
             method: 'POST',

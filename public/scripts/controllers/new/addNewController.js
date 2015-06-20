@@ -1,4 +1,4 @@
-starApp.controller('addNewController', function($scope, $routeParams, $http, $location, $cookieStore, ngTableParams, auth, _) {
+starApp.controller('addNewController', function($scope, $routeParams, $http, $location, $cookieStore, ngTableParams, accountService, _) {
     var id = $routeParams.id;
     $scope.news = [];
     $scope.new = {};
@@ -58,7 +58,7 @@ starApp.controller('addNewController', function($scope, $routeParams, $http, $lo
 
     $scope.$watch('new.Date', function() {
         if ($scope.new.Date === undefined || $scope.new.Date === '') return;
-        $http.get('/news/getByDate/' + auth.getUserName() + '/' + $scope.new.Date).success(function(data) {
+        $http.get('/news/getByDate/' + accountService.getUserName() + '/' + $scope.new.Date).success(function(data) {
             $scope.news = data;
             if (id !== undefined) {
                 $scope.news = $scope.news.filter(function(t) {
@@ -97,18 +97,18 @@ starApp.controller('addNewController', function($scope, $routeParams, $http, $lo
     $scope.save = function() {
         var data = JSON.parse(JSON.stringify($scope.new));
         data.Date = new Date($scope.new.Date).getTime();
-        data.CreatedBy = auth.getUserName();
+        data.CreatedBy = accountService.getUserName();
         var userAction = {
             'collection': 'news',
             'date': new Date().getTime(),
             'title': data.Title,
-            'createdBy': auth.getUserName()
+            'createdBy': accountService.getUserName()
         };
         var url;
         if (id !== undefined) {
             data.Id = id;
             url = '/news/update';
-            data.UpdatedBy = auth.getUserName();
+            data.UpdatedBy = accountService.getUserName();
             userAction.operation = 'Edit';
         } else {
             url = '/news/insert';

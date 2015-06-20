@@ -1,4 +1,4 @@
-﻿starApp.controller('addAgendaController', function($scope, $routeParams, $http, $location, $cookieStore, ngTableParams, auth) {
+﻿starApp.controller('addAgendaController', function($scope, $routeParams, $http, $location, $cookieStore, ngTableParams, accountService) {
     $scope.agenda = {};
     $scope.Date = '';
     $scope.Date = new Date().toISOString().split('T')[0];
@@ -23,7 +23,7 @@
     $scope.tableParams.settings().$scope = $scope;
 
     $scope.$watch('Date', function() {
-        $http.get('/agendas/getByDate/' + auth.getUserName() + '/' + $scope.Date).success(function(data) {
+        $http.get('/agendas/getByDate/' + accountService.getUserName() + '/' + $scope.Date).success(function(data) {
             $scope.data = data;
             $scope.tableParams.reload();
         });
@@ -32,13 +32,13 @@
     $scope.save = function() {
         var data = $scope.agenda;
         data.Date = (new Date($scope.Date)).getTime();
-        data.CreatedBy = auth.getUserName();
+        data.CreatedBy = accountService.getUserName();
         var userAction = {
             'collection': 'agendas',
             'operation': 'Add',
             'date': new Date().getTime(),
             'title': data.Title,
-            'createdBy': auth.getUserName()
+            'createdBy': accountService.getUserName()
         };
         var id;
         $http({

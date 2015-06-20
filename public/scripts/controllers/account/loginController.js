@@ -1,4 +1,4 @@
-﻿starApp.controller('loginController', function($rootScope, $scope, $location, $modal, auth, accountService) {
+﻿starApp.controller('loginController', function($rootScope, $scope, $location, $modal, accountService) {
     $scope.page.title = 'Login';
 
     $scope.login = function() {
@@ -9,7 +9,7 @@
         accountService.authenticate($scope.user.UserName, $scope.user.Password).success(function(data) {
             modalInstance.dismiss('cancel');
             if (data.length) {
-                auth.setUser(data[0]);
+                accountService.setUser(data[0]);
                 $rootScope.$emit('account.loggedIn', data[0].FullName);
                 $location.path('/');
             } else {

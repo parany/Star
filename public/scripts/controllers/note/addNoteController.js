@@ -1,4 +1,4 @@
-﻿starApp.controller('addNoteController', function($scope, $routeParams, $http, $location, auth) {
+﻿starApp.controller('addNoteController', function($scope, $routeParams, $http, $location, accountService) {
     $scope.tags = [];
     $http({
         method: 'POST',
@@ -28,7 +28,7 @@
                 return t._id;
             }),
             'VerseId': $routeParams.id,
-            'CreatedBy': auth.getUserName()
+            'CreatedBy': accountService.getUserName()
         };
         $http({
             method: 'POST',
