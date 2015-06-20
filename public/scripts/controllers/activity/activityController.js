@@ -1,15 +1,15 @@
-starApp.controller('activityController', function($scope, $http, ngTableParams, _, auth) {
+starApp.controller('activityController', function($scope, $http, ngTableParams, _, activityService, auth) {
 	$scope.page.title = 'Activity';
 
 	// GENERAL
-	$http.get('/summary/' + auth.getUserName()).success(function(data) {
-		$scope.generalLabels = _.pluck(data, 'article');
-		$scope.generalData = _.pluck(data, 'total');
+	activityService.getSummary(auth.getUserName()).then(function(data) {
+		$scope.generalLabels = data.labels;
+		$scope.generalData = data.data;
 	});
 
-	$http.get('/activities/' + auth.getUserName()).success(function(data) {
-		$scope.operationsLabels = _.pluck(data, 'operation');
-		$scope.operationsData = _.pluck(data, 'total');
+	activityService.getAllActivities(auth.getUserName()).then(function(data) {
+		$scope.operationsLabels = data.labels;
+		$scope.operationsData = data.data;
 	});
 
 	// AGENDA
@@ -29,11 +29,8 @@ starApp.controller('activityController', function($scope, $http, ngTableParams, 
 		}
 	});
 
-	$http.get('/activities/agendas/' + auth.getUserName() + '/250').success(function(data) {
+	activityService.getActivities('agendas', auth.getUserName()).then(function(data) {
 		$scope.agendaActivity = data;
-		$scope.agendaActivity.operations.forEach(function(value) {
-			value.date = new Date(value.date);
-		});
 		$scope.tableAgendaOperations.settings().total = $scope.agendaActivity.operations.length;
 		$scope.tableAgendaOperations.parameters().page = 1;
 		$scope.tableAgendaOperations.reload();
@@ -56,11 +53,8 @@ starApp.controller('activityController', function($scope, $http, ngTableParams, 
 		}
 	});
 
-	$http.get('/activities/explications/' + auth.getUserName() + '/250').success(function(data) {
+	activityService.getActivities('explications', auth.getUserName()).then(function(data) {
 		$scope.explicationActivity = data;
-		$scope.explicationActivity.operations.forEach(function(value) {
-			value.date = new Date(value.date);
-		});
 		$scope.tableExplicationOperations.settings().total = $scope.explicationActivity.operations.length;
 		$scope.tableExplicationOperations.parameters().page = 1;
 		$scope.tableExplicationOperations.reload();
@@ -83,11 +77,8 @@ starApp.controller('activityController', function($scope, $http, ngTableParams, 
 		}
 	});
 
-	$http.get('/activities/treaties/' + auth.getUserName() + '/250').success(function(data) {
+	activityService.getActivities('treaties', auth.getUserName()).then(function(data) {
 		$scope.treatyActivity = data;
-		$scope.treatyActivity.operations.forEach(function(value) {
-			value.date = new Date(value.date);
-		});
 		$scope.tableTreatyOperations.settings().total = $scope.treatyActivity.operations.length;
 		$scope.tableTreatyOperations.parameters().page = 1;
 		$scope.tableTreatyOperations.reload();
@@ -110,11 +101,8 @@ starApp.controller('activityController', function($scope, $http, ngTableParams, 
 		}
 	});
 
-	$http.get('/activities/treaties/' + auth.getUserName() + '/250').success(function(data) {
+	activityService.getActivities('news', auth.getUserName()).then(function(data) {
 		$scope.newActivity = data;
-		$scope.newActivity.operations.forEach(function(value) {
-			value.date = new Date(value.date);
-		});
 		$scope.tableNewOperations.settings().total = $scope.newActivity.operations.length;
 		$scope.tableNewOperations.parameters().page = 1;
 		$scope.tableNewOperations.reload();
