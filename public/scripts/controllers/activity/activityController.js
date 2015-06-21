@@ -1,4 +1,4 @@
-starApp.controller('activityController', function($scope, $http, ngTableParams, _, activityService, accountService) {
+starApp.controller('activityController', function($scope, ngTableParams, _, activityService, accountService, starTable) {
 	$scope.page.title = 'Activity';
 
 	// GENERAL
@@ -15,20 +15,7 @@ starApp.controller('activityController', function($scope, $http, ngTableParams, 
 	// AGENDA
 	$scope.agendaActivity = {};
 	$scope.agendaActivity.operations = [];
-
-	$scope.tableAgendaOperations = new ngTableParams({
-		page: 1,
-		count: 10
-	}, {
-		counts: [],
-		getData: function($defer, params) {
-			$defer.resolve($scope.agendaActivity.operations.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-		},
-		$scope: {
-			$data: {}
-		}
-	});
-
+	$scope.tableAgendaOperations = starTable.create($scope, 'agendaActivity.operations');
 	activityService.getActivities('agendas', accountService.getUserName()).then(function(data) {
 		$scope.agendaActivity = data;
 		$scope.tableAgendaOperations.settings().total = $scope.agendaActivity.operations.length;
@@ -39,20 +26,7 @@ starApp.controller('activityController', function($scope, $http, ngTableParams, 
 	// EXPLICATION
 	$scope.explicationActivity = {};
 	$scope.explicationActivity.operations = [];
-
-	$scope.tableExplicationOperations = new ngTableParams({
-		page: 1,
-		count: 10
-	}, {
-		counts: [],
-		getData: function($defer, params) {
-			$defer.resolve($scope.explicationActivity.operations.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-		},
-		$scope: {
-			$data: {}
-		}
-	});
-
+	$scope.tableExplicationOperations = starTable.create($scope, 'explicationActivity.operations');
 	activityService.getActivities('explications', accountService.getUserName()).then(function(data) {
 		$scope.explicationActivity = data;
 		$scope.tableExplicationOperations.settings().total = $scope.explicationActivity.operations.length;
@@ -63,20 +37,7 @@ starApp.controller('activityController', function($scope, $http, ngTableParams, 
 	// TREATY
 	$scope.treatyActivity = {};
 	$scope.treatyActivity.operations = [];
-
-	$scope.tableTreatyOperations = new ngTableParams({
-		page: 1,
-		count: 10
-	}, {
-		counts: [],
-		getData: function($defer, params) {
-			$defer.resolve($scope.treatyActivity.operations.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-		},
-		$scope: {
-			$data: {}
-		}
-	});
-
+	$scope.tableTreatyOperations = starTable.create($scope, 'treatyActivity.operations');
 	activityService.getActivities('treaties', accountService.getUserName()).then(function(data) {
 		$scope.treatyActivity = data;
 		$scope.tableTreatyOperations.settings().total = $scope.treatyActivity.operations.length;
@@ -87,20 +48,7 @@ starApp.controller('activityController', function($scope, $http, ngTableParams, 
 	// NEW
 	$scope.newActivity = {};
 	$scope.newActivity.operations = [];
-
-	$scope.tableNewOperations = new ngTableParams({
-		page: 1,
-		count: 10
-	}, {
-		counts: [],
-		getData: function($defer, params) {
-			$defer.resolve($scope.newActivity.operations.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-		},
-		$scope: {
-			$data: {}
-		}
-	});
-
+	$scope.tableNewOperations = starTable.create($scope, 'newActivity.operations');
 	activityService.getActivities('news', accountService.getUserName()).then(function(data) {
 		$scope.newActivity = data;
 		$scope.tableNewOperations.settings().total = $scope.newActivity.operations.length;
