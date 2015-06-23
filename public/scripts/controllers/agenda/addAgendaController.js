@@ -18,22 +18,7 @@
         var data = $scope.agenda;
         data.Date = new Date($scope.Date).getTime();
         data.CreatedBy = accountService.getUserName();
-        var userAction = {
-            'collection': 'agendas',
-            'operation': 'Add',
-            'date': new Date().getTime(),
-            'title': data.Title,
-            'createdBy': accountService.getUserName()
-        };
-        var id;
-        $http({
-            method: 'POST',
-            data: data,
-            url: '/agendas/insert'
-        }).success(function(ret) {
-            id = ret[0]._id;
-            return $http.post('/userActions/insert', userAction);
-        }).then(function() {
+        agendaService.insert(data).then(function(id) {
             $location.path('/agendas/detail/' + id);
         });
     };
