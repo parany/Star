@@ -1,11 +1,11 @@
-starApp.factory('starTable', function(ngTableParams) {
-	function create(data, ppty) {
+starApp.factory('starTable', function($filter, ngTableParams) {
+	function create(data, ppty, orderBy) {
 		var ppties = ppty.split('.');
 		var params = {
 			page: 1,
 			count: 10
 		};
-		return new ngTableParams(params, {
+		var options = {
 			counts: [],
 			getData: function($defer, params) {
 				if (ppties.length === 2) {
@@ -17,7 +17,22 @@ starApp.factory('starTable', function(ngTableParams) {
 			$scope: {
 				$data: {}
 			}
-		});
+		};
+		if (orderBy) {
+			params.sorting = {
+				'Date': 'desc'
+			};
+			options.groupBy = 'DateGroup';
+			options.total = data.datas.length;
+		}
+		var table = new ngTableParams(params, options);
+		if (orderBy) {
+			table.settings.getData = function($defer, params) {
+				var orderedData = params.sorting() ? $filter('orderBy')(data.datas, table.orderBy()) : data.datas.length;
+				$defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+			};
+		}
+		return table;
 	}
 
 	return {

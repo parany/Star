@@ -1,4 +1,4 @@
-﻿starApp.controller('addAgendaController', function($scope, $http, $location, ngTableParams, accountService, agendaService, starTable) {
+﻿starApp.controller('addAgendaController', function($scope, $location, accountService, agendaService, starTable) {
     $scope.page.title = 'Agenda - Add';
     $scope.agenda = {};
     $scope.Date = '';

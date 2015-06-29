@@ -1,15 +1,11 @@
-starApp.factory('accountService', function($http, $cookieStore, ACCESS_LEVELS) {
+starApp.factory('accountService', function($http, $cookieStore, genericService, ACCESS_LEVELS) {
 	var _user = $cookieStore.get('user');
 
 	return {
 		authenticate: function(userName, password) {
-			return $http({
-				method: 'POST',
-				url: '/users/find',
-				data: {
-					UserName: userName,
-					Password: password
-				}
+			return genericService.find('users', {
+				UserName: userName,
+				Password: password
 			});
 		},
 		isAuthorized: function(lvl) {
