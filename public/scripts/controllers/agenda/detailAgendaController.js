@@ -1,4 +1,5 @@
-starApp.controller('detailAgendaController', function($scope, $routeParams, $http, ngTableParams, _, accountService, $location) {
+starApp.controller('detailAgendaController', function($scope, $routeParams, $http, ngTableParams, _, accountService, $location, starTable) {
+    $scope.page.title = 'Agenda - Detail - ';
     var id = $routeParams.id;
     var date;
     $scope.sameDate = [];
@@ -6,63 +7,10 @@ starApp.controller('detailAgendaController', function($scope, $routeParams, $htt
     $scope.prevs = [];
     $scope.nexts = [];
 
-    $scope.page.title = 'Agenda - Detail - ';
-
-    $scope.tableNexts = new ngTableParams({
-        page: 1,
-        total: 1,
-        count: 10
-    }, {
-        counts: [],
-        getData: function($defer, params) {
-            $defer.resolve($scope.nexts.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: {
-            $data: {}
-        }
-    });
-
-    $scope.tablePrevs = new ngTableParams({
-        page: 1,
-        total: 1,
-        count: 10
-    }, {
-        counts: [],
-        getData: function($defer, params) {
-            $defer.resolve($scope.prevs.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: {
-            $data: {}
-        }
-    });
-
-    $scope.tableSameDate = new ngTableParams({
-        page: 1,
-        total: 1,
-        count: 10
-    }, {
-        counts: [],
-        getData: function($defer, params) {
-            $defer.resolve($scope.sameDate.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: {
-            $data: {}
-        }
-    });
-
-    $scope.tableOtherArticles = new ngTableParams({
-        page: 1,
-        total: 1,
-        count: 10
-    }, {
-        counts: [],
-        getData: function($defer, params) {
-            $defer.resolve($scope.articles.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: {
-            $data: {}
-        }
-    });
+    $scope.tableNexts = starTable.create($scope, 'nexts');
+    $scope.tablePrevs = starTable.create($scope, 'prevs');
+    $scope.tableSameDate = starTable.create($scope, 'sameDate');
+    $scope.tableOtherArticles = starTable.create($scope, 'articles');
 
     $http.get('/agendas/findOne/' + id).then(function(dataAgenda) {
         $scope.agenda = dataAgenda.data;
@@ -74,16 +22,15 @@ starApp.controller('detailAgendaController', function($scope, $routeParams, $htt
             return d._id !== id;
         });
         delete data.data.agendas;
-        for (var prop in data.data) {
-            for (var i = 0; i < data.data[prop].length; i++) {
-                var article = data.data[prop][i];
+        _.forIn(data.data, function(value, key) {
+            _.each(value, function(article) {
                 $scope.articles.push({
                     _id: article._id,
                     Title: article.Title,
-                    Type: prop
+                    Type: key
                 });
-            }
-        }
+            });
+        });
         return $http.get('/agendas/getPrevNearArticles/' + date.getTime());
     }).then(function(data) {
         $scope.prevs = data.data;
