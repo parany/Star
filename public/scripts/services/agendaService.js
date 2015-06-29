@@ -34,10 +34,15 @@ starApp.factory('agendaService', function($http, genericService, userActionServi
 		return genericService.search('agendas', text);
 	}
 
+	function findOne(id) {
+		return genericService.findOne('agendas', id);
+	}
+
 	return {
 		getByDate: getByDate,
 		insert: insert,
 		find: find,
-		search: search
+		search: search,
+		findOne: findOne
 	};
 });
