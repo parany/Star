@@ -1,12 +1,17 @@
-starApp.factory('userActionService', function($http, genericService) {
-	function insert(title, createdBy) {
+starApp.factory('userActionService', function($http) {
+	function insert(collectionName, title, createdBy) {
 		var data = {
 			operation: 'Add',
 			date: new Date().getTime(),
 			title: title,
-			createdBy: createdBy
+			createdBy: createdBy,
+			collection: collectionName
 		};
-		return genericService.insert('userActions', data);
+		return $http({
+			method: 'POST',
+			data: data,
+			url: 'userActions/insert'
+		});
 	}
 
 	return {
