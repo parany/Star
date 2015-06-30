@@ -1,4 +1,4 @@
-starApp.controller('agendaController', function($scope, $location, accountService, agendaService, starTable, activityService) {
+starApp.controller('agendaController', function($scope, $location, accountService, genericService, activityService, starTable) {
     $scope.page.title = 'Agenda - Home page';
     $scope.datas = [];
     $scope.activity = {};
@@ -7,17 +7,8 @@ starApp.controller('agendaController', function($scope, $location, accountServic
     $scope.tableSearch = starTable.create($scope, 'datas', true);
     $scope.tableOperations = starTable.create($scope, 'activity.operations');
 
-    agendaService.find({
-        CreatedBy: accountService.getUserName(),
-        sort: {
-            Date: -1
-        },
-        projection: {
-            Title: 1,
-            Date: 1
-        }
-    }).then(function(data) {
-        $scope.datas = data;
+    genericService.getList('agendas', accountService.getUserName()).then(function(data) {
+        $scope.datas = data.data;
         $scope.tableSearch.settings().total = $scope.datas.length;
         $scope.tableSearch.parameters().page = 1;
         $scope.tableSearch.reload();
@@ -39,7 +30,7 @@ starApp.controller('agendaController', function($scope, $location, accountServic
         if (!$scope.txtSearch || $scope.txtSearch.length < 1) {
             return;
         }
-        agendaService.search($scope.txtSearch).success(function(data) {
+        genericService.search('agendas', $scope.txtSearch).success(function(data) {
             $scope.datas = data;
             $scope.datas.forEach(function(d) {
                 d.CreatedBy = accountService.getUserName();

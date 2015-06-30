@@ -1,8 +1,4 @@
 starApp.factory('genericService', function($http, userActionService, _) {
-	function getByDate(collectionName, userName, date) {
-		return $http.get(`/${collectionName}/getByDate/${userName}/${date}`);
-	}
-
 	function insert(collectionName, data) {
 		return $http({
 			method: 'POST',
@@ -11,11 +7,41 @@ starApp.factory('genericService', function($http, userActionService, _) {
 		});
 	}
 
+	function insertWithUserActions(collectionName, data) {
+		var promise = new Promise(function(resolve) {
+			var id;
+			insert(collectionName, data).then(function(ret) {
+				id = ret.data[0]._id;
+				return userActionService.insert(collectionName, data.Title, data.CreatedBy);
+			}).then(function() {
+				resolve(id);
+			});
+		});
+		return promise;
+	}
+
+	function getByDate(collectionName, userName, date) {
+		return $http.get(`/${collectionName}/getByDate/${userName}/${date}`);
+	}
+
 	function find(collectionName, filter) {
 		return $http({
 			method: 'POST',
 			url: `/${collectionName}/find`,
 			data: filter
+		});
+	}
+
+	function getList(collectionName, author) {
+		return find(collectionName, {
+			CreatedBy: author,
+			sort: {
+				Date: -1
+			},
+			projection: {
+				Title: 1,
+				Date: 1
+			}
 		});
 	}
 
@@ -76,25 +102,13 @@ starApp.factory('genericService', function($http, userActionService, _) {
 		return promise;
 	}
 
-	function insertWithUserActions(collectionName, data) {
-		var promise = new Promise(function(resolve) {
-			var id;
-			insert(collectionName, data).then(function(ret) {
-				id = ret.data[0]._id;
-				return userActionService.insert(collectionName, data.Title, data.CreatedBy);
-			}).then(function() {
-				resolve(id);
-			});
-		});
-		return promise;
-	}
-
 	return {
 		getByDate: getByDate,
 		insert: insert,
+		insertWithUserActions: insertWithUserActions,
 		find: find,
 		search: search,
 		findOne: findOne,
-		insertWithUserActions: insertWithUserActions
+		getList: getList
 	};
 });
