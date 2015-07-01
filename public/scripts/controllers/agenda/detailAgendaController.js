@@ -1,4 +1,4 @@
-starApp.controller('detailAgendaController', function($scope, $routeParams, $location, $http, _, accountService, genericService, starTable) {
+starApp.controller('detailAgendaController', function($scope, $routeParams, $location, _, accountService, genericService, starTable) {
     $scope.page.title = 'Agenda - Detail - ';
 
     $scope.tableNexts = starTable.create($scope, 'nexts');
@@ -6,7 +6,7 @@ starApp.controller('detailAgendaController', function($scope, $routeParams, $loc
     $scope.tableSameDate = starTable.create($scope, 'sameDate');
     $scope.tableOtherArticles = starTable.create($scope, 'articles');
 
-    genericService.findOne('agendas', $routeParams.id).then(function(data) {
+    genericService.getDetail('agendas', $routeParams.id).then(function(data) {
         $scope.agenda = data.agenda;
         $scope.page.title += $scope.agenda.Title;
         $scope.sameDate = data.sameDate;

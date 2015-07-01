@@ -80,7 +80,7 @@ starApp.factory('genericService', function($http, userActionService, _) {
 		return promise;
 	}
 
-	function findOne(collectionName, id) {
+	function getDetail(collectionName, id) {
 		var promise = new Promise(function(resolve) {
 			var result = {};
 			var dateTime;
@@ -137,15 +137,39 @@ starApp.factory('genericService', function($http, userActionService, _) {
 		return promise;
 	}
 
+	function findOne(collectionName, id) {
+		return $http.get(`/${collectionName}/findOne/${id}`);
+	}
+
+	function update(collectionName, data) {
+		return $http({
+            method: 'POST',
+            data: data,
+            url: `/${collectionName}/update`
+        });
+	}
+
+	function updateWithUserActions(collectionName, data) {
+		var promise = new Promise(function(resolve) {
+			update(collectionName, data).then(function() {
+				return userActionService.update(collectionName, data.Title, data.CreatedBy);
+			}).then(function() {
+				resolve(data._id);
+			});
+		});
+		return promise;
+	}
+
 	return {
 		getByDate: getByDate,
-		insert: insert,
 		insertWithUserActions: insertWithUserActions,
 		find: find,
 		search: search,
-		findOne: findOne,
+		getDetail: getDetail,
 		getList: getList,
 		remove: remove,
-		removeWithUserActions: removeWithUserActions
+		removeWithUserActions: removeWithUserActions,
+		findOne: findOne,
+		updateWithUserActions: updateWithUserActions
 	};
 });

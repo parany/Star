@@ -18,8 +18,13 @@ starApp.factory('userActionService', function($http) {
 		return send(collectionName, title, author, 'Delete');
 	}
 
+	function update(collectionName, title, author) {
+		return send(collectionName, title, author, 'Edit');
+	}
+
 	return {
 		insert: insert,
-		remove: remove
+		remove: remove,
+		update: update
 	};
 });

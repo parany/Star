@@ -1,37 +1,24 @@
-﻿starApp.controller('editAgendaController', function($scope, $routeParams, $http, $location, ngTableParams, accountService) {
+﻿starApp.controller('editAgendaController', function($scope, $routeParams, $http, $location, ngTableParams, genericService, accountService, starTable) {
+    $scope.page.title = 'Agenda - Edit - ';
+
     var id = $routeParams.id;
     $scope.Date = '';
     $scope.agenda = {};
     $scope.data = [];
 
-    $scope.page.title = 'Agenda - Edit - ';
-
-    $http.get('/agendas/findOne/' + id).success(function(data) {
-        $scope.agenda = data;
+    genericService.findOne('agendas', id).then(function(data) {
+        $scope.agenda = data.data;
         $scope.page.title += $scope.agenda.Title;
-        $scope.Date = new Date(data.Date).toISOString();
+        $scope.Date = new Date($scope.agenda.Date).toISOString();
         $scope.tableParams.reload();
     });
 
-    $scope.tableParams = new ngTableParams({
-        page: 1,
-        total: 1,
-        count: 5
-    }, {
-        counts: [],
-        getData: function($defer, params) {
-            $defer.resolve($scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: {
-            $data: {}
-        }
-    });
-    $scope.tableParams.settings().$scope = $scope;
+    $scope.tableParams = starTable.create($scope, 'data');
 
     $scope.$watch('Date', function() {
         if ($scope.Date === undefined || $scope.Date === '') return;
         $scope.Date = $scope.Date.split('T')[0];
-        $http.get('/agendas/getByDate/' + accountService.getUserName() + '/' + $scope.Date).success(function(data) {
+        genericService.getByDate('agendas', accountService.getUserName(), $scope.Date).success(function(data) {
             $scope.data = data.filter(function(d) {
                 return d._id !== id;
             });
@@ -45,28 +32,12 @@
 
     $scope.save = function() {
         var data = $scope.agenda;
-        data.Date = $scope.Date;
-        data.CreatedBy = accountService.getUserName();
         data.UpdatedBy = accountService.getUserName();
         data._id = id;
-        data.Date = (new Date($scope.Date)).getTime();
-        var userAction = {
-            'collection': 'agendas',
-            'operation': 'Edit',
-            'date': new Date().getTime(),
-            'title': data.Title,
-            'createdBy': accountService.getUserName()
-        };
-        $http({
-            method: 'POST',
-            data: data,
-            url: '/agendas/update'
-        }).success(function() {
-            return $http.post('/userActions/insert', userAction);
-        }).then(function() {
+        data.Date = new Date($scope.Date).getTime();
+        genericService.updateWithUserActions('agendas', data).then(function(id) {
             $location.path('/agendas/detail/' + id);
+            $scope.$apply();
         });
-
-
     };
 });
