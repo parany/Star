@@ -8,7 +8,7 @@ starApp.controller('agendaController', function($scope, $location, accountServic
     $scope.tableOperations = starTable.create($scope, 'activity.operations');
 
     genericService.getList('agendas', accountService.getUserName()).then(function(data) {
-        $scope.datas = data.data;
+        $scope.datas = data;
         $scope.tableSearch.settings().total = $scope.datas.length;
         $scope.tableSearch.parameters().page = 1;
         $scope.tableSearch.reload();
@@ -16,9 +16,6 @@ starApp.controller('agendaController', function($scope, $location, accountServic
 
     activityService.getActivities('agendas', accountService.getUserName()).then(function(data) {
         $scope.activity = data;
-        $scope.activity.operations.forEach(function(value) {
-            value.date = new Date(value.date);
-        });
         $scope.tableOperations.reload();
     });
 
@@ -30,13 +27,8 @@ starApp.controller('agendaController', function($scope, $location, accountServic
         if (!$scope.txtSearch || $scope.txtSearch.length < 1) {
             return;
         }
-        genericService.search('agendas', $scope.txtSearch).success(function(data) {
+        genericService.search('agendas', accountService.getUserName(), $scope.txtSearch).then(function(data) {
             $scope.datas = data;
-            $scope.datas.forEach(function(d) {
-                d.CreatedBy = accountService.getUserName();
-                d.Date = new Date(d.Date);
-                d.DateGroup = d.Date.toCompareString();
-            });
             $scope.tableSearch.settings().total = $scope.datas.length;
             $scope.tableSearch.parameters().page = 1;
             $scope.tableSearch.reload();

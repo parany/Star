@@ -1,20 +1,25 @@
 starApp.factory('userActionService', function($http) {
-	function insert(collectionName, title, createdBy) {
+	function send(collectionName, title, author, operation) {
 		var data = {
-			operation: 'Add',
+			operation: operation,
 			date: new Date().getTime(),
 			title: title,
-			createdBy: createdBy,
+			createdBy: author,
 			collection: collectionName
 		};
-		return $http({
-			method: 'POST',
-			data: data,
-			url: 'userActions/insert'
-		});
+		return $http.post('/userActions/insert', data);
+	}
+
+	function insert(collectionName, title, author) {
+		return send(collectionName, title, author, 'Add');
+	}
+
+	function remove(collectionName, title, author) {
+		return send(collectionName, title, author, 'Delete');
 	}
 
 	return {
-		insert: insert
+		insert: insert,
+		remove: remove
 	};
 });

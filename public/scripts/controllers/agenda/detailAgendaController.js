@@ -1,4 +1,4 @@
-starApp.controller('detailAgendaController', function($scope, $routeParams, $location, $http, _, accountService, starTable, agendaService) {
+starApp.controller('detailAgendaController', function($scope, $routeParams, $location, $http, _, accountService, genericService, starTable) {
     $scope.page.title = 'Agenda - Detail - ';
 
     $scope.tableNexts = starTable.create($scope, 'nexts');
@@ -6,7 +6,7 @@ starApp.controller('detailAgendaController', function($scope, $routeParams, $loc
     $scope.tableSameDate = starTable.create($scope, 'sameDate');
     $scope.tableOtherArticles = starTable.create($scope, 'articles');
 
-    agendaService.findOne($routeParams.id).then(function(data) {
+    genericService.findOne('agendas', $routeParams.id).then(function(data) {
         $scope.agenda = data.agenda;
         $scope.page.title += $scope.agenda.Title;
         $scope.sameDate = data.sameDate;
@@ -19,17 +19,15 @@ starApp.controller('detailAgendaController', function($scope, $routeParams, $loc
     $scope.promptDelete = function(model) {
         var response = confirm('Are you sure you want to delete this agenda?');
         if (response) {
-            $http.get('/agendas/delete/' + model._id).success(function() {
-                $location.path('/agendas');
-            });
-            var userAction = {
-                'collection': 'agendas',
-                'operation': 'Delete',
-                'date': new Date().getTime(),
+            var data = {
+                'id': model._id,
                 'title': model.Title,
-                'createdBy': accountService.getUserName()
+                'author': accountService.getUserName()
             };
-            $http.post('/userActions/insert', userAction);
+            genericService.removeWithUserActions('agendas', data).then(function() {
+                $location.path('/agendas');
+                $scope.$apply();
+            });
         }
     };
 });

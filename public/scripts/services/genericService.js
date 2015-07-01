@@ -33,31 +33,51 @@ starApp.factory('genericService', function($http, userActionService, _) {
 	}
 
 	function getList(collectionName, author) {
-		return find(collectionName, {
-			CreatedBy: author,
-			sort: {
-				Date: -1
-			},
-			projection: {
-				Title: 1,
-				Date: 1
-			}
+		var promise = new Promise(function(resolve) {
+			return find(collectionName, {
+				CreatedBy: author,
+				sort: {
+					Date: -1
+				},
+				projection: {
+					Title: 1,
+					Date: 1
+				}
+			}).then(function(list) {
+				list.data.forEach(function(d) {
+					d.CreatedBy = author;
+					d.Date = new Date(d.Date);
+					d.DateGroup = d.Date.toCompareString();
+				});
+				resolve(list.data);
+			});
 		});
+		return promise;
 	}
 
-	function search(collectionName, text) {
-		return $http({
-			url: `${collectionName}/search/${text}`,
-			method: 'POST',
-			data: {
-				'filters': ['Title', 'Text'],
-				'projection': {
-					Date: 1,
-					Title: 1,
-					Text: 1
+	function search(collectionName, author, text) {
+		var promise = new Promise(function(resolve) {
+			return $http({
+				url: `${collectionName}/search/${text}`,
+				method: 'POST',
+				data: {
+					'filters': ['Title', 'Text'],
+					'projection': {
+						Date: 1,
+						Title: 1,
+						Text: 1
+					}
 				}
-			}
+			}).then(function(list) {
+				list.data.forEach(function(d) {
+					d.CreatedBy = author;
+					d.Date = new Date(d.Date);
+					d.DateGroup = d.Date.toCompareString();
+				});
+				resolve(list.data);
+			});
 		});
+		return promise;
 	}
 
 	function findOne(collectionName, id) {
@@ -102,6 +122,21 @@ starApp.factory('genericService', function($http, userActionService, _) {
 		return promise;
 	}
 
+	function remove(collectionName, id) {
+		return $http.get(`/${collectionName}/delete/${id}`);
+	}
+
+	function removeWithUserActions(collectionName, data) {
+		var promise = new Promise(function(resolve) {
+			remove(collectionName, data.id).then(function() {
+				return userActionService.remove(collectionName, data.title, data.author);
+			}).then(function() {
+				resolve(data.id);
+			});
+		});
+		return promise;
+	}
+
 	return {
 		getByDate: getByDate,
 		insert: insert,
@@ -109,6 +144,8 @@ starApp.factory('genericService', function($http, userActionService, _) {
 		find: find,
 		search: search,
 		findOne: findOne,
-		getList: getList
+		getList: getList,
+		remove: remove,
+		removeWithUserActions: removeWithUserActions
 	};
 });
