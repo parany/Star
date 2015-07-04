@@ -160,8 +160,13 @@ starApp.factory('genericService', function($http, userActionService, _) {
 		return promise;
 	}
 
+	function findAll(collectionName) {
+		return $http.get(`/${collectionName}/findAll`);
+	}
+
 	return {
 		getByDate: getByDate,
+		insert: insert,
 		insertWithUserActions: insertWithUserActions,
 		find: find,
 		search: search,
@@ -170,6 +175,8 @@ starApp.factory('genericService', function($http, userActionService, _) {
 		remove: remove,
 		removeWithUserActions: removeWithUserActions,
 		findOne: findOne,
-		updateWithUserActions: updateWithUserActions
+		update: update,
+		updateWithUserActions: updateWithUserActions,
+		findAll: findAll
 	};
 });

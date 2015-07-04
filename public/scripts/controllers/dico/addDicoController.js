@@ -1,25 +1,24 @@
-﻿starApp.controller('addDicoController', function($rootScope, $scope, $routeParams, $http, $location, ngTableParams, accountService, _) {
+﻿starApp.controller('addDicoController', function($scope, $routeParams, $location, _, accountService, genericService, starTable) {
+    $scope.page.title = 'Dico - ';
+
     $scope.cultures = [];
     $scope.dico = {};
     $scope.dico.Meaning = '';
     $scope.illustrations = [];
 
-    $scope.page.title = 'Dico - ';
-
     var id = $routeParams.id;
-    $http.get('/cultures/findAll').success(function(data) {
-        $scope.cultures = data;
+    genericService.findAll('cultures').then(function(data) {
+        $scope.cultures = data.data;
         $scope.dico.To = $scope.cultures[2];
         $scope.dico.From = $scope.cultures[1];
-    }).then(function() {
         if (id !== undefined) {
-            $http.get('/dicos/findOne/' + id).success(function(data) {
-                $scope.dico = data;
+            return genericService.findOne('dicos', id).then(function(data) {
+                $scope.dico = data.data;
                 $scope.page.title += 'Edit - ' + $scope.dico.Text;
                 var culturesId = _.pluck($scope.cultures, '_id');
-                $scope.dico.To = $scope.cultures[culturesId.indexOf(data.ToId)];
-                $scope.dico.From = $scope.cultures[culturesId.indexOf(data.FromId)];
-                $scope.illustrations = data.Illustrations.map(function(i) {
+                $scope.dico.To = $scope.cultures[culturesId.indexOf($scope.dico.ToId)];
+                $scope.dico.From = $scope.cultures[culturesId.indexOf($scope.dico.FromId)];
+                $scope.illustrations = $scope.dico.Illustrations.map(function(i) {
                     return {
                         Text: i
                     };
@@ -28,36 +27,24 @@
             });
         } else {
             $scope.page.title += 'Add';
+            return Promise.resolve(null);
         }
+    }).then(function(data) {
+        if (!data) return;
+        $scope.dico = data.data;
+        $scope.page.title += 'Edit - ' + $scope.dico.Text;
+        var culturesId = _.pluck($scope.cultures, '_id');
+        $scope.dico.To = $scope.cultures[culturesId.indexOf($scope.dico.ToId)];
+        $scope.dico.From = $scope.cultures[culturesId.indexOf($scope.dico.FromId)];
+        $scope.illustrations = $scope.dico.Illustrations.map(function(i) {
+            return {
+                Text: i
+            };
+        });
+        $scope.tableIllustration.reload();
     });
 
-    $scope.tableDico = new ngTableParams({
-        page: 1,
-        count: 10
-    }, {
-        counts: [],
-        getData: function($defer, params) {
-            $defer.resolve($scope.dicos.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: {
-            dicos: {}
-        }
-    });
-    $scope.tableDico.settings().$scope = $scope;
-
-    $scope.tableIllustration = new ngTableParams({
-        page: 1,
-        count: 10
-    }, {
-        counts: [],
-        getData: function($defer, params) {
-            $defer.resolve($scope.illustrations.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: {
-            illustrations: {}
-        }
-    });
-    $scope.tableDico.settings().$scope = $scope;
+    $scope.tableIllustration = starTable.create($scope, 'illustrations');
 
     $scope.addIllustration = function() {
         $scope.illustrations.push({
@@ -100,25 +87,20 @@
         data.ToId = data.To._id;
         delete data.From;
         delete data.To;
-        var url;
+        var method;
         if (id === undefined) {
             data.CreatedBy = accountService.getUserName();
-            url = '/dicos/insert';
+            method = 'insert';
         } else {
             data.UpdatedBy = accountService.getUserName();
-            url = '/dicos/update';
+            method = 'update';
         }
         data.Illustrations = $scope.illustrations.map(function(i) {
             return i.Text;
         });
-        $http({
-            method: 'POST',
-            url: url,
-            data: data
-        }).success(function() {
+        var func = genericService[method].call({}, 'dicos', data);
+        func.then(function() {
             $location.path('dicos');
-        }).error(function(err) {
-            console.log(err);
         });
     };
 });
