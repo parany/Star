@@ -1,4 +1,4 @@
-starApp.controller('addExplicationController', function($scope, $routeParams, $http, $location, $cookieStore, ngTableParams, accountService, _) {
+starApp.controller('addExplicationController', function($scope, $routeParams, $location, _, ngTableParams, accountService, genericService, starTable) {
     var id = $routeParams.id;
 
     $scope.read = {};
@@ -12,17 +12,16 @@ starApp.controller('addExplicationController', function($scope, $routeParams, $h
 
     $scope.page.title = 'Explication - ';
 
-    $http.post('/tags/find', {
+    genericService.find('tags', {
         'Type': 'Explication'
     }).then(function(data) {
         $scope.tags = data.data;
         if (id === undefined) {
             $scope.explication.Date = new Date().toISOString().split('T')[0];
         } else {
-            $http.get('/explications/findOne/' + id).success(function(data) {
+            genericService.findOne('explications', id).success(function(data) {
                 $scope.explication = data;
                 $scope.explication.Date = new Date(data.Date).toISOString().split('T')[0];
-
                 for (var i = $scope.tags.length - 1; i >= 0; i--) {
                     for (var j = $scope.explication.TagIdList.length - 1; j >= 0; j--) {
                         if ($scope.tags[i]._id === $scope.explication.TagIdList[j]) {
@@ -31,44 +30,18 @@ starApp.controller('addExplicationController', function($scope, $routeParams, $h
                         }
                     }
                 }
-
                 $scope.read.verses = $scope.explication.VerseReadList;
                 $scope.tableVerses.reload();
             });
         }
     });
 
-    $scope.tableParams = new ngTableParams({
-        page: 1,
-        total: 1,
-        count: 5
-    }, {
-        counts: [],
-        getData: function($defer, params) {
-            $defer.resolve($scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: {
-            $data: {}
-        }
-    });
-
-    $scope.tableVerses = new ngTableParams({
-        page: 1,
-        total: 1,
-        count: 5
-    }, {
-        counts: [],
-        getData: function($defer, params) {
-            $defer.resolve($scope.read.verses.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: {
-            $data: {}
-        }
-    });
+    $scope.tableParams = starTable.create($scope, 'data');
+    $scope.tableVerses = starTable.create($scope, 'read.verses');
 
     $scope.$watch('explication.Date', function() {
         if ($scope.explication.Date === undefined || $scope.explication.Date === '') return;
-        $http.get('/explications/getByDate/' + accountService.getUserName() + '/' + $scope.explication.Date).success(function(data) {
+        genericService.getByDate('explications', accountService.getUserName(), $scope.explication.Date).success(function(data) {
             $scope.data = data;
             if (id !== undefined) {
                 $scope.data = $scope.data.filter(function(t) {
@@ -99,39 +72,27 @@ starApp.controller('addExplicationController', function($scope, $routeParams, $h
     $scope.save = function() {
         var data = JSON.parse(JSON.stringify($scope.explication));
         data.Date = new Date($scope.explication.Date).getTime();
-        data.CreatedBy = accountService.getUserName();
         data.TagIdList = _.pluck(_.where($scope.tags, {
             Selected: true
         }), '_id');
         data.VerseReadList = $scope.read.verses;
-        var userAction = {
-            'collection': 'explications',
-            'date': new Date().getTime(),
-            'title': data.Title,
-            'createdBy': accountService.getUserName()
-        };
-        var url;
+        var method;
         if (id !== undefined) {
-            data._id = id;
-            url = '/explications/update';
             data.UpdatedBy = accountService.getUserName();
-            userAction.operation = 'Edit';
+            data._id = id;
+            method = 'updateWithUserActions';
         } else {
-            url = '/explications/insert';
-            userAction.operation = 'Add';
+            data.CreatedBy = accountService.getUserName();
+            method = 'insertWithUserActions';
         }
-        $http.post('/userActions/insert', userAction).then(function() {
-            return $http({
-                method: 'POST',
-                data: data,
-                url: url
-            });
-        }).then(function(ret) {
+        var func = genericService[method].call({}, 'explications', data);
+        func.then(function(ret) {
             if (id !== undefined) {
                 $location.path('/explications/detail/' + id);
             } else {
                 $location.path('explications/detail/' + ret.data[0]._id);
             }
+            $scope.$apply();
         });
     };
 });
