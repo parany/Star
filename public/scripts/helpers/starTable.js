@@ -1,9 +1,9 @@
 starApp.factory('starTable', function($filter, ngTableParams) {
-	function create(data, ppty, orderBy) {
+	function create(data, ppty, orderBy, count) {
 		var ppties = ppty.split('.');
 		var params = {
 			page: 1,
-			count: 10
+			count: count ? count : 10
 		};
 		var options = {
 			counts: [],

@@ -1,4 +1,4 @@
-﻿starApp.controller('dicosController', function($rootScope, $scope, $http, $location, ngTableParams, _) {
+﻿starApp.controller('dicosController', function($scope, $location, _, genericService, starTable) {
     var allDicos = [];
     $scope.cultures = [];
     $scope.dico = {};
@@ -8,37 +8,12 @@
 
     $scope.page.title = 'Dico - Home page';
 
-    $scope.tableDico = new ngTableParams({
-        page: 1,
-        count: 100
-    }, {
-        counts: [], // hide page counts control
-        getData: function($defer, params) {
-            $defer.resolve($scope.dicos.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: {
-            dicos: {}
-        }
-    });
-    $scope.tableDico.settings().$scope = $scope;
+    $scope.tableDico = starTable.create($scope, 'dicos', false, 1000);
+    $scope.tableIllustration = starTable.create($scope, 'illustrations');
 
-    $scope.tableIllustration = new ngTableParams({
-        page: 1,
-        count: 10
-    }, {
-        counts: [], // hide page counts control
-        getData: function($defer, params) {
-            $defer.resolve($scope.illustrations.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: {
-            illustrations: {}
-        }
-    });
-    $scope.tableDico.settings().$scope = $scope;
-
-    $http.get('/cultures/findAll').then(function(cultures) {
+    genericService.findAll('cultures').then(function(cultures) {
         $scope.cultures = cultures.data;
-        return $http.get('/dicos/findAll');
+        return genericService.findAll('dicos');
     }).then(function(dicos) {
         allDicos = dicos.data;
         $scope.dicos = dicos.data;
@@ -68,7 +43,7 @@
         if (!response) {
             return;
         }
-        $http.get('/dicos/delete/' + id).success(function() {
+        genericService.remove('dicos', id).success(function() {
             $scope.dicos = $scope.dicos.filter(function(d) {
                 return d._id !== id;
             });
