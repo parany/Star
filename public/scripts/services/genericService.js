@@ -84,9 +84,9 @@ starApp.factory('genericService', function($http, userActionService, _) {
 		var promise = new Promise(function(resolve) {
 			var result = {};
 			var dateTime;
-			$http.get(`/${collectionName}/findOne/${id}`).then(function(dataAgenda) {
-				result.agenda = dataAgenda.data;
-				dateTime = new Date(result.agenda.Date).getTime();
+			$http.get(`/${collectionName}/findOne/${id}`).then(function(data) {
+				result.item = data.data;
+				dateTime = new Date(result.item.Date).getTime();
 				return $http.get(`/${collectionName}/getArticlesInTheSameDate/${dateTime}`);
 			}).then(function(data) {
 				result.sameDate = data.data[collectionName].filter(function(d) {

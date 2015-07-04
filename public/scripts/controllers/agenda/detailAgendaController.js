@@ -7,7 +7,7 @@ starApp.controller('detailAgendaController', function($scope, $routeParams, $loc
     $scope.tableOtherArticles = starTable.create($scope, 'articles');
 
     genericService.getDetail('agendas', $routeParams.id).then(function(data) {
-        $scope.agenda = data.agenda;
+        $scope.agenda = data.item;
         $scope.page.title += $scope.agenda.Title;
         $scope.sameDate = data.sameDate;
         $scope.articles = data.articles;
