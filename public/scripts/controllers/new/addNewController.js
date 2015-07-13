@@ -1,4 +1,6 @@
-starApp.controller('addNewController', function($scope, $routeParams, $http, $location, $cookieStore, ngTableParams, accountService, _) {
+starApp.controller('addNewController', function($scope, $routeParams, $location, starTable, accountService, genericService) {
+    $scope.page.title = 'New - ';
+
     var id = $routeParams.id;
     $scope.news = [];
     $scope.new = {};
@@ -7,16 +9,15 @@ starApp.controller('addNewController', function($scope, $routeParams, $http, $lo
     $scope.new.Citations = [];
     $scope.sources = [];
 
-    $scope.page.title = 'New - ';
 
-    $http.get('/sources/findAll').success(function(data) {
-        $scope.sources = data;
+    genericService.findAll('sources').then(function(data) {
+        $scope.sources = data.data;
     }).then(function() {
         if (id === undefined) {
             $scope.new.Date = new Date().toISOString().split('T')[0];
             $scope.page.title += 'Add';
         } else {
-            $http.get('/news/findOne/' + id).success(function(data) {
+            genericService.findOne('news', id).success(function(data) {
                 $scope.new = data;
                 $scope.page.title += 'Edit - ' + $scope.new.Title;
                 $scope.new.Date = new Date(data.Date).toISOString().split('T')[0];
@@ -27,38 +28,12 @@ starApp.controller('addNewController', function($scope, $routeParams, $http, $lo
         }
     });
 
-    $scope.tableNews = new ngTableParams({
-        page: 1,
-        total: 1,
-        count: 5
-    }, {
-        counts: [],
-        getData: function($defer, params) {
-            $defer.resolve($scope.news.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: {
-            $data: {}
-        }
-    });
-    $scope.tableNews.settings().$scope = $scope;
-
-    $scope.tableCitations = new ngTableParams({
-        page: 1,
-        total: 1,
-        count: 5
-    }, {
-        counts: [],
-        getData: function($defer, params) {
-            $defer.resolve($scope.new.Citations.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: {
-            $data: {}
-        }
-    });
+    $scope.tableNews = starTable.create($scope, 'news');
+    $scope.tableCitations = starTable.create($scope, 'new.Citations');
 
     $scope.$watch('new.Date', function() {
         if ($scope.new.Date === undefined || $scope.new.Date === '') return;
-        $http.get('/news/getByDate/' + accountService.getUserName() + '/' + $scope.new.Date).success(function(data) {
+        genericService.getByDate('news', accountService.getUserName(), $scope.new.Date).success(function(data) {
             $scope.news = data;
             if (id !== undefined) {
                 $scope.news = $scope.news.filter(function(t) {
@@ -98,34 +73,23 @@ starApp.controller('addNewController', function($scope, $routeParams, $http, $lo
         var data = JSON.parse(JSON.stringify($scope.new));
         data.Date = new Date($scope.new.Date).getTime();
         data.CreatedBy = accountService.getUserName();
-        var userAction = {
-            'collection': 'news',
-            'date': new Date().getTime(),
-            'title': data.Title,
-            'createdBy': accountService.getUserName()
-        };
-        var url;
+        var method;
         if (id !== undefined) {
-            data.Id = id;
-            url = '/news/update';
             data.UpdatedBy = accountService.getUserName();
-            userAction.operation = 'Edit';
+            data._id = id;
+            method = 'updateWithUserActions';
         } else {
-            url = '/news/insert';
-            userAction.operation = 'Add';
+            data.CreatedBy = accountService.getUserName();
+            method = 'insertWithUserActions';
         }
-        $http.post('/userActions/insert', userAction).then(function() {
-            return $http({
-                method: 'POST',
-                data: data,
-                url: url
-            });
-        }).then(function(ret) {
+        var func = genericService[method].call({}, 'news', data);
+        func.then(function(ret) {
             if (id !== undefined) {
                 $location.path('/news/detail/' + id);
             } else {
                 $location.path('news/detail/' + ret.data[0]._id);
             }
+            $scope.$apply();
         });
     };
 });
