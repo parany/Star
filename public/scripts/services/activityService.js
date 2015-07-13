@@ -1,4 +1,4 @@
-starApp.factory('activityService', function($http, _) {
+starApp.factory('activityService', function($http) {
 	function getSummary(userName) {
 		var promise = new Promise(function(resolve) {
 			$http.get('/summary/' + userName).success(function(data) {

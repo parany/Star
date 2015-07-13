@@ -1,4 +1,4 @@
-﻿starApp.controller('dicosController', function($scope, $location, _, genericService, starTable) {
+﻿starApp.controller('dicosController', function($scope, $location, genericService, starTable) {
     var allDicos = [];
     $scope.cultures = [];
     $scope.dico = {};

@@ -1,4 +1,4 @@
-starApp.controller('explicationController', function($scope, $routeParams, $filter, $http, $location, genericService, starTable, accountService, activityService) {
+starApp.controller('explicationController', function($scope, $routeParams, $location, genericService, starTable, accountService, activityService) {
     $scope.page.title = 'Explication - Home page';
     $scope.datas = [];
     $scope.activity = {};

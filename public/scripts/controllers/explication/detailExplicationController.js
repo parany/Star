@@ -1,4 +1,4 @@
-starApp.controller('detailExplicationController', function($scope, $routeParams, $http, $location, _, accountService, genericService, starTable) {
+starApp.controller('detailExplicationController', function($scope, $routeParams, $location, accountService, genericService, starTable) {
     $scope.page.title = 'Explication - Detail - ';
 
     $scope.explication = {};

@@ -77,7 +77,8 @@
 
     // Custom Globals
     "globals"       : { 
-        "angular": false ,
-        "starApp": true
+        "angular": false,
+        "starApp": true,
+        "_": false
     }  // additional predefined global variables
 }

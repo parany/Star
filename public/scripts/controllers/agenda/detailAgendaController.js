@@ -1,4 +1,4 @@
-starApp.controller('detailAgendaController', function($scope, $routeParams, $location, _, accountService, genericService, starTable) {
+starApp.controller('detailAgendaController', function($scope, $routeParams, $location, accountService, genericService, starTable) {
     $scope.page.title = 'Agenda - Detail - ';
 
     $scope.tableNexts = starTable.create($scope, 'nexts');

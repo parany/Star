@@ -1,4 +1,4 @@
-starApp.factory('genericService', function($http, userActionService, _) {
+starApp.factory('genericService', function($http, userActionService) {
 	function insert(collectionName, data) {
 		return $http({
 			method: 'POST',

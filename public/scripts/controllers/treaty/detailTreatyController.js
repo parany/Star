@@ -1,4 +1,4 @@
-starApp.controller('detailTreatyController', function($scope, $routeParams, $http, ngTableParams, _, accountService, $location) {
+starApp.controller('detailTreatyController', function($scope, $routeParams, $http, ngTableParams, accountService, $location) {
     var id = $routeParams.id;
     var tags;
     $scope.sameDate = [];

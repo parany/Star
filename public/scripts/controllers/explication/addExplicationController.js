@@ -1,4 +1,4 @@
-starApp.controller('addExplicationController', function($scope, $routeParams, $location, _, ngTableParams, accountService, genericService, starTable) {
+starApp.controller('addExplicationController', function($scope, $routeParams, $location, accountService, genericService, starTable) {
     var id = $routeParams.id;
 
     $scope.read = {};
