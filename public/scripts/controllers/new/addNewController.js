@@ -87,7 +87,7 @@ starApp.controller('addNewController', function($scope, $routeParams, $location,
             if (id !== undefined) {
                 $location.path('/news/detail/' + id);
             } else {
-                $location.path('news/detail/' + ret.data[0]._id);
+                $location.path('news/detail/' + ret);
             }
             $scope.$apply();
         });

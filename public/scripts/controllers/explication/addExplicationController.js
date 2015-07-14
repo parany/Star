@@ -1,16 +1,17 @@
 starApp.controller('addExplicationController', function($scope, $routeParams, $location, accountService, genericService, starTable) {
-    var id = $routeParams.id;
+    $scope.page.title = 'Explication - ';
 
+    var id = $routeParams.id;
     $scope.read = {};
     $scope.read.verses = [];
     $scope.data = [];
     $scope.tags = [];
-
     $scope.explication = {};
     $scope.explication.Date = '';
     $scope.explication.Content = '';
 
-    $scope.page.title = 'Explication - ';
+    $scope.tableParams = starTable.create($scope, 'data');
+    $scope.tableVerses = starTable.create($scope, 'read.verses');
 
     genericService.find('tags', {
         'Type': 'Explication'
@@ -35,9 +36,6 @@ starApp.controller('addExplicationController', function($scope, $routeParams, $l
             });
         }
     });
-
-    $scope.tableParams = starTable.create($scope, 'data');
-    $scope.tableVerses = starTable.create($scope, 'read.verses');
 
     $scope.$watch('explication.Date', function() {
         if ($scope.explication.Date === undefined || $scope.explication.Date === '') return;
@@ -90,7 +88,7 @@ starApp.controller('addExplicationController', function($scope, $routeParams, $l
             if (id !== undefined) {
                 $location.path('/explications/detail/' + id);
             } else {
-                $location.path('explications/detail/' + ret.data[0]._id);
+                $location.path('explications/detail/' + ret);
             }
             $scope.$apply();
         });

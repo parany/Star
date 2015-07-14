@@ -1,131 +1,49 @@
-starApp.controller('detailTreatyController', function($scope, $routeParams, $http, ngTableParams, accountService, $location) {
+starApp.controller('detailTreatyController', function($scope, $location, $routeParams, starTable, genericService, accountService) {
+    $scope.page.title = 'Treaty - Detail - ';
+
     var id = $routeParams.id;
-    var tags;
     $scope.sameDate = [];
     $scope.articles = [];
     $scope.prevs = [];
     $scope.nexts = [];
 
-    $scope.page.title = 'Treaty - Detail - ';
+    $scope.tableNexts = starTable.create($scope, 'nexts');
+    $scope.tablePrevs = starTable.create($scope, 'prevs');
+    $scope.tableSameDate = starTable.create($scope, 'sameDate');
+    $scope.tableOtherArticles = starTable.create($scope, 'articles');
 
-    $scope.tableNexts = new ngTableParams({
-        page: 1,
-        total: 1,
-        count: 10
-    }, {
-        counts: [],
-        getData: function($defer, params) {
-            $defer.resolve($scope.nexts.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: {
-            $data: {}
-        }
-    });
-
-    $scope.tablePrevs = new ngTableParams({
-        page: 1,
-        total: 1,
-        count: 10
-    }, {
-        counts: [],
-        getData: function($defer, params) {
-            $defer.resolve($scope.prevs.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: {
-            $data: {}
-        }
-    });
-
-    $scope.tableSameDate = new ngTableParams({
-        page: 1,
-        total: 1,
-        count: 10
-    }, {
-        counts: [],
-        getData: function($defer, params) {
-            $defer.resolve($scope.sameDate.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: {
-            $data: {}
-        }
-    });
-
-    $scope.tableOtherArticles = new ngTableParams({
-        page: 1,
-        total: 1,
-        count: 10
-    }, {
-        counts: [],
-        getData: function($defer, params) {
-            $defer.resolve($scope.articles.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: {
-            $data: {}
-        }
-    });
-
-    $http.post('/tags/find', {
-        'Type': 'Treaty'
-    }).then(function(dataTags) {
-        tags = dataTags.data;
-        return $http.get('/treaties/findOne/' + id);
-    }).then(function(dataTreaty) {
-        $scope.treaty = dataTreaty.data;
+    genericService.getDetail('treaties', id).then(function(data) {
+        $scope.treaty = data.item;
         $scope.page.title += $scope.treaty.Title;
+        $scope.sameDate = data.sameDate;
+        $scope.articles = data.articles;
+        $scope.prevs = data.prevs;
+        $scope.nexts = data.nexts;
+        return genericService.find('tags', {
+            'Type': 'Treaty'
+        });
+    }).then(function(data) {
         $scope.treaty.TagIdList.forEach(function(tag, index, array) {
-            array[index] = _.findWhere(tags, {
+            array[index] = _.findWhere(data.data, {
                 '_id': tag
             }).Description;
         });
-    }).then(function() {
-        var date = new Date($scope.treaty.Date);
-        $http.get('/treaties/getArticlesInTheSameDate/' + date.getTime()).success(function(data) {
-            $scope.sameDate = data.treaties.filter(function(d) {
-                return d._id !== id;
-            });
-            delete data.treaties;
-            for (var prop in data) {
-                for (var i = 0; i < data[prop].length; i++) {
-                    var article = data[prop][i];
-                    $scope.articles.push({
-                        _id: article._id,
-                        Title: article.Title,
-                        Type: prop
-                    });
-                }
-            }
-        });
-
-        $http.get('/treaties/getPrevNearArticles/' + date.getTime()).success(function(data) {
-            $scope.prevs = data;
-            $scope.prevs.forEach(function(d) {
-                d.Date = new Date(d.Date);
-            });
-        });
-
-        $http.get('/treaties/getNextNearArticles/' + date.getTime()).success(function(data) {
-            $scope.nexts = data;
-            $scope.nexts.forEach(function(d) {
-                d.Date = new Date(d.Date);
-            });
-        });
+        $scope.$apply();
     });
 
 
     $scope.promptDelete = function(model) {
         var response = confirm('Are you sure you want to delete this treaty?');
         if (response) {
-            $http.get('/treaties/delete/' + model._id).success(function() {
-                $location.path('/treaties');
-            });
-            var userAction = {
-                'collection': 'treaties',
-                'operation': 'Delete',
-                'date': new Date().getTime(),
+            var data = {
+                'id': model._id,
                 'title': model.Title,
-                'createdBy': accountService.getUserName()
+                'author': accountService.getUserName()
             };
-            $http.post('/userActions/insert', userAction);
+            genericService.removeWithUserActions('treaties', data).then(function() {
+                $location.path('/treaties');
+                $scope.$apply();
+            });
         }
     };
 });
