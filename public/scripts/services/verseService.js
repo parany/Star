@@ -41,9 +41,34 @@ starApp.factory('verseService', function($http) {
 		return promise;
 	}
 
+	function search(code, text) {
+		return $http.get('/verses/search/' + code + '/' + text);
+	}
+
+	function getVerses(bookId, chapter, paragraphMin, paragraphMax, version) {
+		return $http({
+			method: 'POST',
+			url: '/verses/find',
+			data: {
+				BookId: bookId,
+				Chapter: chapter,
+				Paragraph: {
+					gte: paragraphMin,
+					lte: paragraphMax
+				},
+				Version: version,
+				sort: {
+					Paragraph: 1
+				}
+			}
+		});
+	}
+
 	return {
 		getBooks: getBooks,
 		getChapters: getChapters,
-		getParagraphs: getParagraphs
+		getParagraphs: getParagraphs,
+		getVerses: getVerses,
+		search: search
 	};
 });

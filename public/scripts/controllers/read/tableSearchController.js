@@ -1,5 +1,7 @@
-﻿starApp.controller('tableSearchController', function($scope, $http, $rootScope, ngTableParams) {
+﻿starApp.controller('tableSearchController', function($scope, $rootScope, verseService, starTable) {
     $scope.dataSearch = [];
+
+    $scope.tableSearch = starTable.create($scope, 'dataSearch', false, 10);
 
     $scope.changeResultSelected = function(model) {
         angular.forEach($scope.dataSearch, function(d) {
@@ -21,7 +23,7 @@
             $scope.page.title += ' -  Searching for';
             $scope.page.title += ' ' + $scope.search.textToSearch;
 
-            $http.get('/verses/search/' + $scope.read.version.Code + '/' + $scope.search.textToSearch).success(function(data) {
+            verseService.search($scope.read.version.Code, $scope.search.textToSearch).success(function(data) {
                 $scope.dataSearch = data;
                 $scope.tableSearch.settings().total = data.length;
                 $scope.tableSearch.parameters().page = 1;
@@ -29,18 +31,4 @@
             });
         }, searchDelay);
     };
-
-    $scope.tableSearch = new ngTableParams({
-        page: 1,
-        count: 10
-    }, {
-        counts: [], // hide page counts control
-        getData: function($defer, params) {
-            $defer.resolve($scope.dataSearch.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: {
-            dataSearch: {}
-        }
-    });
-    $scope.tableSearch.settings().$scope = $scope;
 });
