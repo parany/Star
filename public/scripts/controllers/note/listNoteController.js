@@ -1,27 +1,12 @@
-﻿starApp.controller('listNoteController', function($scope, $http, ngTableParams, auth) {
-    $scope.notes = [];
-
+﻿starApp.controller('listNoteController', function($scope, accountService, noteService, starTable) {
     $scope.page.title = 'Note - List';
 
-    $scope.tableNote = new ngTableParams({
-        page: 1,
-        count: 10
-    }, {
-        counts: [],
-        getData: function($defer, params) {
-            $defer.resolve($scope.notes.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        }
-    });
-    $scope.tableNote.settings().$scope = $scope;
+    $scope.notes = [];
+    $scope.tableNote = starTable.create($scope, 'notes');
 
     $scope.search = function() {
-        var url = '/notes/search/' + auth.getUserName();
-        if ($scope.txtSearch) {
-            url += '/' + $scope.txtSearch;
-        }
-        $http.get(url).success(function(data) {
+        noteService.search(accountService.getUserName(), $scope.txtSearch).success(function(data) {
             $scope.notes = data;
-            console.log($scope.notes.length);
             $scope.tableNote.settings().total = $scope.notes.length;
             $scope.tableNote.parameters().page = 1;
             $scope.tableNote.reload();
@@ -36,7 +21,7 @@
         });
         model.$selected = !model.$selected;
         $scope.page.title = 'Note - ' + model.Verse;
-        $http.get('/notes/getNotesByVerseId/' + auth.getUserName() + '/' + model.VerseId).success(function(data) {
+        noteService.getNotes(accountService.getUserName(), model.VerseId).success(function(data) {
             $scope.dtoNote = data;
         });
     };

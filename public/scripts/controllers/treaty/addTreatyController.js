@@ -1,25 +1,25 @@
-starApp.controller('addTreatyController', function($scope, $routeParams, $http, $location, ngTableParams, auth) {
+starApp.controller('addTreatyController', function($scope, $routeParams, $location, starTable, genericService, accountService) {
+    $scope.page.title = 'Treaty - ';
+
     var id = $routeParams.id;
     $scope.Date = '';
-
     $scope.data = [];
     $scope.treaty = {};
     $scope.treaty.Text = '';
-
-    $scope.page.title = 'Treaty - ';
-
     $scope.tags = [];
 
-    $http.post('/tags/find', {
+    $scope.tableParams = starTable.create($scope, 'data');
+
+    genericService.find('tags', {
         'Type': 'Treaty'
-    }).success(function(data) {
-        $scope.tags = data;
+    }).then(function(data) {
+        $scope.tags = data.data;
     }).then(function() {
         if (id === undefined) {
             $scope.Date = new Date().toISOString().split('T')[0];
             $scope.page.title += 'Add';
         } else {
-            $http.get('/treaties/findOne/' + id).success(function(data) {
+            genericService.findOne('treaties', id).success(function(data) {
                 $scope.treaty = data;
                 $scope.page.title += 'Edit ' + $scope.treaty.Title;
                 $scope.Date = new Date(data.Date).toISOString().split('T')[0];
@@ -36,24 +36,9 @@ starApp.controller('addTreatyController', function($scope, $routeParams, $http, 
         }
     });
 
-    $scope.tableParams = new ngTableParams({
-        page: 1,
-        total: 1,
-        count: 5
-    }, {
-        counts: [],
-        getData: function($defer, params) {
-            $defer.resolve($scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: {
-            $data: {}
-        }
-    });
-    $scope.tableParams.settings().$scope = $scope;
-
     $scope.$watch('Date', function() {
         if ($scope.Date === undefined || $scope.Date === '') return;
-        $http.get('/treaties/getByDate/' + auth.getUserName() + '/' + $scope.Date).success(function(data) {
+        genericService.getByDate('treaties', accountService.getUserName(), $scope.Date).success(function(data) {
             $scope.data = data;
             if (id !== undefined) {
                 $scope.data = $scope.data.filter(function(t) {
@@ -81,40 +66,29 @@ starApp.controller('addTreatyController', function($scope, $routeParams, $http, 
     $scope.save = function() {
         var data = JSON.parse(JSON.stringify($scope.treaty));
         data.Date = new Date($scope.Date).getTime();
-        data.CreatedBy = auth.getUserName();
+        data.CreatedBy = accountService.getUserName();
         data.TagIdList = $scope.tags.filter(function(t) {
             return t.Selected === true;
         }).map(function(t) {
             return t._id;
         });
-        var userAction = {
-            'collection': 'treaties',
-            'date': new Date().getTime(),
-            'title': data.Title,
-            'createdBy': auth.getUserName()
-        };
-        var url;
+        var method;
         if (id !== undefined) {
+            data.UpdatedBy = accountService.getUserName();
             data._id = id;
-            url = '/treaties/update';
-            data.UpdatedBy = auth.getUserName();
-            userAction.operation = 'Edit';
+            method = 'updateWithUserActions';
         } else {
-            url = '/treaties/insert';
-            userAction.operation = 'Add';
+            data.CreatedBy = accountService.getUserName();
+            method = 'insertWithUserActions';
         }
-        $http.post('/userActions/insert', userAction).then(function() {
-            return $http({
-                method: 'POST',
-                data: data,
-                url: url
-            });
-        }).then(function(ret) {
+        var func = genericService[method].call({}, 'treaties', data);
+        func.then(function(ret) {
             if (id !== undefined) {
                 $location.path('/treaties/detail/' + id);
             } else {
-                $location.path('/treaties/detail/' + ret.data[0]._id);
+                $location.path('treaties/detail/' + ret);
             }
+            $scope.$apply();
         });
     };
 });

@@ -1,7 +1,7 @@
-﻿starApp.controller('editNoteController', function($scope, $routeParams, $http, $location, auth) {
+﻿starApp.controller('editNoteController', function($scope, $routeParams, $location, noteService, genericService, accountService) {
     $scope.tags = [];
 
-    $http.get('/notes/getNoteById/' + $routeParams.id).success(function(data) {
+    noteService.getNote($routeParams.id).success(function(data) {
         $scope.note._id = data.Note._id;
         $scope.note.VerseId = data.Note.VerseId;
         $scope.note.Description = data.Note.Description;
@@ -29,14 +29,10 @@
                 return t._id;
             }),
             'VerseId': $scope.note.VerseId,
-            'UpdatedBy': auth.getUserName(),
-            'CreatedBy': auth.getUserName()
+            'UpdatedBy': accountService.getUserName(),
+            'CreatedBy': accountService.getUserName()
         };
-        $http({
-            method: 'POST',
-            url: '/notes/update',
-            data: data
-        }).success(function() {
+        genericService.update('notes', data).success(function() {
             $location.path('/');
         }).error(function(error) {
             console.log(error);

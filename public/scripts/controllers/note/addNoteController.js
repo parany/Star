@@ -1,16 +1,10 @@
-﻿starApp.controller('addNoteController', function($scope, $routeParams, $http, $location, auth) {
+﻿starApp.controller('addNoteController', function($scope, $routeParams, $location, accountService, genericService) {
     $scope.tags = [];
-    $http({
-        method: 'POST',
-        url: '/tags/find',
-        data: {
-            Type: 'Note'
-        }
+    genericService.find('tags', {
+        Type: 'Note'
     }).success(function(data) {
         $scope.tags = data;
     });
-
-    $scope.Content = '';
 
     $scope.valid = function() {
         return $scope.tags.filter(function(t) {
@@ -28,13 +22,9 @@
                 return t._id;
             }),
             'VerseId': $routeParams.id,
-            'CreatedBy': auth.getUserName()
+            'CreatedBy': accountService.getUserName()
         };
-        $http({
-            method: 'POST',
-            url: '/notes/insert',
-            data: data
-        }).success(function() {
+        genericService.insert('notes', data).success(function() {
             $location.path('/');
         }).error(function(error) {
             console.log(error);

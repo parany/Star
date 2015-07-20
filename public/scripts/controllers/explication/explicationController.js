@@ -1,69 +1,21 @@
-starApp.controller('explicationController', function($scope, $routeParams, $filter, $http, $location, ngTableParams, auth) {
+starApp.controller('explicationController', function($scope, $routeParams, $location, genericService, starTable, accountService, activityService) {
+    $scope.page.title = 'Explication - Home page';
     $scope.datas = [];
     $scope.activity = {};
     $scope.activity.operations = [];
 
-    $scope.page.title = 'Explication - Home page';
+    $scope.tableSearch = starTable.create($scope, 'datas', true);
+    $scope.tableOperations = starTable.create($scope, 'activity.operations');
 
-    $scope.tableSearch = new ngTableParams({
-        page: 1,
-        count: 10,
-        sorting: {
-            Date: 'desc'
-        }
-    }, {
-        counts: [], // hide page counts control
-        groupBy: 'DateGroup',
-        total: $scope.datas.length,
-        getData: function($defer, params) {
-            var orderedData = params.sorting() ? $filter('orderBy')($scope.datas, $scope.tableSearch.orderBy()) : $scope.datas.length;
-            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: {
-            $data: {}
-        }
-    });
-
-    $scope.tableOperations = new ngTableParams({
-        page: 1,
-        total: 1,
-        count: 10
-    }, {
-        counts: [],
-        getData: function($defer, params) {
-            $defer.resolve($scope.activity.operations.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        },
-        $scope: {
-            $data: {}
-        }
-    });
-
-    $http.post('/explications/find', {
-        CreatedBy: auth.getUserName(),
-        sort: {
-            Date: -1
-        },
-        projection: {
-            Title: 1,
-            Date: 1
-        }
-    }).success(function(data) {
+    genericService.getList('explications', accountService.getUserName()).then(function(data) {
         $scope.datas = data;
-        $scope.datas.forEach(function(d) {
-            d.CreatedBy = auth.getUserName();
-            d.Date = new Date(d.Date);
-            d.DateGroup = d.Date.toCompareString();
-        });
         $scope.tableSearch.settings().total = $scope.datas.length;
         $scope.tableSearch.parameters().page = 1;
         $scope.tableSearch.reload();
     });
 
-    $http.get('/activities/explications/' + auth.getUserName()).success(function(data) {
+    activityService.getActivities('explications', accountService.getUserName()).then(function(data) {
         $scope.activity = data;
-        $scope.activity.operations.forEach(function(value) {
-            value.date = new Date(value.date);
-        });
         $scope.tableOperations.reload();
     });
 
@@ -75,24 +27,8 @@ starApp.controller('explicationController', function($scope, $routeParams, $filt
         if (!$scope.txtSearch || $scope.txtSearch.length < 1) {
             return;
         }
-        $http({
-            url: '/explications/search/' + $scope.txtSearch,
-            method: 'POST',
-            data: {
-                'filters': ['Title', 'Text'],
-                'projection': {
-                    Date: 1,
-                    Title: 1,
-                    Text: 1
-                }
-            }
-        }).success(function(data) {
+        genericService.search('explications', accountService.getUserName(), $scope.txtSearch).then(function(data) {
             $scope.datas = data;
-            $scope.datas.forEach(function(d) {
-                d.CreatedBy = auth.getUserName();
-                d.Date = new Date(d.Date);
-                d.DateGroup = d.Date.toCompareString();
-            });
             $scope.tableSearch.settings().total = $scope.datas.length;
             $scope.tableSearch.parameters().page = 1;
             $scope.tableSearch.reload();
