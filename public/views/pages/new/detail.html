@@ -19,6 +19,14 @@
 <div class="col-md-6">
     <h3 style="text-align: center;">{{ new.Title }}</h3>
     <div ng-bind-html="new.Content"></div>
+    <blockquote class="blockquote‐reverse">
+        <footer>Written by
+            <cite>{{ new.CreatedBy }}</cite>
+        </footer>
+        <footer>On
+            <cite>{{ new.CreatedOn | date:"dd/MM/yyyy EEE hh:mm:ss" }}</cite>
+        </footer>
+    </blockquote>
     <form class="form-horizontal btn-actions">
         <div class="btn-left">
             <a class="btn btn-default" ng-href="#/news">Back to list</a>
