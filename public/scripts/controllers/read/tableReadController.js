@@ -4,7 +4,7 @@
     var lastRead = $cookieStore.get('lastRead');
     var firstLoad = true;
 
-    $scope.tableRead = starTable.create($scope, 'dataRead');
+    $scope.tableRead = starTable.create($scope, 'dataRead', false, 1000);
 
     genericService.findAll('versions').success(function(data) {
         $scope.read.versions = data;

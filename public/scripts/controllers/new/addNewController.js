@@ -6,7 +6,7 @@ starApp.controller('addNewController', function($scope, $routeParams, $location,
     $scope.new = {};
     $scope.new.Date = '';
     $scope.new.Content = '';
-    $scope.new.Citations = [];
+    $scope.new.citations = [];
     $scope.sources = [];
 
 
@@ -29,7 +29,7 @@ starApp.controller('addNewController', function($scope, $routeParams, $location,
     });
 
     $scope.tableNews = starTable.create($scope, 'news');
-    $scope.tableCitations = starTable.create($scope, 'new.Citations');
+    $scope.tableCitations = starTable.create($scope, 'new.citations');
 
     $scope.$watch('new.Date', function() {
         if ($scope.new.Date === undefined || $scope.new.Date === '') return;
@@ -45,18 +45,22 @@ starApp.controller('addNewController', function($scope, $routeParams, $location,
     });
 
     $scope.valid = function() {
-        return $scope.new.Citations.length > 0 && $scope.new.Content.length > 0 && $scope.new.Source !== undefined;
+        return $scope.new.citations.length > 0 && $scope.new.Content.length > 0 && $scope.new.Source !== undefined;
     };
 
-    $scope.addCitation = function(citation) {
-        $scope.new.Citations.push(citation);
+    $scope.addCitation = function() {
+        $scope.new.citations.push({
+            text: $scope.text,
+            author: $scope.author
+        });
         $scope.tableCitations.reload();
-        $scope.citation = '';
+        $scope.text = '';
+        $scope.author = '';
     };
 
     $scope.removeCitation = function(citation) {
-        $scope.new.Citations = $scope.new.Citations.filter(function(c) {
-            return c !== citation;
+        $scope.new.citations = $scope.new.citations.filter(function(c) {
+            return c.text !== citation.text && c.author !== citation.author;
         });
         $scope.tableCitations.reload();
     };

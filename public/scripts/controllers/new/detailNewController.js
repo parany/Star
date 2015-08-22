@@ -3,7 +3,7 @@ starApp.controller('detailNewController', function($scope, $routeParams, $locati
 
     var id = $routeParams.id;
     $scope.new = {};
-    $scope.new.Citations = [];
+    $scope.new.citations = [];
     $scope.sameDate = [];
     $scope.articles = [];
     $scope.prevs = [];
@@ -13,7 +13,7 @@ starApp.controller('detailNewController', function($scope, $routeParams, $locati
     $scope.tablePrevs = starTable.create($scope, 'prevs');
     $scope.tableSameDate = starTable.create($scope, 'sameDate');
     $scope.tableOtherArticles = starTable.create($scope, 'articles');
-    $scope.tableCitations = starTable.create($scope, 'new.Citations');
+    $scope.tableCitations = starTable.create($scope, 'new.citations');
 
     genericService.getDetail('news', id).then(function(data) {
         $scope.new = data.item;

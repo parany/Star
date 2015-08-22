@@ -2,20 +2,12 @@
     <form class="form-horizontal" name="addNew">
         <div class="form-group">
             <div>
-                <input type="date"
-                       placeholder="Date"
-                       class="form-control"
-                       ng-model="new.Date"
-                       required>
+                <input type="date" placeholder="Date" class="form-control" ng-model="new.Date" required>
             </div>
         </div>
         <div class="form-group">
             <div>
-                <input type="text"
-                       placeholder="Title"
-                       class="form-control"
-                       ng-model="new.Title"
-                       required>
+                <input type="text" placeholder="Title" class="form-control" ng-model="new.Title" required>
             </div>
         </div>
         <div>
@@ -31,10 +23,7 @@
             </table>
         </div>
         <div>
-            <button type="submit"
-                    class="btn btn-success"
-                    ng-click="save()"
-                    ng-disabled="addNew.$invalid || !valid()">
+            <button type="submit" class="btn btn-success" ng-click="save()" ng-disabled="addNew.$invalid || !valid()">
                 Save
             </button>
             &nbsp;
@@ -42,44 +31,56 @@
         </div>
     </form>
 </div>
-
 <div class="col-md-9">
-    <h4>Content</h4>
-    <div text-angular=""
-         ng-model="new.Content"
-         name="demo-editor"
-         ta-text-editor-class="border-around"
-         ta-html-editor-class="border-around">
-    </div>
     <h4>Source</h4>
     <div class="form-group">
         <div class="form-group">
-            <select class="form-control"
-                    ng-model="new.Source"
-                    ng-options="source.Description for source in sources"></select>
+            <select class="form-control" ng-model="new.Source" ng-options="source.Description for source in sources"></select>
         </div>
     </div>
-
+    <br/>
+    <h4>Content</h4>
+    <div text-angular="" ng-model="new.Content" name="demo-editor" ta-text-editor-class="border-around" ta-html-editor-class="border-around">
+    </div>
+    <br/>
     <h4>Citations</h4>
-    <textarea rows="4" class="col-md-12" ng-model="citation"></textarea>
-    <button type="submit"
-            class="btn btn-success col-md-12"
-            ng-click="addCitation(citation)">
+    <input type="text" placeholder="Citation" class="form-control" ng-model="text" required>
+    <input type="text" placeholder="Author" class="form-control" ng-model="author" required>
+    <button type="submit" class="btn btn-success col-md-2" ng-click="addCitation()" ng-disabled="!text || !author">
         Add Citation
     </button>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
     <table ng-table="tableCitations" class="table ng-table-rowselected">
         <thead>
         </thead>
         <tbody>
             <tr ng-repeat="citation in $data">
                 <td>
-                    <blockquote>
-                        <p>{{ citation }}</p>
+                    <blockquote ng-if="!citation.$edit">
+                        <p>{{ citation.text }}</p>
+                        <footer>by
+                            <cite title="Source Title">{{ citation.author }}</cite>
+                        </footer>
+                    </blockquote>
+                    <blockquote ng-if="citation.$edit">
+                    <form>
+                        <label>Text: </label>
+                        <input type="text" class="form-control" ng-model="citation.text" />
+                        <label>Author: </label>
+                        <input type="text" class="form-control" ng-model="citation.author" />
+                    </form>
                     </blockquote>
                 </td>
                 <td>
-                    <span class="glyphicon glyphicon-remove" style="float: right;"
-                          ng-click="removeCitation(citation)">
+                    <span class="glyphicon glyphicon-remove" style="float: right;" ng-click="removeCitation(citation)" ng-if="!citation.$edit">
+                    </span>
+                    <span class="glyphicon glyphicon-edit" style="float: right;" ng-click="citation.$edit = true" ng-if="!citation.$edit">
+                    </span>
+                    <span class="glyphicon glyphicon-ok" style="float: right;" ng-if="citation.$edit" ng-click="citation.$edit = false">
+                    </span>
                     </span>
                 </td>
             </tr>

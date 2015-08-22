@@ -1,5 +1,3 @@
-/* jshint node: true */
-
 var phony = require('phony').make_phony();
 var _ = require('underscore');
 var Repository = require('../../model/repository.js');
@@ -9,7 +7,7 @@ var newsRepository = new Repository('news');
 var sourcesRepository = new Repository('sources');
 
 var days = _.sample(_.range(0, 30), _.random(15, 25));
-var months = _.range(0, 4);
+var months = _.range(7, 9);
 var year = 2015;
 var allSources = [];
 var news = [];
@@ -40,5 +38,5 @@ sourcesRepository.find({}).then(function(sourcesDoc) {
 		});
 	});
 	console.log(news[0]);
-	newsRepository.save(news);
+	newsRepository.insert(news);
 });

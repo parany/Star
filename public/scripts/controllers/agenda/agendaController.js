@@ -25,10 +25,13 @@ starApp.controller('agendaController', function($scope, $location, accountServic
 
     $scope.search = function() {
         if (!$scope.txtSearch || $scope.txtSearch.length < 1) {
+            $scope.datas = _.sortBy($scope.datas, 'DateGroup');
+            $scope.datas.reverse();
             return;
         }
         genericService.search('agendas', accountService.getUserName(), $scope.txtSearch).then(function(data) {
-            $scope.datas = data;
+            $scope.datas = _.sortBy(data, 'DateGroup');
+            $scope.datas.reverse();
             $scope.tableSearch.settings().total = $scope.datas.length;
             $scope.tableSearch.parameters().page = 1;
             $scope.tableSearch.reload();

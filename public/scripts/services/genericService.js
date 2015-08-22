@@ -99,7 +99,8 @@ starApp.factory('genericService', function($http, userActionService) {
 						articles.push({
 							_id: article._id,
 							Title: article.Title,
-							Type: key
+							Type: key,
+							Date: new Date(article.Date)
 						});
 					});
 				});
@@ -143,10 +144,10 @@ starApp.factory('genericService', function($http, userActionService) {
 
 	function update(collectionName, data) {
 		return $http({
-            method: 'POST',
-            data: data,
-            url: `/${collectionName}/update`
-        });
+			method: 'POST',
+			data: data,
+			url: `/${collectionName}/update`
+		});
 	}
 
 	function updateWithUserActions(collectionName, data) {

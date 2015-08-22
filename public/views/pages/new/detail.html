@@ -6,9 +6,9 @@
             <tr ng-repeat="citation in $data">
                 <td>
                     <blockquote>
-                        <p class="citation">{{ citation }}</p>
-                        <footer>Source
-                            <cite title="Source Title">{{ new.Source.Description }}</cite>
+                        <p class="citation">{{ citation.text }}</p>
+                        <footer>Author
+                            <cite title="Source Title">{{ citation.author }}</cite>
                         </footer>
                     </blockquote>
                 </td>
@@ -19,6 +19,14 @@
 <div class="col-md-6">
     <h3 style="text-align: center;">{{ new.Title }}</h3>
     <div ng-bind-html="new.Content"></div>
+    <blockquote class="blockquote‐reverse">
+        <footer>Written by
+            <cite>{{ new.CreatedBy }}</cite>
+        </footer>
+        <footer>On
+            <cite>{{ new.CreatedOn | date:"dd/MM/yyyy EEE hh:mm:ss" }}</cite>
+        </footer>
+    </blockquote>
     <form class="form-horizontal btn-actions">
         <div class="btn-left">
             <a class="btn btn-default" ng-href="#/news">Back to list</a>
@@ -39,7 +47,7 @@
                     <tr ng-repeat="model in $data">
                         <td>
                             <span class="activity">
-                                <a href="#/news/detail/{{ model._id }}">{{ model.Title }}</a>
+                                <a href="#/news/detail/{{ model._id }}">{{ model.Title }}</a> on {{ model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
                             </span>
                         </td>
                     </tr>
@@ -56,7 +64,7 @@
                     <tr ng-repeat="model in $data">
                         <td>
                             <span class="activity">
-                                <a href="#/{{ model.Type }}/detail/{{ model._id }}">{{ model.Title }}<a/> ({{ model.Type }})
+                                <a href="#/{{ model.Type }}/detail/{{ model._id }}">{{ model.Title }}<a/> ({{ model.Type }}) on {{ model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
                             </span>
                         </td>
                     </tr>

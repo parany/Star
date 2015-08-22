@@ -8,6 +8,14 @@
 <div class="col-md-6">
     <h3 style="text-align: center;">{{ treaty.Title }}</h3>
     <div ng-bind-html="treaty.Text"></div>
+    <blockquote class="blockquote‐reverse">
+        <footer>Written by
+            <cite>{{ treaty.CreatedBy }}</cite>
+        </footer>
+        <footer>On
+            <cite>{{ treaty.CreatedOn | date:"dd/MM/yyyy EEE hh:mm:ss" }}</cite>
+        </footer>
+    </blockquote>
     <form class="form-horizontal btn-actions">
         <div class="btn-left">
             <a class="btn btn-default" ng-href="#/treaties">Back to list</a>
@@ -30,7 +38,7 @@
                     <tr ng-repeat="model in $data">
                         <td>
                             <span class="activity">
-                                <a href="#/treaties/detail/{{ model._id }}">{{ model.Title }}</a>
+                                <a href="#/treaties/detail/{{ model._id }}">{{ model.Title }}</a> on {{ model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
                             </span>
                         </td>
                     </tr>
@@ -48,7 +56,7 @@
                     <tr ng-repeat="model in $data">
                         <td>
                             <span class="activity">
-                                <a href="#/{{ model.Type }}/detail/{{ model._id }}">{{ model.Title }}<a/> ({{ model.Type }})
+                                <a href="#/{{ model.Type }}/detail/{{ model._id }}">{{ model.Title }}<a/> ({{ model.Type }}) on {{ model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
                             </span>
                         </td>
                     </tr>
