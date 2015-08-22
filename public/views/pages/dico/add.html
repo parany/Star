@@ -2,55 +2,37 @@
     <form name="addDico">
         <div class="form-group col-md-4">
             <div>
-                <select class="form-control"
-                        ng-model="dico.From"
-                        ng-options="culture.Description for culture in cultures"></select>
+                <input type="text" placeholder="Text" class="form-control" ng-model="dico.Text" required />
             </div>
         </div>
         <div class="form-group col-md-4">
             <div>
-                <select class="form-control"
-                        ng-model="dico.To"
-                        ng-options="culture.Description for culture in cultures"></select>
+                <select class="form-control" ng-model="dico.From" ng-options="culture.Description for culture in cultures"></select>
             </div>
         </div>
         <div class="form-group col-md-4">
             <div>
-                <input type="text"
-                       placeholder="Text"
-                       class="form-control"
-                       ng-model="dico.Text"
-                       required />
+                <select class="form-control" ng-model="dico.To" ng-options="culture.Description for culture in cultures"></select>
             </div>
         </div>
-        <div text-angular=""
-             ng-model="dico.Meaning"
-             name="demo-editor"
-             ta-text-editor-class="border-around"
-             ta-html-editor-class="border-around">
+        <div text-angular="" ng-model="dico.Meaning" name="demo-editor" ta-text-editor-class="border-around" ta-html-editor-class="border-around">
         </div>
     </form>
-
     <div class="actions rigth">
         <a class="btn btn-default" ng-href="#/dicos">Go back</a>
-        <a class="btn btn-success"
-           ng-click="save()"
-           ng-disabled="!addDico.$valid || illustrations.length == 0">Save</a>
+        <a class="btn btn-success" ng-click="save()" ng-disabled="!addDico.$valid || illustrations.length == 0">Save</a>
     </div>
 </div>
-
 <div class="col-md-4">
     <h5>
         &nbsp;Illustrations
         <span class="glyphicon glyphicon-plus" ng-click="newIllustration.$edit = true"></span>
     </h5>
-
     <div ng-if="newIllustration.$edit">
         <textarea class="col-md-10" ng-model="newIllustration.Text"></textarea>
         <span class="glyphicon glyphicon-ok" ng-click="addIllustration()"></span>
         <span class="glyphicon glyphicon-remove" ng-click="cancelAddIllustration()"></span>
     </div>
-
     <table ng-table="tableIllustration" class="table ng-table-rowselected">
         <thead>
         </thead>
@@ -63,21 +45,13 @@
                         </span>
                         <textarea class="col-md-10" ng-if="model.editIllustration.$edit" ng-model="model.Text"></textarea>
                     </div>
-                    <span ng-if="model.editIllustration.$edit"
-                          class="glyphicon glyphicon-ok"
-                          ng-click="editIllustration(model)">
+                    <span ng-if="model.editIllustration.$edit" class="glyphicon glyphicon-ok" ng-click="editIllustration(model)">
                     </span>
-                    <span ng-if="model.editIllustration.$edit"
-                          class="glyphicon glyphicon-remove"
-                          ng-click="cancelEditIllustration(model)">
+                    <span ng-if="model.editIllustration.$edit" class="glyphicon glyphicon-remove" ng-click="cancelEditIllustration(model)">
                     </span>
-                    <span ng-if="!model.editIllustration.$edit"
-                          class="glyphicon glyphicon-edit"
-                          ng-click="model.editIllustration.$edit = true; startEditIllustration(model);">
+                    <span ng-if="!model.editIllustration.$edit" class="glyphicon glyphicon-edit" ng-click="model.editIllustration.$edit = true; startEditIllustration(model);">
                     </span>
-                    <span ng-if="!model.editIllustration.$edit"
-                          class="glyphicon glyphicon-trash"
-                          ng-click="removeIllustration(model)">
+                    <span ng-if="!model.editIllustration.$edit" class="glyphicon glyphicon-trash" ng-click="removeIllustration(model)">
                     </span>
                 </td>
             </tr>
