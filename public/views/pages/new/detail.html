@@ -6,9 +6,9 @@
             <tr ng-repeat="citation in $data">
                 <td>
                     <blockquote>
-                        <p class="citation">{{ citation }}</p>
-                        <footer>Source
-                            <cite title="Source Title">{{ new.Source.Description }}</cite>
+                        <p class="citation">{{ citation.text }}</p>
+                        <footer>Author
+                            <cite title="Source Title">{{ citation.author }}</cite>
                         </footer>
                     </blockquote>
                 </td>
