@@ -2,20 +2,12 @@
     <form class="form-horizontal" name="addTreaty">
         <div class="form-group">
             <div>
-                <input type="date"
-                       placeholder="Date"
-                       class="form-control"
-                       ng-model="Date"
-                       required>
+                <input type="date" placeholder="Date" class="form-control" ng-model="Date" ng-change="changeDate()" required>
             </div>
         </div>
         <div class="form-group">
             <div>
-                <input type="text"
-                       placeholder="Title"
-                       class="form-control"
-                       ng-model="treaty.Title"
-                       required />
+                <input type="text" placeholder="Title" class="form-control" ng-model="treaty.Title" required />
             </div>
         </div>
         <div>
@@ -31,10 +23,7 @@
             </table>
         </div>
         <div>
-            <button type="submit"
-                    class="btn btn-success"
-                    ng-click="save()"
-                    ng-disabled="!valid()">
+            <button type="submit" class="btn btn-success" ng-click="save()" ng-disabled="!valid()">
                 Save
             </button>
             &nbsp;
@@ -42,19 +31,11 @@
         </div>
     </form>
 </div>
-
 <div class="col-md-8">
-    <div text-angular=""
-         ng-model="treaty.Text"
-         name="demo-editor"
-         ta-text-editor-class="border-around"
-         ta-html-editor-class="border-around">
+    <div text-angular="" ng-model="treaty.Text" name="demo-editor" ta-text-editor-class="border-around" ta-html-editor-class="border-around">
     </div>
     <div class="btn-group" data-toggle="buttons">
-        <label  ng-repeat="tag in tags" 
-                class="btn btn-primary" 
-                ng-click="tag.Selected = !tag.Selected;"
-                ng-class="{ active: tag.IsSelected }">
+        <label ng-repeat="tag in tags" class="btn btn-primary" ng-click="tag.Selected = !tag.Selected;" ng-class="{ active: tag.IsSelected }">
             <input type="checkbox"> {{ tag.Description }}
         </label>
     </div>

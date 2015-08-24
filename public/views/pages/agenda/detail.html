@@ -1,12 +1,12 @@
 <div class="col-md-8">
-    <h3 style="text-align: center;">{{ agenda.Title }}</h3>
+    <h3 style="text-align: center;">{{ ::agenda.Title }}</h3>
     <div ng-bind-html="agenda.Text"></div>
     <blockquote class="blockquote‐reverse">
         <footer>Written by
-            <cite>{{ agenda.CreatedBy }}</cite>
+            <cite>{{ ::agenda.CreatedBy }}</cite>
         </footer>
         <footer>On
-            <cite>{{ agenda.CreatedOn | date:"dd/MM/yyyy EEE hh:mm:ss" }}</cite>
+            <cite>{{ ::agenda.CreatedOn | date:"dd/MM/yyyy EEE hh:mm:ss" }}</cite>
         </footer>
     </blockquote>
     <form class="form-horizontal btn-actions">
@@ -15,7 +15,7 @@
         </div>
         <div class="btn-right">
             <a class="btn btn-primary" ng-click="promptDelete(agenda)">Delete</a>
-            <a class="btn btn-success" ng-href="#/agendas/edit/{{ agenda._id }}" ng-disabled="agenda._id == undefined">Edit</a>
+            <a class="btn btn-success" ng-href="#/agendas/edit/{{ ::agenda._id }}" ng-disabled="agenda._id == undefined">Edit</a>
         </div>
     </form>
 </div>
@@ -30,7 +30,7 @@
                     <tr ng-repeat="model in $data">
                         <td>
                             <span class="activity">
-                                <a href="#/agendas/detail/{{ model._id }}">{{ model.Title }}</a> on {{ model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
+                                <a href="#/agendas/detail/{{ ::model._id }}">{{ ::model.Title }}</a> on {{ ::model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
                             </span>
                         </td>
                     </tr>
@@ -48,7 +48,7 @@
                     <tr ng-repeat="model in $data">
                         <td>
                             <span class="activity">
-                                <a href="#/{{ model.Type }}/detail/{{ model._id }}">{{ model.Title }}<a/> ({{ model.Type }}) on {{ model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
+                                <a href="#/{{ ::model.Type }}/detail/{{ ::model._id }}">{{ ::model.Title }}<a/> ({{ model.Type }}) on {{ ::model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
                             </span>
                         </td>
                     </tr>
@@ -66,7 +66,7 @@
                     <tr ng-repeat="model in $data">
                         <td>
                             <span class="activity">
-                                <a href="#/agendas/detail/{{ model._id }}">{{ model.Title }}</a> on {{ model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
+                                <a href="#/agendas/detail/{{ ::model._id }}">{{ ::model.Title }}</a> on {{ ::model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
                             </span>
                         </td>
                     </tr>
@@ -84,7 +84,7 @@
                     <tr ng-repeat="model in $data">
                         <td>
                             <span class="activity">
-                                <a href="#/agendas/detail/{{ model._id }}">{{ model.Title }}</a> on {{ model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
+                                <a href="#/agendas/detail/{{ ::model._id }}">{{ ::model.Title }}</a> on {{ ::model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
                             </span>
                         </td>
                     </tr>

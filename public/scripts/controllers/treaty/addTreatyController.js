@@ -2,10 +2,8 @@ starApp.controller('addTreatyController', function($scope, $routeParams, $locati
     $scope.page.title = 'Treaty - ';
 
     var id = $routeParams.id;
-    $scope.Date = '';
     $scope.data = [];
     $scope.treaty = {};
-    $scope.treaty.Text = '';
     $scope.tags = [];
 
     $scope.tableParams = starTable.create($scope, 'data');
@@ -16,14 +14,13 @@ starApp.controller('addTreatyController', function($scope, $routeParams, $locati
         $scope.tags = data.data;
     }).then(function() {
         if (id === undefined) {
-            $scope.Date = new Date().toISOString().split('T')[0];
             $scope.page.title += 'Add';
+            $scope.Date = new Date();
+            $scope.changeDate();
         } else {
             genericService.findOne('treaties', id).success(function(data) {
                 $scope.treaty = data;
                 $scope.page.title += 'Edit ' + $scope.treaty.Title;
-                $scope.Date = new Date(data.Date).toISOString().split('T')[0];
-
                 for (var i = $scope.tags.length - 1; i >= 0; i--) {
                     for (var j = $scope.treaty.TagIdList.length - 1; j >= 0; j--) {
                         if ($scope.tags[i]._id === $scope.treaty.TagIdList[j]) {
@@ -32,12 +29,13 @@ starApp.controller('addTreatyController', function($scope, $routeParams, $locati
                         }
                     }
                 }
+                $scope.Date = new Date(data.Date);
+                $scope.changeDate();
             });
         }
     });
 
-    $scope.$watch('Date', function() {
-        if ($scope.Date === undefined || $scope.Date === '') return;
+    $scope.changeDate = function() {
         genericService.getByDate('treaties', accountService.getUserName(), $scope.Date).success(function(data) {
             $scope.data = data;
             if (id !== undefined) {
@@ -47,7 +45,7 @@ starApp.controller('addTreatyController', function($scope, $routeParams, $locati
             }
             $scope.tableParams.reload();
         });
-    });
+    };
 
     $scope.valid = function() {
         return $scope.tags.filter(function(t) {

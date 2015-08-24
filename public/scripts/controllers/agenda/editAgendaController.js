@@ -1,39 +1,33 @@
 ﻿starApp.controller('editAgendaController', function($scope, $routeParams, $location, genericService, accountService, starTable) {
     $scope.page.title = 'Agenda - Edit - ';
 
-    var id = $routeParams.id;
-    $scope.Date = '';
+    $scope.id = $routeParams.id;
+    $scope.Date = new Date();
     $scope.agenda = {};
     $scope.data = [];
+    $scope.tableParams = starTable.create($scope, 'data');
 
-    genericService.findOne('agendas', id).then(function(data) {
+    genericService.findOne('agendas', $scope.id).then(function(data) {
         $scope.agenda = data.data;
         $scope.page.title += $scope.agenda.Title;
-        $scope.Date = new Date($scope.agenda.Date).toISOString();
+        $scope.Date = new Date($scope.agenda.Date);
+        $scope.changeDate();
         $scope.tableParams.reload();
     });
 
-    $scope.tableParams = starTable.create($scope, 'data');
-
-    $scope.$watch('Date', function() {
-        if ($scope.Date === undefined || $scope.Date === '') return;
-        $scope.Date = $scope.Date.split('T')[0];
+    $scope.changeDate = function() {
         genericService.getByDate('agendas', accountService.getUserName(), $scope.Date).success(function(data) {
             $scope.data = data.filter(function(d) {
-                return d._id !== id;
+                return d._id !== $scope.id;
             });
             $scope.tableParams.reload();
         });
-    });
-
-    $scope.cancel = function() {
-        $location.path('/agendas/detail/' + id);
     };
 
     $scope.save = function() {
         var data = $scope.agenda;
         data.UpdatedBy = accountService.getUserName();
-        data._id = id;
+        data._id = $scope.id;
         data.Date = new Date($scope.Date).getTime();
         genericService.updateWithUserActions('agendas', data).then(function(id) {
             $location.path('/agendas/detail/' + id);
