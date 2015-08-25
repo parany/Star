@@ -4,18 +4,19 @@ starApp.controller('addNewController', function($scope, $routeParams, $location,
     var id = $routeParams.id;
     $scope.news = [];
     $scope.new = {};
-    $scope.new.Date = '';
-    $scope.new.Content = '';
     $scope.new.citations = [];
     $scope.sources = [];
 
+    $scope.tableNews = starTable.create($scope, 'news');
+    $scope.tableCitations = starTable.create($scope, 'new.citations');
 
     genericService.findAll('sources').then(function(data) {
         $scope.sources = data.data;
     }).then(function() {
         if (id === undefined) {
-            $scope.new.Date = new Date().toISOString().split('T')[0];
             $scope.page.title += 'Add';
+            $scope.new.Date = new Date();
+            $scope.changeDate();
         } else {
             genericService.findOne('news', id).success(function(data) {
                 $scope.new = data;
@@ -24,25 +25,22 @@ starApp.controller('addNewController', function($scope, $routeParams, $location,
                 $scope.tableCitations.reload();
                 var sourcesId = _.pluck($scope.sources, '_id');
                 $scope.new.Source = $scope.sources[sourcesId.indexOf($scope.new.Source._id)];
+                $scope.new.Date = new Date(data.Date);
+                $scope.changeDate();
             });
         }
     });
 
-    $scope.tableNews = starTable.create($scope, 'news');
-    $scope.tableCitations = starTable.create($scope, 'new.citations');
-
-    $scope.$watch('new.Date', function() {
+    $scope.changeDate = function() {
         if ($scope.new.Date === undefined || $scope.new.Date === '') return;
         genericService.getByDate('news', accountService.getUserName(), $scope.new.Date).success(function(data) {
             $scope.news = data;
             if (id !== undefined) {
-                $scope.news = $scope.news.filter(function(t) {
-                    return t._id !== id;
-                });
+                $scope.news = _.reject($scope.news, { _id: id });
             }
             $scope.tableNews.reload();
         });
-    });
+    };
 
     $scope.valid = function() {
         return $scope.new.citations.length > 0 && $scope.new.Content.length > 0 && $scope.new.Source !== undefined;
@@ -59,9 +57,7 @@ starApp.controller('addNewController', function($scope, $routeParams, $location,
     };
 
     $scope.removeCitation = function(citation) {
-        $scope.new.citations = $scope.new.citations.filter(function(c) {
-            return c.text !== citation.text && c.author !== citation.author;
-        });
+        $scope.new.citations = _.without($scope.new.citations, citation);
         $scope.tableCitations.reload();
     };
 

@@ -1,26 +1,23 @@
 ﻿var ObjectId = require('mongodb').ObjectID;
 var Q = require('Q');
-var Repository = require('../model/repository.js');
+var repository = require('../model/repository.js');
 require('../helpers/filterHelper.js');
 
 exports.findAll = function(req, res) {
-	var repository = new Repository(req.params.collectionName);
-	repository.find({}).then(function(docs) {
+	repository.find(req.params.collectionName, {}).then(function(docs) {
 		res.send(docs);
 	});
 };
 
 exports.find = function(req, res) {
-	var repository = new Repository(req.params.collectionName);
 	var filters = req.body.toAnyFilter();
-	repository.find(filters).then(function(docs) {
+	repository.find(req.params.collectionName, filters).then(function(docs) {
 		res.send(docs);
 	});
 };
 
 exports.findOne = function(req, res) {
-	var repository = new Repository(req.params.collectionName);
-	repository.findOne({
+	repository.findOne(req.params.collectionName, {
 		_id: new ObjectId(req.params.id)
 	}).then(function(docs) {
 		res.send(docs);
@@ -28,17 +25,15 @@ exports.findOne = function(req, res) {
 };
 
 exports.update = function(req, res) {
-	var repository = new Repository(req.params.collectionName);
-	repository.save(req.body).then(function(ret) {
+	repository.save(req.params.collectionName, req.body).then(function(ret) {
 		res.json(ret);
 	});
 };
 
 exports.insert = function(req, res) {
-	var repository = new Repository(req.params.collectionName);
 	var obj = req.body;
 	obj.CreatedOn = new Date().getTime();
-	repository.insert(obj).then(function(ret) {
+	repository.insert(req.params.collectionName, obj).then(function(ret) {
 		res.json(ret);
 	});
 };
@@ -47,8 +42,7 @@ exports.getByDate = function(req, res) {
 	var date = new Date(req.params.date);
 	var firstMsOfDay = date.getFirstMsOfDay();
 	var lastMsOfDay = date.getLastMsOfDay();
-	var repository = new Repository(req.params.collectionName);
-	repository.find({
+	repository.find(req.params.collectionName, {
 		CreatedBy: req.params.author,
 		Date: {
 			$gte: firstMsOfDay,
@@ -60,14 +54,12 @@ exports.getByDate = function(req, res) {
 };
 
 exports.getActivities = function(req, res) {
-	var repository = new Repository(req.params.collectionName);
-	var userActionRepository = new Repository('userActions');
 	var operations = [];
 	var limit = 6;
 	if (req.params.limit) {
 		limit = parseInt(req.params.limit);
 	}
-	userActionRepository.find({
+	repository.find('userActions', {
 		collection: req.params.collectionName,
 		createdBy: req.params.author,
 		sort: {
@@ -76,7 +68,7 @@ exports.getActivities = function(req, res) {
 		limit: limit
 	}).then(function(docs) {
 		operations = docs;
-		return repository.find({
+		return repository.find(req.params.collectionName, {
 			CreatedBy: req.params.author,
 			sort: {
 				Date: 1
@@ -113,7 +105,6 @@ exports.getActivities = function(req, res) {
 };
 
 exports.search = function(req, res) {
-	var repository = new Repository(req.params.collectionName);
 	var columns = req.body.filters;
 	var filters = columns.map(function(column) {
 		var filter = {};
@@ -122,7 +113,7 @@ exports.search = function(req, res) {
 		};
 		return filter;
 	});
-	repository.find({
+	repository.find(req.params.collectionName, {
 		$or: filters,
 		projection: req.body.projection || {}
 	}).then(function(agendas) {
@@ -131,8 +122,7 @@ exports.search = function(req, res) {
 };
 
 exports.delete = function(req, res) {
-	var repository = new Repository(req.params.collectionName);
-	repository.delete(new ObjectId(req.params.id)).then(function(ret) {
+	repository.delete(req.params.collectionName, new ObjectId(req.params.id)).then(function(ret) {
 		res.json(ret);
 	});
 };
@@ -142,8 +132,7 @@ exports.getArticlesInTheSameDate = function(req, res) {
 	var date = new Date(parseInt(req.params.date));
 	var tasks = [];
 	articles.forEach(function(article) {
-		var repository = new Repository(article);
-		var task = repository.find({
+		var task = repository.find(article, {
 			Date: {
 				$gte: date.getFirstMsOfDay(),
 				$lte: date.getLastMsOfDay()
@@ -163,8 +152,7 @@ exports.getArticlesInTheSameDate = function(req, res) {
 exports.getPrevNearArticles = function(req, res) {
 	var date = new Date(parseInt(req.params.date));
 	var dateTime = date.getTime();
-	var repository = new Repository(req.params.collectionName);
-	repository.find({
+	repository.find(req.params.collectionName, {
 		Date: {
 			$lt: dateTime
 		},
@@ -184,8 +172,7 @@ exports.getPrevNearArticles = function(req, res) {
 exports.getNextNearArticles = function(req, res) {
 	var date = new Date(parseInt(req.params.date));
 	var dateTime = date.getTime();
-	var repository = new Repository(req.params.collectionName);
-	repository.find({
+	repository.find(req.params.collectionName, {
 		Date: {
 			$gt: dateTime
 		},
@@ -203,8 +190,7 @@ exports.getNextNearArticles = function(req, res) {
 };
 
 exports.getAllActivities = function(req, res) {
-	var userActionRepository = new Repository('userActions');
-	userActionRepository.group({
+	repository.group('userActions', {
 			operation: 1
 		}, {
 			createdBy: req.params.author
@@ -223,8 +209,7 @@ exports.getTotal = function(req, res) {
 	var articles = ['treaties', 'agendas', 'explications', 'news'];
 	var tasks = [];
 	articles.forEach(function(article) {
-		var repository = new Repository(article);
-		var task = repository.count({
+		var task = repository.count(article, {
 			CreatedBy: req.params.author
 		});
 		tasks.push(task);

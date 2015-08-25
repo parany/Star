@@ -7,8 +7,6 @@ starApp.controller('addExplicationController', function($scope, $routeParams, $l
     $scope.data = [];
     $scope.tags = [];
     $scope.explication = {};
-    $scope.explication.Date = '';
-    $scope.explication.Content = '';
 
     $scope.tableParams = starTable.create($scope, 'data');
     $scope.tableVerses = starTable.create($scope, 'read.verses');
@@ -18,11 +16,13 @@ starApp.controller('addExplicationController', function($scope, $routeParams, $l
     }).then(function(data) {
         $scope.tags = data.data;
         if (id === undefined) {
-            $scope.explication.Date = new Date().toISOString().split('T')[0];
+            $scope.page.title += 'Add';
+            $scope.explication.Date = new Date();
+            $scope.changeDate();
         } else {
             genericService.findOne('explications', id).success(function(data) {
                 $scope.explication = data;
-                $scope.explication.Date = new Date(data.Date).toISOString().split('T')[0];
+                $scope.page.title += 'Edit - ' + $scope.explication.Title;
                 for (var i = $scope.tags.length - 1; i >= 0; i--) {
                     for (var j = $scope.explication.TagIdList.length - 1; j >= 0; j--) {
                         if ($scope.tags[i]._id === $scope.explication.TagIdList[j]) {
@@ -32,26 +32,22 @@ starApp.controller('addExplicationController', function($scope, $routeParams, $l
                     }
                 }
                 $scope.read.verses = $scope.explication.VerseReadList;
+                $scope.explication.Date = new Date(data.Date);
+                $scope.changeDate();
                 $scope.tableVerses.reload();
             });
         }
     });
 
-    $scope.$watch('explication.Date', function() {
-        if ($scope.explication.Date === undefined || $scope.explication.Date === '') return;
+    $scope.changeDate = function() {
         genericService.getByDate('explications', accountService.getUserName(), $scope.explication.Date).success(function(data) {
             $scope.data = data;
             if (id !== undefined) {
-                $scope.data = $scope.data.filter(function(t) {
-                    return t._id !== id;
-                });
-                $scope.page.title += 'Edit - ' + $scope.explication.Title;
-            } else {
-                $scope.page.title += 'Add';
+                $scope.data = _.reject($scope.data, { _id: id });
             }
             $scope.tableParams.reload();
         });
-    });
+    };
 
     $scope.valid = function() {
         return $scope.tags.filter(function(t) {

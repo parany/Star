@@ -6,3 +6,7 @@ starApp = angular.module('starApp', [
 	'chart.js',
 	'ui.bootstrap'
 ]);
+
+starApp.config(function($compileProvider, STAR_CONFIG) {
+	$compileProvider.debugInfoEnabled(STAR_CONFIG.debug);
+});

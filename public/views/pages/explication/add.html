@@ -2,20 +2,12 @@
     <form class="form-horizontal" name="addExplication">
         <div class="form-group">
             <div>
-                <input type="date"
-                       placeholder="Date"
-                       class="form-control"
-                       ng-model="explication.Date"
-                       required>
+                <input type="date" placeholder="Date" class="form-control" ng-model="explication.Date" ng-change="changeDate()" required>
             </div>
         </div>
         <div class="form-group">
             <div>
-                <input type="text"
-                       placeholder="Title"
-                       class="form-control"
-                       ng-model="explication.Title"
-                       required>
+                <input type="text" placeholder="Title" class="form-control" ng-model="explication.Title" required>
             </div>
         </div>
         <div>
@@ -31,10 +23,7 @@
             </table>
         </div>
         <div>
-            <button type="submit"
-                    class="btn btn-success"
-                    ng-click="save()"
-                    ng-disabled="addExplication.$invalid || !valid()">
+            <button type="submit" class="btn btn-success" ng-click="save()" ng-disabled="addExplication.$invalid || !valid()">
                 Save
             </button>
             &nbsp;
@@ -42,62 +31,37 @@
         </div>
     </form>
 </div>
-
 <div class="col-md-8">
-    <div text-angular=""
-         ng-model="explication.Content"
-         name="demo-editor"
-         ta-text-editor-class="border-around"
-         ta-html-editor-class="border-around">
+    <div text-angular="" ng-model="explication.Content" name="demo-editor" ta-text-editor-class="border-around" ta-html-editor-class="border-around">
     </div>
     <div class="btn-group" data-toggle="buttons">
-        <label ng-repeat="tag in tags"
-               class="btn btn-primary"
-               ng-click="tag.Selected = !tag.Selected;"
-               ng-class="{ active: tag.IsSelected }">
+        <label ng-repeat="tag in tags" class="btn btn-primary" ng-click="tag.Selected = !tag.Selected;" ng-class="{ active: tag.IsSelected }">
             <input type="checkbox"> {{ tag.Description }}
         </label>
     </div>
 </div>
-
 <div class="col-md-2" id="read-nav">
     <form class="form-horizontal">
         <div class="form-group">
-            <select class="form-control"
-                    ng-model="read.version"
-                    ng-options="version.Code for version in read.versions"></select>
+            <select class="form-control" ng-model="read.version" ng-options="version.Code for version in read.versions"></select>
         </div>
         <div class="form-group">
-            <select class="form-control"
-                    ng-model="read.testament"
-                    ng-options="testament.Description for testament in read.testaments"></select>
+            <select class="form-control" ng-model="read.testament" ng-options="testament.Description for testament in read.testaments"></select>
         </div>
         <div class="form-group">
-            <select class="form-control"
-                    ng-model="read.book"
-                    ng-options="book.Description for book in read.books"></select>
+            <select class="form-control" ng-model="read.book" ng-options="book.Description for book in read.books"></select>
         </div>
         <div class="form-group">
-            <select class="form-control"
-                    ng-model="read.chapter"
-                    ng-options="chap for chap in read.chapters"></select>
+            <select class="form-control" ng-model="read.chapter" ng-options="chap for chap in read.chapters"></select>
         </div>
         <div class="form-group">
-            <select class="form-control"
-                    ng-model="read.paragraphMin"
-                    ng-change="updateContent()"
-                    ng-options="par for par in read.paragraphs"></select>
+            <select class="form-control" ng-model="read.paragraphMin" ng-change="updateContent()" ng-options="par for par in read.paragraphs"></select>
         </div>
         <div class="form-group">
-            <select class="form-control"
-                    ng-model="read.paragraphMax"
-                    ng-change="updateContent()"
-                    ng-options="par for par in read.paragraphs"></select>
+            <select class="form-control" ng-model="read.paragraphMax" ng-change="updateContent()" ng-options="par for par in read.paragraphs"></select>
         </div>
     </form>
-    <button type="submit"
-            class="btn btn-success col-md-12"
-            ng-click="read.addVerse()">
+    <button type="submit" class="btn btn-success col-md-12" ng-click="read.addVerse()">
         Add verse
     </button>
     <table ng-table="tableVerses" class="table ng-table-rowselected">
@@ -107,8 +71,7 @@
             <tr ng-repeat="verseRead in $data">
                 <td><span>{{ verseRead.Book + ' ' + verseRead.Chapter + ',' + verseRead.ParagraphMin + '-' + verseRead.ParagraphMax }}</span></td>
                 <td>
-                    <span class="glyphicon glyphicon-remove"
-                          ng-click="read.removeVerseRead(verseRead)">
+                    <span class="glyphicon glyphicon-remove" ng-click="read.removeVerseRead(verseRead)">
                     </span>
                 </td>
             </tr>

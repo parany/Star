@@ -1,18 +1,18 @@
 ﻿starApp.controller('addAgendaController', function($scope, $location, accountService, genericService, starTable) {
     $scope.page.title = 'Agenda - Add';
+
     $scope.agenda = {};
-    $scope.Date = '';
-    $scope.Date = new Date().toISOString().split('T')[0];
+    $scope.Date = new Date();
     $scope.data = [];
-    $scope.agenda.Text = '';
     $scope.tableParams = starTable.create($scope, 'data');
 
-    $scope.$watch('Date', function() {
+    $scope.changeDate = function() {
         genericService.getByDate('agendas', accountService.getUserName(), $scope.Date).success(function(data) {
             $scope.data = data;
             $scope.tableParams.reload();
         });
-    });
+    };
+    $scope.changeDate();
 
     $scope.save = function() {
         var data = $scope.agenda;

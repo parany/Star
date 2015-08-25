@@ -1,16 +1,14 @@
 ﻿var ObjectId = require('mongodb').ObjectID;
 var _ = require('underscore');
-var Repository = require('../model/repository.js');
+var repository = require('../model/repository.js');
 
 exports.getNotesByVerseId = function(req, res) {
-    var notesRepository = new Repository('notes');
-    var tagsRepository = new Repository('tags');
     var notes;
-    notesRepository.find({
+    repository.find('notes', {
         VerseId: req.params.verseId
     }).then(function(docs) {
         notes = docs;
-        return tagsRepository.find({
+        return repository.find('tags', {
             Type: 'Note'
         });
     }).then(function(tags) {
@@ -39,14 +37,12 @@ exports.getNotesByVerseId = function(req, res) {
 };
 
 exports.getNoteById = function(req, res) {
-    var notesRepository = new Repository('notes');
-    var tagsRepository = new Repository('tags');
     var note;
-    notesRepository.findOne({
+    repository.findOne('notes', {
         _id: new ObjectId(req.params.id)
     }).then(function(doc) {
         note = doc;
-        return tagsRepository.find({
+        return repository.find('tags', {
             Type: 'Note'
         });
     }).then(function(tags) {
@@ -70,12 +66,9 @@ exports.getNoteById = function(req, res) {
 };
 
 exports.search = function(req, res) {
-    var notesRepository = new Repository('notes'),
-        versesRepository = new Repository('verses'),
-        booksRepository = new Repository('books'),
-        notes = [],
+    var notes = [],
         verses = [];
-    notesRepository.find({
+    repository.find('notes', {
         CreatedBy: req.params.author,
         $or: [{
             Description: {
@@ -91,14 +84,14 @@ exports.search = function(req, res) {
         var versesId = notes.map(function(n) {
             return new ObjectId(n.VerseId);
         });
-        return versesRepository.find({
+        return repository.find('verses', {
             _id: {
                 $in: versesId
             }
         });
     }).then(function(docs) {
         verses = docs;
-        return booksRepository.find({});
+        return repository.find('books', {});
     }).then(function(books) {
         verses.forEach(function(verse) {
             verse._id = verse._id.toString();
