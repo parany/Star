@@ -41,3 +41,8 @@ packages
 ._*
 node_modules
 logs
+
+# Star config files
+public/scripts/config/config.js
+server/config/config.json
+server/config/db.json
