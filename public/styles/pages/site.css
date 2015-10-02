@@ -4,8 +4,7 @@ body {
 
 #account a {
     cursor: pointer;
-    color: #989898;
-    text-transform: uppercase;
+    font-weight: bold;
     margin-right: 20px;
     font-family: monospace;
 }
