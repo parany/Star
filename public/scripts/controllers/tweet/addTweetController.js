@@ -6,7 +6,6 @@
     $scope.activity.operations = [];
     
     $scope.model = {};
-    $scope.model.Text = '';
     $scope.model.Date = new Date();
     $scope.contentTypes = [];
     var id = $routeParams.id;

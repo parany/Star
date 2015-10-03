@@ -93,6 +93,8 @@ starApp.factory('genericService', function($http, userActionService) {
 					return d._id !== id;
 				});
 				delete data.data[collectionName];
+				result.tweets = data.data.tweets;
+				delete data.data.tweets;
 				var articles = [];
 				_.forIn(data.data, function(value, key) {
 					_.each(value, function(article) {

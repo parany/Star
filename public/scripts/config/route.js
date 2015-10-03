@@ -60,13 +60,13 @@
             access_level: ACCESS_LEVELS.Pub,
             menuId: 'dico'
         })
-        .when('/dico/add', {
+        .when('/dicos/add', {
             templateUrl: 'views/pages/dico/add.html',
             controller: 'addDicoController',
             access_level: ACCESS_LEVELS.Pub,
             menuId: 'dico'
         })
-        .when('/dico/edit/:id', {
+        .when('/dicos/edit/:id', {
             templateUrl: 'views/pages/dico/add.html',
             controller: 'addDicoController',
             access_level: ACCESS_LEVELS.Pub,
