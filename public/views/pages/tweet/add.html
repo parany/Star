@@ -1,4 +1,4 @@
-﻿<div class="col-md-6" id="read-nav">
+﻿<div class="col-md-8" id="read-nav">
     <form class="form-horizontal" name="addTweet">
         <div class="form-group">
             <div>
@@ -23,27 +23,58 @@
         </button>
     </div>
 </div>
-<div class="col-md-6">
-    <ul class="nav nav-tabs">
-        <li>
-            <a data-target="#tab-near-prev" data-toggle="tab" href="">Near prevs</a>
-        </li>
-        <li class="active">
-            <a data-target="#tab-same-date" data-toggle="tab" href="">Same date</a>
-        </li>
-        <li>
-            <a data-target="#tab-near-next" data-toggle="tab" href="">Near nexts</a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane" id="tab-near-prev">
-            <p>This is the page content for Tab Pa fqds fds fdqfs fds fsf ge 2</p>
+<div class="col-md-4 list-sidebar">
+    <div class="panel panel-default activity">
+        <div class="panel-heading">General</div>
+        <div class="panel-body">
+            <table class="table ng-table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="activity">Total number of items:
+                                <span class="badge">{{ activity.nbOfItems }}</span>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity">Added this year:
+                                <span class="badge">{{ activity.nbOfYearItems }}</span>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity">Added this month:
+                                <span class="badge">{{ activity.nbOfMonthItems }}</span>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity">Added this week:
+                                <span class="badge">{{ activity.nbOfWeekItems }}</span>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="tab-pane active" id="tab-same-date">
-            <p>This fdffffffffdf sdq fdsqf dsqf fqsd fdsqf dsfq ffffff</p>
-        </div>
-        <div class="tab-pane" id="tab-near-next">
-            <p>zz zzz z dkfjqmsdklddddd dd</p>
+    </div>
+    <div class="panel panel-default activity">
+        <div class="panel-heading">Operations</div>
+        <div class="panel-body">
+            <table ng-table="tableOperations" class="table operation">
+                <thead></thead>
+                <tbody>
+                    <tr ng-repeat="model in $data">
+                        <td>
+                            <span class="activity">{{ model.operation }}
+                                <span class="badge">{{ model.title }}</span> on {{ model.date | date: "dd MMM yyyy hh:mm:ss" }}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

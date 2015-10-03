@@ -1,4 +1,4 @@
-﻿starApp.controller('tweetController', function($scope, $location, accountService, genericService, activityService, starTable) {
+﻿starApp.controller('tweetController', function($scope, $location, accountService, genericService, tweetService, activityService, starTable) {
     $scope.page.title = 'Tweet - Home page';
     $scope.datas = [];
     $scope.activity = {};
@@ -7,7 +7,7 @@
     $scope.tableSearch = starTable.create($scope, 'datas', true);
     $scope.tableOperations = starTable.create($scope, 'activity.operations');
 
-    genericService.getList('tweets', accountService.getUserName(), 'Type').then(function(data) {
+    tweetService.getList('tweets', accountService.getUserName(), 'Type').then(function(data) {
         $scope.datas = data;
         $scope.tableSearch.settings().total = $scope.datas.length;
         $scope.tableSearch.parameters().page = 1;
@@ -19,8 +19,8 @@
         $scope.tableOperations.reload();
     });
 
-    $scope.goToDetail = function(model) {
-        $location.path('/tweets/detail/' + model._id);
+    $scope.edit = function(model) {
+        $location.path('/tweets/edit/' + model._id);
     };
 
     $scope.search = function() {

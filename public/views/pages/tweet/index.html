@@ -19,12 +19,11 @@
                         </a>
                     </td>
                 </tr>
-                <tr ng-hide="group.$hideRows" ng-repeat="model in group.data" ng-click="goToDetail(model)">
+                <tr ng-hide="group.$hideRows" ng-repeat="model in group.data" ng-click="edit(model)">
                     <td>
                         <span class="title-detail">
                             <span class="badge">{{ model.Type }}</span>&nbsp;
                             <b>{{ model.Title }}</b>
-                            <a ng-href="#/note/edit/555f6cddd8d7a7eca0000001"><span class="glyphicon glyphicon-pencil"></span></a>
                         </span>
                         <br/>
                         <span class="text-detail">Created By

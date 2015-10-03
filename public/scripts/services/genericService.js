@@ -32,21 +32,17 @@ starApp.factory('genericService', function($http, userActionService) {
 		});
 	}
 
-	function getList(collectionName, author, additionalProperty) {
-		var projection = {
-			Title: 1,
-			Date: 1
-		};
-		if (additionalProperty) {
-			projection[additionalProperty] = 1;
-		}
+	function getList(collectionName, author) {
 		var promise = new Promise(function(resolve) {
 			return find(collectionName, {
 				CreatedBy: author,
 				sort: {
 					Date: -1
 				},
-				projection
+				projection: {
+					Title: 1,
+					Date: 1
+				}
 			}).then(function(list) {
 				list.data.forEach(function(d) {
 					d.CreatedBy = author;
