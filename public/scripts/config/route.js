@@ -152,7 +152,7 @@
         })
         .when('/tweets', {
             templateUrl: 'views/pages/tweet/index.html',
-            controller: 'tweetsController',
+            controller: 'tweetController',
             access_level: ACCESS_LEVELS.Pub,
             menuId: 'tweet'
         })

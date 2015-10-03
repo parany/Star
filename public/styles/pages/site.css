@@ -132,6 +132,17 @@ a.dropdown-toggle {
     margin-bottom: 45px;
 }
 
+.tweet {
+    border-width: 1px;
+    border-color: black;
+    border-style: dotted;
+    border-radius: 5px;
+    padding: 3px;
+    font-size: 90%;
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
 .author {
     float: right;
 }

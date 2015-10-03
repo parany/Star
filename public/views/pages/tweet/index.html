@@ -1,55 +1,98 @@
-﻿<div class="col-md-2" id="read-nav">
-    <div class="form-group">
-        <div>
-            <select class="form-control" ng-model="filter.From" ng-change="search()" ng-options="culture.Description for culture in cultures"></select>
+﻿<div class="col-md-8" id="read-nav">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <input type="search" placeholder="Search" class="form-control" ng-model="txtSearch" ng-change="search()" />
         </div>
-    </div>
-    <div class="form-group">
-        <div>
-            <select class="form-control" ng-model="filter.To" ng-change="search()" ng-options="culture.Description for culture in cultures"></select>
-        </div>
-    </div>
-    <div class="form-group">
-        <div>
-            <input type="text" placeholder="Text" class="form-control" ng-model="filter.Text" ng-change="search()" required />
-        </div>
-    </div>
-    <span class="badge">{{ dicos.length }}</span> items <br/><br/>
-    <div class="resizable">
-        <table ng-table="tableDico" class="table ng-table-rowselected">
-            <thead>
-            </thead>
-            <tbody>
-                <tr ng-repeat="model in $data" ng-click="changeLabelSelected(model)" ng-class="{'active': model.$selected}">
+    </form>
+    <table ng-table="tableSearch" class="table ng-table-rowselected">
+        <thead></thead>
+        <tbody>
+            <tbody ng-repeat="group in $groups">
+                <tr class="ng-table-group">
+                    <td colspan="{{ $columns.length }}">
+                        <a href="" ng-click="group.$hideRows = !group.$hideRows" ng-init="group.$hideRows = false">
+                            <span class="glyphicon" ng-class="{ 
+                                    'glyphicon-chevron-right': group.$hideRows, 
+                                    'glyphicon-chevron-down': !group.$hideRows }">
+                            </span>
+                            <strong>{{ group.value }} ({{ group.data.length }})</strong>
+                        </a>
+                    </td>
+                </tr>
+                <tr ng-hide="group.$hideRows" ng-repeat="model in group.data" ng-click="goToDetail(model)">
                     <td>
-                        <span>{{ model.Text }}</span>
+                        <span class="title-detail">
+                            <span class="badge">{{ model.Type }}</span>&nbsp;
+                            <b>{{ model.Title }}</b>
+                            <a ng-href="#/note/edit/555f6cddd8d7a7eca0000001"><span class="glyphicon glyphicon-pencil"></span></a>
+                        </span>
+                        <br/>
+                        <span class="text-detail">Created By
+                            <i>
+                                <u>{{ model.CreatedBy }}</u>
+                            </i>On
+                            <i>
+                                <u>{{ model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}</u>
+                            </i>
+                        </span>
                     </td>
                 </tr>
             </tbody>
-        </table>
-    </div>
-</div>
-<div class="col-md-6">
-    <div class="actions">
-        <a ng-href="#/dico/add" class="btn btn-success">Add</a>
-        <a ng-href="#/dico/edit/{{ dico._id }}" class="btn btn-primary">Edit</a>
-        <button ng-click="remove(dico._id)" class="btn btn-default">Delete</button>
-    </div>
-    <span class="badge">{{ dico.From }}</span>
-    <span class="glyphicon glyphicon-arrow-right"></span>
-    <span class="badge">{{ dico.To }}</span>
-    <div ng-bind-html="dico.Meaning" class="meaning"></div>
-</div>
-<div class="col-md-4">
-    <table ng-table="tableIllustration" class="table ng-table-rowselected">
-        <thead>
-        </thead>
-        <tbody>
-            <tr ng-repeat="model in $data">
-                <td>
-                    <span>{{ model }}</span>
-                </td>
-            </tr>
         </tbody>
     </table>
+</div>
+<div class="col-md-4 list-sidebar">
+    <div class="panel panel-default activity">
+        <div class="panel-heading">General</div>
+        <div class="panel-body">
+            <table class="table ng-table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="activity">Total number of items:
+                                <span class="badge">{{ activity.nbOfItems }}</span>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity">Added this year:
+                                <span class="badge">{{ activity.nbOfYearItems }}</span>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity">Added this month:
+                                <span class="badge">{{ activity.nbOfMonthItems }}</span>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity">Added this week:
+                                <span class="badge">{{ activity.nbOfWeekItems }}</span>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="panel panel-default activity">
+        <div class="panel-heading">Operations</div>
+        <div class="panel-body">
+            <table ng-table="tableOperations" class="table operation">
+                <thead></thead>
+                <tbody>
+                    <tr ng-repeat="model in $data">
+                        <td>
+                            <span class="activity">{{ model.operation }}
+                                <span class="badge">{{ model.title }}</span> on {{ model.date | date: "dd MMM yyyy hh:mm:ss" }}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

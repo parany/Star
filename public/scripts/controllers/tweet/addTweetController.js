@@ -8,14 +8,13 @@
     var id = $routeParams.id;
 
     genericService.findAll('contentTypes').success(function(data) {
-        $scope.contentTypes = data;
+        $scope.contentTypes = _.pluck(data, 'name');
         $scope.model.Type = $scope.contentTypes[0];
     });
 
     $scope.save = function() {
         var data = JSON.parse(JSON.stringify($scope.model));
         data.Date = $scope.model.Date.getTime();
-        delete $scope.model.$$hashKey;
         var method;
         if (id) {
             data.UpdatedBy = accountService.getUserName();
