@@ -1,0 +1,47 @@
+﻿<div class="col-md-6" id="read-nav">
+    <form class="form-horizontal" name="addTweet">
+        <div class="form-group">
+            <div>
+                <input type="date" placeholder="Date" class="form-control" ng-model="model.Date" ng-change="changeDate()" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <div>
+                <select class="form-control" ng-model="model.Type" ng-options="ct.name for ct in contentTypes" required></select>
+            </div>
+        </div>
+    </form>
+    <div text-angular="" ng-model="model.Text" name="demo-editor" ta-text-editor-class="border-around" ta-html-editor-class="border-around">
+    </div>
+    <div>
+        <button type="submit" class="btn btn-success" ng-click="save()" ng-disabled="addTweet.$invalid || !model.Text">
+            Save
+        </button>
+        &nbsp;
+        <a class="btn btn-default" ng-href="#/tweets">Cancel</a>
+    </div>
+</div>
+<div class="col-md-6">
+    <ul class="nav nav-tabs">
+        <li>
+            <a data-target="#tab-near-prev" data-toggle="tab" href="">Near prevs</a>
+        </li>
+        <li class="active">
+            <a data-target="#tab-same-date" data-toggle="tab" href="">Same date</a>
+        </li>
+        <li>
+            <a data-target="#tab-near-next" data-toggle="tab" href="">Near nexts</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane" id="tab-near-prev">
+            <p>This is the page content for Tab Pa fqds fds fdqfs fds fsf ge 2</p>
+        </div>
+        <div class="tab-pane active" id="tab-same-date">
+            <p>This fdffffffffdf sdq fdsqf dsqf fqsd fdsqf dsfq ffffff</p>
+        </div>
+        <div class="tab-pane" id="tab-near-next">
+            <p>zz zzz z dkfjqmsdklddddd dd</p>
+        </div>
+    </div>
+</div>

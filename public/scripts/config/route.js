@@ -150,6 +150,24 @@
             access_level: ACCESS_LEVELS.Pub,
             menuId: 'account'
         })
+        .when('/tweets', {
+            templateUrl: 'views/pages/tweet/index.html',
+            controller: 'tweetsController',
+            access_level: ACCESS_LEVELS.Pub,
+            menuId: 'tweet'
+        })
+        .when('/tweets/add', {
+            templateUrl: 'views/pages/tweet/add.html',
+            controller: 'addTweetController',
+            access_level: ACCESS_LEVELS.Pub,
+            menuId: 'tweet'
+        })
+        .when('/tweets/edit/:id', {
+            templateUrl: 'views/pages/tweet/add.html',
+            controller: 'addTweetController',
+            access_level: ACCESS_LEVELS.Pub,
+            menuId: 'tweet'
+        })
         .when('/error500', {
             templateUrl: 'views/pages/error/500.html',
             controller: 'error500Controller',
