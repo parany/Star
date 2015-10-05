@@ -12,12 +12,14 @@ starApp.controller('detailExplicationController', function($scope, $routeParams,
     $scope.tablePrevs = starTable.create($scope, 'prevs');
     $scope.tableSameDate = starTable.create($scope, 'sameDate');
     $scope.tableOtherArticles = starTable.create($scope, 'articles');
+    $scope.tableTweets = starTable.create($scope, 'tweets');
     $scope.tableVerses = starTable.create($scope, 'explication.VerseReadList');
 
     genericService.getDetail('explications', $routeParams.id).then(function(data) {
         $scope.explication = data.item;
         $scope.page.title += $scope.explication.Title;
         $scope.sameDate = data.sameDate;
+        $scope.tweets = data.tweets;
         $scope.articles = data.articles;
         $scope.prevs = data.prevs;
         $scope.nexts = data.nexts;

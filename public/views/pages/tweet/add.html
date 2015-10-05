@@ -1,0 +1,80 @@
+﻿<div class="col-md-8" id="read-nav">
+    <form class="form-horizontal" name="addTweet">
+        <div class="form-group">
+            <div>
+                <input type="date" placeholder="Date" class="form-control" ng-model="model.Date" ng-change="changeDate()" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <div>
+                <select class="form-control" ng-model="model.Type" ng-options="ct for ct in contentTypes" required></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div>
+                <textarea placeholder="Title" class="form-control" ng-model="model.Title" required></textarea>
+            </div>
+        </div>
+    </form>
+    <div class="actions rigth">
+        <a class="btn btn-default" ng-href="#/tweets">Go Back</a> &nbsp;
+        <button type="submit" class="btn btn-success" ng-click="save()" ng-disabled="addTweet.$invalid">
+            Save
+        </button>
+    </div>
+</div>
+<div class="col-md-4 list-sidebar">
+    <div class="panel panel-default activity">
+        <div class="panel-heading">General</div>
+        <div class="panel-body">
+            <table class="table ng-table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="activity">Total number of items:
+                                <span class="badge">{{ activity.nbOfItems }}</span>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity">Added this year:
+                                <span class="badge">{{ activity.nbOfYearItems }}</span>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity">Added this month:
+                                <span class="badge">{{ activity.nbOfMonthItems }}</span>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity">Added this week:
+                                <span class="badge">{{ activity.nbOfWeekItems }}</span>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="panel panel-default activity">
+        <div class="panel-heading">Operations</div>
+        <div class="panel-body">
+            <table ng-table="tableOperations" class="table operation">
+                <thead></thead>
+                <tbody>
+                    <tr ng-repeat="model in $data">
+                        <td>
+                            <span class="activity">{{ model.operation }}
+                                <span class="badge">{{ model.title }}</span> on {{ model.date | date: "dd MMM yyyy hh:mm:ss" }}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -60,13 +60,13 @@
             access_level: ACCESS_LEVELS.Pub,
             menuId: 'dico'
         })
-        .when('/dico/add', {
+        .when('/dicos/add', {
             templateUrl: 'views/pages/dico/add.html',
             controller: 'addDicoController',
             access_level: ACCESS_LEVELS.Pub,
             menuId: 'dico'
         })
-        .when('/dico/edit/:id', {
+        .when('/dicos/edit/:id', {
             templateUrl: 'views/pages/dico/add.html',
             controller: 'addDicoController',
             access_level: ACCESS_LEVELS.Pub,
@@ -149,6 +149,24 @@
             controller: 'activityController',
             access_level: ACCESS_LEVELS.Pub,
             menuId: 'account'
+        })
+        .when('/tweets', {
+            templateUrl: 'views/pages/tweet/index.html',
+            controller: 'tweetController',
+            access_level: ACCESS_LEVELS.Pub,
+            menuId: 'tweet'
+        })
+        .when('/tweets/add', {
+            templateUrl: 'views/pages/tweet/add.html',
+            controller: 'addTweetController',
+            access_level: ACCESS_LEVELS.Pub,
+            menuId: 'tweet'
+        })
+        .when('/tweets/edit/:id', {
+            templateUrl: 'views/pages/tweet/add.html',
+            controller: 'addTweetController',
+            access_level: ACCESS_LEVELS.Pub,
+            menuId: 'tweet'
         })
         .when('/error500', {
             templateUrl: 'views/pages/error/500.html',

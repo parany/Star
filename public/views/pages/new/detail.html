@@ -55,6 +55,24 @@
             </table>
         </div>
     </div>
+    <div class="panel panel-default activity" ng-if="tweets.length">
+        <div class="panel-heading">Tweets in the same date</div>
+        <div class="panel-body">
+            <table ng-table="tableTweets" class="table operation">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="model in $data">
+                        <td>
+                            <span class="activity">
+                                <a href="#/tweets/edit/{{ ::model._id }}">{{ ::model.Title }}</a> on {{ ::model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
     <div class="panel panel-default activity" ng-if="articles.length">
         <div class="panel-heading">Other articles in the same date</div>
         <div class="panel-body">

@@ -128,7 +128,7 @@ exports.delete = function(req, res) {
 };
 
 exports.getArticlesInTheSameDate = function(req, res) {
-	var articles = ['treaties', 'agendas', 'explications', 'news'];
+	var articles = ['treaties', 'agendas', 'explications', 'news', 'tweets'];
 	var date = new Date(parseInt(req.params.date));
 	var tasks = [];
 	articles.forEach(function(article) {
