@@ -8,14 +8,9 @@
 <div class="col-md-6">
     <h3 style="text-align: center;">{{ treaty.Title }}</h3>
     <div ng-bind-html="treaty.Text"></div>
-    <blockquote class="blockquote‐reverse">
-        <footer>Written by
-            <cite>{{ treaty.CreatedBy }}</cite>
-        </footer>
-        <footer>On
-            <cite>{{ treaty.CreatedOn | date:"dd/MM/yyyy EEE hh:mm:ss" }}</cite>
-        </footer>
-    </blockquote>
+    <div class="authoring">
+        written by <span class="badge">{{ ::treaty.CreatedBy }}</span> On <span class="badge">{{ ::treaty.CreatedOn | date:"dd/MM/yyyy EEE hh:mm:ss" }}</span>
+    </div>
     <form class="form-horizontal btn-actions">
         <div class="btn-left">
             <a class="btn btn-default" ng-href="#/treaties">Back to list</a>

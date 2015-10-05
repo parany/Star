@@ -261,6 +261,7 @@ span.text-detail {
 }
 
 .btn-actions {
+    margin-top: 50px;
     margin-bottom: 100px;
 }
 
@@ -270,4 +271,9 @@ span.text-detail {
 
 span.error {
     color: red;
+}
+
+.authoring {
+    font-size: 10px;
+    float: right;
 }
