@@ -204,7 +204,7 @@ exports.getAllActivities = function(req, res) {
 };
 
 exports.getTotal = function(req, res) {
-	var articles = ['treaties', 'agendas', 'explications', 'news'];
+	var articles = ['treaties', 'agendas', 'explications', 'news', 'tweets'];
 	var tasks = [];
 	articles.forEach(function(article) {
 		var task = repository.count(article, {
@@ -213,7 +213,7 @@ exports.getTotal = function(req, res) {
 		tasks.push(task);
 	});
 	var results = [];
-	Q.all(tasks).spread(function(list0, list1, list2, list3) {
+	Q.all(tasks).spread(function(list0, list1, list2, list3, list4) {
 		results.push({
 			'article': articles[0],
 			'total': list0
@@ -229,6 +229,10 @@ exports.getTotal = function(req, res) {
 		results.push({
 			'article': articles[3],
 			'total': list3
+		});
+		results.push({
+			'article': articles[4],
+			'total': list4
 		});
 		res.send(results);
 	});

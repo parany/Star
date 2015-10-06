@@ -55,4 +55,15 @@ starApp.controller('activityController', function($scope, activityService, accou
 		$scope.tableNewOperations.parameters().page = 1;
 		$scope.tableNewOperations.reload();
 	});
+
+	// TWEET
+	$scope.tweetActivity = {};
+	$scope.tweetActivity.operations = [];
+	$scope.tableTweetOperations = starTable.create($scope, 'tweetActivity.operations');
+	activityService.getActivities('tweets', accountService.getUserName()).then(function(data) {
+		$scope.tweetActivity = data;
+		$scope.tableTweetOperations.settings().total = $scope.tweetActivity.operations.length;
+		$scope.tableTweetOperations.parameters().page = 1;
+		$scope.tableTweetOperations.reload();
+	});
 });

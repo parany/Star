@@ -1,5 +1,4 @@
 <div class="col-md-12">
-
     <div class="col-md-4">
         <div class="panel panel-default">
             <div class="panel-heading">Explications</div>
@@ -36,7 +35,6 @@
             </div>
         </div>
     </div>
-
     <div class="col-md-4">
         <div class="panel panel-default">
             <div class="panel-heading">Treaties</div>
@@ -73,7 +71,6 @@
             </div>
         </div>
     </div>
-
     <div class="col-md-4">
         <div class="panel panel-default">
             <div class="panel-heading">Agendas</div>
@@ -111,7 +108,6 @@
         </div>
     </div>
 </div>
-
 <div class="col-md-12">
     <div class="col-md-4">
         <div class="panel panel-default">
@@ -157,12 +153,49 @@
             </div>
         </div>
     </div>
-
     <div class="col-md-4">
         <div class="panel panel-default">
             <div class="panel-heading">By operations</div>
             <div class="panel-body">
                 <canvas class="chart chart-doughnut" data="operationsData" labels="operationsLabels" legend="true"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Tweets</div>
+            <div class="panel-body">
+                <span class="activity">
+                    <u>Total number of items: </u> <span class="badge">{{ ::tweetActivity.nbOfItems }}</span>
+                <br/>
+                </span>
+                <span class="activity">
+                    <u>Added this year: </u> <span class="badge">{{ ::tweetActivity.nbOfYearItems }}</span>
+                <br/>
+                </span>
+                <span class="activity">
+                    <u>Added this month: </u> <span class="badge">{{ ::tweetActivity.nbOfMonthItems }}</span>
+                <br/>
+                </span>
+                <span class="activity">
+                    <u>Added this week: </u><span class="badge">{{ ::tweetActivity.nbOfWeekItems }}</span>
+                <br/>
+                </span>
+                <br/>
+                <br/>
+                <table ng-table="tableTweetOperations" class="table">
+                    <thead></thead>
+                    <tbody>
+                        <tr ng-repeat="model in $data">
+                            <td class="activity-general">
+                                <span class="activity">{{ ::model.operation }}
+                                <span class="badge">{{ ::model.title }}</span> on {{ ::model.date | date: "dd MMM yyyy hh:mm:ss" }}</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

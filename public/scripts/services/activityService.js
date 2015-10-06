@@ -28,7 +28,7 @@ starApp.factory('activityService', function($http) {
 			$http.get(`/activities/${article}/${userName}/250`).success(function(data) {
 				data.operations.forEach(function(value) {
 					value.date = new Date(value.date);
-					if (value.title.length > 40) {
+					if (value.title && value.title.length > 40) {
 						value.title = value.title.slice(0, 40) + '...';
 					}
 				});
