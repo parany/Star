@@ -94,6 +94,11 @@ starApp.factory('genericService', function($http, userActionService) {
 				});
 				delete data.data[collectionName];
 				result.tweets = data.data.tweets;
+				result.tweets.forEach(function(tweet){
+					if (tweet.Title.length > 40) {
+						tweet.Title = tweet.Title.slice(0, 40) + '...';
+					}
+				});
 				delete data.data.tweets;
 				var articles = [];
 				_.forIn(data.data, function(value, key) {
