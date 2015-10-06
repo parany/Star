@@ -151,10 +151,9 @@ exports.getArticlesInTheSameDate = function(req, res) {
 
 exports.getPrevNearArticles = function(req, res) {
 	var date = new Date(parseInt(req.params.date));
-	var dateTime = date.getTime();
 	repository.find(req.params.collectionName, {
 		Date: {
-			$lt: dateTime
+			$lt: date.getFirstMsOfDay()
 		},
 		sort: {
 			Date: -1
@@ -171,10 +170,9 @@ exports.getPrevNearArticles = function(req, res) {
 
 exports.getNextNearArticles = function(req, res) {
 	var date = new Date(parseInt(req.params.date));
-	var dateTime = date.getTime();
 	repository.find(req.params.collectionName, {
 		Date: {
-			$gt: dateTime
+			$gt: date.getLastMsOfDay()
 		},
 		sort: {
 			Date: 1

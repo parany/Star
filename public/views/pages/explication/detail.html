@@ -18,14 +18,9 @@
 <div class="col-md-6">
     <h3 style="text-align: center;">{{ explication.Title }}</h3>
     <div ng-bind-html="explication.Content"></div>
-    <blockquote class="blockquote‐reverse">
-        <footer>Written by
-            <cite>{{ explication.CreatedBy }}</cite>
-        </footer>
-        <footer>On
-            <cite>{{ explication.CreatedOn | date:"dd/MM/yyyy EEE hh:mm:ss" }}</cite>
-        </footer>
-    </blockquote>
+    <div class="authoring">
+        written by <span class="badge">{{ ::explication.CreatedBy }}</span> On <span class="badge">{{ ::explication.CreatedOn | date:"dd/MM/yyyy EEE hh:mm:ss" }}</span>
+    </div>
     <form class="form-horizontal btn-actions">
         <div class="btn-left">
             <a class="btn btn-default" ng-href="#/explications">Back to list</a>
