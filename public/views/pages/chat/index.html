@@ -1,5 +1,7 @@
 <div class="col-md-2" id="read-nav">
-    <span class="badge">{{ users.length }}</span> items <br/><br/>
+    <span class="badge">{{ users.length }}</span> items
+    <br/>
+    <br/>
     <div class="resizable">
         <table ng-table="tableUser" class="table ng-table-rowselected">
             <thead>
@@ -14,9 +16,11 @@
         </table>
     </div>
 </div>
-<div class="col-md-6">
-    
-</div>
-<div class="col-md-4">
-    
+<div class="col-md-10">
+    <form class="form-inline" role="form">
+        <div class="form-group chat">
+            <input type="text" class="form-control chat" ng-model="message" ng-change="writting()">
+            <button class="btn btn-success" ng-click="sendMessage()" ng-disabled="!message || !user">Send</button>
+        </div>
+    </form>
 </div>

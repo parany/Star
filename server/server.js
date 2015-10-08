@@ -47,18 +47,4 @@ server.listen(config.port, function() {
 });
 
 // SOCKET
-io.on('connection', function(socket) {
-	socket.on('join', function(name) {
-		socket.nickname = name;
-		var users = socket.nsp.sockets.filter(function(user) {
-			return user.nickname !== socket.nickname;
-		});
-		users = users.map(function(soc) {
-			return {
-				id: soc.id,
-				nickname: soc.nickname
-			};
-		});
-		socket.emit('users', users);
-	});
-});
+require('./logic/socketLogic.js').listen(io);
