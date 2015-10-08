@@ -17,6 +17,21 @@
     </div>
 </div>
 <div class="col-md-10">
+    <table ng-table="tableMessage" class="table ng-table">
+        <thead>
+        </thead>
+        <tbody>
+            <tr ng-repeat="model in $data">
+                <td width="10">
+                    <span class="badge">{{ model.author }}</span> 
+                    <span class="date">{{ ::model.date | date:"hh:mm:ss" }}</span>
+                </td>
+                <td width="1000">
+                    <span>{{ model.message }}</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
     <form class="form-inline" role="form">
         <div class="form-group chat">
             <input type="text" class="form-control chat" ng-model="message" ng-change="writting()">
