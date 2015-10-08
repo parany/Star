@@ -1,0 +1,22 @@
+<div class="col-md-2" id="read-nav">
+    <span class="badge">{{ users.length }}</span> items <br/><br/>
+    <div class="resizable">
+        <table ng-table="tableUser" class="table ng-table-rowselected">
+            <thead>
+            </thead>
+            <tbody>
+                <tr ng-repeat="model in $data" ng-click="changeUserSelected(model)" ng-class="{'active': model.$selected}">
+                    <td>
+                        <span>{{ model.nickname }}</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="col-md-6">
+    
+</div>
+<div class="col-md-4">
+    
+</div>

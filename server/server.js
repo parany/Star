@@ -1,6 +1,5 @@
 ﻿// DEPENDENCIES
 var express = require('express');
-var http = require('http');
 var path = require('path');
 var bodyParser = require('body-parser');
 
@@ -48,9 +47,18 @@ server.listen(config.port, function() {
 });
 
 // SOCKET
-io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
+io.on('connection', function(socket) {
+	socket.on('join', function(name) {
+		socket.nickname = name;
+		var users = socket.nsp.sockets.filter(function(user) {
+			return user.nickname !== socket.nickname;
+		});
+		users = users.map(function(soc) {
+			return {
+				id: soc.id,
+				nickname: soc.nickname
+			};
+		});
+		socket.emit('users', users);
+	});
 });
