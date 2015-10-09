@@ -1,9 +1,7 @@
 ﻿// DEPENDENCIES
 var express = require('express');
-var http = require('http');
 var path = require('path');
 var bodyParser = require('body-parser');
-var connect = require('connect');
 
 var config = require('./config/config.json');
 var log = require('./utils/log.js');
@@ -11,6 +9,8 @@ var log = require('./utils/log.js');
 // SETTING UP ENVIRONNEMENTS
 var port = process.env.PORT || config.port;
 var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 app.set('port', port);
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/../public')));
@@ -41,7 +41,10 @@ app.use(function(err) {
 });
 
 // LAUNCH THE SERVER
-http.createServer(app).listen(config.port, function() {
+server.listen(config.port, function() {
 	log.info('server created with success');
 	log.info('listening on port ' + config.port);
 });
+
+// SOCKET
+require('./logic/socketLogic.js').listen(io);

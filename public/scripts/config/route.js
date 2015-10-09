@@ -168,6 +168,11 @@
             access_level: ACCESS_LEVELS.Pub,
             menuId: 'tweet'
         })
+        .when('/chat', {
+            templateUrl: 'views/pages/chat/index.html',
+            controller: 'chatController',
+            access_level: ACCESS_LEVELS.Pub
+        })
         .when('/error500', {
             templateUrl: 'views/pages/error/500.html',
             controller: 'error500Controller',

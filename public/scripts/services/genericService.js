@@ -1,4 +1,11 @@
 starApp.factory('genericService', function($http, userActionService) {
+	var filters = {
+		'agendas': 'agenda',
+		'explications': 'explication',
+		'treaties': 'treaty',
+		'news': 'new'
+	};
+
 	function insert(collectionName, data) {
 		return $http({
 			method: 'POST',
@@ -93,7 +100,14 @@ starApp.factory('genericService', function($http, userActionService) {
 					return d._id !== id;
 				});
 				delete data.data[collectionName];
-				result.tweets = data.data.tweets;
+				result.tweets = data.data.tweets.filter(function(tweet) {
+					return tweet.Type === filters[collectionName];
+				});
+				result.tweets.forEach(function(tweet) {
+					if (tweet.Title.length > 40) {
+						tweet.Title = tweet.Title.slice(0, 40) + '...';
+					}
+				});
 				delete data.data.tweets;
 				var articles = [];
 				_.forIn(data.data, function(value, key) {

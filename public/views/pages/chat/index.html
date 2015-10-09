@@ -1,0 +1,41 @@
+<div class="col-md-2" id="read-nav">
+    <span class="badge">{{ users.length }}</span> items
+    <br/>
+    <br/>
+    <div class="resizable">
+        <table ng-table="tableUser" class="table ng-table-rowselected">
+            <thead>
+            </thead>
+            <tbody>
+                <tr ng-repeat="model in $data" ng-click="changeUserSelected(model)" ng-class="{'active': model.$selected}">
+                    <td>
+                        <span>{{ model.nickname }}</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="col-md-10">
+    <table ng-table="tableMessage" class="table ng-table">
+        <thead>
+        </thead>
+        <tbody>
+            <tr ng-repeat="model in $data">
+                <td width="10">
+                    <span class="badge">{{ model.author }}</span> 
+                    <span class="date">{{ ::model.date | date:"hh:mm:ss" }}</span>
+                </td>
+                <td width="1000">
+                    <span>{{ model.message }}</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <form class="form-inline" role="form">
+        <div class="form-group chat">
+            <input type="text" class="form-control chat" ng-model="message" ng-change="writting()">
+            <button class="btn btn-success" ng-click="sendMessage()" ng-disabled="!message || !user">Send</button>
+        </div>
+    </form>
+</div>

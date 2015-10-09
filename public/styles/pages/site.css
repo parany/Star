@@ -277,3 +277,20 @@ span.error {
     font-size: 10px;
     float: right;
 }
+
+.form-group.chat {
+    width: 100%;
+}
+
+.form-control.chat {
+    width: 94%;
+}
+
+.chat .btn-success {
+    margin-left: -15px;
+}
+
+.date {
+    font-style: italic;
+    font-size: 8pt;
+}
