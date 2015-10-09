@@ -33,11 +33,19 @@ starApp.controller('chatController', function($scope, starTable, accountService)
 	});
 
 	socket.on('message', function(data) {
-		$scope.messages[data.from].push({
-			author: data.from,
-			message: data.message,
-			date: data.date
-		});
+		if (data.to === 'broadcast') {
+			$scope.messages[data.to].push({
+				author: data.from,
+				message: data.message,
+				date: data.date
+			});
+		} else {
+			$scope.messages[data.from].push({
+				author: data.from,
+				message: data.message,
+				date: data.date
+			});
+		}
 		$scope.tableMessage.reload();
 	});
 
