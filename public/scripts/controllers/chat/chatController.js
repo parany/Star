@@ -19,7 +19,6 @@ starApp.controller('chatController', function($scope, starTable, accountService)
 	});
 
 	socket.on('message', function(data) {
-		console.log(data);
 		if (!$scope.messages[data.from]) {
 			$scope.messages[data.from] = [];
 		}
