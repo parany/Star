@@ -13,15 +13,30 @@ starApp.controller('chatController', function($scope, starTable, accountService)
 		socket.emit('join', accountService.getUserName());
 	});
 
-	socket.on('users', function(users) {
-		$scope.users = users;
+	socket.on('initialization', function(data) {
+		$scope.users = data.users;
+		data.users.forEach(function(user) {
+			$scope.messages[user.nickname] = [];
+			data.messages.forEach(function(message) {
+				if (message.from === user.nickname) {
+					$scope.messages[user.nickname].push({
+						author: user.nickname,
+						message: message.message,
+						date: new Date(message.date)
+					});
+				} else if (message.to === user.nickname) {
+					$scope.messages[user.nickname].push({
+						author: message.from,
+						message: message.message,
+						date: new Date(message.date)
+					});
+				}
+			});
+		});
 		$scope.tableUser.reload();
 	});
 
 	socket.on('message', function(data) {
-		if (!$scope.messages[data.from]) {
-			$scope.messages[data.from] = [];
-		}
 		$scope.messages[data.from].push({
 			author: data.from,
 			message: data.message,
@@ -36,9 +51,6 @@ starApp.controller('chatController', function($scope, starTable, accountService)
 		});
 		model.$selected = !model.$selected;
 		$scope.user = model;
-		if (!$scope.messages[model.nickname]) {
-			$scope.messages[model.nickname] = [];
-		}
 		$scope.selectedMessages = $scope.messages[model.nickname];
 		$scope.tableMessage.reload();
 	};
@@ -52,9 +64,6 @@ starApp.controller('chatController', function($scope, starTable, accountService)
 			to: $scope.user.nickname,
 			date: new Date()
 		};
-		if (!$scope.messages[data.to]) {
-			$scope.messages[data.to] = [];
-		}
 		$scope.messages[data.to].push({
 			author: data.from,
 			message: data.message,

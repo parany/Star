@@ -1,3 +1,5 @@
+var repository = require('../model/repository.js');
+
 var socket = null;
 
 exports.listen = function(io) {
@@ -22,7 +24,22 @@ function join(name) {
 	users.unshift({
 		nickname: 'broadcast'
 	});
-	socket.emit('users', users);
+	repository.find('messages', {
+		$or: [{
+			from: name
+		}, {
+			to: name
+		}],
+		sort: {
+			date: 1
+		}
+	}).then(function(messages) {
+		var data = {
+			'messages': messages,
+			'users': users
+		};
+		socket.emit('initialization', data);
+	});
 }
 
 function sendMessage(data) {
@@ -30,4 +47,6 @@ function sendMessage(data) {
 		return user.nickname === data.to;
 	});
 	soc[0].emit('message', data);
+	data.date = new Date(data.date).getTime();
+	repository.insert('messages', data);
 }
