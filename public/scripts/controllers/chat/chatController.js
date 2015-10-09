@@ -4,6 +4,7 @@ starApp.controller('chatController', function($scope, starTable, accountService)
 	$scope.messages = {};
 	$scope.selectedMessages = [];
 	$scope.users = [];
+
 	$scope.tableUser = starTable.create($scope, 'users', false, 100);
 	$scope.tableMessage = starTable.create($scope, 'selectedMessages', false, 100);
 
@@ -16,17 +17,12 @@ starApp.controller('chatController', function($scope, starTable, accountService)
 	socket.on('initialization', function(data) {
 		$scope.users = data.users;
 		data.users.forEach(function(user) {
-			$scope.messages[user.nickname] = [];
+			var nickname = user.nickname;
+			$scope.messages[nickname] = [];
 			data.messages.forEach(function(message) {
-				if (message.from === user.nickname) {
+				if (message.from === nickname || message.to === nickname) {
 					$scope.messages[user.nickname].push({
-						author: user.nickname,
-						message: message.message,
-						date: new Date(message.date)
-					});
-				} else if (message.to === user.nickname) {
-					$scope.messages[user.nickname].push({
-						author: message.from,
+						author: message.from === nickname ? nickname : message.from,
 						message: message.message,
 						date: new Date(message.date)
 					});
@@ -49,7 +45,7 @@ starApp.controller('chatController', function($scope, starTable, accountService)
 		$scope.users.forEach(function(d) {
 			d.$selected = false;
 		});
-		model.$selected = !model.$selected;
+		model.$selected = true;
 		$scope.user = model;
 		$scope.selectedMessages = $scope.messages[model.nickname];
 		$scope.tableMessage.reload();
