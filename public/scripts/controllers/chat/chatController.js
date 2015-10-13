@@ -20,9 +20,15 @@ starApp.controller('chatController', function($scope, starTable, accountService)
 			var nickname = user.nickname;
 			$scope.messages[nickname] = [];
 			data.messages.forEach(function(message) {
-				if (message.from === nickname || message.to === nickname) {
+				if (message.to === 'broadcast') {
+					$scope.messages.broadcast.push({
+						author: message.from === accountService.getUserName() ? 'Me' : message.from,
+						message: message.message,
+						date: new Date(message.date)
+					});
+				} else if (message.from === nickname || message.to === nickname) {
 					$scope.messages[user.nickname].push({
-						author: message.from === nickname ? nickname : message.from,
+						author: message.from === nickname ? nickname : 'Me',
 						message: message.message,
 						date: new Date(message.date)
 					});
@@ -69,7 +75,7 @@ starApp.controller('chatController', function($scope, starTable, accountService)
 			date: new Date()
 		};
 		$scope.messages[data.to].push({
-			author: data.from,
+			author: 'Me',
 			message: data.message,
 			date: data.date
 		});
