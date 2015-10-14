@@ -90,27 +90,7 @@
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="">notifications(26)<b class="caret"></b></a>
-                            <ul role="menu" class="dropdown-menu">
-                                <li>
-                                    <a href="#/chat">chat(20)</a>
-                                </li>
-                                <li>
-                                    <a href="#">new commentary(2)</a>
-                                </li>
-                                <li>
-                                    <a href="#">commentary replay(2)</a>
-                                </li>
-                                <li>
-                                    <a href="#">like(2)</a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <a href="#">history</a>
-                                </li>
-                            </ul>
-                        </li>
+                        <notification></notification>
                         <li id="account" class="dropdown" ng-class="account ? 'active' : ''">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="">{{ ::fullName }}<b class="caret"></b></a>
                             <ul role="menu" class="dropdown-menu">

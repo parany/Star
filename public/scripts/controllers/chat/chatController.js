@@ -1,71 +1,31 @@
-starApp.controller('chatController', function($scope, starTable, accountService) {
+starApp.controller('chatController', function($rootScope, $scope, starTable, accountService) {
 	$scope.page.title = 'Chat';
 
-	$scope.messages = {};
 	$scope.selectedMessages = [];
-	$scope.users = [];
-
-	$scope.tableUser = starTable.create($scope, 'users', false, 100);
+	$scope.tableUser = starTable.create($scope, 'page.users', false, 100);
 	$scope.tableMessage = starTable.create($scope, 'selectedMessages', false, 100);
 
-	var socket = io.connect();
-
-	socket.on('connect', function() {
-		socket.emit('join', accountService.getUserName());
-	});
-
-	socket.on('initialization', function(data) {
-		$scope.users = data.users;
-		data.users.forEach(function(user) {
-			var nickname = user.nickname;
-			$scope.messages[nickname] = [];
-			data.messages.forEach(function(message) {
-				if (message.to === 'broadcast') {
-					$scope.messages.broadcast.push({
-						author: message.from === accountService.getUserName() ? 'Me' : message.from,
-						message: message.message,
-						date: new Date(message.date)
-					});
-				} else if (message.from === nickname || message.to === nickname) {
-					$scope.messages[user.nickname].push({
-						author: message.from === nickname ? nickname : 'Me',
-						message: message.message,
-						date: new Date(message.date)
-					});
-				}
-			});
-		});
-		$scope.tableUser.reload();
-	});
-
-	socket.on('message', function(data) {
-		if (data.to === 'broadcast') {
-			$scope.messages[data.to].push({
-				author: data.from,
-				message: data.message,
-				date: data.date
-			});
-		} else {
-			$scope.messages[data.from].push({
-				author: data.from,
-				message: data.message,
-				date: data.date
-			});
-		}
-		$scope.tableMessage.reload();
-	});
-
 	$scope.changeUserSelected = function(model) {
-		$scope.users.forEach(function(d) {
+		$scope.page.users.forEach(function(d) {
 			d.$selected = false;
 		});
 		model.$selected = true;
 		$scope.user = model;
-		$scope.selectedMessages = $scope.messages[model.nickname];
+		$scope.selectedMessages = $scope.page.messages[model.nickname];
 		$scope.tableMessage.reload();
 	};
 
-	$scope.writting = function() {};
+	$rootScope.$on('chat.users', function() {
+		$scope.tableUser.reload();
+	});
+
+	$rootScope.$on('chat.messages', function() {
+		$scope.tableMessage.reload();
+	});
+
+	$scope.writting = function() {
+		console.log('writting in');
+	};
 
 	$scope.sendMessage = function() {
 		var data = {
@@ -74,13 +34,13 @@ starApp.controller('chatController', function($scope, starTable, accountService)
 			to: $scope.user.nickname,
 			date: new Date()
 		};
-		$scope.messages[data.to].push({
+		$rootScope.$emit('chat.send', data);
+		$scope.page.messages[data.to].push({
 			author: 'Me',
 			message: data.message,
 			date: data.date
 		});
 		$scope.tableMessage.reload();
-		socket.emit('message', data);
 		$scope.message = '';
 	};
 });
