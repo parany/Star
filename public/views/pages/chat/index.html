@@ -34,7 +34,7 @@
     </table>
     <form class="form-inline" role="form">
         <div class="form-group chat">
-            <input type="text" class="form-control chat" ng-model="message" ng-change="writting()">
+            <input type="text" class="form-control chat" ng-model="message">
             <button class="btn btn-success" ng-click="sendMessage()" ng-disabled="!message || !user">Send</button>
         </div>
     </form>

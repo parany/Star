@@ -24,10 +24,6 @@ starApp.controller('chatController', function($rootScope, $scope, starTable, acc
 		$scope.tableMessage.reload();
 	});
 
-	$scope.writting = function() {
-		console.log('writting in');
-	};
-
 	$scope.sendMessage = function() {
 		var data = {
 			from: accountService.getUserName(),
