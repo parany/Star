@@ -1,6 +1,7 @@
 starApp.controller('chatController', function($rootScope, $scope, starTable, accountService) {
 	$scope.page.title = 'Chat';
 
+	$scope.userName = accountService.getUserName();
 	$scope.selectedMessages = [];
 	$scope.tableUser = starTable.create($scope, 'page.users', false, 100);
 	$scope.tableMessage = starTable.create($scope, 'selectedMessages', false, 100);
@@ -38,9 +39,19 @@ starApp.controller('chatController', function($rootScope, $scope, starTable, acc
 		$scope.page.messages[data.to].push({
 			author: 'Me',
 			message: data.message,
-			date: data.date
+			date: data.date,
+			seen: true
 		});
 		$scope.tableMessage.reload();
 		$scope.message = '';
+	};
+
+	$scope.markSeen = function(model) {
+		$scope.page.nbOfNotifications--;
+		if (model.seen) {
+			return;
+		}
+		model.seen = true;
+		$rootScope.$emit('chat.mark', model);
 	};
 });

@@ -294,3 +294,7 @@ span.error {
     font-style: italic;
     font-size: 8pt;
 }
+
+.notseen {
+    background-color: beige;
+}

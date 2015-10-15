@@ -1,5 +1,5 @@
 <div class="col-md-2" id="read-nav">
-    <span class="badge">{{ users.length }}</span> items
+    <span class="badge">{{ page.users.length }}</span> items
     <br/>
     <br/>
     <div class="resizable">
@@ -21,7 +21,7 @@
         <thead>
         </thead>
         <tbody>
-            <tr ng-repeat="model in $data">
+            <tr ng-repeat="model in $data" ng-class="{ notseen: !model.seen }" ng-click="markSeen(model)">
                 <td width="10">
                     <span class="badge">{{ model.author }}</span> 
                     <span class="date">{{ ::model.date | date:"hh:mm:ss" }}</span>

@@ -46,7 +46,12 @@ exports.listen = function(io) {
 				soc[0].emit('message', data);
 			}
 			data.date = new Date(data.date).getTime();
+			data.seen = false;
 			repository.insert('messages', data);
+		});
+
+		socket.on('mark', function sendMessage(data) {
+			repository.save('messages', data);
 		});
 	});
 };
