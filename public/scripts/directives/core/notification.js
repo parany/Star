@@ -8,36 +8,47 @@ starApp.directive('notification', function($location, $rootScope, $route, accoun
         replace: true,
         link: function(scope) {
             socket.on('connect', function() {
-                socket.emit('join', accountService.getUserName());
+                socket.emit('join', userName);
             });
 
             socket.on('initialization', function(data) {
                 scope.page.users = data.users;
+                var seen;
                 data.users.forEach(function(user) {
                     var nickname = user.nickname;
                     scope.page.messages[nickname] = [];
                     data.messages.forEach(function(message) {
-                        if (message.to === 'broadcast') {
+                        seen = true;
+                        if (!message.seen && (message.to === userName || (message.to === 'broadcast' && message.from !== userName))) {
+                            seen = false;
+                        }
+                        if (message.to === 'broadcast' && nickname === 'broadcast') {
                             scope.page.messages.broadcast.push({
                                 _id: message._id,
-                                author: message.from === accountService.getUserName() ? 'Me' : message.from,
+                                author: message.from === userName ? 'Me' : message.from,
                                 message: message.message,
                                 date: new Date(message.date),
-                                seen: message.seen || message.to !== userName
+                                displayDate: new Date(message.date).getElapsed(),
+                                seen: seen
                             });
-                        } else if (message.from === nickname || message.to === nickname) {
+                        } else if ((message.from === nickname || message.to === nickname) && message.to !== 'broadcast') {
                             scope.page.messages[user.nickname].push({
                                 _id: message._id,
                                 author: message.from === nickname ? nickname : 'Me',
                                 message: message.message,
                                 date: new Date(message.date),
-                                seen: message.seen || message.to !== userName
+                                displayDate: new Date(message.date).getElapsed(),
+                                seen: seen
                             });
                         }
                     });
                 });
                 scope.page.nbOfNotifications = data.messages.filter(function(message) {
-                    return message.seen === false && message.to === userName;
+                    seen = true;
+                    if (!message.seen && (message.to === userName || (message.to === 'broadcast' && message.from !== userName))) {
+                        seen = false;
+                    }
+                    return !seen;
                 }).length;
                 $rootScope.$emit('chat.users');
             });
@@ -48,13 +59,15 @@ starApp.directive('notification', function($location, $rootScope, $route, accoun
                     scope.page.messages[data.to].push({
                         author: data.from,
                         message: data.message,
-                        date: data.date
+                        date: new Date(data.date),
+                        displayDate: new Date(data.date).getElapsed()
                     });
                 } else {
                     scope.page.messages[data.from].push({
                         author: data.from,
                         message: data.message,
-                        date: data.date
+                        date: new Date(data.date),
+                        displayDate: new Date(data.date).getElapsed()
                     });
                 }
                 $rootScope.$emit('chat.messages');

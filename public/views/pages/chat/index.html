@@ -21,12 +21,12 @@
         <thead>
         </thead>
         <tbody>
-            <tr ng-repeat="model in $data" ng-class="{ notseen: !model.seen }" ng-click="markSeen(model)">
-                <td width="10">
+            <tr ng-repeat="model in $data" class="message" ng-class="{ notseen: !model.seen }" ng-click="markSeen(model)">
+                <td width="200">
                     <span class="badge">{{ model.author }}</span> 
-                    <span class="date">{{ ::model.date | date:"hh:mm:ss" }}</span>
+                    <span class="date">{{ model.displayDate }}</span>
                 </td>
-                <td width="1000">
+                <td width="800">
                     <span>{{ model.message }}</span>
                 </td>
             </tr>

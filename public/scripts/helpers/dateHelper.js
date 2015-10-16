@@ -47,3 +47,22 @@ Date.prototype.getLastMsOfWeek = function() {
 	var firstMsOfDay = this.getFirstMsOfDay();
 	return firstMsOfDay + date;
 };
+
+Date.prototype.getElapsed = function() {
+	var now = new Date(new Date() - this);
+	var str = '';
+	if (now.getMonth()) {
+		str += `${now.getMonth() + 1}M `; 
+	}
+	if (now.getDate() - 1) {
+		str += `${now.getDate() - 1}d `; 
+	}
+	if (now.getHours() -3) {
+		str += `${now.getHours() -3}h `; 
+	}
+	if (now.getMinutes()) {
+		str += `${now.getMinutes()}min `; 
+	}
+	str += `${now.getSeconds()}sec `; 
+	return str;
+};

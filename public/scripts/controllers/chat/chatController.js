@@ -26,7 +26,7 @@ starApp.controller('chatController', function($rootScope, $scope, starTable, acc
 
 	$scope.sendMessage = function() {
 		var data = {
-			from: accountService.getUserName(),
+			from: $scope.userName,
 			message: $scope.message,
 			to: $scope.user.nickname,
 			date: new Date()
@@ -43,11 +43,20 @@ starApp.controller('chatController', function($rootScope, $scope, starTable, acc
 	};
 
 	$scope.markSeen = function(model) {
-		$scope.page.nbOfNotifications--;
 		if (model.seen) {
 			return;
 		}
+		$scope.page.nbOfNotifications--;
 		model.seen = true;
 		$rootScope.$emit('chat.mark', model);
 	};
+
+	setInterval(function(){
+		_.forIn($scope.page.messages, function(messages) {
+			messages.forEach(function(message) {
+				message.displayDate = message.date.getElapsed();
+			});
+		});
+		$scope.tableMessage.reload();
+	}, 10000);
 });

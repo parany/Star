@@ -298,3 +298,7 @@ span.error {
 .notseen {
     background-color: beige;
 }
+
+tr.message {
+    cursor: pointer;
+}
