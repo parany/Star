@@ -10,6 +10,9 @@
                 <tr ng-repeat="model in $data" ng-click="changeUserSelected(model)" ng-class="{'active': model.$selected}">
                     <td>
                         <span>{{ model.nickname }}</span>
+                        <div class="status">
+                            <span class="status" ng-class="{'active': model.active, 'inactive': !model.active }">o</span>
+                        </div>
                     </td>
                 </tr>
             </tbody>

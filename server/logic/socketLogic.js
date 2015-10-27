@@ -4,35 +4,51 @@ exports.listen = function(io) {
 	io.on('connection', function(socket) {
 		socket.on('join', function(name) {
 			socket.nickname = name;
-			var users = socket.nsp.sockets.filter(function(user) {
-				return user.nickname !== socket.nickname;
-			});
-			users = users.map(function(soc) {
-				return {
-					id: soc.id,
-					nickname: soc.nickname
-				};
-			});
-			users.unshift({
-				nickname: 'broadcast'
-			});
-			repository.find('messages', {
-				$or: [{
-					from: name
-				}, {
-					to: name
-				}, {
-					to: 'broadcast'
-				}],
-				sort: {
-					date: 1
+			var users = [];
+			repository.find('users', {
+				projection: {
+					UserName: 1
 				}
+			}).then(function(data) {
+				users = data;
+				users.forEach(function(user) {
+					var socUser = socket.nsp.sockets.filter(function(soc) {
+						return user.UserName === soc.nickname;
+					});
+					user.nickname = user.UserName;
+					if (socUser.length) {
+						user.active = true;
+						user.id = socUser[0].id;
+					}
+				});
+				users = users.filter(function(user) {
+					return user.nickname !== socket.nickname;
+				});
+				users.unshift({
+					nickname: 'broadcast'
+				});
+				return repository.find('messages', {
+					$or: [{
+						from: name
+					}, {
+						to: name
+					}, {
+						to: 'broadcast'
+					}],
+					sort: {
+						date: 1
+					}
+				});
 			}).then(function(messages) {
 				var data = {
 					'messages': messages,
 					'users': users
 				};
 				socket.emit('initialization', data);
+				socket.broadcast.emit('status', {
+					nickname: socket.nickname,
+					status: true
+				});
 			});
 		});
 
@@ -52,6 +68,13 @@ exports.listen = function(io) {
 
 		socket.on('mark', function sendMessage(data) {
 			repository.save('messages', data);
+		});
+
+		socket.on('disconnect', function() {
+			socket.broadcast.emit('status', {
+				nickname: socket.nickname,
+				status: false
+			});
 		});
 	});
 };

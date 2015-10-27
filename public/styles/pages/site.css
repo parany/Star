@@ -302,3 +302,27 @@ span.error {
 tr.message {
     cursor: pointer;
 }
+
+div.status {
+    position: relative;
+    top: -5px;
+    float: right;
+}
+
+span.status {
+    font-weight: 900;
+    font-size: 0px;
+    border-color: green;
+    border-width: 7px;
+    border-style: solid;
+    border-radius: 36px;
+    margin-top: 23px;
+}
+
+span.status.inactive {
+    border-color: red;
+}
+
+span.status.active {
+    border-color: green;
+}

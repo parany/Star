@@ -73,6 +73,13 @@ starApp.directive('notification', function($location, $rootScope, $route, accoun
                 $rootScope.$emit('chat.messages');
             });
 
+            socket.on('status', function(data) {
+                var user = scope.page.users.filter(function(u){
+                    return u.nickname === data.nickname;
+                })[0];
+                user.active = data.status;
+            });
+
             $rootScope.$on('chat.send', function(evt, data) {
                 socket.emit('message', data);
             });
