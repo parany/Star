@@ -1,5 +1,5 @@
 <div class="col-md-2" id="read-nav">
-    <span class="badge">{{ users.length }}</span> items
+    <span class="badge">{{ page.users.length }}</span> items
     <br/>
     <br/>
     <div class="resizable">
@@ -10,6 +10,9 @@
                 <tr ng-repeat="model in $data" ng-click="changeUserSelected(model)" ng-class="{'active': model.$selected}">
                     <td>
                         <span>{{ model.nickname }}</span>
+                        <div class="status">
+                            <span class="status" ng-class="{'active': model.active, 'inactive': !model.active }">o</span>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -21,12 +24,12 @@
         <thead>
         </thead>
         <tbody>
-            <tr ng-repeat="model in $data">
-                <td width="10">
+            <tr ng-repeat="model in $data" class="message" ng-class="{ notseen: !model.seen }" ng-click="markSeen(model)">
+                <td width="200">
                     <span class="badge">{{ model.author }}</span> 
-                    <span class="date">{{ ::model.date | date:"hh:mm:ss" }}</span>
+                    <span class="date">{{ model.displayDate }}</span>
                 </td>
-                <td width="1000">
+                <td width="800">
                     <span>{{ model.message }}</span>
                 </td>
             </tr>
@@ -34,7 +37,7 @@
     </table>
     <form class="form-inline" role="form">
         <div class="form-group chat">
-            <input type="text" class="form-control chat" ng-model="message" ng-change="writting()">
+            <input type="text" class="form-control chat" ng-model="message">
             <button class="btn btn-success" ng-click="sendMessage()" ng-disabled="!message || !user">Send</button>
         </div>
     </form>
