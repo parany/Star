@@ -13,7 +13,14 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 app.set('port', port);
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, '/../public')));
+
+app.configure('production', function() {
+	app.use(express.static(path.join(__dirname, '/../public', { maxAge: 86400000 })));
+});
+
+app.configure('development', function() {
+	app.use(express.static(path.join(__dirname, '/../public')));
+});
 
 // ROUTES
 var verseRoute = require('./route/verseRoute.js');
