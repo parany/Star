@@ -2,7 +2,6 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
-
 var config = require('./config/config.json');
 var log = require('./utils/log.js');
 
@@ -11,16 +10,17 @@ var port = process.env.PORT || config.port;
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+
 app.set('port', port);
 app.use(bodyParser.json());
 
-app.configure('production', function() {
+var env = process.env.NODE_ENV || 'development';
+if (env === 'production') {
 	app.use(express.static(path.join(__dirname, '/../public', { maxAge: 86400000 })));
-});
-
-app.configure('development', function() {
+}
+if (env === 'development') {
 	app.use(express.static(path.join(__dirname, '/../public')));
-});
+}
 
 // ROUTES
 var verseRoute = require('./route/verseRoute.js');
@@ -37,7 +37,7 @@ app.use('/treaties', treatyRoute);
 app.use('/activities', activityRoute);
 app.use('/', genericRoute);
 
-// ERROR
+// ERRORS
 // error 404
 app.use(function(req) {
 	log.error('error 404 ' + req.url);
