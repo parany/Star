@@ -2,7 +2,7 @@
     <h3 style="text-align: center;">{{ ::agenda.Title }}</h3>
     <div ng-bind-html="agenda.Text"></div>
     <div class="authoring">
-        written by <span class="badge">{{ ::agenda.CreatedBy }}</span> On <span class="badge">{{ ::agenda.CreatedOn | date:"dd/MM/yyyy EEE hh:mm:ss" }}</span>
+        written by <span class="badge">{{ ::agenda.CreatedBy }}</span> On <span class="badge">{{ ::agenda.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}</span>
     </div>
     <form class="form-horizontal btn-actions">
         <div class="btn-left">

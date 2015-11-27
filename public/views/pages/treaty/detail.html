@@ -9,7 +9,7 @@
     <h3 style="text-align: center;">{{ treaty.Title }}</h3>
     <div ng-bind-html="treaty.Text"></div>
     <div class="authoring">
-        written by <span class="badge">{{ ::treaty.CreatedBy }}</span> On <span class="badge">{{ ::treaty.CreatedOn | date:"dd/MM/yyyy EEE hh:mm:ss" }}</span>
+        written by <span class="badge">{{ ::treaty.CreatedBy }}</span> On <span class="badge">{{ ::treaty.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}</span>
     </div>
     <form class="form-horizontal btn-actions">
         <div class="btn-left">

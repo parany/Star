@@ -19,7 +19,7 @@
     <h3 style="text-align: center;">{{ explication.Title }}</h3>
     <div ng-bind-html="explication.Content"></div>
     <div class="authoring">
-        written by <span class="badge">{{ ::explication.CreatedBy }}</span> On <span class="badge">{{ ::explication.CreatedOn | date:"dd/MM/yyyy EEE hh:mm:ss" }}</span>
+        written by <span class="badge">{{ ::explication.CreatedBy }}</span> On <span class="badge">{{ ::explication.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}</span>
     </div>
     <form class="form-horizontal btn-actions">
         <div class="btn-left">
