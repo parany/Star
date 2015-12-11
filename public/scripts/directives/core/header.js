@@ -3,7 +3,7 @@
         scope: true,
         templateUrl: 'views/directives/core/header.html',
         restrict: 'E',
-        link: function(scope, element, attrs) {
+        link: function(scope) {
             scope[$route.current.$$route.menuId] = true;
             scope.isLoggedIn = accountService.isLoggedIn();
             scope.fullName = accountService.getUserFullName();

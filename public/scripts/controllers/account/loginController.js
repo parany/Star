@@ -3,18 +3,21 @@
 
     $scope.login = function() {
         var modalInstance = $modal.open({
-            animation: $scope.animationsEnabled,
+            animation: true,
             templateUrl: 'message'
         });
         accountService.authenticate($scope.user.UserName, $scope.user.Password).success(function(data) {
             modalInstance.dismiss('cancel');
-            if (data.length) {
-                accountService.setUser(data[0]);
-                $rootScope.$emit('account.loggedIn', data[0].FullName);
+            if (data) {
+                accountService.setData(data);
+                $rootScope.$emit('account.loggedIn', data.user.FullName);
                 $location.path('/');
             } else {
                 $scope.error = true;
             }
+        }).error(function() {
+            $scope.error = true;
+            modalInstance.dismiss('cancel');
         });
     };
 });
