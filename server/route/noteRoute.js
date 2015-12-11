@@ -1,5 +1,3 @@
-/* jshint node: true */
-
 var router = require('express').Router();
 var noteLogic = require('../logic/noteLogic.js');
 

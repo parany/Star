@@ -1,5 +1,3 @@
-/* jshint node: true */
-
 var router = require('express').Router();
 var genericLogic = require('../logic/genericLogic.js');
 

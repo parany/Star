@@ -1,20 +1,20 @@
-starApp.factory('accountService', function($http, $cookieStore, genericService, ACCESS_LEVELS) {
-	var _user = $cookieStore.get('user');
+starApp.factory('accountService', function($http) {
+	var _user = localStorage.getItem('user');
 
 	return {
 		authenticate: function(userName, password) {
-			return genericService.find('users', {
-				UserName: userName,
-				Password: password
+			return $http.post('/user/login', {
+				username: userName,
+				password: password
 			});
 		},
 		isAuthorized: function(lvl) {
 			return _user !== null && _user.Role === lvl;
 		},
-		setUser: function(user) {
-			user.Role = ACCESS_LEVELS.pub;
-			_user = user;
-			$cookieStore.put('user', _user);
+		setData: function(data) {
+			_user = data.user;
+			localStorage.setItem('user', _user);
+			localStorage.setItem('token', data.token);
 		},
 		isLoggedIn: function() {
 			return _user ? true : false;
@@ -23,7 +23,7 @@ starApp.factory('accountService', function($http, $cookieStore, genericService, 
 			return _user;
 		},
 		getUserName: function() {
-			return _user.UserName;
+			return _user ? _user.UserName : '';
 		},
 		getUserFullName: function() {
 			return _user ? _user.FullName : '';
@@ -32,8 +32,10 @@ starApp.factory('accountService', function($http, $cookieStore, genericService, 
 			return _user ? _user._id : null;
 		},
 		logout: function() {
-			$cookieStore.remove('user');
+			localStorage.removeItem('user');
+			localStorage.removeItem('token');
 			_user = null;
-		}
+		},
+		isLogged: false
 	};
 });
