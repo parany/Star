@@ -1,5 +1,7 @@
 ﻿starApp.controller('tweetController', function($scope, $location, accountService, genericService, tweetService, activityService, starTable) {
     $scope.page.title = 'Tweet - Home page';
+
+    var allTweets = [];
     $scope.datas = [];
     $scope.activity = {};
     $scope.activity.operations = [];
@@ -8,10 +10,9 @@
     $scope.tableOperations = starTable.create($scope, 'activity.operations');
 
     tweetService.getList('tweets', accountService.getUserName(), 'Type').then(function(data) {
-        $scope.datas = data;
-        $scope.tableSearch.settings().total = $scope.datas.length;
-        $scope.tableSearch.parameters().page = 1;
-        $scope.tableSearch.reload();
+        allTweets = data;
+        $scope.datas = allTweets;
+        reloadTable();
     });
 
     activityService.getActivities('tweets', accountService.getUserName()).then(function(data) {
@@ -24,17 +25,21 @@
     };
 
     $scope.search = function() {
-        if (!$scope.txtSearch || $scope.txtSearch.length < 1) {
-            $scope.datas = _.sortBy($scope.datas, 'DateGroup');
-            $scope.datas.reverse();
-            return;
+        if (!$scope.txtSearch) {
+            $scope.datas = allTweets;
+
+        } else {
+            var regSearch = new RegExp($scope.txtSearch, 'i');
+            $scope.datas = allTweets.filter(function(tweet) {
+                return regSearch.test(tweet.Title);
+            });
         }
-        genericService.search('tweets', accountService.getUserName(), $scope.txtSearch).then(function(data) {
-            $scope.datas = _.sortBy(data, 'DateGroup');
-            $scope.datas.reverse();
-            $scope.tableSearch.settings().total = $scope.datas.length;
-            $scope.tableSearch.parameters().page = 1;
-            $scope.tableSearch.reload();
-        });
+        reloadTable();
     };
+
+    function reloadTable() {
+        $scope.tableSearch.settings().total = $scope.datas.length;
+        $scope.tableSearch.parameters().page = 1;
+        $scope.tableSearch.reload();
+    }
 });

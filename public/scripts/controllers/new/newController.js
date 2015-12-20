@@ -1,6 +1,7 @@
 starApp.controller('newController', function($scope, $routeParams, $filter, $http, $location, activityService, accountService, starTable, genericService) {
     $scope.page.title = 'New - Home page';
 
+    var allNews =  [];
     $scope.datas = [];
     $scope.activity = {};
     $scope.activity.operations = [];
@@ -9,10 +10,9 @@ starApp.controller('newController', function($scope, $routeParams, $filter, $htt
     $scope.tableOperations = starTable.create($scope, 'activity.operations');
 
     genericService.getList('news', accountService.getUserName()).then(function(data) {
-        $scope.datas = data;
-        $scope.tableSearch.settings().total = $scope.datas.length;
-        $scope.tableSearch.parameters().page = 1;
-        $scope.tableSearch.reload();
+        allNews = data;
+        $scope.datas = allNews;
+        reloadTable();
     });
 
     activityService.getActivities('news', accountService.getUserName()).then(function(data) {
@@ -25,14 +25,21 @@ starApp.controller('newController', function($scope, $routeParams, $filter, $htt
     };
 
     $scope.search = function() {
-        if (!$scope.txtSearch || $scope.txtSearch.length < 1) {
-            return;
+        if (!$scope.txtSearch) {
+            $scope.datas = allNews;
+
+        } else {
+            var regSearch = new RegExp($scope.txtSearch, 'i');
+            $scope.datas = allNews.filter(function(nw) {
+                return regSearch.test(nw.Title) || regSearch.test(nw.Content);
+            });
         }
-        genericService.search('news', accountService.getUserName(), $scope.txtSearch).then(function(data) {
-            $scope.datas = data;
-            $scope.tableSearch.settings().total = $scope.datas.length;
-            $scope.tableSearch.parameters().page = 1;
-            $scope.tableSearch.reload();
-        });
+        reloadTable();
     };
+
+    function reloadTable() {
+        $scope.tableSearch.settings().total = $scope.datas.length;
+        $scope.tableSearch.parameters().page = 1;
+        $scope.tableSearch.reload();
+    }
 });
