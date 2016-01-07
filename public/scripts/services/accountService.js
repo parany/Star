@@ -1,5 +1,5 @@
 starApp.factory('accountService', function($http) {
-	var _user = localStorage.getItem('user');
+	var _user = JSON.parse(localStorage.getItem('user'));
 
 	return {
 		authenticate: function(userName, password) {
@@ -13,7 +13,7 @@ starApp.factory('accountService', function($http) {
 		},
 		setData: function(data) {
 			_user = data.user;
-			localStorage.setItem('user', _user);
+			localStorage.setItem('user', JSON.stringify(_user));
 			localStorage.setItem('token', data.token);
 		},
 		isLoggedIn: function() {

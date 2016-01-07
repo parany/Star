@@ -1,5 +1,7 @@
 starApp.controller('agendaController', function($scope, $location, accountService, genericService, activityService, starTable) {
     $scope.page.title = 'Agenda - Home page';
+    
+    var allAgendas = [];
     $scope.datas = [];
     $scope.activity = {};
     $scope.activity.operations = [];
@@ -8,10 +10,9 @@ starApp.controller('agendaController', function($scope, $location, accountServic
     $scope.tableOperations = starTable.create($scope, 'activity.operations');
 
     genericService.getList('agendas', accountService.getUserName()).then(function(data) {
-        $scope.datas = data;
-        $scope.tableSearch.settings().total = $scope.datas.length;
-        $scope.tableSearch.parameters().page = 1;
-        $scope.tableSearch.reload();
+        allAgendas = data;
+        $scope.datas = allAgendas;
+        reloadTable();
     });
 
     activityService.getActivities('agendas', accountService.getUserName()).then(function(data) {
@@ -24,17 +25,21 @@ starApp.controller('agendaController', function($scope, $location, accountServic
     };
 
     $scope.search = function() {
-        if (!$scope.txtSearch || $scope.txtSearch.length < 1) {
-            $scope.datas = _.sortBy($scope.datas, 'DateGroup');
-            $scope.datas.reverse();
-            return;
+        if (!$scope.txtSearch) {
+            $scope.datas = allAgendas;
+
+        } else {
+            var regSearch = new RegExp($scope.txtSearch, 'i');
+            $scope.datas = allAgendas.filter(function(agenda) {
+                return regSearch.test(agenda.Title) || regSearch.test(agenda.Text);
+            });
         }
-        genericService.search('agendas', accountService.getUserName(), $scope.txtSearch).then(function(data) {
-            $scope.datas = _.sortBy(data, 'DateGroup');
-            $scope.datas.reverse();
-            $scope.tableSearch.settings().total = $scope.datas.length;
-            $scope.tableSearch.parameters().page = 1;
-            $scope.tableSearch.reload();
-        });
+        reloadTable();
     };
+
+    function reloadTable() {
+        $scope.tableSearch.settings().total = $scope.datas.length;
+        $scope.tableSearch.parameters().page = 1;
+        $scope.tableSearch.reload();
+    }
 });

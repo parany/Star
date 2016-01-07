@@ -48,7 +48,9 @@ starApp.factory('genericService', function($http, userActionService) {
 				},
 				projection: {
 					Title: 1,
-					Date: 1
+					Date: 1,
+					Text: 1,
+					Content: 1
 				}
 			}).then(function(list) {
 				list.data.forEach(function(d) {
