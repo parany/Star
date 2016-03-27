@@ -5,19 +5,20 @@
     $scope.dico = {};
     $scope.dico.Meaning = '';
     $scope.illustrations = [];
+    $scope.culturesId = [];
 
     var id = $routeParams.id;
     genericService.findAll('cultures').then(function(data) {
         $scope.cultures = data.data;
         $scope.dico.To = $scope.cultures[2];
         $scope.dico.From = $scope.cultures[1];
-        if (id !== undefined) {
+        $scope.culturesId = _.pluck($scope.cultures, '_id');
+        if (id) {
             return genericService.findOne('dicos', id).then(function(data) {
                 $scope.dico = data.data;
                 $scope.page.title += 'Edit - ' + $scope.dico.Text;
-                var culturesId = _.pluck($scope.cultures, '_id');
-                $scope.dico.To = $scope.cultures[culturesId.indexOf($scope.dico.ToId)];
-                $scope.dico.From = $scope.cultures[culturesId.indexOf($scope.dico.FromId)];
+                $scope.dico.To = $scope.cultures[$scope.culturesId.indexOf($scope.dico.ToId)];
+                $scope.dico.From = $scope.cultures[$scope.culturesId.indexOf($scope.dico.FromId)];
                 $scope.illustrations = $scope.dico.Illustrations.map(function(i) {
                     return {
                         Text: i
@@ -79,6 +80,24 @@
     var currentIllustration = '';
     $scope.startEditIllustration = function(model) {
         currentIllustration = model.Text;
+    };
+
+    $scope.loadInfo = function() {
+        if (!$scope.dico.Text || !$scope.culturesId.length) {
+            return;
+        }
+        genericService.find('dicos', {
+            'Text': $scope.dico.Text
+        }).success(function(data) {
+            if (data.length) {
+                console.log(data);
+                $scope.otherMeanings = data;
+                $scope.otherMeanings.forEach(function(item) {
+                    item.To = $scope.cultures[$scope.culturesId.indexOf(item.ToId)];
+                    item.From = $scope.cultures[$scope.culturesId.indexOf(item.FromId)];
+                });
+            }
+        });
     };
 
     $scope.save = function() {
