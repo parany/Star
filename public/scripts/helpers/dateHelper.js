@@ -3,7 +3,7 @@
 };
 
 Date.prototype.toCompareString = function() {
-	return parseInt(this.getMonth() + 1).format() + '/' + this.getDate().format() + '/' + this.getFullYear();
+	return this.getDate().format() + '/' + parseInt(this.getMonth() + 1).format() + '/' + this.getFullYear();
 };
 
 Date.prototype.getFirstMsOfDay = function() {
@@ -52,17 +52,17 @@ Date.prototype.getElapsed = function() {
 	var now = new Date(new Date() - this);
 	var str = '';
 	if (now.getMonth()) {
-		str += `${now.getMonth() + 1}M `; 
+		str += `${now.getMonth() + 1}M `;
 	}
 	if (now.getDate() - 1) {
-		str += `${now.getDate() - 1}d `; 
+		str += `${now.getDate() - 1}d `;
 	}
-	if (now.getHours() -3) {
-		str += `${now.getHours() -3}h `; 
+	if (now.getHours() - 3) {
+		str += `${now.getHours() -3}h `;
 	}
 	if (now.getMinutes()) {
-		str += `${now.getMinutes()}min `; 
+		str += `${now.getMinutes()}min `;
 	}
-	str += `${now.getSeconds()}sec `; 
+	str += `${now.getSeconds()}sec `;
 	return str;
 };
