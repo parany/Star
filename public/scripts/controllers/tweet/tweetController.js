@@ -1,4 +1,4 @@
-﻿starApp.controller('tweetController', function($scope, $location, accountService, genericService, tweetService, activityService, starTable) {
+﻿starApp.controller('tweetController', function($scope, $cookieStore, $location, accountService, genericService, tweetService, activityService, starTable) {
     $scope.page.title = 'Tweet - Home page';
 
     var allTweets = [];
@@ -12,6 +12,8 @@
     tweetService.getList('tweets', accountService.getUserName(), 'Type').then(function(data) {
         allTweets = data;
         $scope.datas = allTweets;
+        $scope.txtSearch = $cookieStore.get('lastTweetSearch');
+        $scope.search();
         reloadTable();
     });
 
@@ -25,6 +27,7 @@
     };
 
     $scope.search = function() {
+        $cookieStore.put('lastTweetSearch', $scope.txtSearch);
         if (!$scope.txtSearch) {
             $scope.datas = allTweets;
 

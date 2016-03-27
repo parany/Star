@@ -1,4 +1,4 @@
-starApp.controller('newController', function($scope, $routeParams, $filter, $http, $location, activityService, accountService, starTable, genericService) {
+starApp.controller('newController', function($scope, $routeParams, $filter, $http, $cookieStore, $location, activityService, accountService, starTable, genericService) {
     $scope.page.title = 'New - Home page';
 
     var allNews =  [];
@@ -12,6 +12,8 @@ starApp.controller('newController', function($scope, $routeParams, $filter, $htt
     genericService.getList('news', accountService.getUserName()).then(function(data) {
         allNews = data;
         $scope.datas = allNews;
+        $scope.txtSearch = $cookieStore.get('lastNewSearch');
+        $scope.search();
         reloadTable();
     });
 
@@ -25,6 +27,7 @@ starApp.controller('newController', function($scope, $routeParams, $filter, $htt
     };
 
     $scope.search = function() {
+        $cookieStore.put('lastNewSearch', $scope.txtSearch);
         if (!$scope.txtSearch) {
             $scope.datas = allNews;
 

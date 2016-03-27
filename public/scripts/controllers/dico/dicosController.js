@@ -1,4 +1,4 @@
-﻿starApp.controller('dicosController', function($scope, $location, genericService, starTable) {
+﻿starApp.controller('dicosController', function($scope, $cookieStore, $location, genericService, starTable) {
     var allDicos = [];
     $scope.cultures = [];
     $scope.dico = {};
@@ -13,14 +13,24 @@
 
     genericService.findAll('cultures').then(function(cultures) {
         $scope.cultures = cultures.data;
-        $scope.cultures.unshift({ 'Description': 'All', _id: -1 });
-        $scope.filter.To = $scope.cultures[0];
-        $scope.filter.From = $scope.cultures[0];
+        $scope.cultures.unshift({
+            'Description': 'All',
+            _id: -1
+        });
+        var indexFrom = 0;
+        var indexTo = 0;
+        $scope.filter = $cookieStore.get('dicosFilter') || {};
+        if (!_.isEmpty($scope.filter)) {
+            indexFrom = $scope.filter.From;
+            indexTo = $scope.filter.To;
+        }
+        $scope.filter.To = $scope.cultures[indexTo];
+        $scope.filter.From = $scope.cultures[indexFrom];
         return genericService.findAll('dicos');
     }).then(function(dicos) {
         allDicos = dicos.data;
         $scope.dicos = dicos.data;
-        updateDicosTable();
+        $scope.search();
     });
 
     $scope.changeLabelSelected = function(model) {
@@ -56,10 +66,17 @@
     };
 
     $scope.search = function() {
+        $cookieStore.put('dicosFilter', {
+            Text: $scope.filter.Text,
+            From: _.findIndex($scope.cultures, {
+                _id: $scope.filter.From._id
+            }),
+            To: _.findIndex($scope.cultures, {
+                _id: $scope.filter.To._id
+            })
+        });
         $scope.dicos = _.filter(allDicos, function(d) {
-            return ($scope.filter.To._id === -1 || $scope.filter.To._id === d.ToId) 
-                    && ($scope.filter.From._id === -1 || $scope.filter.From._id === d.FromId) 
-                    && (!$scope.filter.Text || $scope.filter.Text === d.Text.substring(0, $scope.filter.Text.length));
+            return ($scope.filter.To._id === -1 || $scope.filter.To._id === d.ToId) && ($scope.filter.From._id === -1 || $scope.filter.From._id === d.FromId) && (!$scope.filter.Text || $scope.filter.Text === d.Text.substring(0, $scope.filter.Text.length));
         });
         updateDicosTable();
     };
