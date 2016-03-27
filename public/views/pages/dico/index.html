@@ -14,7 +14,19 @@
             <input type="text" placeholder="Text" class="form-control" ng-model="filter.Text" ng-change="search()" required />
         </div>
     </div>
-    <span class="badge">{{ dicos.length }}</span> items <br/><br/>
+    <div class="form-group">
+        <label>
+            <input type="checkbox" ng-model="includeMeaning" ng-change="search()"> Include meaning
+        </label>
+    </div>
+    <div class="form-group">
+        <label>
+            <input type="checkbox" ng-model="includeIllustration" ng-change="search()"> Include illustrat.
+        </label>
+    </div>
+    <span class="badge">{{ dicos.length }}</span> items
+    <br/>
+    <br/>
     <div class="resizable">
         <table ng-table="tableDico" class="table ng-table-rowselected">
             <thead>
