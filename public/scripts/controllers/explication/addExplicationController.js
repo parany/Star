@@ -40,7 +40,7 @@ starApp.controller('addExplicationController', function($scope, $routeParams, $l
     });
 
     $scope.changeDate = function() {
-        genericService.getByDate('explications', accountService.getUserName(), $scope.explication.Date).success(function(data) {
+        genericService.getByDate('explications', $scope.explication.Date).success(function(data) {
             $scope.data = data;
             if (id !== undefined) {
                 $scope.data = _.reject($scope.data, { _id: id });

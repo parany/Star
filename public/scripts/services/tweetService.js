@@ -1,4 +1,4 @@
-starApp.factory('tweetService', function($http, userActionService, genericService) {
+starApp.factory('tweetService', function($http, genericService) {
 	function getList(collectionName, author) {
 		var projection = {
 			Title: 1,

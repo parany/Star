@@ -27,8 +27,8 @@ starApp.factory('genericService', function($http, userActionService) {
 		return promise;
 	}
 
-	function getByDate(collectionName, userName, date) {
-		return $http.get(`/${collectionName}/getByDate/${userName}/${date}`);
+	function getByDate(collectionName, date) {
+		return $http.get(`/${collectionName}/getByDate/${date}`);
 	}
 
 	function find(collectionName, filter) {

@@ -1,9 +1,7 @@
-/* jshint node: true */
-
 var router = require('express').Router();
 var genericLogic = require('../logic/genericLogic.js');
 
-router.get('/summary/:author', genericLogic.getTotal);
+router.get('/summary', genericLogic.getTotal);
 router.get('/:collectionName/findAll', genericLogic.findAll);
 router.post('/:collectionName/find', genericLogic.find);
 router.get('/:collectionName/findOne/:id', genericLogic.findOne);
