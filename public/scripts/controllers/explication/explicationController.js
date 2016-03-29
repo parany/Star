@@ -17,7 +17,7 @@ starApp.controller('explicationController', function($scope, $cookieStore, $rout
         reloadTable();
     });
 
-    activityService.getActivities('explications', accountService.getUserName()).then(function(data) {
+    activityService.getActivities('explications').then(function(data) {
         $scope.activity = data;
         $scope.tableOperations.reload();
     });

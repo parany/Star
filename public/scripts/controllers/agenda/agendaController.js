@@ -17,7 +17,7 @@ starApp.controller('agendaController', function($scope, $cookieStore, $location,
         reloadTable();
     });
 
-    activityService.getActivities('agendas', accountService.getUserName()).then(function(data) {
+    activityService.getActivities('agendas').then(function(data) {
         $scope.activity = data;
         $scope.tableOperations.reload();
     });
