@@ -21,7 +21,8 @@
             }).map(function(t) {
                 return t._id;
             }),
-            'VerseId': $routeParams.id
+            'VerseId': $routeParams.id,
+            'CreatedBy': accountService.getUserName()
         };
         genericService.insert('notes', data).success(function() {
             $location.path('/');

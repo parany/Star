@@ -17,7 +17,7 @@ starApp.controller('newController', function($scope, $routeParams, $filter, $htt
         reloadTable();
     });
 
-    activityService.getActivities('news').then(function(data) {
+    activityService.getActivities('news', accountService.getUserName()).then(function(data) {
         $scope.activity = data;
         $scope.tableOperations.reload();
     });

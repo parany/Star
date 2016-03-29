@@ -33,7 +33,6 @@ exports.update = function(req, res) {
 exports.insert = function(req, res) {
 	var obj = req.body;
 	obj.CreatedOn = new Date().getTime();
-	obj.CreatedBy = req.user.UserName;
 	repository.insert(req.params.collectionName, obj).then(function(ret) {
 		res.json(ret);
 	});
@@ -62,7 +61,7 @@ exports.getActivities = function(req, res) {
 	}
 	repository.find('userActions', {
 		collection: req.params.collectionName,
-		createdBy: req.user.UserName,
+		createdBy: req.params.author,
 		sort: {
 			date: -1
 		},
@@ -70,7 +69,7 @@ exports.getActivities = function(req, res) {
 	}).then(function(docs) {
 		operations = docs;
 		return repository.find(req.params.collectionName, {
-			CreatedBy: req.user.UserName,
+			CreatedBy: req.params.author,
 			sort: {
 				Date: 1
 			}
@@ -192,7 +191,7 @@ exports.getAllActivities = function(req, res) {
 	repository.group('userActions', {
 			operation: 1
 		}, {
-			createdBy: req.user.UserName
+			createdBy: req.params.author
 		},
 		function(curr, result) {
 			result.total++;
@@ -209,7 +208,7 @@ exports.getTotal = function(req, res) {
 	var tasks = [];
 	articles.forEach(function(article) {
 		var task = repository.count(article, {
-			CreatedBy: req.user.UserName
+			CreatedBy: req.params.author
 		});
 		tasks.push(task);
 	});

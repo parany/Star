@@ -28,7 +28,7 @@
         $scope.page.title += 'Add';
     }
 
-    activityService.getActivities('tweets').then(function(data) {
+    activityService.getActivities('tweets', accountService.getUserName()).then(function(data) {
         $scope.activity = data;
         $scope.tableOperations.reload();
     });

@@ -10,7 +10,7 @@ exports.getByDate = function(req, res) {
     var firstMsOfDay = date.getFirstMsOfDay();
     var lastMsOfDay = date.getLastMsOfDay();
     repository.find('explications', {
-        CreatedBy: req.user.UserName,
+        CreatedBy: req.params.author,
         sort: {
             Date: 1
         },

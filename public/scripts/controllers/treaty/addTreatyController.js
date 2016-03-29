@@ -36,7 +36,7 @@ starApp.controller('addTreatyController', function($scope, $routeParams, $locati
     });
 
     $scope.changeDate = function() {
-        genericService.getByDate('treaties', $scope.Date).success(function(data) {
+        genericService.getByDate('treaties', accountService.getUserName(), $scope.Date).success(function(data) {
             $scope.data = data;
             if (id !== undefined) {
                 $scope.data = $scope.data.filter(function(t) {

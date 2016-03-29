@@ -1,6 +1,6 @@
-﻿starApp.controller('tabController', function($scope, $rootScope, noteService) {
+﻿starApp.controller('tabController', function($scope, $rootScope, noteService, accountService) {
 	$rootScope.$on('read.changeSelect', function(event, id) {
-		noteService.getNotes(id).success(function(data) {
+		noteService.getNotes(accountService.getUserName(), id).success(function(data) {
 			$scope.dtoNote = data;
 		});
 	});

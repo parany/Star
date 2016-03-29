@@ -17,7 +17,7 @@ starApp.controller('treatyController', function($scope, $cookieStore, $routePara
         reloadTable();
     });
 
-    activityService.getActivities('treaties').then(function(data) {
+    activityService.getActivities('treaties', accountService.getUserName()).then(function(data) {
         $scope.activity = data;
         $scope.tableOperations.reload();
     });

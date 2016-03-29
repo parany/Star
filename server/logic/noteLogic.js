@@ -23,10 +23,10 @@ exports.getNotesByVerseId = function(req, res) {
             }
         }
         var myNote = _.findWhere(notes, {
-            CreatedBy: req.user.UserName
+            CreatedBy: req.params.author
         });
         var otherNotes = notes.filter(function(note) {
-            return note.CreatedBy !== req.user.UserName;
+            return note.CreatedBy !== req.params.author;
         });
         var results = {
             MyNote: myNote,
@@ -69,7 +69,7 @@ exports.search = function(req, res) {
     var notes = [],
         verses = [];
     repository.find('notes', {
-        CreatedBy: req.user.UserName,
+        CreatedBy: req.params.author,
         $or: [{
             Description: {
                 $regex: req.params.text
