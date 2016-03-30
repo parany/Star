@@ -8,7 +8,7 @@ router.post('/:collectionName/find', genericLogic.find);
 router.get('/:collectionName/findOne/:id', genericLogic.findOne);
 router.post('/:collectionName/update', genericLogic.update);
 router.post('/:collectionName/insert', genericLogic.insert);
-router.get('/:collectionName/getByDate/:author/:date', genericLogic.getByDate);
+router.get('/:collectionName/getByDate/:date', genericLogic.getByDate);
 router.get('/:collectionName/delete/:id', genericLogic.delete);
 router.post('/:collectionName/search/:text', genericLogic.search);
 router.get('/:collectionName/getArticlesInTheSameDate/:date', genericLogic.getArticlesInTheSameDate);

@@ -33,7 +33,7 @@ starApp.controller('addNewController', function($scope, $routeParams, $location,
 
     $scope.changeDate = function() {
         if ($scope.new.Date === undefined || $scope.new.Date === '') return;
-        genericService.getByDate('news', accountService.getUserName(), $scope.new.Date).success(function(data) {
+        genericService.getByDate('news', $scope.new.Date).success(function(data) {
             $scope.news = data;
             if (id !== undefined) {
                 $scope.news = _.reject($scope.news, { _id: id });
@@ -72,14 +72,12 @@ starApp.controller('addNewController', function($scope, $routeParams, $location,
     $scope.save = function() {
         var data = JSON.parse(JSON.stringify($scope.new));
         data.Date = new Date($scope.new.Date).getTime();
-        data.CreatedBy = accountService.getUserName();
         var method;
         if (id !== undefined) {
             data.UpdatedBy = accountService.getUserName();
             data._id = id;
             method = 'updateWithUserActions';
         } else {
-            data.CreatedBy = accountService.getUserName();
             method = 'insertWithUserActions';
         }
         var func = genericService[method].call({}, 'news', data);

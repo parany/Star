@@ -32,6 +32,7 @@ exports.update = function(req, res) {
 
 exports.insert = function(req, res) {
 	var obj = req.body;
+	obj.CreatedBy = req.user.UserName;
 	obj.CreatedOn = new Date().getTime();
 	repository.insert(req.params.collectionName, obj).then(function(ret) {
 		res.json(ret);
@@ -43,7 +44,7 @@ exports.getByDate = function(req, res) {
 	var firstMsOfDay = date.getFirstMsOfDay();
 	var lastMsOfDay = date.getLastMsOfDay();
 	repository.find(req.params.collectionName, {
-		CreatedBy: req.params.author,
+		CreatedBy: req.user.UserName,
 		Date: {
 			$gte: firstMsOfDay,
 			$lte: lastMsOfDay

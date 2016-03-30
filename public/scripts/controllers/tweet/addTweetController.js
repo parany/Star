@@ -42,7 +42,6 @@
             data._id = id;
             method = 'updateWithUserActions';
         } else {
-            data.CreatedBy = accountService.getUserName();
             method = 'insertWithUserActions';
         }
         var func = genericService[method].call({}, 'tweets', data);

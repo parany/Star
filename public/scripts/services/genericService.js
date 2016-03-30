@@ -19,7 +19,7 @@ starApp.factory('genericService', function($http, userActionService) {
 			var id;
 			insert(collectionName, data).then(function(ret) {
 				id = ret.data[0]._id;
-				return userActionService.insert(collectionName, data.Title, data.CreatedBy);
+				return userActionService.insert(collectionName, data.Title);
 			}).then(function() {
 				resolve(id);
 			});
@@ -27,8 +27,8 @@ starApp.factory('genericService', function($http, userActionService) {
 		return promise;
 	}
 
-	function getByDate(collectionName, userName, date) {
-		return $http.get(`/${collectionName}/getByDate/${userName}/${date}`);
+	function getByDate(collectionName, date) {
+		return $http.get(`/${collectionName}/getByDate/${date}`);
 	}
 
 	function find(collectionName, filter) {
