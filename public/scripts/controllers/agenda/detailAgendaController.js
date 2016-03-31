@@ -23,8 +23,7 @@ starApp.controller('detailAgendaController', function($scope, $routeParams, $loc
         if (response) {
             var data = {
                 'id': model._id,
-                'title': model.Title,
-                'author': accountService.getUserName()
+                'title': model.Title
             };
             genericService.removeWithUserActions('agendas', data).then(function() {
                 $location.path('/agendas');

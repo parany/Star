@@ -27,7 +27,7 @@ starApp.factory('activityService', function($http) {
 		var promise = new Promise(function(resolve) {
 			$http.get(`/activities/${article}/250`).success(function(data) {
 				data.operations.forEach(function(value) {
-					value.date = new Date(value.Date);
+					value.date = new Date(value.date);
 					if (value.title && value.title.length > 40) {
 						value.title = value.title.slice(0, 40) + '...';
 					}

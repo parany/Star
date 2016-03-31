@@ -62,31 +62,6 @@ starApp.factory('genericService', function($http, userActionService) {
 		return promise;
 	}
 
-	function search(collectionName, author, text) {
-		var promise = new Promise(function(resolve) {
-			return $http({
-				url: `${collectionName}/search/${text}`,
-				method: 'POST',
-				data: {
-					'filters': ['Title', 'Text'],
-					'projection': {
-						Date: 1,
-						Title: 1,
-						Text: 1
-					}
-				}
-			}).then(function(list) {
-				list.data.forEach(function(d) {
-					d.CreatedBy = author;
-					d.Date = new Date(d.Date);
-					d.DateGroup = d.Date.toCompareString();
-				});
-				resolve(list.data);
-			});
-		});
-		return promise;
-	}
-
 	function getDetail(collectionName, id) {
 		var promise = new Promise(function(resolve) {
 			var result = {};
@@ -146,7 +121,7 @@ starApp.factory('genericService', function($http, userActionService) {
 	function removeWithUserActions(collectionName, data) {
 		var promise = new Promise(function(resolve) {
 			remove(collectionName, data.id).then(function() {
-				return userActionService.remove(collectionName, data.title, data.author);
+				return userActionService.remove(collectionName, data.title);
 			}).then(function() {
 				resolve(data.id);
 			});
@@ -186,7 +161,6 @@ starApp.factory('genericService', function($http, userActionService) {
 		insert: insert,
 		insertWithUserActions: insertWithUserActions,
 		find: find,
-		search: search,
 		getDetail: getDetail,
 		getList: getList,
 		remove: remove,
