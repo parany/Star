@@ -1,14 +1,19 @@
 ﻿var ObjectId = require('mongodb').ObjectID;
 
-Object.prototype.toAnyFilter = function () {
+Object.prototype.toAnyFilter = function (collectionName, author) {
+    var collectionNames = ['agendas', 'explications', 'treaties', 'news', 'tweets'];
     var filters = this;
-    for (var filter in filters) {
+    if (collectionNames.indexOf(collectionName) > -1) {
+        filters.CreatedBy = author;
+        filters.projection.CreatedBy = 1;
+    }
+    Object.keys(filters).forEach(function(filter) {
         if (filter.indexOf('Id') > 0 && filter !== 'VerseId') {
             filters[filter] = new ObjectId(filters[filter]);
         }
         if (filters[filter] instanceof Object) {
             var subFilters = filters[filter];
-            for (var subFilter in subFilters) {
+            Object.keys(subFilters).forEach(function(subFilter) {
                 if (subFilter === 'lte') {
                     subFilters.$lte = subFilters[subFilter];
                     delete subFilters.lte;
@@ -21,8 +26,8 @@ Object.prototype.toAnyFilter = function () {
                     subFilters.$regex = subFilters[subFilter];
                     delete subFilters.regex;
                 }
-            }
+            });
         }
-    }
+    });
     return filters;
 };

@@ -9,7 +9,7 @@
     $scope.tableSearch = starTable.create($scope, 'datas', true);
     $scope.tableOperations = starTable.create($scope, 'activity.operations');
 
-    tweetService.getList('tweets', accountService.getUserName(), 'Type').then(function(data) {
+    tweetService.getList('tweets', 'Type').then(function(data) {
         allTweets = data;
         $scope.datas = allTweets;
         $scope.txtSearch = $cookieStore.get('lastTweetSearch');

@@ -9,7 +9,7 @@ starApp.controller('treatyController', function($scope, $cookieStore, $routePara
     $scope.tableSearch = starTable.create($scope, 'datas', true);
     $scope.tableOperations = starTable.create($scope, 'activity.operations');
 
-    genericService.getList('treaties', accountService.getUserName()).then(function(data) {
+    genericService.getList('treaties').then(function(data) {
         allTreaties = data;
         $scope.datas = allTreaties;
         $scope.txtSearch = $cookieStore.get('lastTreatySearch');

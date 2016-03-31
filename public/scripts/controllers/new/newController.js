@@ -9,7 +9,7 @@ starApp.controller('newController', function($scope, $routeParams, $filter, $htt
     $scope.tableSearch = starTable.create($scope, 'datas', true);
     $scope.tableOperations = starTable.create($scope, 'activity.operations');
 
-    genericService.getList('news', accountService.getUserName()).then(function(data) {
+    genericService.getList('news').then(function(data) {
         allNews = data;
         $scope.datas = allNews;
         $scope.txtSearch = $cookieStore.get('lastNewSearch');

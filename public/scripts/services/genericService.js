@@ -39,10 +39,9 @@ starApp.factory('genericService', function($http, userActionService) {
 		});
 	}
 
-	function getList(collectionName, author) {
+	function getList(collectionName) {
 		var promise = new Promise(function(resolve) {
 			return find(collectionName, {
-				CreatedBy: author,
 				sort: {
 					Date: -1
 				},
@@ -54,7 +53,6 @@ starApp.factory('genericService', function($http, userActionService) {
 				}
 			}).then(function(list) {
 				list.data.forEach(function(d) {
-					d.CreatedBy = author;
 					d.Date = new Date(d.Date);
 					d.DateGroup = d.Date.toCompareString();
 				});

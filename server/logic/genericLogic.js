@@ -10,8 +10,9 @@ exports.findAll = function(req, res) {
 };
 
 exports.find = function(req, res) {
-	var filters = req.body.toAnyFilter();
-	repository.find(req.params.collectionName, filters).then(function(docs) {
+	var collectionName = req.params.collectionName;
+	var filters = req.body.toAnyFilter(collectionName, req.user.UserName);
+	repository.find(collectionName, filters).then(function(docs) {
 		res.send(docs);
 	});
 };

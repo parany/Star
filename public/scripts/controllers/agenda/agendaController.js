@@ -9,7 +9,7 @@ starApp.controller('agendaController', function($scope, $cookieStore, $location,
     $scope.tableSearch = starTable.create($scope, 'datas', true);
     $scope.tableOperations = starTable.create($scope, 'activity.operations');
 
-    genericService.getList('agendas', accountService.getUserName()).then(function(data) {
+    genericService.getList('agendas').then(function(data) {
         allAgendas = data;
         $scope.datas = allAgendas;
         $scope.txtSearch = $cookieStore.get('lastAgendaSearch');

@@ -9,7 +9,7 @@ starApp.controller('explicationController', function($scope, $cookieStore, $rout
     $scope.tableSearch = starTable.create($scope, 'datas', true);
     $scope.tableOperations = starTable.create($scope, 'activity.operations');
 
-    genericService.getList('explications', accountService.getUserName()).then(function(data) {
+    genericService.getList('explications').then(function(data) {
         allExplications = data;
         $scope.datas = allExplications;
         $scope.txtSearch = $cookieStore.get('lastExplicationSearch');
