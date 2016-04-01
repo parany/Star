@@ -26,7 +26,10 @@ exports.findOne = function(req, res) {
 };
 
 exports.update = function(req, res) {
-	repository.save(req.params.collectionName, req.body).then(function(ret) {
+	var obj = req.body;
+	obj.UpatedBy = req.user.UserName;
+	obj.UpdatedOn = new Date().getTime();
+	repository.save(req.params.collectionName, obj).then(function(ret) {
 		res.json(ret);
 	});
 };
