@@ -326,3 +326,12 @@ span.status.inactive {
 span.status.active {
     border-color: green;
 }
+
+.other-meaning {
+    margin-top: 0;
+    font-weight: bold;
+}
+
+.other-meanings .description {
+    text-decoration: underline;
+}

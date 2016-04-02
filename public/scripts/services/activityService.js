@@ -1,7 +1,7 @@
 starApp.factory('activityService', function($http) {
-	function getSummary(userName) {
+	function getSummary() {
 		var promise = new Promise(function(resolve) {
-			$http.get('/summary/' + userName).success(function(data) {
+			$http.get('/summary').success(function(data) {
 				var obj = {};
 				obj.labels = _.pluck(data, 'article');
 				obj.data = _.pluck(data, 'total');
@@ -11,9 +11,9 @@ starApp.factory('activityService', function($http) {
 		return promise;
 	}
 
-	function getAllActivities(userName) {
+	function getAllActivities() {
 		var promise = new Promise(function(resolve) {
-			$http.get(`/activities/${userName}`).success(function(data) {
+			$http.get(`/activities`).success(function(data) {
 				var obj = {};
 				obj.labels = _.pluck(data, 'operation');
 				obj.data = _.pluck(data, 'total');
@@ -23,9 +23,9 @@ starApp.factory('activityService', function($http) {
 		return promise;
 	}
 
-	function getActivities(article, userName) {
+	function getActivities(article) {
 		var promise = new Promise(function(resolve) {
-			$http.get(`/activities/${article}/${userName}/250`).success(function(data) {
+			$http.get(`/activities/${article}/250`).success(function(data) {
 				data.operations.forEach(function(value) {
 					value.date = new Date(value.date);
 					if (value.title && value.title.length > 40) {

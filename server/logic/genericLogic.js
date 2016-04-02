@@ -10,8 +10,9 @@ exports.findAll = function(req, res) {
 };
 
 exports.find = function(req, res) {
-	var filters = req.body.toAnyFilter();
-	repository.find(req.params.collectionName, filters).then(function(docs) {
+	var collectionName = req.params.collectionName;
+	var filters = req.body.toAnyFilter(collectionName, req.user.UserName);
+	repository.find(collectionName, filters).then(function(docs) {
 		res.send(docs);
 	});
 };
@@ -25,13 +26,17 @@ exports.findOne = function(req, res) {
 };
 
 exports.update = function(req, res) {
-	repository.save(req.params.collectionName, req.body).then(function(ret) {
+	var obj = req.body;
+	obj.UpdatedBy = req.user.UserName;
+	obj.UpdatedOn = new Date().getTime();
+	repository.save(req.params.collectionName, obj).then(function(ret) {
 		res.json(ret);
 	});
 };
 
 exports.insert = function(req, res) {
 	var obj = req.body;
+	obj.CreatedBy = req.user.UserName;
 	obj.CreatedOn = new Date().getTime();
 	repository.insert(req.params.collectionName, obj).then(function(ret) {
 		res.json(ret);
@@ -43,7 +48,7 @@ exports.getByDate = function(req, res) {
 	var firstMsOfDay = date.getFirstMsOfDay();
 	var lastMsOfDay = date.getLastMsOfDay();
 	repository.find(req.params.collectionName, {
-		CreatedBy: req.params.author,
+		CreatedBy: req.user.UserName,
 		Date: {
 			$gte: firstMsOfDay,
 			$lte: lastMsOfDay
@@ -61,7 +66,7 @@ exports.getActivities = function(req, res) {
 	}
 	repository.find('userActions', {
 		collection: req.params.collectionName,
-		createdBy: req.params.author,
+		CreatedBy: req.user.UserName,
 		sort: {
 			date: -1
 		},
@@ -69,7 +74,7 @@ exports.getActivities = function(req, res) {
 	}).then(function(docs) {
 		operations = docs;
 		return repository.find(req.params.collectionName, {
-			CreatedBy: req.params.author,
+			CreatedBy: req.user.UserName,
 			sort: {
 				Date: 1
 			}
@@ -191,7 +196,7 @@ exports.getAllActivities = function(req, res) {
 	repository.group('userActions', {
 			operation: 1
 		}, {
-			createdBy: req.params.author
+			CreatedBy: req.user.UserName
 		},
 		function(curr, result) {
 			result.total++;
@@ -208,7 +213,7 @@ exports.getTotal = function(req, res) {
 	var tasks = [];
 	articles.forEach(function(article) {
 		var task = repository.count(article, {
-			CreatedBy: req.params.author
+			CreatedBy: req.user.UserName
 		});
 		tasks.push(task);
 	});

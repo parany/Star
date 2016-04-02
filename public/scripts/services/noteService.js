@@ -3,12 +3,12 @@ starApp.factory('noteService', function($http) {
 		return $http.get('/notes/getNoteById/' + noteId);
 	}
 
-	function getNotes(user, verseId) {
-		return $http.get('/notes/getNotesByVerseId/' + user + '/' + verseId);
+	function getNotes(verseId) {
+		return $http.get('/notes/getNotesByVerseId/' + verseId);
 	}
 
-	function search(user, text) {
-		var url = '/notes/search/' + user;
+	function search(text) {
+		var url = '/notes/search';
         if (text) {
             url += '/' + text;
         }

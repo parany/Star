@@ -1,4 +1,4 @@
-starApp.controller('addTreatyController', function($scope, $routeParams, $location, starTable, genericService, accountService) {
+starApp.controller('addTreatyController', function($scope, $routeParams, $location, starTable, genericService) {
     $scope.page.title = 'Treaty - ';
 
     var id = $routeParams.id;
@@ -36,7 +36,7 @@ starApp.controller('addTreatyController', function($scope, $routeParams, $locati
     });
 
     $scope.changeDate = function() {
-        genericService.getByDate('treaties', accountService.getUserName(), $scope.Date).success(function(data) {
+        genericService.getByDate('treaties', $scope.Date).success(function(data) {
             $scope.data = data;
             if (id !== undefined) {
                 $scope.data = $scope.data.filter(function(t) {
@@ -64,7 +64,6 @@ starApp.controller('addTreatyController', function($scope, $routeParams, $locati
     $scope.save = function() {
         var data = JSON.parse(JSON.stringify($scope.treaty));
         data.Date = new Date($scope.Date).getTime();
-        data.CreatedBy = accountService.getUserName();
         data.TagIdList = $scope.tags.filter(function(t) {
             return t.Selected === true;
         }).map(function(t) {
@@ -72,11 +71,9 @@ starApp.controller('addTreatyController', function($scope, $routeParams, $locati
         });
         var method;
         if (id !== undefined) {
-            data.UpdatedBy = accountService.getUserName();
             data._id = id;
             method = 'updateWithUserActions';
         } else {
-            data.CreatedBy = accountService.getUserName();
             method = 'insertWithUserActions';
         }
         var func = genericService[method].call({}, 'treaties', data);

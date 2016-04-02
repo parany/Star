@@ -1,4 +1,4 @@
-﻿starApp.controller('editAgendaController', function($scope, $routeParams, $location, genericService, accountService, starTable) {
+﻿starApp.controller('editAgendaController', function($scope, $routeParams, $location, genericService, starTable) {
     $scope.page.title = 'Agenda - Edit - ';
 
     $scope.id = $routeParams.id;
@@ -16,7 +16,7 @@
     });
 
     $scope.changeDate = function() {
-        genericService.getByDate('agendas', accountService.getUserName(), $scope.Date).success(function(data) {
+        genericService.getByDate('agendas', $scope.Date).success(function(data) {
             $scope.data = data.filter(function(d) {
                 return d._id !== $scope.id;
             });
@@ -26,7 +26,6 @@
 
     $scope.save = function() {
         var data = $scope.agenda;
-        data.UpdatedBy = accountService.getUserName();
         data._id = $scope.id;
         data.Date = new Date($scope.Date).getTime();
         genericService.updateWithUserActions('agendas', data).then(function(id) {

@@ -2,7 +2,7 @@
     <form name="addDico">
         <div class="form-group col-md-4">
             <div>
-                <input type="text" placeholder="Text" class="form-control" ng-model="dico.Text" required />
+                <input type="text" placeholder="Text" class="form-control" ng-model="dico.Text" ng-change="loadInfo()" required />
             </div>
         </div>
         <div class="form-group col-md-4">
@@ -15,12 +15,20 @@
                 <select class="form-control" ng-model="dico.To" ng-options="culture.Description for culture in cultures"></select>
             </div>
         </div>
-        <div text-angular="" ng-model="dico.Meaning" name="demo-editor" ta-text-editor-class="border-around" ta-html-editor-class="border-around">
+        <div text-angular="" ng-model="dico.Meaning" name="demo-editor" ta-text-editor-class="border-around" ta-html-editor-class="border-around" required>
         </div>
     </form>
+    <div class="other-meanings">
+        <ul>
+            <li ng-repeat="item in otherMeanings">
+                <span class="description">({{ item.From.Description }} => {{ item.To.Description }})</span>
+                <div ng-bind-html="item.Meaning" class="other-meaning"></div>
+            </li>
+        </ul>
+    </div>
     <div class="actions rigth">
         <a class="btn btn-default" ng-href="#/dicos">Go back</a>
-        <a class="btn btn-success" ng-click="save()" ng-disabled="!addDico.$valid || illustrations.length == 0">Save</a>
+        <a class="btn btn-success" ng-click="save()" ng-disabled="!addDico.$valid">Save</a>
     </div>
 </div>
 <div class="col-md-4">

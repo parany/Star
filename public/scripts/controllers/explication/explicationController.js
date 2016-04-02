@@ -1,6 +1,6 @@
-starApp.controller('explicationController', function($scope, $routeParams, $location, genericService, starTable, accountService, activityService) {
+starApp.controller('explicationController', function($scope, $cookieStore, $routeParams, $location, genericService, starTable, activityService) {
     $scope.page.title = 'Explication - Home page';
-    
+
     var allExplications = [];
     $scope.datas = [];
     $scope.activity = {};
@@ -9,13 +9,15 @@ starApp.controller('explicationController', function($scope, $routeParams, $loca
     $scope.tableSearch = starTable.create($scope, 'datas', true);
     $scope.tableOperations = starTable.create($scope, 'activity.operations');
 
-    genericService.getList('explications', accountService.getUserName()).then(function(data) {
+    genericService.getList('explications').then(function(data) {
         allExplications = data;
         $scope.datas = allExplications;
+        $scope.txtSearch = $cookieStore.get('lastExplicationSearch');
+        $scope.search();
         reloadTable();
     });
 
-    activityService.getActivities('explications', accountService.getUserName()).then(function(data) {
+    activityService.getActivities('explications').then(function(data) {
         $scope.activity = data;
         $scope.tableOperations.reload();
     });
@@ -25,6 +27,7 @@ starApp.controller('explicationController', function($scope, $routeParams, $loca
     };
 
     $scope.search = function() {
+        $cookieStore.put('lastExplicationSearch', $scope.txtSearch);
         if (!$scope.txtSearch) {
             $scope.datas = allExplications;
 

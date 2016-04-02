@@ -46,7 +46,7 @@ app.use(function(req, res, next) {
 					message: 'Failed to authenticate token.'
 				});
 			} else {
-				req.decoded = decoded;
+				req.user = decoded;
 				next();
 			}
 		});

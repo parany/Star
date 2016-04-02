@@ -1,4 +1,4 @@
-starApp.controller('treatyController', function($scope, $routeParams, $filter, $http, $location, starTable, activityService, accountService, genericService) {
+starApp.controller('treatyController', function($scope, $cookieStore, $routeParams, $filter, $http, $location, starTable, activityService, genericService) {
     $scope.page.title = 'Treaty - Home page';
 
     var allTreaties = [];
@@ -9,13 +9,15 @@ starApp.controller('treatyController', function($scope, $routeParams, $filter, $
     $scope.tableSearch = starTable.create($scope, 'datas', true);
     $scope.tableOperations = starTable.create($scope, 'activity.operations');
 
-    genericService.getList('treaties', accountService.getUserName()).then(function(data) {
+    genericService.getList('treaties').then(function(data) {
         allTreaties = data;
         $scope.datas = allTreaties;
+        $scope.txtSearch = $cookieStore.get('lastTreatySearch');
+        $scope.search();
         reloadTable();
     });
 
-    activityService.getActivities('treaties', accountService.getUserName()).then(function(data) {
+    activityService.getActivities('treaties').then(function(data) {
         $scope.activity = data;
         $scope.tableOperations.reload();
     });
@@ -25,6 +27,7 @@ starApp.controller('treatyController', function($scope, $routeParams, $filter, $
     };
 
     $scope.search = function() {
+        $cookieStore.put('lastTreatySearch', $scope.txtSearch);
         if (!$scope.txtSearch) {
             $scope.datas = allTreaties;
 

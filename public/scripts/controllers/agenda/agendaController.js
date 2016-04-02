@@ -1,6 +1,6 @@
-starApp.controller('agendaController', function($scope, $location, accountService, genericService, activityService, starTable) {
+starApp.controller('agendaController', function($scope, $cookieStore, $location, genericService, activityService, starTable) {
     $scope.page.title = 'Agenda - Home page';
-    
+
     var allAgendas = [];
     $scope.datas = [];
     $scope.activity = {};
@@ -9,13 +9,15 @@ starApp.controller('agendaController', function($scope, $location, accountServic
     $scope.tableSearch = starTable.create($scope, 'datas', true);
     $scope.tableOperations = starTable.create($scope, 'activity.operations');
 
-    genericService.getList('agendas', accountService.getUserName()).then(function(data) {
+    genericService.getList('agendas').then(function(data) {
         allAgendas = data;
         $scope.datas = allAgendas;
+        $scope.txtSearch = $cookieStore.get('lastAgendaSearch');
+        $scope.search();
         reloadTable();
     });
 
-    activityService.getActivities('agendas', accountService.getUserName()).then(function(data) {
+    activityService.getActivities('agendas').then(function(data) {
         $scope.activity = data;
         $scope.tableOperations.reload();
     });
@@ -25,9 +27,9 @@ starApp.controller('agendaController', function($scope, $location, accountServic
     };
 
     $scope.search = function() {
+        $cookieStore.put('lastAgendaSearch', $scope.txtSearch);
         if (!$scope.txtSearch) {
             $scope.datas = allAgendas;
-
         } else {
             var regSearch = new RegExp($scope.txtSearch, 'i');
             $scope.datas = allAgendas.filter(function(agenda) {

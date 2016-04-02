@@ -1,4 +1,4 @@
-﻿starApp.controller('addNoteController', function($scope, $routeParams, $location, accountService, genericService) {
+﻿starApp.controller('addNoteController', function($scope, $routeParams, $location, genericService) {
     $scope.tags = [];
     genericService.find('tags', {
         Type: 'Note'
@@ -21,8 +21,7 @@
             }).map(function(t) {
                 return t._id;
             }),
-            'VerseId': $routeParams.id,
-            'CreatedBy': accountService.getUserName()
+            'VerseId': $routeParams.id
         };
         genericService.insert('notes', data).success(function() {
             $location.path('/');

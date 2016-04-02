@@ -1,4 +1,4 @@
-﻿starApp.controller('addTweetController', function($scope, $routeParams, $location, accountService, genericService, tweetService, activityService, starTable) {
+﻿starApp.controller('addTweetController', function($scope, $routeParams, $location, genericService, tweetService, activityService, starTable) {
     $scope.page.title = 'Tweet - ';
     
     $scope.datas = [];
@@ -28,7 +28,7 @@
         $scope.page.title += 'Add';
     }
 
-    activityService.getActivities('tweets', accountService.getUserName()).then(function(data) {
+    activityService.getActivities('tweets').then(function(data) {
         $scope.activity = data;
         $scope.tableOperations.reload();
     });
@@ -38,11 +38,9 @@
         data.Date = $scope.model.Date.getTime();
         var method;
         if (id) {
-            data.UpdatedBy = accountService.getUserName();
             data._id = id;
             method = 'updateWithUserActions';
         } else {
-            data.CreatedBy = accountService.getUserName();
             method = 'insertWithUserActions';
         }
         var func = genericService[method].call({}, 'tweets', data);

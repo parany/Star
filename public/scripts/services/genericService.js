@@ -19,7 +19,7 @@ starApp.factory('genericService', function($http, userActionService) {
 			var id;
 			insert(collectionName, data).then(function(ret) {
 				id = ret.data[0]._id;
-				return userActionService.insert(collectionName, data.Title, data.CreatedBy);
+				return userActionService.insert(collectionName, data.Title);
 			}).then(function() {
 				resolve(id);
 			});
@@ -27,8 +27,8 @@ starApp.factory('genericService', function($http, userActionService) {
 		return promise;
 	}
 
-	function getByDate(collectionName, userName, date) {
-		return $http.get(`/${collectionName}/getByDate/${userName}/${date}`);
+	function getByDate(collectionName, date) {
+		return $http.get(`/${collectionName}/getByDate/${date}`);
 	}
 
 	function find(collectionName, filter) {
@@ -39,10 +39,9 @@ starApp.factory('genericService', function($http, userActionService) {
 		});
 	}
 
-	function getList(collectionName, author) {
+	function getList(collectionName) {
 		var promise = new Promise(function(resolve) {
 			return find(collectionName, {
-				CreatedBy: author,
 				sort: {
 					Date: -1
 				},
@@ -54,32 +53,6 @@ starApp.factory('genericService', function($http, userActionService) {
 				}
 			}).then(function(list) {
 				list.data.forEach(function(d) {
-					d.CreatedBy = author;
-					d.Date = new Date(d.Date);
-					d.DateGroup = d.Date.toCompareString();
-				});
-				resolve(list.data);
-			});
-		});
-		return promise;
-	}
-
-	function search(collectionName, author, text) {
-		var promise = new Promise(function(resolve) {
-			return $http({
-				url: `${collectionName}/search/${text}`,
-				method: 'POST',
-				data: {
-					'filters': ['Title', 'Text'],
-					'projection': {
-						Date: 1,
-						Title: 1,
-						Text: 1
-					}
-				}
-			}).then(function(list) {
-				list.data.forEach(function(d) {
-					d.CreatedBy = author;
 					d.Date = new Date(d.Date);
 					d.DateGroup = d.Date.toCompareString();
 				});
@@ -148,7 +121,7 @@ starApp.factory('genericService', function($http, userActionService) {
 	function removeWithUserActions(collectionName, data) {
 		var promise = new Promise(function(resolve) {
 			remove(collectionName, data.id).then(function() {
-				return userActionService.remove(collectionName, data.title, data.author);
+				return userActionService.remove(collectionName, data.title);
 			}).then(function() {
 				resolve(data.id);
 			});
@@ -171,7 +144,7 @@ starApp.factory('genericService', function($http, userActionService) {
 	function updateWithUserActions(collectionName, data) {
 		var promise = new Promise(function(resolve) {
 			update(collectionName, data).then(function() {
-				return userActionService.update(collectionName, data.Title, data.CreatedBy);
+				return userActionService.update(collectionName, data.Title);
 			}).then(function() {
 				resolve(data._id);
 			});
@@ -188,7 +161,6 @@ starApp.factory('genericService', function($http, userActionService) {
 		insert: insert,
 		insertWithUserActions: insertWithUserActions,
 		find: find,
-		search: search,
 		getDetail: getDetail,
 		getList: getList,
 		remove: remove,

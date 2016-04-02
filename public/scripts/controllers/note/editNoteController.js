@@ -1,4 +1,4 @@
-﻿starApp.controller('editNoteController', function($scope, $routeParams, $location, noteService, genericService, accountService) {
+﻿starApp.controller('editNoteController', function($scope, $routeParams, $location, noteService, genericService) {
     $scope.tags = [];
 
     noteService.getNote($routeParams.id).success(function(data) {
@@ -28,9 +28,7 @@
             }).map(function(t) {
                 return t._id;
             }),
-            'VerseId': $scope.note.VerseId,
-            'UpdatedBy': accountService.getUserName(),
-            'CreatedBy': accountService.getUserName()
+            'VerseId': $scope.note.VerseId
         };
         genericService.update('notes', data).success(function() {
             $location.path('/');

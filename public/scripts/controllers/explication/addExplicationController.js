@@ -1,4 +1,4 @@
-starApp.controller('addExplicationController', function($scope, $routeParams, $location, accountService, genericService, starTable) {
+starApp.controller('addExplicationController', function($scope, $routeParams, $location, genericService, starTable) {
     $scope.page.title = 'Explication - ';
 
     var id = $routeParams.id;
@@ -40,7 +40,7 @@ starApp.controller('addExplicationController', function($scope, $routeParams, $l
     });
 
     $scope.changeDate = function() {
-        genericService.getByDate('explications', accountService.getUserName(), $scope.explication.Date).success(function(data) {
+        genericService.getByDate('explications', $scope.explication.Date).success(function(data) {
             $scope.data = data;
             if (id !== undefined) {
                 $scope.data = _.reject($scope.data, { _id: id });
@@ -72,11 +72,9 @@ starApp.controller('addExplicationController', function($scope, $routeParams, $l
         data.VerseReadList = $scope.read.verses;
         var method;
         if (id !== undefined) {
-            data.UpdatedBy = accountService.getUserName();
             data._id = id;
             method = 'updateWithUserActions';
         } else {
-            data.CreatedBy = accountService.getUserName();
             method = 'insertWithUserActions';
         }
         var func = genericService[method].call({}, 'explications', data);

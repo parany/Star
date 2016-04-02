@@ -1,4 +1,4 @@
-starApp.controller('detailTreatyController', function($scope, $location, $routeParams, starTable, genericService, accountService) {
+starApp.controller('detailTreatyController', function($scope, $location, $routeParams, starTable, genericService) {
     $scope.page.title = 'Treaty - Detail - ';
 
     var id = $routeParams.id;
@@ -39,8 +39,7 @@ starApp.controller('detailTreatyController', function($scope, $location, $routeP
         if (response) {
             var data = {
                 'id': model._id,
-                'title': model.Title,
-                'author': accountService.getUserName()
+                'title': model.Title
             };
             genericService.removeWithUserActions('treaties', data).then(function() {
                 $location.path('/treaties');
