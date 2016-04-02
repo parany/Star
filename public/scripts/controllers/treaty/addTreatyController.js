@@ -1,4 +1,4 @@
-starApp.controller('addTreatyController', function($scope, $routeParams, $location, starTable, genericService, accountService) {
+starApp.controller('addTreatyController', function($scope, $routeParams, $location, starTable, genericService) {
     $scope.page.title = 'Treaty - ';
 
     var id = $routeParams.id;

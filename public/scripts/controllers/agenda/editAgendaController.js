@@ -16,7 +16,7 @@
     });
 
     $scope.changeDate = function() {
-        genericService.getByDate('agendas', accountService.getUserName(), $scope.Date).success(function(data) {
+        genericService.getByDate('agendas', $scope.Date).success(function(data) {
             $scope.data = data.filter(function(d) {
                 return d._id !== $scope.id;
             });
