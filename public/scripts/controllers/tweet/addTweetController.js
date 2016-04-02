@@ -38,7 +38,6 @@
         data.Date = $scope.model.Date.getTime();
         var method;
         if (id) {
-            data.UpdatedBy = accountService.getUserName();
             data._id = id;
             method = 'updateWithUserActions';
         } else {

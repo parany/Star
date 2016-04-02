@@ -144,7 +144,7 @@ starApp.factory('genericService', function($http, userActionService) {
 	function updateWithUserActions(collectionName, data) {
 		var promise = new Promise(function(resolve) {
 			update(collectionName, data).then(function() {
-				return userActionService.update(collectionName, data.Title, data.CreatedBy);
+				return userActionService.update(collectionName, data.Title);
 			}).then(function() {
 				resolve(data._id);
 			});

@@ -26,7 +26,6 @@
 
     $scope.save = function() {
         var data = $scope.agenda;
-        data.UpdatedBy = accountService.getUserName();
         data._id = $scope.id;
         data.Date = new Date($scope.Date).getTime();
         genericService.updateWithUserActions('agendas', data).then(function(id) {

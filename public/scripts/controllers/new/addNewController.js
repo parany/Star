@@ -74,7 +74,6 @@ starApp.controller('addNewController', function($scope, $routeParams, $location,
         data.Date = new Date($scope.new.Date).getTime();
         var method;
         if (id !== undefined) {
-            data.UpdatedBy = accountService.getUserName();
             data._id = id;
             method = 'updateWithUserActions';
         } else {

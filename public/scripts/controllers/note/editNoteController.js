@@ -28,9 +28,7 @@
             }).map(function(t) {
                 return t._id;
             }),
-            'VerseId': $scope.note.VerseId,
-            'UpdatedBy': accountService.getUserName(),
-            'CreatedBy': accountService.getUserName()
+            'VerseId': $scope.note.VerseId
         };
         genericService.update('notes', data).success(function() {
             $location.path('/');

@@ -108,10 +108,8 @@
         delete data.To;
         var method;
         if (id === undefined) {
-            data.CreatedBy = accountService.getUserName();
             method = 'insert';
         } else {
-            data.UpdatedBy = accountService.getUserName();
             method = 'update';
         }
         data.Illustrations = $scope.illustrations.map(function(i) {

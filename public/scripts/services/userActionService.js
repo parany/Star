@@ -17,8 +17,8 @@ starApp.factory('userActionService', function($http) {
 		return send(collectionName, title, 'Delete');
 	}
 
-	function update(collectionName, title, author) {
-		return send(collectionName, title, author, 'Edit');
+	function update(collectionName, title) {
+		return send(collectionName, title, 'Edit');
 	}
 
 	return {

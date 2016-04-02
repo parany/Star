@@ -27,7 +27,7 @@ exports.findOne = function(req, res) {
 
 exports.update = function(req, res) {
 	var obj = req.body;
-	obj.UpatedBy = req.user.UserName;
+	obj.UpdatedBy = req.user.UserName;
 	obj.UpdatedOn = new Date().getTime();
 	repository.save(req.params.collectionName, obj).then(function(ret) {
 		res.json(ret);

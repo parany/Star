@@ -72,7 +72,6 @@ starApp.controller('addExplicationController', function($scope, $routeParams, $l
         data.VerseReadList = $scope.read.verses;
         var method;
         if (id !== undefined) {
-            data.UpdatedBy = accountService.getUserName();
             data._id = id;
             method = 'updateWithUserActions';
         } else {
