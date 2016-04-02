@@ -1,4 +1,4 @@
-starApp.controller('activityController', function($scope, activityService, accountService, starTable) {
+starApp.controller('activityController', function($scope, activityService, starTable) {
 	$scope.page.title = 'Activity';
 
 	// GENERAL

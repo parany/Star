@@ -1,4 +1,4 @@
-﻿starApp.controller('listNoteController', function($scope, accountService, noteService, starTable) {
+﻿starApp.controller('listNoteController', function($scope, noteService, starTable) {
     $scope.page.title = 'Note - List';
 
     $scope.notes = [];

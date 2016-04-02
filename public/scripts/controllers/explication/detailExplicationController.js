@@ -1,4 +1,4 @@
-starApp.controller('detailExplicationController', function($scope, $routeParams, $location, accountService, genericService, starTable) {
+starApp.controller('detailExplicationController', function($scope, $routeParams, $location, genericService, starTable) {
     $scope.page.title = 'Explication - Detail - ';
 
     $scope.explication = {};
@@ -41,8 +41,7 @@ starApp.controller('detailExplicationController', function($scope, $routeParams,
         if (response) {
             var data = {
                 'id': model._id,
-                'title': model.Title,
-                'author': accountService.getUserName()
+                'title': model.Title
             };
             genericService.removeWithUserActions('explications', data).then(function() {
                 $location.path('/explications');

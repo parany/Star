@@ -1,4 +1,4 @@
-starApp.controller('agendaController', function($scope, $cookieStore, $location, accountService, genericService, activityService, starTable) {
+starApp.controller('agendaController', function($scope, $cookieStore, $location, genericService, activityService, starTable) {
     $scope.page.title = 'Agenda - Home page';
 
     var allAgendas = [];

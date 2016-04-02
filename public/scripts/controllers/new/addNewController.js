@@ -1,4 +1,4 @@
-starApp.controller('addNewController', function($scope, $routeParams, $location, starTable, accountService, genericService) {
+starApp.controller('addNewController', function($scope, $routeParams, $location, starTable, genericService) {
     $scope.page.title = 'New - ';
 
     var id = $routeParams.id;

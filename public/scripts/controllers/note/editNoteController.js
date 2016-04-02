@@ -1,4 +1,4 @@
-﻿starApp.controller('editNoteController', function($scope, $routeParams, $location, noteService, genericService, accountService) {
+﻿starApp.controller('editNoteController', function($scope, $routeParams, $location, noteService, genericService) {
     $scope.tags = [];
 
     noteService.getNote($routeParams.id).success(function(data) {

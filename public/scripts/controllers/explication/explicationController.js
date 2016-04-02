@@ -1,4 +1,4 @@
-starApp.controller('explicationController', function($scope, $cookieStore, $routeParams, $location, genericService, starTable, accountService, activityService) {
+starApp.controller('explicationController', function($scope, $cookieStore, $routeParams, $location, genericService, starTable, activityService) {
     $scope.page.title = 'Explication - Home page';
 
     var allExplications = [];

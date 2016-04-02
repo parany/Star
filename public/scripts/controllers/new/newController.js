@@ -1,4 +1,4 @@
-starApp.controller('newController', function($scope, $routeParams, $filter, $http, $cookieStore, $location, activityService, accountService, starTable, genericService) {
+starApp.controller('newController', function($scope, $routeParams, $filter, $http, $cookieStore, $location, activityService, starTable, genericService) {
     $scope.page.title = 'New - Home page';
 
     var allNews =  [];

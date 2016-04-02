@@ -1,4 +1,4 @@
-starApp.controller('detailNewController', function($scope, $routeParams, $location, accountService, genericService, starTable) {
+starApp.controller('detailNewController', function($scope, $routeParams, $location, genericService, starTable) {
     $scope.page.title = 'New - Detail - ';
 
     var id = $routeParams.id;
@@ -33,8 +33,7 @@ starApp.controller('detailNewController', function($scope, $routeParams, $locati
         if (response) {
             var data = {
                 'id': model._id,
-                'title': model.Title,
-                'author': accountService.getUserName()
+                'title': model.Title
             };
             genericService.removeWithUserActions('news', data).then(function() {
                 $location.path('/news');
