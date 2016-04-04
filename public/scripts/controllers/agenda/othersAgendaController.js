@@ -1,4 +1,4 @@
-starApp.controller('othersAgendaController', function($scope, $cookieStore, $location, genericService, activityService, starTable) {
+starApp.controller('othersAgendaController', function($scope, $location, genericService, activityService, starTable) {
     $scope.page.title = 'Agenda - Others';
 
     var allAgendas = [];
@@ -9,10 +9,9 @@ starApp.controller('othersAgendaController', function($scope, $cookieStore, $loc
     $scope.tableSearch = starTable.create($scope, 'datas', true);
     $scope.tableOperations = starTable.create($scope, 'activity.operations');
 
-    genericService.getList('agendas').then(function(data) {
+    genericService.getOthers('agendas').then(function(data) {
         allAgendas = data;
         $scope.datas = allAgendas;
-        $scope.txtSearch = $cookieStore.get('lastAgendaSearch');
         $scope.search();
         reloadTable();
     });
@@ -27,7 +26,6 @@ starApp.controller('othersAgendaController', function($scope, $cookieStore, $loc
     };
 
     $scope.search = function() {
-        $cookieStore.put('lastAgendaSearch', $scope.txtSearch);
         if (!$scope.txtSearch) {
             $scope.datas = allAgendas;
         } else {

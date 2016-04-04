@@ -17,6 +17,31 @@ exports.find = function(req, res) {
 	});
 };
 
+exports.getOthers = function(req, res) {
+	var collectionName = req.params.collectionName;
+	var filters = {
+		$and: [{
+			CreatedBy: {
+				$nin: [req.user.UserName],
+			}
+		}, {
+			Public: true
+		}],
+		sort: {
+			Date: -1
+		},
+		projection: {
+			Title: 1,
+			Date: 1,
+			Text: 1,
+			Content: 1,
+		}
+	};
+	repository.find(collectionName, filters).then(function(docs) {
+		res.send(docs);
+	});
+};
+
 exports.findOne = function(req, res) {
 	repository.findOne(req.params.collectionName, {
 		_id: new ObjectId(req.params.id)
