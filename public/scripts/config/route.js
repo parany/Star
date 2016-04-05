@@ -36,12 +36,6 @@
             access_level: ACCESS_LEVELS.Pub,
             menuId: 'agenda'
         })
-        .when('/agendas/others', {
-            templateUrl: 'views/pages/agenda/index.html',
-            controller: 'othersAgendaController',
-            access_level: ACCESS_LEVELS.Pub,
-            menuId: 'agenda'
-        })
         .when('/agendas/detail/:id', {
             templateUrl: 'views/pages/agenda/detail.html',
             controller: 'detailAgendaController',

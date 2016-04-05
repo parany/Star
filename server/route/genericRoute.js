@@ -5,7 +5,6 @@ var genericLogic = require('../logic/genericLogic.js');
 router.get('/summary', genericLogic.getTotal);
 router.get('/:collectionName/findAll', genericLogic.findAll);
 router.post('/:collectionName/find', genericLogic.find);
-router.get('/:collectionName/getOthers', genericLogic.getOthers);
 router.get('/:collectionName/findOne/:id', genericLogic.findOne);
 router.post('/:collectionName/update', genericLogic.update);
 router.post('/:collectionName/insert', genericLogic.insert);

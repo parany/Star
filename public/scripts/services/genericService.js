@@ -62,19 +62,6 @@ starApp.factory('genericService', function($http, userActionService) {
 		return promise;
 	}
 
-	function getOthers(collectionName) {
-		var promise = new Promise(function(resolve) {
-			return $http.get(`/${collectionName}/getOthers`).then(function(list) {
-				list.data.forEach(function(d) {
-					d.Date = new Date(d.Date);
-					d.DateGroup = d.Date.toCompareString();
-				});
-				resolve(list.data);
-			});
-		});
-		return promise;
-	}
-
 	function getDetail(collectionName, id) {
 		var promise = new Promise(function(resolve) {
 			var result = {};
@@ -176,7 +163,6 @@ starApp.factory('genericService', function($http, userActionService) {
 		find: find,
 		getDetail: getDetail,
 		getList: getList,
-		getOthers: getOthers,
 		remove: remove,
 		removeWithUserActions: removeWithUserActions,
 		findOne: findOne,
