@@ -10,7 +10,6 @@ var jwt = require('jsonwebtoken');
 var port = process.env.PORT || config.port;
 var app = module.exports = express();
 var server = require('http').Server(app);
-var io = require('socket.io')(server);
 
 app.set('port', port);
 app.use(bodyParser.json());
