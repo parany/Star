@@ -5,13 +5,20 @@ var gulpIf = require('gulp-if');
 var ngAnnotate = require('gulp-ng-annotate');
 
 gulp.task('useref', function() {
+	return gulp.src('../public/index.html')
+		.pipe(useref())
+		.pipe(gulpIf('*.js', uglify().on('error', function(e) {
+			console.log(e);
+		})))
+		.pipe(gulp.dest('../public/dist'));
+});
+
+gulp.task('ng-annotate', function() {
 	return gulp.src('../public/scripts/**/*.js')
 		.pipe(ngAnnotate({
-			single_quotes: true
+			single_quotes: true,
+			remove: true,
+			add: true
 		}))
-		// .pipe(useref())
-		// .pipe(gulpIf('*.js', uglify().on('error', function(e){
-		//           console.log(e);
-		//        })))
 		.pipe(gulp.dest('../public/dist'));
 });
