@@ -1,4 +1,4 @@
-starApp.factory('verseService', function($http) {
+starApp.factory('verseService', ['$http', function($http) {
 	function getBooks(testamentId) {
 		return $http.post('/books/find', {
 			TestamentId: testamentId,
@@ -71,4 +71,4 @@ starApp.factory('verseService', function($http) {
 		getVerses: getVerses,
 		search: search
 	};
-});
+}]);

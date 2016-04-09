@@ -1,4 +1,4 @@
-﻿starApp.controller('addDicoController', function($scope, $routeParams, $location, genericService, starTable) {
+starApp.controller('addDicoController', ['$scope', '$routeParams', '$location', 'genericService', 'starTable', function($scope, $routeParams, $location, genericService, starTable) {
     $scope.page.title = 'Dico - ';
 
     $scope.cultures = [];
@@ -120,4 +120,4 @@
             $location.path('dicos');
         });
     };
-});
+}]);

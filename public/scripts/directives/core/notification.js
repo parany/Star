@@ -1,4 +1,4 @@
-starApp.directive('notification', function($location, $rootScope, $route, accountService) {
+starApp.directive('notification', ['$location', '$rootScope', '$route', 'accountService', function($location, $rootScope, $route, accountService) {
     var socket = io.connect();
     var userName = accountService.getUserName();
     return {
@@ -93,4 +93,4 @@ starApp.directive('notification', function($location, $rootScope, $route, accoun
             });
         }
     };
-});
+}]);

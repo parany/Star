@@ -1,4 +1,4 @@
-starApp.controller('othersAgendaController', function($scope, $location, genericService, activityService, starTable) {
+starApp.controller('othersAgendaController', ['$scope', '$location', 'genericService', 'activityService', 'starTable', function($scope, $location, genericService, activityService, starTable) {
     $scope.page.title = 'Agenda - Others';
 
     var allAgendas = [];
@@ -42,4 +42,4 @@ starApp.controller('othersAgendaController', function($scope, $location, generic
         $scope.tableSearch.parameters().page = 1;
         $scope.tableSearch.reload();
     }
-});
+}]);

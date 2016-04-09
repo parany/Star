@@ -1,4 +1,4 @@
-starApp.controller('newController', function($scope, $routeParams, $filter, $http, $cookieStore, $location, activityService, starTable, genericService) {
+starApp.controller('newController', ['$scope', '$routeParams', '$filter', '$http', '$cookieStore', '$location', 'activityService', 'starTable', 'genericService', function($scope, $routeParams, $filter, $http, $cookieStore, $location, activityService, starTable, genericService) {
     $scope.page.title = 'New - Home page';
 
     var allNews =  [];
@@ -45,4 +45,4 @@ starApp.controller('newController', function($scope, $routeParams, $filter, $htt
         $scope.tableSearch.parameters().page = 1;
         $scope.tableSearch.reload();
     }
-});
+}]);

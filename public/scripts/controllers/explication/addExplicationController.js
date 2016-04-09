@@ -1,4 +1,4 @@
-starApp.controller('addExplicationController', function($scope, $routeParams, $location, genericService, starTable) {
+starApp.controller('addExplicationController', ['$scope', '$routeParams', '$location', 'genericService', 'starTable', function($scope, $routeParams, $location, genericService, starTable) {
     $scope.page.title = 'Explication - ';
 
     var id = $routeParams.id;
@@ -87,4 +87,4 @@ starApp.controller('addExplicationController', function($scope, $routeParams, $l
             $scope.$apply();
         });
     };
-});
+}]);

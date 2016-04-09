@@ -1,4 +1,4 @@
-starApp.controller('chatController', function($rootScope, $scope, starTable, accountService) {
+starApp.controller('chatController', ['$rootScope', '$scope', 'starTable', 'accountService', function($rootScope, $scope, starTable, accountService) {
 	$scope.page.title = 'Chat';
 
 	$scope.userName = accountService.getUserName();
@@ -59,4 +59,4 @@ starApp.controller('chatController', function($rootScope, $scope, starTable, acc
 		});
 		$scope.tableMessage.reload();
 	}, 10000);
-});
+}]);

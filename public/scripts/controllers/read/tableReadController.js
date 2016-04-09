@@ -1,4 +1,4 @@
-﻿starApp.controller('tableReadController', function($scope, $rootScope, $cookieStore, genericService, verseService, starTable) {
+starApp.controller('tableReadController', ['$scope', '$rootScope', '$cookieStore', 'genericService', 'verseService', 'starTable', function($scope, $rootScope, $cookieStore, genericService, verseService, starTable) {
     $scope.dataRead = [];
 
     var lastRead = $cookieStore.get('lastRead');
@@ -124,4 +124,4 @@
         $scope.read.selected = model;
         $rootScope.$emit('read.changeSelect', $scope.read.selected._id);
     };
-});
+}]);

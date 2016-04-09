@@ -1,4 +1,4 @@
-﻿Date.prototype.toAnyString = function() {
+Date.prototype.toAnyString = function() {
 	return this.getFullYear() + '-' + parseInt(this.getMonth() + 1).format() + '-' + this.getDate().format();
 };
 

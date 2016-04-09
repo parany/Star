@@ -1,4 +1,4 @@
-starApp.controller('activityController', function($scope, activityService, starTable) {
+starApp.controller('activityController', ['$scope', 'activityService', 'starTable', function($scope, activityService, starTable) {
 	$scope.page.title = 'Activity';
 
 	// GENERAL
@@ -66,4 +66,4 @@ starApp.controller('activityController', function($scope, activityService, starT
 		$scope.tableTweetOperations.parameters().page = 1;
 		$scope.tableTweetOperations.reload();
 	});
-});
+}]);

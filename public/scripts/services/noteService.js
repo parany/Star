@@ -1,4 +1,4 @@
-starApp.factory('noteService', function($http) {
+starApp.factory('noteService', ['$http', function($http) {
 	function getNote(noteId) {
 		return $http.get('/notes/getNoteById/' + noteId);
 	}
@@ -20,4 +20,4 @@ starApp.factory('noteService', function($http) {
 		getNotes: getNotes,
 		search: search
 	};
-});
+}]);

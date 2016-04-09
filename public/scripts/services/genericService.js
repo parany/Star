@@ -1,4 +1,4 @@
-starApp.factory('genericService', function($http, userActionService) {
+starApp.factory('genericService', ['$http', 'userActionService', function($http, userActionService) {
 	var filters = {
 		'agendas': 'agenda',
 		'explications': 'explication',
@@ -170,4 +170,4 @@ starApp.factory('genericService', function($http, userActionService) {
 		updateWithUserActions: updateWithUserActions,
 		findAll: findAll
 	};
-});
+}]);

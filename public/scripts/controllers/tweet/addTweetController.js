@@ -1,4 +1,4 @@
-﻿starApp.controller('addTweetController', function($scope, $routeParams, $location, genericService, tweetService, activityService, starTable) {
+starApp.controller('addTweetController', ['$scope', '$routeParams', '$location', 'genericService', 'tweetService', 'activityService', 'starTable', function($scope, $routeParams, $location, genericService, tweetService, activityService, starTable) {
     $scope.page.title = 'Tweet - ';
     
     $scope.datas = [];
@@ -49,4 +49,4 @@
             $scope.$apply();
         });
     };
-});
+}]);

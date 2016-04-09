@@ -1,4 +1,4 @@
-﻿starApp.directive('header', function($location, $rootScope, $route, accountService) {
+starApp.directive('header', ['$location', '$rootScope', '$route', 'accountService', function($location, $rootScope, $route, accountService) {
     return {
         scope: true,
         templateUrl: 'views/directives/core/header.html',
@@ -20,4 +20,4 @@
             });
         }
     };
-});
+}]);

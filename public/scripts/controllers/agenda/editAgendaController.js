@@ -1,4 +1,4 @@
-﻿starApp.controller('editAgendaController', function($scope, $routeParams, $location, genericService, starTable) {
+starApp.controller('editAgendaController', ['$scope', '$routeParams', '$location', 'genericService', 'starTable', function($scope, $routeParams, $location, genericService, starTable) {
     $scope.page.title = 'Agenda - Edit - ';
 
     $scope.id = $routeParams.id;
@@ -33,4 +33,4 @@
             $scope.$apply();
         });
     };
-});
+}]);

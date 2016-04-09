@@ -83,4 +83,6 @@ server.listen(config.port, function() {
 });
 
 // SOCKET
-require('./logic/socketLogic.js').listen(io);
+var socketLogic = require('./logic/socketLogic.js');
+var ioServ = require('socket.io')(server);
+socketLogic.listen(ioServ);

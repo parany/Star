@@ -1,4 +1,4 @@
-starApp.controller('addNewController', function($scope, $routeParams, $location, starTable, genericService) {
+starApp.controller('addNewController', ['$scope', '$routeParams', '$location', 'starTable', 'genericService', function($scope, $routeParams, $location, starTable, genericService) {
     $scope.page.title = 'New - ';
 
     var id = $routeParams.id;
@@ -89,4 +89,4 @@ starApp.controller('addNewController', function($scope, $routeParams, $location,
             $scope.$apply();
         });
     };
-});
+}]);

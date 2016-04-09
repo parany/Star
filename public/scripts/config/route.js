@@ -1,4 +1,4 @@
-﻿starApp.config(function($routeProvider, ACCESS_LEVELS) {
+starApp.config(['$routeProvider', 'ACCESS_LEVELS', function($routeProvider, ACCESS_LEVELS) {
     $routeProvider
         .when('/login', {
             templateUrl: 'views/pages/account/login.html',
@@ -179,4 +179,4 @@
             access_level: ACCESS_LEVELS.Pub,
             menuId: 'error'
         });
-});
+}]);

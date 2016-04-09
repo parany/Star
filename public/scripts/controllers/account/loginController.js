@@ -1,4 +1,4 @@
-﻿starApp.controller('loginController', function($rootScope, $scope, $location, $modal, accountService) {
+starApp.controller('loginController', ['$rootScope', '$scope', '$location', '$modal', 'accountService', function($rootScope, $scope, $location, $modal, accountService) {
     $scope.page.title = 'Login';
 
     $scope.login = function() {
@@ -20,4 +20,4 @@
             modalInstance.dismiss('cancel');
         });
     };
-});
+}]);
