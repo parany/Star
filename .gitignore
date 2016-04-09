@@ -46,3 +46,6 @@ logs
 public/scripts/config/config.js
 server/config/config.json
 server/config/db.json
+
+# dist (gulp output)
+dist/
