@@ -3,6 +3,7 @@ var useref = require('gulp-useref');
 var uglify = require('gulp-uglify');
 var gulpIf = require('gulp-if');
 var ngAnnotate = require('gulp-ng-annotate');
+var cssnano = require('gulp-cssnano');
 
 gulp.task('useref', function() {
 	return gulp.src('../public/index.html')
@@ -10,6 +11,7 @@ gulp.task('useref', function() {
 		.pipe(gulpIf('*.js', uglify().on('error', function(e) {
 			console.log(e);
 		})))
+		.pipe(gulpIf('*.css', cssnano()))
 		.pipe(gulp.dest('../public/dist'));
 });
 

@@ -1,5 +1,6 @@
 ﻿<!doctype html>
 <html ng-app="starApp" ng-controller="pageController">
+
 <head>
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
@@ -7,16 +8,14 @@
 
     <title>Star - {{ page.title }}</title>
     
-    <link href="/styles/Vendor/bootstrap.min.css" rel="stylesheet">
-    <link href="/styles/Vendor/font-awesome.min.css" rel="stylesheet">
-    <link href="/styles/Vendor/ng-table.css" rel="stylesheet">
-    <link href="/styles/Pages/Site.css" rel="stylesheet">
+    <link rel="stylesheet" href="/dist/css/vendor.min.css">
+    <link rel="stylesheet" href="/dist/css/site.min.css">
 
-    <script src="/dist/js/vendor.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="/dist/js/vendor.min.js"></script>
     <script src="/dist/js/main.min.js"></script>
-
 </head>
+
 <body>
     <div>
         <header></header>
