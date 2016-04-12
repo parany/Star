@@ -24,8 +24,8 @@ gulp.task('template', function() {
 			quotes: true
 		}))
 		.pipe(ngTemplate({
-			moduleName: 'starTemplateApp',
-			standalone: true,
+			moduleName: 'starApp',
+			standalone: false,
 			filePath: 'template/templates.js'
 		}))
 		.pipe(gulp.dest('../public/dist'));

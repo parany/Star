@@ -4,7 +4,9 @@ starApp.directive('header', ['$location', '$rootScope', '$route', 'accountServic
         templateUrl: 'views/directives/core/header.html',
         restrict: 'E',
         link: function(scope) {
-            scope[$route.current.$$route.menuId] = true;
+            if ($route.current) {
+                scope[$route.current.$$route.menuId] = true;
+            }
             scope.isLoggedIn = accountService.isLoggedIn();
             scope.fullName = accountService.getUserFullName();
 
