@@ -6,6 +6,18 @@ var ngAnnotate = require('gulp-ng-annotate');
 var cssnano = require('gulp-cssnano');
 var minifyHtml = require('gulp-minify-html');
 var ngTemplate = require('gulp-ng-template');
+var browserSync = require('browser-sync');
+
+gulp.task('watch', function() {
+	gulp.watch('../public/scripts/**/*.js', ['browserSync']);
+});
+
+browserSync.init({
+	proxy: 'http://localhost:4444/#/'
+});
+gulp.task('browserSync', function() {
+	browserSync.reload();
+});
 
 gulp.task('useref', function() {
 	return gulp.src('../public/index.html')
