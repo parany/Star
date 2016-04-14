@@ -1,17 +1,12 @@
 var gulp = require('gulp');
-var useref = require('gulp-useref');
-var uglify = require('gulp-uglify');
-var gulpIf = require('gulp-if');
-var ngAnnotate = require('gulp-ng-annotate');
-var cssnano = require('gulp-cssnano');
-var minifyHtml = require('gulp-minify-html');
-var ngTemplate = require('gulp-ng-template');
-var browserSync = require('browser-sync');
 
 gulp.task('watch', function() {
 	gulp.watch('../public/scripts/**/*.js', ['browserSync']);
+	gulp.watch('../public/styles/**/*.css', ['browserSync']);
+	gulp.watch('../public/views/**/*.html', ['browserSync']);
 });
 
+var browserSync = require('browser-sync');
 browserSync.init({
 	proxy: 'http://localhost:4444/#/'
 });
@@ -19,7 +14,11 @@ gulp.task('browserSync', function() {
 	browserSync.reload();
 });
 
-gulp.task('useref', function() {
+var useref = require('gulp-useref');
+var uglify = require('gulp-uglify');
+var gulpIf = require('gulp-if');
+var cssnano = require('gulp-cssnano');
+gulp.task('assets', function() {
 	return gulp.src('../public/index.html')
 		.pipe(useref())
 		.pipe(gulpIf('*.js', uglify().on('error', function(e) {
@@ -29,7 +28,9 @@ gulp.task('useref', function() {
 		.pipe(gulp.dest('../public/dist'));
 });
 
-gulp.task('template', function() {
+var minifyHtml = require('gulp-minify-html');
+var ngTemplate = require('gulp-ng-template');
+gulp.task('templates', function() {
 	return gulp.src('../public/**/*.html')
 		.pipe(minifyHtml({
 			empty: true,
@@ -43,7 +44,8 @@ gulp.task('template', function() {
 		.pipe(gulp.dest('../public/dist'));
 });
 
-gulp.task('ng-annotate', function() {
+var ngAnnotate = require('gulp-ng-annotate');
+gulp.task('annotate', function() {
 	return gulp.src('../public/scripts/**/*.js')
 		.pipe(ngAnnotate({
 			single_quotes: true,
