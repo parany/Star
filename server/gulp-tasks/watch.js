@@ -1,12 +1,16 @@
 var gulp = require('gulp');
-require('require-dir')('./gulp-tasks');
+var browserSync = require('browser-sync');
 
-gulp.task('watch', function() {
+browserSync.init({
+	proxy: 'http://localhost:4444/#/'
+});
+gulp.task('browserSync', function() {
+	browserSync.reload();
+});
+
+gulp.task('live-reload', function() {
 	gulp.watch('../public/scripts/**/*.js', ['browserSync']);
 	gulp.watch('../public/styles/**/*.css', ['browserSync']);
 	gulp.watch('../public/views/**/*.html', ['browserSync']);
 });
 
-gulp.task('build-all', ['minify-assets', 'minify-templates', 'annotate-templates'], function() {
-	console.log('Building files');
-});
