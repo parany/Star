@@ -38,6 +38,7 @@
     "gulp-ng-template": "0.2.2",
     "gulp-minify-html": "1.0.6",
     "browser-sync": "2.12.2",
-    "require-dir": "0.3.0"
+    "require-dir": "0.3.0",
+    "npm-shrinkwrap": "200.5.1"
   }
 }
