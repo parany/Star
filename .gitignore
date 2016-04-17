@@ -49,3 +49,6 @@ server/config/db.json
 
 # dist (gulp output)
 dist/
+
+#heapdump
+snapshot/
