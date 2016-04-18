@@ -103,11 +103,6 @@ if (config.enableHeapDump) {
 		if (currentDiff > tolerableDiff) {
 			heapdump.writeSnapshot(`./snapshot/star-${now.getTime()}-${currentDiff.toFixed(2)}.heapsnapshot`);
 		}
-		console.log('date: ' + now.toUTCString());
-		console.log('prec: ' + precUsage);
-		console.log('current: ' + currentUsage);
-		console.log('diff: ' + currentDiff);
-		console.log(' ');
 		precUsage = currentUsage;
 	}, 1000 * interval);
 }

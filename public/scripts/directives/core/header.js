@@ -7,7 +7,7 @@ starApp.directive('header', ['$location', '$rootScope', '$route', 'accountServic
             if ($route.current) {
                 scope[$route.current.$$route.menuId] = true;
             }
-            scope.isLoggedIn = accountService.isLoggedIn();
+            scope.isLoggedIn = accountService.isLoggedIn() && localStorage.getItem('token');
             scope.fullName = accountService.getUserFullName();
 
             scope.logout = function() {

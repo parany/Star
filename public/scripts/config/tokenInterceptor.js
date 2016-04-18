@@ -21,6 +21,7 @@ starApp.factory('tokenInterceptor', ['$q', '$location', function ($q, $location)
         responseError: function(rejection) {
             if (rejection !== null && rejection.status === 401 && (localStorage.token)) {
                 localStorage.removeItem('token');
+                localStorage.removeItem('user');
                 $location.path('/login');
             }
  
