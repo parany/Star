@@ -63,7 +63,7 @@ starApp.controller('tableReadController', ['$scope', '$rootScope', '$cookieStore
         angular.element('.glyphicon-chevron-right').css('opacity', $scope.read.chapter === $scope.read.maxChapter ? '0.4' : '1.0');
     });
 
-    $scope.$watch('read.paragraphMin + read.paragraphMax + read.version.Code', function() {
+    $scope.$watch('read.chapter + read.paragraphMin + read.paragraphMax + read.version.Code', function() {
         $scope.search.textToSearch = '';
         if (!$scope.read.paragraphMin) return;
 
