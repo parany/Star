@@ -7,11 +7,17 @@
 
     <title>Star - {{ page.title }}</title>
     
+    <!--build:css css/vendor.min.css-->
     <link href="/styles/Vendor/bootstrap.min.css" rel="stylesheet">
     <link href="/styles/Vendor/font-awesome.min.css" rel="stylesheet">
     <link href="/styles/Vendor/ng-table.css" rel="stylesheet">
-    <link href="/styles/Pages/Site.css" rel="stylesheet">
+    <!--endbuild-->
 
+    <!--build:css css/site.min.css-->
+    <link href="/styles/Pages/Site.css" rel="stylesheet">
+    <!--endbuild-->
+
+    <!--build:js js/vendor.min.js -->
     <script src="/scripts/vendor/jquery.min.js"></script>
     <script src="/scripts/vendor/bootstrap.min.js"></script>
     <script src="/scripts/vendor/angular-1.4.2.js"></script>
@@ -25,10 +31,12 @@
     <script src="/scripts/vendor/Chart.js"></script>
     <script src="/scripts/vendor/angular-chart.js"></script>
     <script src="/scripts/vendor/ui-bootstrap-tpls-0.12.1.min.js"></script>
+    <!-- endbuild -->
 
     <script src="/socket.io/socket.io.js"></script>
 
     <script src="/scripts/app.js"></script>
+    <!--build:js js/main.min.js -->
 
     <script src="/scripts/config/route.js"></script>
     <script src="/scripts/config/accesLevel.js"></script>
@@ -82,6 +90,8 @@
     <script src="/scripts/controllers/tweet/tweetController.js"></script>
     <script src="/scripts/controllers/tweet/addTweetController.js"></script>
     <script src="/scripts/controllers/chat/chatController.js"></script>
+    <!-- endbuild -->
+
 </head>
 <body>
     <div>

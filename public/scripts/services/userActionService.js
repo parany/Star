@@ -1,4 +1,4 @@
-starApp.factory('userActionService', function($http) {
+starApp.factory('userActionService', ['$http', function($http) {
 	function send(collectionName, title, operation) {
 		var data = {
 			operation: operation,
@@ -26,4 +26,4 @@ starApp.factory('userActionService', function($http) {
 		remove: remove,
 		update: update
 	};
-});
+}]);

@@ -1,3 +1,3 @@
-starApp.controller('error500Controller', function($scope) {
+starApp.controller('error500Controller', ['$scope', function($scope) {
 	$scope.page.title = 'Error 500';
-});
+}]);

@@ -1,4 +1,4 @@
-﻿starApp.controller('editNoteController', function($scope, $routeParams, $location, noteService, genericService) {
+starApp.controller('editNoteController', ['$scope', '$routeParams', '$location', 'noteService', 'genericService', function($scope, $routeParams, $location, noteService, genericService) {
     $scope.tags = [];
 
     noteService.getNote($routeParams.id).success(function(data) {
@@ -36,4 +36,4 @@
             console.log(error);
         });
     };
-});
+}]);

@@ -1,4 +1,4 @@
-starApp.factory('tokenInterceptor', function ($q, $location) {
+starApp.factory('tokenInterceptor', ['$q', '$location', function ($q, $location) {
     return {
         request: function (config) {
             config.headers = config.headers || {};
@@ -21,14 +21,15 @@ starApp.factory('tokenInterceptor', function ($q, $location) {
         responseError: function(rejection) {
             if (rejection !== null && rejection.status === 401 && (localStorage.token)) {
                 localStorage.removeItem('token');
+                localStorage.removeItem('user');
                 $location.path('/login');
             }
  
             return $q.reject(rejection);
         }
     };
-});
+}]);
 
-starApp.config(function ($httpProvider) {
+starApp.config(['$httpProvider', function ($httpProvider) {
     $httpProvider.interceptors.push('tokenInterceptor');
-});
+}]);

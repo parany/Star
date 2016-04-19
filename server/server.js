@@ -10,7 +10,6 @@ var jwt = require('jsonwebtoken');
 var port = process.env.PORT || config.port;
 var app = module.exports = express();
 var server = require('http').Server(app);
-var io = require('socket.io')(server);
 
 app.set('port', port);
 app.use(bodyParser.json());
@@ -84,4 +83,26 @@ server.listen(config.port, function() {
 });
 
 // SOCKET
-require('./logic/socketLogic.js').listen(io);
+var socketLogic = require('./logic/socketLogic.js');
+var ioServ = require('socket.io')(server);
+socketLogic.listen(ioServ);
+
+// HEAPDUMP
+if (config.enableHeapDump) {
+	var heapdump = require('heapdump');
+	var MB = 1024 * 1024;
+	var tolerableDiff = 5;
+	var precUsage = (process.memoryUsage().rss / MB).toFixed(2);
+	var interval = 5;
+	var now = new Date();
+	heapdump.writeSnapshot(`./snapshot/star-${now.getTime()}.heapsnapshot`);
+	setInterval(function() {
+		now = new Date();
+		var currentUsage = (process.memoryUsage().rss / MB).toFixed(2);
+		var currentDiff = currentUsage - precUsage;
+		if (currentDiff > tolerableDiff) {
+			heapdump.writeSnapshot(`./snapshot/star-${now.getTime()}-${currentDiff.toFixed(2)}.heapsnapshot`);
+		}
+		precUsage = currentUsage;
+	}, 1000 * interval);
+}

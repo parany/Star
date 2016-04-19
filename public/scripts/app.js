@@ -7,6 +7,6 @@ starApp = angular.module('starApp', [
 	'ui.bootstrap'
 ]);
 
-starApp.config(function($compileProvider, STAR_CONFIG) {
+starApp.config(['$compileProvider', 'STAR_CONFIG', function($compileProvider, STAR_CONFIG) {
 	$compileProvider.debugInfoEnabled(STAR_CONFIG.debug);
-});
+}]);

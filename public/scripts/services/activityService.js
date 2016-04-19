@@ -1,4 +1,4 @@
-starApp.factory('activityService', function($http) {
+starApp.factory('activityService', ['$http', function($http) {
 	function getSummary() {
 		var promise = new Promise(function(resolve) {
 			$http.get('/summary').success(function(data) {
@@ -43,4 +43,4 @@ starApp.factory('activityService', function($http) {
 		getAllActivities: getAllActivities,
 		getActivities: getActivities
 	};
-});
+}]);

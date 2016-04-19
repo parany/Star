@@ -1,4 +1,4 @@
-starApp.factory('starTable', function($filter, ngTableParams) {
+starApp.factory('starTable', ['$filter', 'ngTableParams', function($filter, ngTableParams) {
 	function create(data, ppty, orderBy, count) {
 		var ppties = ppty.split('.');
 		var params = {
@@ -38,4 +38,4 @@ starApp.factory('starTable', function($filter, ngTableParams) {
 	return {
 		create: create
 	};
-});
+}]);

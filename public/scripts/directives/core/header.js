@@ -1,11 +1,13 @@
-﻿starApp.directive('header', function($location, $rootScope, $route, accountService) {
+starApp.directive('header', ['$location', '$rootScope', '$route', 'accountService', function($location, $rootScope, $route, accountService) {
     return {
         scope: true,
         templateUrl: 'views/directives/core/header.html',
         restrict: 'E',
         link: function(scope) {
-            scope[$route.current.$$route.menuId] = true;
-            scope.isLoggedIn = accountService.isLoggedIn();
+            if ($route.current) {
+                scope[$route.current.$$route.menuId] = true;
+            }
+            scope.isLoggedIn = accountService.isLoggedIn() && localStorage.getItem('token');
             scope.fullName = accountService.getUserFullName();
 
             scope.logout = function() {
@@ -20,4 +22,4 @@
             });
         }
     };
-});
+}]);

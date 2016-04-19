@@ -1,4 +1,4 @@
-﻿starApp.controller('tableReadController', function($scope, $rootScope, $cookieStore, genericService, verseService, starTable) {
+starApp.controller('tableReadController', ['$scope', '$rootScope', '$cookieStore', 'genericService', 'verseService', 'starTable', function($scope, $rootScope, $cookieStore, genericService, verseService, starTable) {
     $scope.dataRead = [];
 
     var lastRead = $cookieStore.get('lastRead');
@@ -63,7 +63,7 @@
         angular.element('.glyphicon-chevron-right').css('opacity', $scope.read.chapter === $scope.read.maxChapter ? '0.4' : '1.0');
     });
 
-    $scope.$watch('read.paragraphMin + read.paragraphMax + read.version.Code', function() {
+    $scope.$watch('read.chapter + read.paragraphMin + read.paragraphMax + read.version.Code', function() {
         $scope.search.textToSearch = '';
         if (!$scope.read.paragraphMin) return;
 
@@ -124,4 +124,4 @@
         $scope.read.selected = model;
         $rootScope.$emit('read.changeSelect', $scope.read.selected._id);
     };
-});
+}]);

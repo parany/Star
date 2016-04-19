@@ -1,4 +1,4 @@
-﻿starApp.controller('dicosController', function($scope, $cookieStore, $location, genericService, starTable) {
+starApp.controller('dicosController', ['$scope', '$cookieStore', '$location', 'genericService', 'starTable', function($scope, $cookieStore, $location, genericService, starTable) {
     var allDicos = [];
     $scope.cultures = [];
     $scope.dico = {};
@@ -96,4 +96,4 @@
             $scope.changeLabelSelected($scope.dico);
         }
     };
-});
+}]);

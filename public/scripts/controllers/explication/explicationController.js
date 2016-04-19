@@ -1,4 +1,4 @@
-starApp.controller('explicationController', function($scope, $cookieStore, $routeParams, $location, genericService, starTable, activityService) {
+starApp.controller('explicationController', ['$scope', '$cookieStore', '$routeParams', '$location', 'genericService', 'starTable', 'activityService', function($scope, $cookieStore, $routeParams, $location, genericService, starTable, activityService) {
     $scope.page.title = 'Explication - Home page';
 
     var allExplications = [];
@@ -45,4 +45,4 @@ starApp.controller('explicationController', function($scope, $cookieStore, $rout
         $scope.tableSearch.parameters().page = 1;
         $scope.tableSearch.reload();
     }
-});
+}]);

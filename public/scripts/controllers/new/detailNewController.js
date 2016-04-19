@@ -1,4 +1,4 @@
-starApp.controller('detailNewController', function($scope, $routeParams, $location, genericService, starTable) {
+starApp.controller('detailNewController', ['$scope', '$routeParams', '$location', 'genericService', 'starTable', function($scope, $routeParams, $location, genericService, starTable) {
     $scope.page.title = 'New - Detail - ';
 
     var id = $routeParams.id;
@@ -41,4 +41,4 @@ starApp.controller('detailNewController', function($scope, $routeParams, $locati
             });
         }
     };
-});
+}]);

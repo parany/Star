@@ -1,4 +1,4 @@
-starApp.factory('accountService', function($http) {
+starApp.factory('accountService', ['$http', function($http) {
 	var _user = JSON.parse(localStorage.getItem('user'));
 
 	return {
@@ -38,4 +38,4 @@ starApp.factory('accountService', function($http) {
 		},
 		isLogged: false
 	};
-});
+}]);

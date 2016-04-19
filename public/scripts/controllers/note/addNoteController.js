@@ -1,4 +1,4 @@
-﻿starApp.controller('addNoteController', function($scope, $routeParams, $location, genericService) {
+starApp.controller('addNoteController', ['$scope', '$routeParams', '$location', 'genericService', function($scope, $routeParams, $location, genericService) {
     $scope.tags = [];
     genericService.find('tags', {
         Type: 'Note'
@@ -29,4 +29,4 @@
             console.log(error);
         });
     };
-});
+}]);

@@ -1,4 +1,4 @@
-starApp.controller('treatyController', function($scope, $cookieStore, $routeParams, $filter, $http, $location, starTable, activityService, genericService) {
+starApp.controller('treatyController', ['$scope', '$cookieStore', '$routeParams', '$filter', '$http', '$location', 'starTable', 'activityService', 'genericService', function($scope, $cookieStore, $routeParams, $filter, $http, $location, starTable, activityService, genericService) {
     $scope.page.title = 'Treaty - Home page';
 
     var allTreaties = [];
@@ -45,4 +45,4 @@ starApp.controller('treatyController', function($scope, $cookieStore, $routePara
         $scope.tableSearch.parameters().page = 1;
         $scope.tableSearch.reload();
     }
-});
+}]);

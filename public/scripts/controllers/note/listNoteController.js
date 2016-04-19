@@ -1,4 +1,4 @@
-﻿starApp.controller('listNoteController', function($scope, noteService, starTable) {
+starApp.controller('listNoteController', ['$scope', 'noteService', 'starTable', function($scope, noteService, starTable) {
     $scope.page.title = 'Note - List';
 
     $scope.notes = [];
@@ -25,4 +25,4 @@
             $scope.dtoNote = data;
         });
     };
-});
+}]);

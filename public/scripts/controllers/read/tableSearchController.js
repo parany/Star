@@ -1,4 +1,4 @@
-﻿starApp.controller('tableSearchController', function($scope, $rootScope, verseService, starTable) {
+starApp.controller('tableSearchController', ['$scope', '$rootScope', 'verseService', 'starTable', function($scope, $rootScope, verseService, starTable) {
     $scope.dataSearch = [];
 
     $scope.tableSearch = starTable.create($scope, 'dataSearch', false, 10);
@@ -31,4 +31,4 @@
             });
         }, searchDelay);
     };
-});
+}]);

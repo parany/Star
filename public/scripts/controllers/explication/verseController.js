@@ -1,4 +1,4 @@
-﻿starApp.controller('verseController', function($scope, genericService, verseService) {
+starApp.controller('verseController', ['$scope', 'genericService', 'verseService', function($scope, genericService, verseService) {
     genericService.findAll('versions').success(function(data) {
         $scope.read.versions = data;
         $scope.read.version = $scope.read.versions[0];
@@ -56,4 +56,4 @@
         });
         $scope.tableVerses.reload();
     };
-});
+}]);
