@@ -27,6 +27,7 @@
     "gulp-minify-html": "1.0.6",
     "browser-sync": "2.12.2",
     "require-dir": "0.3.0",
-    "npm-clean": "1.0.3"
+    "npm-clean": "1.0.3",
+    "heapdump": "0.3.7"
   }
 }
