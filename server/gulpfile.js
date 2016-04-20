@@ -7,6 +7,6 @@ gulp.task('watch', function() {
 	gulp.watch('../public/views/**/*.html', ['browserSync']);
 });
 
-gulp.task('build-all', ['minify-assets', 'minify-templates', 'annotate-templates'], function() {
+gulp.task('build-all', ['minify-assets', 'minify-templates'], function() {
 	console.log('Building files');
 });
