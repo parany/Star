@@ -18,16 +18,18 @@
     "gulp": "3.9.1"
   },
   "devDependencies": {
-    "useref": "1.2.0",
-    "gulp-uglify": "1.5.3",
-    "gulp-if": "2.0.0",
-    "gulp-ng-annotate": "2.0.0",
-    "gulp-cssnano": "2.1.1",
-    "gulp-ng-template": "0.2.2",
-    "gulp-minify-html": "1.0.6",
     "browser-sync": "2.12.2",
+    "gulp-cssnano": "2.1.1",
+    "gulp-if": "2.0.0",
+    "gulp-minify-html": "1.0.6",
+    "gulp-ng-annotate": "2.0.0",
+    "gulp-ng-template": "0.2.2",
+    "gulp-uglify": "1.5.3",
+    "gulp-useref": "^3.1.0",
+    "npm-clean": "1.0.3",
     "require-dir": "0.3.0",
     "npm-clean": "1.0.3",
     "heapdump": "0.3.7"
+    "useref": "1.2.0"
   }
 }
