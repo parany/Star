@@ -47,6 +47,7 @@ public/scripts/config/config.js
 server/config/config.json
 server/config/db.json
 npm-debug.log
+public/index.html
 
 # dist (gulp output)
 dist/
