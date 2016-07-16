@@ -29,7 +29,7 @@
     "npm-clean": "1.0.3",
     "require-dir": "0.3.0",
     "npm-clean": "1.0.3",
-    "heapdump": "0.3.7"
+    "heapdump": "0.3.7",
     "useref": "1.2.0"
   }
 }
