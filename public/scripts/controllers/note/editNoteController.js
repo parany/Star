@@ -2,10 +2,7 @@ starApp.controller('editNoteController', ['$scope', '$routeParams', '$location',
     $scope.tags = [];
 
     noteService.getNote($routeParams.id).success(function(data) {
-        $scope.note._id = data.Note._id;
-        $scope.note.VerseId = data.Note.VerseId;
-        $scope.note.Description = data.Note.Description;
-        $scope.note.Content = data.Note.Content;
+        $scope.note = data.Note;
         $scope.tags = data.Tags;
         $scope.tags.forEach(function(tag) {
             tag.Selected = tag.IsActive;
