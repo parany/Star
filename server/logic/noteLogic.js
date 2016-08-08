@@ -66,8 +66,12 @@ exports.getNoteById = function(req, res) {
 };
 
 exports.search = function(req, res) {
-    var notes = [],
-        verses = [];
+    var notes = [];
+    var verses = [];
+
+    if (req.params.text === undefined) {
+        req.params.text = '';
+    }
     repository.find('notes', {
         CreatedBy: req.user.UserName,
         $or: [{
