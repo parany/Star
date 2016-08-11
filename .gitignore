@@ -54,3 +54,7 @@ dist/
 
 #heapdump
 snapshot/
+
+#webstorm configs
+public/.idea/
+server/.idea/
