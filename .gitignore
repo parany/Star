@@ -58,3 +58,5 @@ snapshot/
 #webstorm configs
 public/.idea/
 server/.idea/
+
+public/scripts/vendor/bower_components

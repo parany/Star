@@ -1,0 +1,23 @@
+{
+  "name": "star-public",
+  "description": "An agenda, ...",
+  "main": "",
+  "author": {
+    "name": "parany",
+    "email": "ramilison.andriamparany@gmail.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/parany/Star",
+  "dependencies": {
+    "angular": "~1.4.2",
+    "jquery": "~1.11.1",
+    "bootstrap": "~3.3.1"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
