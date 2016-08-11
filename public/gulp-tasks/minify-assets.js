@@ -5,11 +5,11 @@ var gulpIf = require('gulp-if');
 var cssnano = require('gulp-cssnano');
 
 gulp.task('minify-assets', function() {
-	return gulp.src('../public/index.html')
+	return gulp.src('index.html')
 		.pipe(useref())
 		.pipe(gulpIf('*.js', uglify().on('error', function(e) {
 			console.log(e);
 		})))
 		.pipe(gulpIf('*.css', cssnano()))
-		.pipe(gulp.dest('../public/dist'));
+		.pipe(gulp.dest('dist'));
 });
