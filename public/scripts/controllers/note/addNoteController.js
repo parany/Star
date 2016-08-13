@@ -1,4 +1,4 @@
-starApp.controller('addNoteController', ['$scope', '$routeParams', '$location', 'genericService', function($scope, $routeParams, $location, genericService) {
+angular.module('starApp.controllers').controller('addNoteController', ['$scope', '$routeParams', '$location', 'genericService', function($scope, $routeParams, $location, genericService) {
     $scope.tags = [];
     genericService.find('tags', {
         Type: 'Note'

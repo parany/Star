@@ -1,4 +1,4 @@
-starApp.controller('addAgendaController', ['$scope', '$location', 'genericService', 'starTable', function($scope, $location, genericService, starTable) {
+angular.module('starApp.controllers').controller('addAgendaController', ['$scope', '$location', 'genericService', 'starTable', function($scope, $location, genericService, starTable) {
     $scope.page.title = 'Agenda - Add';
 
     $scope.agenda = {};

@@ -1,4 +1,4 @@
-starApp.controller('dicosController', ['$scope', '$cookieStore', '$location', 'genericService', 'starTable', function($scope, $cookieStore, $location, genericService, starTable) {
+angular.module('starApp.controllers').controller('dicosController', ['$scope', '$cookieStore', '$location', 'genericService', 'starTable', function($scope, $cookieStore, $location, genericService, starTable) {
     var allDicos = [];
     $scope.cultures = [];
     $scope.dico = {};

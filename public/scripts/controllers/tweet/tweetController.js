@@ -1,4 +1,4 @@
-starApp.controller('tweetController', ['$scope', '$cookieStore', '$location', 'genericService', 'tweetService', 'activityService', 'starTable', function($scope, $cookieStore, $location, genericService, tweetService, activityService, starTable) {
+angular.module('starApp.controllers').controller('tweetController', ['$scope', '$cookieStore', '$location', 'genericService', 'tweetService', 'activityService', 'starTable', function($scope, $cookieStore, $location, genericService, tweetService, activityService, starTable) {
     $scope.page.title = 'Tweet - Home page';
 
     var allTweets = [];

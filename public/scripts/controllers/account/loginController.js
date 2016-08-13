@@ -1,4 +1,4 @@
-starApp.controller('loginController', ['$rootScope', '$scope', '$location', '$modal', 'accountService', function($rootScope, $scope, $location, $modal, accountService) {
+angular.module('starApp.controllers').controller('loginController', ['$rootScope', '$scope', '$location', '$modal', 'accountService', function($rootScope, $scope, $location, $modal, accountService) {
     $scope.page.title = 'Login';
 
     $scope.login = function() {

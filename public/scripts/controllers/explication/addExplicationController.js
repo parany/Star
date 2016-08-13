@@ -1,4 +1,4 @@
-starApp.controller('addExplicationController', ['$scope', '$routeParams', '$location', 'genericService', 'starTable', function($scope, $routeParams, $location, genericService, starTable) {
+angular.module('starApp.controllers').controller('addExplicationController', ['$scope', '$routeParams', '$location', 'genericService', 'starTable', function($scope, $routeParams, $location, genericService, starTable) {
     $scope.page.title = 'Explication - ';
 
     var id = $routeParams.id;

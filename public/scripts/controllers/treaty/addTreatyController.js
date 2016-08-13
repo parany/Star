@@ -1,4 +1,4 @@
-starApp.controller('addTreatyController', ['$scope', '$routeParams', '$location', 'starTable', 'genericService', function($scope, $routeParams, $location, starTable, genericService) {
+angular.module('starApp.controllers').controller('addTreatyController', ['$scope', '$routeParams', '$location', 'starTable', 'genericService', function($scope, $routeParams, $location, starTable, genericService) {
     $scope.page.title = 'Treaty - ';
 
     var id = $routeParams.id;

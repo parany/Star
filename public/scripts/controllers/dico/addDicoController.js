@@ -1,4 +1,4 @@
-starApp.controller('addDicoController', ['$scope', '$routeParams', '$location', 'genericService', 'starTable', function($scope, $routeParams, $location, genericService, starTable) {
+angular.module('starApp.controllers').controller('addDicoController', ['$scope', '$routeParams', '$location', 'genericService', 'starTable', function($scope, $routeParams, $location, genericService, starTable) {
     $scope.page.title = 'Dico - ';
 
     $scope.cultures = [];

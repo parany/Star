@@ -1,4 +1,7 @@
+angular.module('starApp.controllers', []);
+
 starApp = angular.module('starApp', [
+	'starApp.controllers',
 	'ngRoute',
 	'ngTable',
 	'ngCookies',

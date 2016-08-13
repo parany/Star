@@ -1,4 +1,4 @@
-starApp.controller('verseController', ['$scope', 'genericService', 'verseService', function($scope, genericService, verseService) {
+angular.module('starApp.controllers').controller('verseController', ['$scope', 'genericService', 'verseService', function($scope, genericService, verseService) {
     genericService.findAll('versions').success(function(data) {
         $scope.read.versions = data;
         $scope.read.version = $scope.read.versions[0];

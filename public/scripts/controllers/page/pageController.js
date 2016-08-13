@@ -1,4 +1,4 @@
-starApp.controller('pageController', ['$scope', function($scope) {
+angular.module('starApp.controllers').controller('pageController', ['$scope', function($scope) {
 	$scope.page = {};
 	$scope.page.users = [];
 	$scope.page.messages = {};

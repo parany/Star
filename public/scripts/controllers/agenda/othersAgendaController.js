@@ -1,4 +1,4 @@
-starApp.controller('othersAgendaController', ['$scope', '$location', 'genericService', 'activityService', 'starTable', function($scope, $location, genericService, activityService, starTable) {
+angular.module('starApp.controllers').controller('othersAgendaController', ['$scope', '$location', 'genericService', 'activityService', 'starTable', function($scope, $location, genericService, activityService, starTable) {
     $scope.page.title = 'Agenda - Others';
 
     var allAgendas = [];

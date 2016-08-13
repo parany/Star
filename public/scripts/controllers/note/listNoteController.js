@@ -1,4 +1,4 @@
-starApp.controller('listNoteController', ['$scope', 'noteService', 'starTable', function($scope, noteService, starTable) {
+angular.module('starApp.controllers').controller('listNoteController', ['$scope', 'noteService', 'starTable', function($scope, noteService, starTable) {
     $scope.page.title = 'Note - List';
 
     $scope.notes = [];

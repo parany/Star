@@ -1,4 +1,4 @@
-starApp.controller('tableReadController', ['$scope', '$rootScope', '$cookieStore', 'genericService', 'verseService', 'starTable', function($scope, $rootScope, $cookieStore, genericService, verseService, starTable) {
+angular.module('starApp.controllers').controller('tableReadController', ['$scope', '$rootScope', '$cookieStore', 'genericService', 'verseService', 'starTable', function($scope, $rootScope, $cookieStore, genericService, verseService, starTable) {
     $scope.dataRead = [];
 
     var lastRead = $cookieStore.get('lastRead');

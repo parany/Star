@@ -1,4 +1,4 @@
-starApp.controller('chatController', ['$rootScope', '$scope', 'starTable', 'accountService', function($rootScope, $scope, starTable, accountService) {
+angular.module('starApp.controllers').controller('chatController', ['$rootScope', '$scope', 'starTable', 'accountService', function($rootScope, $scope, starTable, accountService) {
 	$scope.page.title = 'Chat';
 
 	$scope.userName = accountService.getUserName();

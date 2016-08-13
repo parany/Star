@@ -1,4 +1,4 @@
-starApp.controller('tableSearchController', ['$scope', '$rootScope', 'verseService', 'starTable', function($scope, $rootScope, verseService, starTable) {
+angular.module('starApp.controllers').controller('tableSearchController', ['$scope', '$rootScope', 'verseService', 'starTable', function($scope, $rootScope, verseService, starTable) {
     $scope.dataSearch = [];
 
     $scope.tableSearch = starTable.create($scope, 'dataSearch', false, 10);
