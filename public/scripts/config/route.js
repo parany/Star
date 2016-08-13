@@ -1,7 +1,7 @@
 angular.module('starApp').config(['$routeProvider', 'ACCESS_LEVELS', function($routeProvider, ACCESS_LEVELS) {
     $routeProvider
         .when('/login', {
-            templateUrl: 'views/pages/account/login.html',
+            templateUrl: 'scripts/pages/account/login.html',
             controller: 'loginController',
             access_level: ACCESS_LEVELS.Pub,
             menuId: 'read'
@@ -145,7 +145,7 @@ angular.module('starApp').config(['$routeProvider', 'ACCESS_LEVELS', function($r
             menuId: 'new'
         })
         .when('/activities', {
-            templateUrl: 'views/pages/activity/index.html',
+            templateUrl: 'scripts/pages/activity/index.html',
             controller: 'activityController',
             access_level: ACCESS_LEVELS.Pub,
             menuId: 'account'

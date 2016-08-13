@@ -5,7 +5,7 @@ var gulpIf = require('gulp-if');
 var cssnano = require('gulp-cssnano');
 
 gulp.task('minify-assets', function() {
-	return gulp.src('index.html')
+	return gulp.src('index-dev.html')
 		.pipe(useref())
 		.pipe(gulpIf('*.js', uglify().on('error', function(e) {
 			console.log(e);
