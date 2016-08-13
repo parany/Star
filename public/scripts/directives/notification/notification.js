@@ -3,7 +3,7 @@ angular.module('starApp.directives').directive('notification', ['$location', '$r
     var userName = accountService.getUserName();
     return {
         scope: true,
-        templateUrl: 'views/directives/core/notification.html',
+        templateUrl: 'scripts/directives/notification/notification.html',
         restrict: 'E',
         replace: true,
         link: function(scope) {
