@@ -43,7 +43,7 @@ node_modules
 logs
 
 # Star config files
-public/scripts/config/config.js
+public/app/config/config.js
 server/config/config.json
 server/config/db.json
 npm-debug.log
@@ -59,4 +59,4 @@ snapshot/
 public/.idea/
 server/.idea/
 
-public/scripts/vendor/bower_components
+public/vendor/bower_components
