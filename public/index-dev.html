@@ -6,100 +6,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Star - {{ page.title }}</title>
-    
+
     <!--build:css css/vendor.min.css-->
-    <link href="/scripts/vendor/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/styles/Vendor/font-awesome.min.css" rel="stylesheet">
-    <link href="/styles/Vendor/ng-table.css" rel="stylesheet">
+    <link href="/vendor/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/vendor/styles/font-awesome.min.css" rel="stylesheet">
+    <link href="/vendor/styles/ng-table.css" rel="stylesheet">
     <!--endbuild-->
 
     <!--build:css css/site.min.css-->
-    <link href="/styles/Pages/Site.css" rel="stylesheet">
+    <link href="/app/styles/site.css" rel="stylesheet">
     <!--endbuild-->
 
     <!--build:js js/vendor.min.js -->
-    <script src="/scripts/vendor/bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="/scripts/vendor/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="/scripts/vendor/bower_components/angular/angular.min.js"></script>
-    <script src="/scripts/vendor/bower_components/angular-route/angular-route.min.js"></script>
-    <script src="/scripts/vendor/ng-table.js"></script>
-    <script src="/scripts/vendor/bower_components/angular-cookies/angular-cookies.min.js"></script>
-    <script src="/scripts/vendor/textAngular-rangy.min.js"></script>
-    <script src="/scripts/vendor/textAngular-sanitize.min.js"></script>
-    <script src="/scripts/vendor/textAngular.min.js"></script>
-    <script src="/scripts/vendor/bower_components/lodash/lodash.min.js"></script>
-    <script src="/scripts/vendor/Chart.js"></script>
-    <script src="/scripts/vendor/angular-chart.js"></script>
-    <script src="/scripts/vendor/ui-bootstrap-tpls-0.12.1.min.js"></script>
+    <script src="/vendor/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/vendor/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/vendor/bower_components/angular/angular.min.js"></script>
+    <script src="/vendor/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="/vendor/ng-table.js"></script>
+    <script src="/vendor/bower_components/angular-cookies/angular-cookies.min.js"></script>
+    <script src="/vendor/textAngular-rangy.min.js"></script>
+    <script src="/vendor/textAngular-sanitize.min.js"></script>
+    <script src="/vendor/textAngular.min.js"></script>
+    <script src="/vendor/bower_components/lodash/lodash.min.js"></script>
+    <script src="/vendor/Chart.js"></script>
+    <script src="/vendor/angular-chart.js"></script>
+    <script src="/vendor/ui-bootstrap-tpls-0.12.1.min.js"></script>
     <!-- endbuild -->
 
     <script src="/socket.io/socket.io.js"></script>
 
-    <script src="/scripts/app.js"></script>
+    <script src="/app/app.js"></script>
     <!--build:js js/main.min.js -->
 
-    <script src="/scripts/config/route.js"></script>
-    <script src="/scripts/config/accesLevel.js"></script>
-    <script src="/scripts/config/events.js"></script>
-    <script src="/scripts/config/httpInterceptor500.js"></script>
-    <script src="/scripts/config/tokenInterceptor.js"></script>
-    <script src="/scripts/config/config.js"></script>
+    <script src="/app/config/route.js"></script>
+    <script src="/app/config/accesLevel.js"></script>
+    <script src="/app/config/events.js"></script>
+    <script src="/app/config/httpInterceptor500.js"></script>
+    <script src="/app/config/tokenInterceptor.js"></script>
+    <script src="/app/config/config.js"></script>
 
-    <script src="/scripts/helpers/dateHelper.js"></script>
-    <script src="/scripts/helpers/numberHelper.js"></script>
-    <script src="/scripts/helpers/starTable.js"></script>
-    
-    <script src="/scripts/services/genericService.js"></script>
-    <script src="/scripts/services/accountService.js"></script>
-    <script src="/scripts/services/activityService.js"></script>
-    <script src="/scripts/services/userActionService.js"></script>
-    <script src="/scripts/services/verseService.js"></script>
-    <script src="/scripts/services/noteService.js"></script>
-    <script src="/scripts/services/tweetService.js"></script>
+    <script src="/app/helpers/dateHelper.js"></script>
+    <script src="/app/helpers/numberHelper.js"></script>
+    <script src="/app/helpers/starTable.js"></script>
 
-    <script src="/scripts/directives/header/header.js"></script>
-    <script src="/scripts/directives/notification/notification.js"></script>
-        
-    <script src="/scripts/controllers/page/pageController.js"></script>
-    <script src="/scripts/pages/account/loginController.js"></script>
-    <script src="/scripts/controllers/read/readController.js"></script>
-    <script src="/scripts/controllers/read/tableReadController.js"></script>
-    <script src="/scripts/controllers/read/tableSearchController.js"></script>
-    <script src="/scripts/controllers/read/tabController.js"></script>
-    <script src="/scripts/controllers/agenda/agendaController.js"></script>
-    <script src="/scripts/controllers/agenda/detailAgendaController.js"></script>
-    <script src="/scripts/controllers/agenda/addAgendaController.js"></script>
-    <script src="/scripts/controllers/agenda/editAgendaController.js"></script>
-    <script src="/scripts/controllers/note/addNoteController.js"></script>
-    <script src="/scripts/controllers/note/editNoteController.js"></script>
-    <script src="/scripts/controllers/note/listNoteController.js"></script>
-    <script src="/scripts/controllers/dico/dicosController.js"></script>
-    <script src="/scripts/controllers/dico/addDicoController.js"></script>
-    <script src="/scripts/controllers/treaty/treatyController.js"></script>
-    <script src="/scripts/controllers/treaty/addTreatyController.js"></script>
-    <script src="/scripts/controllers/treaty/detailTreatyController.js"></script>
-    <script src="/scripts/controllers/explication/explicationController.js"></script>
-    <script src="/scripts/controllers/explication/addExplicationController.js"></script>
-    <script src="/scripts/controllers/explication/detailExplicationController.js"></script>
-    <script src="/scripts/controllers/explication/verseController.js"></script>
-    <script src="/scripts/controllers/new/detailNewController.js"></script>
-    <script src="/scripts/controllers/new/newController.js"></script>
-    <script src="/scripts/controllers/new/addNewController.js"></script>
-    <script src="/scripts/pages/activity/activityController.js"></script>
-    <script src="/scripts/controllers/error/error500Controller.js"></script>
-    <script src="/scripts/controllers/tweet/tweetController.js"></script>
-    <script src="/scripts/controllers/tweet/addTweetController.js"></script>
-    <script src="/scripts/controllers/chat/chatController.js"></script>
+    <script src="/app/services/genericService.js"></script>
+    <script src="/app/services/accountService.js"></script>
+    <script src="/app/services/activityService.js"></script>
+    <script src="/app/services/userActionService.js"></script>
+    <script src="/app/services/verseService.js"></script>
+    <script src="/app/services/noteService.js"></script>
+    <script src="/app/services/tweetService.js"></script>
+
+    <script src="/app/directives/header/header.js"></script>
+    <script src="/app/directives/notification/notification.js"></script>
+
+    <script src="/app/pages/page/pageController.js"></script>
+    <script src="/app/pages/account/loginController.js"></script>
+    <script src="/app/pages/read/readController.js"></script>
+    <script src="/app/pages/read/tableReadController.js"></script>
+    <script src="/app/pages/read/tableSearchController.js"></script>
+    <script src="/app/pages/read/tabController.js"></script>
+    <script src="/app/pages/agenda/agendaController.js"></script>
+    <script src="/app/pages/agenda/detailAgendaController.js"></script>
+    <script src="/app/pages/agenda/addAgendaController.js"></script>
+    <script src="/app/pages/agenda/editAgendaController.js"></script>
+    <script src="/app/pages/note/addNoteController.js"></script>
+    <script src="/app/pages/note/editNoteController.js"></script>
+    <script src="/app/pages/note/listNoteController.js"></script>
+    <script src="/app/pages/dico/dicosController.js"></script>
+    <script src="/app/pages/dico/addDicoController.js"></script>
+    <script src="/app/pages/treaty/treatyController.js"></script>
+    <script src="/app/pages/treaty/addTreatyController.js"></script>
+    <script src="/app/pages/treaty/detailTreatyController.js"></script>
+    <script src="/app/pages/explication/explicationController.js"></script>
+    <script src="/app/pages/explication/addExplicationController.js"></script>
+    <script src="/app/pages/explication/detailExplicationController.js"></script>
+    <script src="/app/pages/explication/verseController.js"></script>
+    <script src="/app/pages/new/detailNewController.js"></script>
+    <script src="/app/pages/new/newController.js"></script>
+    <script src="/app/pages/new/addNewController.js"></script>
+    <script src="/app/pages/activity/activityController.js"></script>
+    <script src="/app/pages/error/error500Controller.js"></script>
+    <script src="/app/pages/tweet/tweetController.js"></script>
+    <script src="/app/pages/tweet/addTweetController.js"></script>
+    <script src="/app/pages/chat/chatController.js"></script>
     <!-- endbuild -->
 
 </head>
 <body>
-    <div>
-        <header></header>
+<div>
+    <header></header>
 
-        <div class="row">
-            <ng-view></ng-view>
-        </div>
+    <div class="row">
+        <ng-view></ng-view>
     </div>
+</div>
 </body>
 </html>

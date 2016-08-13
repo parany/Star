@@ -3,7 +3,7 @@ var minifyHtml = require('gulp-minify-html');
 var ngTemplate = require('gulp-ng-template');
 
 gulp.task('minify-templates', function() {
-	return gulp.src(['../public/**/*.html', '!./node_modules/**'])
+	return gulp.src(['../public/**/*.html', '!./node_modules/**', '!./vendor/**'])
 		.pipe(minifyHtml({
 			empty: true,
 			quotes: true
