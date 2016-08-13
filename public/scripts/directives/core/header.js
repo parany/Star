@@ -1,4 +1,4 @@
-starApp.directive('header', ['$location', '$rootScope', '$route', 'accountService', function($location, $rootScope, $route, accountService) {
+angular.module('starApp.directives').directive('header', ['$location', '$rootScope', '$route', 'accountService', function($location, $rootScope, $route, accountService) {
     return {
         scope: true,
         templateUrl: 'views/directives/core/header.html',

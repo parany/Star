@@ -1,4 +1,4 @@
-starApp.directive('notification', ['$location', '$rootScope', '$route', 'accountService', function($location, $rootScope, $route, accountService) {
+angular.module('starApp.directives').directive('notification', ['$location', '$rootScope', '$route', 'accountService', function($location, $rootScope, $route, accountService) {
     var socket = io.connect();
     var userName = accountService.getUserName();
     return {
