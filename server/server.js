@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 
 var env = process.env.NODE_ENV || 'development';
 if (env === 'production') {
-	app.use(express.static(path.join(__dirname, '/../public', {
+	app.use(express.static(path.join(__dirname, '/../app', {
 		maxAge: 86400000
 	})));
 }

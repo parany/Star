@@ -1,7 +1,7 @@
 angular.module('starApp.directives').directive('header', ['$location', '$rootScope', '$route', 'accountService', function($location, $rootScope, $route, accountService) {
     return {
         scope: true,
-        templateUrl: 'scripts/directives/header/header.html',
+        templateUrl: 'app/directives/header/header.html',
         restrict: 'E',
         link: function(scope) {
             if ($route.current) {

@@ -8,5 +8,5 @@ gulp.task('annotate-templates', function() {
 			remove: true,
 			add: true
 		}))
-		.pipe(gulp.dest('../public/dist'));
+		.pipe(gulp.dest('dist'));
 });
