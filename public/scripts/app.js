@@ -1,9 +1,11 @@
 angular.module('starApp.controllers', []);
 angular.module('starApp.directives', []);
+angular.module('starApp.factories', []);
 
 starApp = angular.module('starApp', [
 	'starApp.controllers',
 	'starApp.directives',
+	'starApp.factories',
 	'ngRoute',
 	'ngTable',
 	'ngCookies',

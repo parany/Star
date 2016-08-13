@@ -1,4 +1,4 @@
-starApp.factory('starTable', ['$filter', 'ngTableParams', function($filter, ngTableParams) {
+angular.module('starApp.factories').factory('starTable', ['$filter', 'ngTableParams', function($filter, ngTableParams) {
 	function create(data, ppty, orderBy, count) {
 		var ppties = ppty.split('.');
 		var params = {
