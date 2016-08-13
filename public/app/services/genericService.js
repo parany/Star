@@ -78,11 +78,6 @@ angular.module('starApp.services').factory('genericService', ['$http', 'userActi
 				result.tweets = data.data.tweets.filter(function(tweet) {
 					return tweet.Type === filters[collectionName];
 				});
-				result.tweets.forEach(function(tweet) {
-					if (tweet.Title.length > 40) {
-						tweet.Title = tweet.Title.slice(0, 40) + '...';
-					}
-				});
 				delete data.data.tweets;
 				var articles = [];
 				_.forIn(data.data, function(value, key) {
