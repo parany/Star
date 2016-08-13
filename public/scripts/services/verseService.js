@@ -1,4 +1,4 @@
-starApp.factory('verseService', ['$http', function($http) {
+angular.module('starApp.services').factory('verseService', ['$http', function($http) {
 	function getBooks(testamentId) {
 		return $http.post('/books/find', {
 			TestamentId: testamentId,

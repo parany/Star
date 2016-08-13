@@ -1,4 +1,4 @@
-starApp.factory('userActionService', ['$http', function($http) {
+angular.module('starApp.services').factory('userActionService', ['$http', function($http) {
 	function send(collectionName, title, operation) {
 		var data = {
 			operation: operation,

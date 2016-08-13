@@ -1,4 +1,4 @@
-starApp.factory('tweetService', ['$http', 'userActionService', 'genericService', function($http, userActionService, genericService) {
+angular.module('starApp.services').factory('tweetService', ['$http', 'userActionService', 'genericService', function($http, userActionService, genericService) {
 	function getList(collectionName) {
 		var projection = {
 			Title: 1,

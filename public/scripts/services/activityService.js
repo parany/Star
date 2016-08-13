@@ -1,4 +1,4 @@
-starApp.factory('activityService', ['$http', function($http) {
+angular.module('starApp.services').factory('activityService', ['$http', function($http) {
 	function getSummary() {
 		var promise = new Promise(function(resolve) {
 			$http.get('/summary').success(function(data) {

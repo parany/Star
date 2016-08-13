@@ -1,4 +1,4 @@
-starApp.factory('noteService', ['$http', function($http) {
+angular.module('starApp.services').factory('noteService', ['$http', function($http) {
 	function getNote(noteId) {
 		return $http.get('/notes/getNoteById/' + noteId);
 	}

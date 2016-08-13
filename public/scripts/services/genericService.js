@@ -1,4 +1,4 @@
-starApp.factory('genericService', ['$http', 'userActionService', function($http, userActionService) {
+angular.module('starApp.services').factory('genericService', ['$http', 'userActionService', function($http, userActionService) {
 	var filters = {
 		'agendas': 'agenda',
 		'explications': 'explication',

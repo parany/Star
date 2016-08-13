@@ -1,4 +1,4 @@
-starApp.factory('accountService', ['$http', function($http) {
+angular.module('starApp.services').factory('accountService', ['$http', function($http) {
 	var _user = JSON.parse(localStorage.getItem('user'));
 
 	return {
