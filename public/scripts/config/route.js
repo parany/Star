@@ -1,4 +1,4 @@
-starApp.config(['$routeProvider', 'ACCESS_LEVELS', function($routeProvider, ACCESS_LEVELS) {
+angular.module('starApp').config(['$routeProvider', 'ACCESS_LEVELS', function($routeProvider, ACCESS_LEVELS) {
     $routeProvider
         .when('/login', {
             templateUrl: 'views/pages/account/login.html',

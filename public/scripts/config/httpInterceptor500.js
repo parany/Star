@@ -1,4 +1,4 @@
-starApp.factory('htppInterceptor500', ['$q', '$location', function($q, $location) {
+angular.module('starApp').factory('htppInterceptor500', ['$q', '$location', function($q, $location) {
 	var interceptor = {
 		'responseError': function(rejection) {
 			if (rejection.status === 403) {
@@ -14,6 +14,6 @@ starApp.factory('htppInterceptor500', ['$q', '$location', function($q, $location
 	return interceptor;
 }]);
 
-starApp.config(['$httpProvider', function($httpProvider) {
+angular.module('starApp').config(['$httpProvider', function($httpProvider) {
 	$httpProvider.interceptors.push('htppInterceptor500');
 }]);

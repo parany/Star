@@ -1,4 +1,4 @@
-starApp.factory('tokenInterceptor', ['$q', '$location', function ($q, $location) {
+angular.module('starApp').factory('tokenInterceptor', ['$q', '$location', function ($q, $location) {
     return {
         request: function (config) {
             config.headers = config.headers || {};
@@ -30,6 +30,6 @@ starApp.factory('tokenInterceptor', ['$q', '$location', function ($q, $location)
     };
 }]);
 
-starApp.config(['$httpProvider', function ($httpProvider) {
+angular.module('starApp').config(['$httpProvider', function ($httpProvider) {
     $httpProvider.interceptors.push('tokenInterceptor');
 }]);
