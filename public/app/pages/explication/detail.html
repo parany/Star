@@ -19,7 +19,7 @@
     <h3 style="text-align: center;">{{ explication.Title }}</h3>
     <div ng-bind-html="explication.Content"></div>
     <div class="authoring">
-        written by <span class="badge">{{ ::explication.CreatedBy }}</span> On <span class="badge">{{ ::explication.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}</span>
+        written by <span class="badge">{{ ::explication.CreatedBy }}</span> On <span class="badge">{{ ::explication.Date|fullDate }}</span>
     </div>
     <form class="form-horizontal btn-actions">
         <div class="btn-left">
@@ -43,7 +43,7 @@
                     <tr ng-repeat="model in $data">
                         <td>
                             <span class="activity">
-                                <a href="#/explications/detail/{{ model._id }}">{{ model.Title }}</a> on {{ model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
+                                <a href="#/explications/detail/{{ model._id }}">{{ model.Title }}</a> on {{ model.Date|fullDate }}
                             </span>
                         </td>
                     </tr>
@@ -61,7 +61,7 @@
                     <tr ng-repeat="model in $data">
                         <td>
                             <span class="activity">
-                                <a href="#/tweets/edit/{{ ::model._id }}">{{ ::model.Title|cut }}</a> on {{ ::model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
+                                <a href="#/tweets/edit/{{ ::model._id }}">{{ ::model.Title|cut }}</a> on {{ ::model.Date|fullDate }}
                             </span>
                         </td>
                     </tr>
@@ -79,7 +79,7 @@
                     <tr ng-repeat="model in $data">
                         <td>
                             <span class="activity">
-                                <a href="#/{{ model.Type }}/detail/{{ model._id }}">{{ model.Title|cut }}<a/> ({{ model.Type }}) on {{ model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
+                                <a href="#/{{ model.Type }}/detail/{{ model._id }}">{{ model.Title|cut }}<a/> ({{ model.Type }}) on {{ model.Date|fullDate }}
                             </span>
                         </td>
                     </tr>
@@ -97,7 +97,7 @@
                     <tr ng-repeat="model in $data">
                         <td>
                             <span class="activity">
-                                <a href="#/explications/detail/{{ model._id }}">{{ model.Title|cut }}</a> on {{ model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
+                                <a href="#/explications/detail/{{ model._id }}">{{ model.Title|cut }}</a> on {{ model.Date|fullDate }}
                             </span>
                         </td>
                     </tr>
@@ -115,7 +115,7 @@
                     <tr ng-repeat="model in $data">
                         <td>
                             <span class="activity">
-                                <a href="#/explications/detail/{{ model._id }}">{{ model.Title|cut }}</a> on {{ model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}
+                                <a href="#/explications/detail/{{ model._id }}">{{ model.Title|cut }}</a> on {{ model.Date|fullDate }}
                             </span>
                         </td>
                     </tr>

@@ -30,7 +30,7 @@
                                 <u>{{ model.CreatedBy }}</u>
                             </i>On
                             <i>
-                                <u>{{ model.Date | date:"dd/MM/yyyy EEE hh:mm:ss" }}</u>
+                                <u>{{ model.Date|fullDate }}</u>
                             </i>
                         </span>
                     </td>
@@ -86,7 +86,7 @@
                     <tr ng-repeat="model in $data">
                         <td>
                             <span class="activity">{{ model.operation }}
-                                <span class="badge">{{ model.title|cut }}</span> on {{ model.date | date: "dd MMM yyyy hh:mm:ss" }}</span>
+                                <span class="badge">{{ model.title|cut }}</span> on {{ model.date|fullDate }}</span>
                         </td>
                     </tr>
                 </tbody>
