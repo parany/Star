@@ -20,6 +20,10 @@ angular.module('starApp.directives').directive('header', ['$location', '$rootSco
                 scope.fullName = fullName;
                 scope.isLoggedIn = true;
             });
+
+            $rootScope.$on('account.expired', function(evt, status) {
+                scope.isLoggedIn = false;
+            });
         }
     };
 }]);

@@ -1,12 +1,13 @@
-angular.module('starApp').factory('htppInterceptor500', ['$q', '$location', function($q, $location) {
+angular.module('starApp').factory('htppInterceptor500', ['$rootScope', '$q', '$location', function($rootScope, $q, $location) {
 	var interceptor = {
 		'responseError': function(rejection) {
-			if (rejection.status === 403) {
+			if (rejection.status === 403 || rejection.status === 401) {
 				localStorage.removeItem('user');
 				localStorage.removeItem('token');
+				$rootScope.$emit('account.expired', true);
 				$location.path('/login');
-			} else if (rejection.status !== 401) {
-				$location.path('/error500');
+			} else if (rejection.status !== 500) {
+				$location.path('/login');
 			}
 
 			return $q.reject(rejection);

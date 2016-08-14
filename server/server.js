@@ -40,7 +40,7 @@ app.use(function(req, res, next) {
 	if (token) {
 		jwt.verify(token, config.secretToken, function(err, decoded) {
 			if (err) {
-				res.json({
+				res.status(401).send({
 					success: false,
 					message: 'Failed to authenticate token.'
 				});
