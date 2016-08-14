@@ -21,7 +21,7 @@ angular.module('starApp.directives').directive('header', ['$location', '$rootSco
                 scope.isLoggedIn = true;
             });
 
-            $rootScope.$on('account.expired', function(evt, status) {
+            $rootScope.$on('account.expired', function() {
                 scope.isLoggedIn = false;
             });
         }

@@ -11,6 +11,9 @@
     "gulp": "3.9.1"
   },
   "devDependencies": {
+    "gulp-jshint": "^2.0.1",
+    "jshint": "^2.9.2",
+    "jshint-stylish": "^2.2.0",
     "browser-sync": "^2.13.0",
     "gulp-babel": "^6.1.2",
     "gulp-cssnano": "^2.1.2",
