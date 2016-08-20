@@ -9,35 +9,35 @@ body {
     font-family: monospace;
 }
 
-    #account a:hover {
-        text-decoration: none;
-        color: black;
-    }
+#account a:hover {
+    text-decoration: none;
+    color: black;
+}
 
 #menu {
     padding-left: 0;
 }
 
-    #menu a {
-        cursor: pointer;
-        color: #989898;
-        text-transform: uppercase;
-        margin-right: 20px;
-        font-family: "Rockwell Extra Bold";
-        font-size: 15pt;
-    }
+#menu a {
+    cursor: pointer;
+    color: #989898;
+    text-transform: uppercase;
+    margin-right: 20px;
+    font-family: "Rockwell Extra Bold";
+    font-size: 15pt;
+}
 
-        #menu a.selected {
-            font-size: 30pt;
-            border-bottom-color: #989898;
-            border-bottom-width: thin;
-            border-bottom-style: solid;
-        }
+#menu a.selected {
+    font-size: 30pt;
+    border-bottom-color: #989898;
+    border-bottom-width: thin;
+    border-bottom-style: solid;
+}
 
-        #menu a:hover {
-            text-decoration: none;
-            color: black;
-        }
+#menu a:hover {
+    text-decoration: none;
+    color: black;
+}
 
 table.ng-table th {
     text-align: left;
@@ -71,16 +71,16 @@ table.ng-table th {
     width: 250px;
 }
 
-    .expander > .title {
-        background-color: gray;
-        color: white;
-        padding: .1em .3em;
-        cursor: pointer;
-    }
+.expander > .title {
+    background-color: gray;
+    color: white;
+    padding: .1em .3em;
+    cursor: pointer;
+}
 
-    .expander > .body {
-        padding: .1em .3em;
-    }
+.expander > .body {
+    padding: .1em .3em;
+}
 
 .closed {
     display: none;
@@ -153,9 +153,9 @@ a.dropdown-toggle {
     margin-bottom: 20px;
 }
 
-    .actions.rigth {
-        float: right;
-    }
+.actions.rigth {
+    float: right;
+}
 
 .culture {
     font-weight: bold;
@@ -176,9 +176,9 @@ a.dropdown-toggle {
     margin-bottom: 25px;
 }
 
-    .treaty-badge span {
-        font-size: 13px;
-    }
+.treaty-badge span {
+    font-size: 13px;
+}
 
 blockquote {
     font-size: 14.5px !important;
@@ -188,9 +188,9 @@ blockquote {
     margin-top: 30px;
 }
 
-    #activity li a {
-        font-size: 12px;
-    }
+#activity li a {
+    font-size: 12px;
+}
 
 .nav-tabs a {
     color: black;
@@ -208,14 +208,14 @@ blockquote {
 }
 
 .over {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      -o-text-overflow: ellipsis;
-      margin-bottom: -10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    margin-bottom: -10px;
 }
 
-.table>tbody+tbody {
+.table > tbody + tbody {
     border-top: 3px solid #ddd;
 }
 
@@ -334,4 +334,120 @@ span.status.active {
 
 .other-meanings .description {
     text-decoration: underline;
+}
+
+@keyframes slideOutRight {
+    to {
+        transform: translateX(100%);
+    }
+}
+
+@-moz-keyframes slideOutRight {
+    to {
+        -moz-transform: translateX(100%);
+    }
+}
+
+@-webkit-keyframes slideOutRight {
+    to {
+        -webkit-transform: translateX(100%);
+    }
+}
+
+@keyframes slideOutLeft {
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+@-moz-keyframes slideOutLeft {
+    to {
+        -moz-transform: translateX(-100%);
+    }
+}
+
+@-webkit-keyframes slideOutLeft {
+    to {
+        -webkit-transform: translateX(-100%);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@-moz-keyframes slideInRight {
+    from {
+        -moz-transform: translateX(100%);
+    }
+    to {
+        -moz-transform: translateX(0);
+    }
+}
+
+@-webkit-keyframes slideInRight {
+    from {
+        -webkit-transform: translateX(100%);
+    }
+    to {
+        -webkit-transform: translateX(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@-moz-keyframes slideInLeft {
+    from {
+        -moz-transform: translateX(-100%);
+    }
+    to {
+        -moz-transform: translateX(0);
+    }
+}
+
+@-webkit-keyframes slideInLeft {
+    from {
+        -webkit-transform: translateX(-100%);
+    }
+    to {
+        -webkit-transform: translateX(0);
+    }
+}
+
+.master-view.ng-enter {
+    z-index: 1;
+    -webkit-animation: slideInLeft 0.25s both linear;
+    -moz-animation: slideInLeft 0.25s both linear;
+    animation: slideInLeft 0.25s both linear;
+}
+
+.master-view.ng-leave {
+    -webkit-animation: slideOutLeft 0.25s both linear;
+    -moz-animation: slideOutLeft 0.25s both linear;
+    animation: slideOutLeft 0.25s both linear;
+}
+
+.detail-view.ng-enter {
+    z-index: 1;
+    -webkit-animation: slideInRight 0.25s both linear;
+    -moz-animation: slideInRight 0.25s both linear;
+    animation: slideInRight 0.25s both linear;
+}
+
+.detail-view.ng-leave {
+    -webkit-animation: slideOutRight 0.25s both linear;
+    -moz-animation: slideOutRight 0.25s both linear;
+    animation: slideOutRight 0.25s both linear;
 }

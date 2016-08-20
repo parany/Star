@@ -1,34 +1,37 @@
-﻿<div class="col-md-8" id="read-nav">
-    <form class="form-horizontal" name="addTweet">
-        <div class="form-group">
-            <div>
-                <input type="date" placeholder="Date" class="form-control" ng-model="model.Date" ng-change="changeDate()" required />
+﻿<div class="col-md-12"style="position: fixed;">
+    <div class="col-md-8" id="read-nav">
+        <form class="form-horizontal" name="addTweet">
+            <div class="form-group">
+                <div>
+                    <input type="date" placeholder="Date" class="form-control" ng-model="model.Date"
+                           ng-change="changeDate()" required/>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div>
-                <select class="form-control" ng-model="model.Type" ng-options="ct for ct in contentTypes" required></select>
+            <div class="form-group">
+                <div>
+                    <select class="form-control" ng-model="model.Type" ng-options="ct for ct in contentTypes"
+                            required></select>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div>
-                <textarea placeholder="Title" class="form-control" ng-model="model.Title" required></textarea>
+            <div class="form-group">
+                <div>
+                    <textarea placeholder="Title" class="form-control" ng-model="model.Title" required></textarea>
+                </div>
             </div>
+        </form>
+        <div class="actions rigth">
+            <a class="btn btn-default" ng-href="#/tweets">Go Back</a> &nbsp;
+            <button type="submit" class="btn btn-success" ng-click="save()" ng-disabled="addTweet.$invalid">
+                Save
+            </button>
         </div>
-    </form>
-    <div class="actions rigth">
-        <a class="btn btn-default" ng-href="#/tweets">Go Back</a> &nbsp;
-        <button type="submit" class="btn btn-success" ng-click="save()" ng-disabled="addTweet.$invalid">
-            Save
-        </button>
     </div>
-</div>
-<div class="col-md-4 list-sidebar">
-    <div class="panel panel-default activity">
-        <div class="panel-heading">General</div>
-        <div class="panel-body">
-            <table class="table ng-table">
-                <tbody>
+    <div class="col-md-4 list-sidebar">
+        <div class="panel panel-default activity">
+            <div class="panel-heading">General</div>
+            <div class="panel-body">
+                <table class="table ng-table">
+                    <tbody>
                     <tr>
                         <td>
                             <span class="activity">Total number of items:
@@ -57,24 +60,25 @@
                             </span>
                         </td>
                     </tr>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-    <div class="panel panel-default activity">
-        <div class="panel-heading">Operations</div>
-        <div class="panel-body">
-            <table ng-table="tableOperations" class="table operation">
-                <thead></thead>
-                <tbody>
+        <div class="panel panel-default activity">
+            <div class="panel-heading">Operations</div>
+            <div class="panel-body">
+                <table ng-table="tableOperations" class="table operation">
+                    <thead></thead>
+                    <tbody>
                     <tr ng-repeat="model in $data">
                         <td>
                             <span class="activity">{{ model.operation }}
                                 <span class="badge">{{ model.title|cut }}</span> on {{ model.date|fullDate }}</span>
                         </td>
                     </tr>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
