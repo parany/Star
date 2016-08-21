@@ -58,8 +58,12 @@
     <script src="/app/services/noteService.js"></script>
     <script src="/app/services/tweetService.js"></script>
 
-    <script src="/app/directives/header/header.js"></script>
+    <script src="/app/filters/cutFilter.js"></script>
+    <script src="/app/filters/fullDateFilter.js"></script>
+
     <script src="/app/directives/notification/notification.js"></script>
+    <script src="/app/directives/article/article-list.js"></script>
+    <script src="/app/directives/activity/activity.js"></script>
 
     <script src="/app/pages/page/pageController.js"></script>
     <script src="/app/pages/account/loginController.js"></script>
@@ -96,10 +100,12 @@
 </head>
 <body>
 <div>
-    <header></header>
+    <div ng-include="'app/templates/header.html'"></div>
 
     <div class="row">
-        <ng-view></ng-view>
+        <div ng-view="true" class="{{pageClass}}"
+             style="position: absolute"
+             autoscroll="true"></div>
     </div>
 </div>
 </body>
