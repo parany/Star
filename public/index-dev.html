@@ -21,7 +21,6 @@
     <script src="/vendor/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/vendor/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/vendor/bower_components/angular/angular.min.js"></script>
-    <script src="/vendor/bower_components/angular-animate/angular-animate.min.js"></script>
     <script src="/vendor/bower_components/angular-route/angular-route.min.js"></script>
     <script src="/vendor/ng-table.js"></script>
     <script src="/vendor/bower_components/angular-cookies/angular-cookies.min.js"></script>
@@ -103,9 +102,7 @@
     <div ng-include="'app/templates/header.html'"></div>
 
     <div class="row">
-        <div ng-view="true" class="{{pageClass}}"
-             style="position: absolute"
-             autoscroll="true"></div>
+        <ng-view></ng-view>
     </div>
 </div>
 </body>
