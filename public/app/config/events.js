@@ -6,6 +6,9 @@ angular.module('starApp').run(['$rootScope', function($rootScope) {
             if (next !== undefined) {
                 angular.element('#' + next.menuId).addClass('active');
             }
+            if (next.$$route) {
+                $rootScope[next.$$route .menuId] = true;
+            }
         });
     $rootScope.$on('$locationChangeStart',
         function(evt, next) {

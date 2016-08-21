@@ -11,13 +11,13 @@ angular.module('starApp.services').factory('accountService', ['$http', function(
 		isAuthorized: function(lvl) {
 			return _user !== null && _user.Role === lvl;
 		},
-		setData: function(data) {
+		login: function(data) {
 			_user = data.user;
 			localStorage.setItem('user', JSON.stringify(_user));
 			localStorage.setItem('token', data.token);
 		},
 		isLoggedIn: function() {
-			return _user ? true : false;
+			return _user && localStorage.getItem('token') ? true : false;
 		},
 		getUser: function() {
 			return _user;
@@ -35,7 +35,6 @@ angular.module('starApp.services').factory('accountService', ['$http', function(
 			localStorage.removeItem('user');
 			localStorage.removeItem('token');
 			_user = null;
-		},
-		isLogged: false
+		}
 	};
 }]);

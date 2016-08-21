@@ -9,8 +9,9 @@ angular.module('starApp.controllers').controller('loginController', ['$rootScope
         accountService.authenticate($scope.user.UserName, $scope.user.Password).success(function(data) {
             modalInstance.dismiss('cancel');
             if (data) {
-                accountService.setData(data);
-                $rootScope.$emit('account.loggedIn', data.user.FullName);
+                accountService.login(data);
+                $scope.$parent.fullName = data.user.FullName;
+                $scope.$parent.isLoggedIn = true;
                 $location.path('/');
             } else {
                 $scope.error = true;
