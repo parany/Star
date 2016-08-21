@@ -81,9 +81,7 @@ angular.module('starApp.controllers').controller('dicosController', ['$scope', '
         $scope.dicos = _.filter(allDicos, function(d) {
             return ($scope.filter.To._id === -1 || $scope.filter.To._id === d.ToId) 
             && ($scope.filter.From._id === -1 || $scope.filter.From._id === d.FromId) 
-            && ((!$scope.filter.Text || $scope.filter.Text === d.Text.substring(0, $scope.filter.Text.length))
-                || (!$scope.filter.Text || ($scope.includeMeaning && d.Meaning.includes($scope.filter.Text))))
-                || (!$scope.filter.Text || ($scope.includeIllustration && d.StrIllustrations.includes($scope.filter.Text)));
+            && ((!$scope.filter.Text || $scope.filter.Text === d.Text.substring(0, $scope.filter.Text.length)));
         });
         updateDicosTable();
     };

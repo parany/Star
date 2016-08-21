@@ -1,32 +1,14 @@
 ﻿<div class="col-md-12" style="position: fixed;">
     <div class="col-md-2" id="read-nav">
-        <div class="form-group">
+        <div class="form-group search">
             <div>
-                <select class="form-control" ng-model="filter.From" ng-change="search()"
-                        ng-options="culture.Description for culture in cultures"></select>
-            </div>
-        </div>
-        <div class="form-group">
-            <div>
-                <select class="form-control" ng-model="filter.To" ng-change="search()"
-                        ng-options="culture.Description for culture in cultures"></select>
-            </div>
-        </div>
-        <div class="form-group">
-            <div>
-                <input type="text" placeholder="Text" class="form-control" ng-model="filter.Text" ng-change="search()"
+                <input type="text"
+                       placeholder="Text"
+                       class="form-control"
+                       ng-model="filter.Text"
+                       ng-change="search()"
                        required/>
             </div>
-        </div>
-        <div class="form-group">
-            <label>
-                <input type="checkbox" ng-model="includeMeaning" ng-change="search()"> Include meaning
-            </label>
-        </div>
-        <div class="form-group">
-            <label>
-                <input type="checkbox" ng-model="includeIllustration" ng-change="search()"> Include illustrat.
-            </label>
         </div>
         <span class="badge">{{ dicos.length }}</span> items
         <br/>
@@ -47,14 +29,16 @@
         </div>
     </div>
     <div class="col-md-6">
-        <div class="actions">
+        <div class="language">
+            <span class="badge">{{ dico.From }}</span>
+            <span class="glyphicon glyphicon-arrow-right"></span>
+            <span class="badge">{{ dico.To }}</span>
+        </div>
+        <div ng-bind-html="dico.Meaning" class="meaning"></div>
+        <div class="actions fixed">
             <a ng-href="#/dicos/edit/{{ dico._id }}" class="btn btn-success">Edit</a>
             <button ng-click="remove(dico._id)" class="btn btn-default">Delete</button>
         </div>
-        <span class="badge">{{ dico.From }}</span>
-        <span class="glyphicon glyphicon-arrow-right"></span>
-        <span class="badge">{{ dico.To }}</span>
-        <div ng-bind-html="dico.Meaning" class="meaning"></div>
     </div>
     <div class="col-md-4">
         <table ng-table="tableIllustration" class="table ng-table-rowselected">

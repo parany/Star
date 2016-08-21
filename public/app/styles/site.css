@@ -201,7 +201,7 @@ blockquote {
 }
 
 .resizable {
-    height: 400px;
+    height: 475px;
     overflow: auto;
     max-width: 304px;
     max-height: 500px;
@@ -450,4 +450,19 @@ span.status.active {
     -webkit-animation: slideOutRight 0.25s both linear;
     -moz-animation: slideOutRight 0.25s both linear;
     animation: slideOutRight 0.25s both linear;
+}
+
+.form-group.search {
+    margin-bottom: 6px !important;
+    margin-top: -20px !important;
+}
+
+.language {
+    margin-top: 6px;
+    margin-bottom: -20px;
+}
+
+.actions.fixed {
+    position: absolute;
+    top: 200px;
 }
