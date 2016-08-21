@@ -22,11 +22,5 @@
     "bower_components",
     "test",
     "tests"
-  ],
-  "resolutions": {
-    "angular": "1.4.2"
-  },
-  "devDependencies": {
-    "angular-animate": "1.4.2"
-  }
+  ]
 }

@@ -11,7 +11,6 @@ angular.module('starApp', [
 	'starApp.services',
 	'starApp.filters',
 	'ngRoute',
-	'ngAnimate',
 	'ngTable',
 	'ngCookies',
 	'textAngular',
