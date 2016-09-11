@@ -60,3 +60,4 @@ public/.idea/
 server/.idea/
 
 public/vendor/bower_components
+server/typings
